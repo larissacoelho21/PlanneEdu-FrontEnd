@@ -1,0 +1,108 @@
+body {
+    background-color: #F2F2F2;
+    font-family: "Poppins", system-ui;
+    font-style: normal;
+} 
+
+.back {
+    position: fixed;
+    width: 60%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a imagem para preencher o container */
+
+}
+
+.computer {
+    position: absolute;
+    width: 0 auto;
+    height: 35vw;
+    top: 8vw;
+    left: 8vw;
+}
+
+.logo img{
+    width: 0 auto;
+    height: 8vw;    
+    margin-top: 5%;
+}
+
+.logo {
+    margin-right: 7%;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 8%;
+}
+
+.forms {
+    margin-top: 5%;
+}
+
+.forms h2 {
+    font-weight: 800;
+    color: #074973;
+    font-size: 2.8vw;
+    text-align: left;
+}
+
+.forms p {
+    opacity: 60%;
+    margin-bottom: 5%;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    background-color: rgba(217, 217, 217, 0%);
+    margin-bottom: 3%;
+    padding: 2vw;
+    width: 36vw;
+    height: 4vw;
+    border: rgba(1, 18, 38, 50%) solid 1.3px;
+    border-radius: 0.5vw;
+}
+
+.input::placeholder {
+    font-family: "Poppins", system-ui;
+    
+}
+
+textarea:focus, input:focus, select:focus {
+    border: rgba(1, 18, 38, 80%) solid 1.3px;
+    outline: none;
+} 
+
+.password {
+    font-size: 1vw;
+    margin-left: 18vw;
+    color: #074973;
+    margin-bottom: 2vw;
+}
+
+.button button{
+    background-color: #074973;
+    border: none;
+    border-radius: 0.5vw;
+    width: 12vw;
+    height: 3.5vw;
+    font-family: "Poppins", system-ui;
+    color: #F2F2F2;
+}
+
+.button button:hover {
+    background-color: #07678D;
+}
+
+
