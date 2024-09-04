@@ -1,0 +1,79 @@
+.input-verification {
+    display: flex;
+    flex-direction: column;
+}
+
+.verification {
+    background-color: rgba(217, 217, 217, 0%);
+    padding: 3vw;
+    width: 22vw;
+    height: 5vw;
+    border: rgb(7, 73, 115) solid 2px; 
+    border-radius: 0.5vw;
+    font-size: 3.2vw;
+    font-weight: bold;
+    letter-spacing: 0.8vw;
+    font-family: "Poppins", system-ui;
+    
+}
+
+.verification::placeholder {
+    font-size: 2vw;
+    letter-spacing: none;
+}
+
+/* Retirando as setas que aparecem com o type=number do input */
+.verification::-webkit-inner-spin-button, .verification::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-verification:focus, select:focus, .verification:focus {
+    border: rgb(38, 133, 195) solid 2px; 
+    outline: none;
+} 
+
+.confirm {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.time {
+    color: #074973;
+    margin-bottom: 3%;
+    font-size: 1.3vw;
+}
+
+.confirmEmail {
+    opacity: 50%;
+    font-size: 1vw;
+}
+
+.link-return {
+    color: black;
+    text-decoration: none;
+    opacity: 50%;
+    font-size: 1vw;
+
+}
+
+.link-return:hover {
+    color: rgba(7, 73, 115, 100%);
+}
+
+.button-verification button{
+    background-color: #074973;
+    border: none;
+    margin-top: 1vw;
+    border-radius: 0.5vw;
+    font-size: 1.3vw;
+    font-weight: 300;
+    width: 12vw;
+    height: 3.5vw;
+    font-family: "Poppins", system-ui;
+    color: #F2F2F2;
+}
+
+.button-verification button:hover {
+    background-color: #07678D;
+}
