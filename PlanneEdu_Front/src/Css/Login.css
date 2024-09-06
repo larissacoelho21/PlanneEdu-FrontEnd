@@ -116,4 +116,7 @@ textarea:focus, input:focus, select:focus {
     background-color: #07678D;
 }
 
-
+.input::-webkit-inner-spin-button, .verification::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

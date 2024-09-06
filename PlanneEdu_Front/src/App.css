@@ -3,3 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --font: font-family: "Poppins", system-ui;
+  --blue1: #074973;
+}
