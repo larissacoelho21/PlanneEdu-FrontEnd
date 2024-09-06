@@ -5,7 +5,7 @@
 
 .verification {
     background-color: rgba(217, 217, 217, 0%);
-    padding: 3vw;
+    padding: 1vw;
     width: 22vw;
     height: 5vw;
     border: rgb(7, 73, 115) solid 2px; 
@@ -34,7 +34,7 @@
 } 
 
 .confirm {
-    margin-top: 5%;
+    margin: 5% 0 5% 0;
     text-align: center;
 }
 
@@ -54,7 +54,6 @@
     text-decoration: none;
     opacity: 50%;
     font-size: 1vw;
-
 }
 
 .link-return:hover {
@@ -64,11 +63,11 @@
 .button-verification button{
     background-color: #074973;
     border: none;
-    margin-top: 1vw;
+    margin-top: 1.5vw;
     border-radius: 0.5vw;
     font-size: 1.3vw;
     font-weight: 300;
-    width: 12vw;
+    width: 20vw;
     height: 3.5vw;
     font-family: "Poppins", system-ui;
     color: #F2F2F2;
@@ -76,4 +75,35 @@
 
 .button-verification button:hover {
     background-color: #07678D;
+}
+
+
+.inputReset{
+  display: flex;
+  justify-content: space-between;
+  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  padding: 1.2vw 2vw;
+  border-radius: 0.5vw; 
+  width: 36vw;
+  height: 4vw;
+  cursor: pointer;
+}
+
+.inputReset input{
+  background-color: transparent;
+  outline: none;
+  border: 0;
+}
+
+.inputReset button {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  color: #000;
+  opacity: 50%;
+}
+
+.input-password:focus{
+  border: none;
 }
