@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './Pages/Login';
 import { PasswordReset } from './Pages/PasswordReset';
 import { VerificationEmail } from './Pages/Verification';
-import { CreatePassword } from './Pages/CreatePassword';
+import { Home } from './Pages/Teacher/Home';
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -12,7 +12,7 @@ const Router: React.FC = () => {
                     <Route path='/' element={<Login />}></Route>
                     <Route path='/redefinicaosenha' element={<PasswordReset />}></Route>
                     <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
-                    <Route path='/novasenha' element={<CreatePassword />}></Route>
+                    <Route path='/homeprofessor' element={<Home />}></Route>
                 </Routes>
         </BrowserRouter>
 

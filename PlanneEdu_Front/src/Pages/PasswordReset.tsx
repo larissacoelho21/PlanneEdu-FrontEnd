@@ -20,11 +20,10 @@ export function PasswordReset() {
 
                     <div className="input-reset"> {/* Inputs - colocando novo css pela posição do objeto */}
                         <input type="email" className="reset" placeholder="Insira seu email" required/>
-                        <input type="email" className="reset" placeholder="Confirme seu email" required/>
                     </div>
 
                     <div className="button-password"> 
-                        <button type="submit" >Enviar Instruções</button>
+                        <button type="submit" style={{cursor: "pointer"}}>Enviar Instruções</button>
                     </div>
                 </div>
 

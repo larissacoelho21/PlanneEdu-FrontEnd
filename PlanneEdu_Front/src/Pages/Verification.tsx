@@ -3,7 +3,14 @@ import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundP
 
 /* Página de verificação de email, solicitação do código */
 import "../Css/Verification.css"
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 export function VerificationEmail() {
+
+    const [isShow, setisShow] = useState(false);
+
+    const handlePassword = () => setisShow(!isShow)
+
     return (
         <section className="VerificationEmail">
             <div className="background">
@@ -33,8 +40,35 @@ export function VerificationEmail() {
                         <Link className="link-return" to="/redefinicaosenha"> Reenviar Código</Link>
                     </div>
 
+                    <div className="input-reset">
+                    <label className="inputReset">
+                            <input 
+                            className="input-password"
+                                type={isShow ? "text" : "password"} 
+                                placeholder="Insira sua nova senha" 
+                                required 
+                            />
+                            <button onClick={handlePassword} type="button">
+                                {isShow && <Eye size={18} />}   
+                                {!isShow  && <EyeOff size={18} />}
+                            </button>
+                        </label>
+                        <label className="inputReset">
+                            <input 
+                            className="input-password"
+                                type={isShow ? "text" : "password"} 
+                                placeholder="Confirme sua senha" 
+                                required 
+                            />
+                            <button onClick={handlePassword} type="button">
+                                {isShow && <Eye size={18} />}   
+                                {!isShow  && <EyeOff size={18} />}
+                            </button>
+                        </label>
+                    </div>
+
                     <div className="button-verification">
-                        <button>Verificar</button>
+                        <button type="submit" style={{cursor: "pointer"}}>Trocar senha</button>
                     </div>
                 </div>
             </div>
