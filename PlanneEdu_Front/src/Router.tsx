@@ -4,6 +4,7 @@ import { PasswordReset } from './Pages/PasswordReset';
 import { VerificationEmail } from './Pages/Verification';
 import { NavBarProfessor } from './Components/NavBar-Professores/navBarProfessor';
 import { Home } from './Pages/Teacher/Home';
+import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -15,6 +16,7 @@ const Router: React.FC = () => {
                     <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
                     <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
+                    <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
                 </Routes>
         </BrowserRouter>
 
