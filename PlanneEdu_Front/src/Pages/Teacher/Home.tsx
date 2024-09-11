@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css";
 import SemesterTeacher from "../../assets/clock.svg";
@@ -14,12 +15,32 @@ export function Home() {
       </div>
 
       <div className="cardsTeacher">
+        <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
+          {" "}
+          {/* Evita sublinhado no texto */}
+          <div className="box-teacher">
+            <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+            <div className="date-badge">
+              <span>23/02/2023 — 18/12/2024</span>
+            </div>
+            <div className="infos-class">
+              <div className="semester-teacher">
+                <img src={SemesterTeacher} alt="" />
+                <h1>4 semestres</h1>
+              </div>
+              <div className="students">
+                <img src={StudentsTeacher} alt="" />
+                <h1>35 alunos</h1>
+              </div>
+            </div>
+          </div>
+        </Link>
         <div className="box-teacher">
           <h1>Desenvolvimento de sistemas | SESI 2023</h1>
           <div className="date-badge">
             <span>23/02/2023 — 18/12/2024</span>
           </div>
-          <div className="infos-teacher">
+          <div className="infos-class">
             <div className="semester-teacher">
               <img src={SemesterTeacher} alt="" />
               <h1>4 semestres</h1>
@@ -31,48 +52,38 @@ export function Home() {
           </div>
         </div>
         <div className="box-teacher">
-          <h1>Desenvolvimento de Sistemas | Noite 2023</h1>
-          <h2>30/02/2023 — 23/12/2024</h2>
-          <div className="infos-teacher">
+          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+          <div className="date-badge">
+            <span>23/02/2023 — 18/12/2024</span>
+          </div>
+          <div className="infos-class">
             <div className="semester-teacher">
               <img src={SemesterTeacher} alt="" />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
               <img src={StudentsTeacher} alt="" />
-              <h1>27 alunos</h1>
+              <h1>35 alunos</h1>
             </div>
           </div>
         </div>
         <div className="box-teacher">
-          <h1>Desenvolvimento de Sistemas | LIBBS 2023</h1>
-          <h2>23/02/2023 — 25/12/2024</h2>
-          <div className="infos-teacher">
-            <div className="semester-teacher">
-              <img src={SemesterTeacher} alt="" />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="students">
-              <img src={StudentsTeacher} alt="" />
-              <h1>23 alunos</h1>
-            </div>
+          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+          <div className="date-badge">
+            <span>23/02/2023 — 18/12/2024</span>
           </div>
-        </div>
-        <div className="box-teacher">
-          <h1>Desenvolvimento de Sistemas | SESI 2024</h1>
-          <h2>27/02/2024 — 18/12/2025</h2>
-          <div className="infos-teacher">
+          <div className="infos-class">
             <div className="semester-teacher">
               <img src={SemesterTeacher} alt="" />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
               <img src={StudentsTeacher} alt="" />
-              <h1>34 alunos</h1>
+              <h1>35 alunos</h1>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

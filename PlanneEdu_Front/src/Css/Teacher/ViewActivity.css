@@ -1,0 +1,51 @@
+body {
+  background-color: #f2f2f2;
+  font-family: "Poppins", system-ui;
+  font-style: normal;
+}
+
+.visualizar-atividade {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.discipline{
+  display: flex;
+  gap: 0.5vw;
+  font-size: 1vw;
+}
+
+.discipline h1{
+  color: #084973;
+}
+
+.discipline h2{
+  font-weight: normal;
+}
+
+.button-addActivity{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #07678d;
+  width: 35vw;
+  height: 10vh;
+  border-radius: 0.5vw;
+}
+
+.button-addActivity a{
+  display: flex;
+  text-decoration: none;
+  gap: 2vw;
+  color: #ffff;
+}
+
+.button-addActivity h1{
+  font-weight: normal;
+  font-size: 1.5vw;
+}
+
+.button-addActivity img{
+  width: 1.6vw;
+}

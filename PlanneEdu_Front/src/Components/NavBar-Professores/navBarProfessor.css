@@ -46,23 +46,27 @@ link:active {
     margin-top: 2vw;
 }
 
+
 .navbar-link:hover {
     color: #074973;
     font-weight: bold;
     border-bottom: #074973 solid 2px;
     transition: 100ms ease-in-out;
+    cursor: pointer;
 }
 
 .navbar-link.active {
     color: #074973;
     font-weight: bold;
     border-bottom: #074973 solid 2px;
+    cursor: pointer;
 }
 
 .navbar-link.selected {
     color: #074973;
     font-weight: bold;
     border-bottom: #074973 solid 2px;
+    cursor: pointer;
 }
 
 /* estilizando o menu */
@@ -70,7 +74,7 @@ link:active {
 .dropdown-menu {
     position: absolute;
     top: 5vw;
-    right: 27vw;
+    right: 26vw;
     background-color: #fff;
     padding: 1vw 1vw;
     width: 17vw;
@@ -122,7 +126,6 @@ link:active {
     transition: var(--speed);
 }
 
-
 .dropdownItem .menu-a {
     font-size: 1.1vw;
     max-width: 15vw;
@@ -132,22 +135,72 @@ link:active {
     transition: var(--speed);
 }
 
+/* estilizando o segundo dropdwn */
 
-/* ícones lateral direita */
+.dropdown-notification {
+    position: absolute;
+    top: 5vw;
+    right: 8vw;
+    background-color: #fff;
+    padding: 1.2vw 1.2vw;
+    width: 28vw;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+}
 
-.profile {
+.dropdown-notification.ativo{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: var(--speed) ease;
+}
+
+.dropdown-notification.inactive{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: var(--speed) ease;
+}
+
+.dropdownNotification .paragrafo {
+    font-size: 1vw;
+    max-width: 30vw;
+    color: black;
+    align-self: center;
+    margin: 0;
+    transition: var(--speed);
+}
+
+.dropdownNotification .sub-paragrafo {
+    font-size: 0.8vw;
+    font-style: italic;
+    max-width: 15vw;
+    color: #7F7F7F;
+    transition: var(--speed);
+    margin-bottom: 1vw;
+}
+
+.dropdownNotification .sub-paragrafo:hover {
+    color: black;
+}
+
+.link-bell .iconsBell, .profile .not-icons, .darkmodeIcon .not-icons{
+    width: 0 auto;
+    height: 1.6vw;
+    margin-left: 1vw;
+    margin-right: 1.5vw;
+    color: black;
+}
+
+.link-bell .iconsBell {
+    margin-left: 5vw;
+    cursor: pointer;
+}
+
+.icon-list ul, .secondPart {
+    display: flex;
+}
+
+.Icons {
     display: flex;
     align-items: center;
 }
-
-.profile img {
-    width: 0 auto;
-    height: 2vw;
-    margin-left: 3vw;
-}
-
-.darkMode img {
-    margin-right: 3vw;
-    width: 0 auto;
-    height: 1.8vw;
-} /* HAHAHAHAHAHAHAHHA */

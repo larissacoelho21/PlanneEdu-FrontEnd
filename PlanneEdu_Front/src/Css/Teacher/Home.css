@@ -15,7 +15,6 @@ body{
   flex-direction: column;
   text-align: center;
   align-items: center;
-  margin-top: 8vw;
 }
 
 .introTeacher h1{
@@ -49,7 +48,6 @@ body{
 .box-teacher{
   display: flex;
   flex-direction: column;
-  flex: 0 1 calc(50% - 5%);
   box-sizing: border-box;
   background-color: #ffff;
   width: 42vw;
@@ -57,7 +55,8 @@ body{
   padding: 2.4vw;
   gap: 1vw;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  color: #000;
 }
 
 .box-teacher h1{
@@ -75,7 +74,7 @@ body{
   border-radius: 0.5vw;
 }
 
-.infos-teacher{
+.infos-class{
   display: flex;
   gap: 5vw;
 }
