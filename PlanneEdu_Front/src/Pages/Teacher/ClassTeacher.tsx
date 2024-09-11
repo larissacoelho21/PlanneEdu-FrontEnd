@@ -85,7 +85,7 @@ export function ClassTeacher() {
             </div>
             <div className="buttons-action">
               <div className="button-view">
-                <Link to="">
+                <Link to="/visualizaratvd">
                     <img src={eyesIcon} alt="" />
                     <h1>Visualizar atividades</h1>
                 </Link>

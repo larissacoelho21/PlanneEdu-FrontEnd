@@ -5,6 +5,7 @@ import { VerificationEmail } from './Pages/Verification';
 import { NavBarProfessor } from './Components/NavBar-Professores/navBarProfessor';
 import { Home } from './Pages/Teacher/Home';
 import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
+import { ViewActivity } from './Pages/Teacher/ViewActivity';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -17,6 +18,7 @@ const Router: React.FC = () => {
                     npm install sweetalert2                    <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
+                    <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
                 </Routes>
         </BrowserRouter>
 

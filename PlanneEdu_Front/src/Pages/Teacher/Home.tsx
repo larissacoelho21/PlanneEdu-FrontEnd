@@ -15,73 +15,75 @@ export function Home() {
       </div>
 
       <div className="cardsTeacher">
-      <Link to="/turmaprofessor" style={{ textDecoration: 'none' }}> {/* Evita sublinhado no texto */}
-      <div className="box-teacher">
-        <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-        <div className="date-badge">
-          <span>23/02/2023 — 18/12/2024</span>
-        </div>
-        <div className="infos-class">
-          <div className="semester-teacher">
-            <img src={SemesterTeacher} alt="" />
-            <h1>4 semestres</h1>
+        <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
+          {" "}
+          {/* Evita sublinhado no texto */}
+          <div className="box-teacher">
+            <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+            <div className="date-badge">
+              <span>23/02/2023 — 18/12/2024</span>
+            </div>
+            <div className="infos-class">
+              <div className="semester-teacher">
+                <img src={SemesterTeacher} alt="" />
+                <h1>4 semestres</h1>
+              </div>
+              <div className="students">
+                <img src={StudentsTeacher} alt="" />
+                <h1>35 alunos</h1>
+              </div>
+            </div>
           </div>
-          <div className="students">
-            <img src={StudentsTeacher} alt="" />
-            <h1>35 alunos</h1>
+        </Link>
+        <div className="box-teacher">
+          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+          <div className="date-badge">
+            <span>23/02/2023 — 18/12/2024</span>
           </div>
-        </div>
-      </div>
-    </Link>
-    <div className="box-teacher">
-        <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-        <div className="date-badge">
-          <span>23/02/2023 — 18/12/2024</span>
-        </div>
-        <div className="infos-class">
-          <div className="semester-teacher">
-            <img src={SemesterTeacher} alt="" />
-            <h1>4 semestres</h1>
-          </div>
-          <div className="students">
-            <img src={StudentsTeacher} alt="" />
-            <h1>35 alunos</h1>
-          </div>
-        </div>
-      </div>
-      <div className="box-teacher">
-        <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-        <div className="date-badge">
-          <span>23/02/2023 — 18/12/2024</span>
-        </div>
-        <div className="infos-class">
-          <div className="semester-teacher">
-            <img src={SemesterTeacher} alt="" />
-            <h1>4 semestres</h1>
-          </div>
-          <div className="students">
-            <img src={StudentsTeacher} alt="" />
-            <h1>35 alunos</h1>
+          <div className="infos-class">
+            <div className="semester-teacher">
+              <img src={SemesterTeacher} alt="" />
+              <h1>4 semestres</h1>
+            </div>
+            <div className="students">
+              <img src={StudentsTeacher} alt="" />
+              <h1>35 alunos</h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="box-teacher">
-        <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-        <div className="date-badge">
-          <span>23/02/2023 — 18/12/2024</span>
-        </div>
-        <div className="infos-class">
-          <div className="semester-teacher">
-            <img src={SemesterTeacher} alt="" />
-            <h1>4 semestres</h1>
+        <div className="box-teacher">
+          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+          <div className="date-badge">
+            <span>23/02/2023 — 18/12/2024</span>
           </div>
-          <div className="students">
-            <img src={StudentsTeacher} alt="" />
-            <h1>35 alunos</h1>
+          <div className="infos-class">
+            <div className="semester-teacher">
+              <img src={SemesterTeacher} alt="" />
+              <h1>4 semestres</h1>
+            </div>
+            <div className="students">
+              <img src={StudentsTeacher} alt="" />
+              <h1>35 alunos</h1>
+            </div>
           </div>
         </div>
-      </div>
+        <div className="box-teacher">
+          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
+          <div className="date-badge">
+            <span>23/02/2023 — 18/12/2024</span>
+          </div>
+          <div className="infos-class">
+            <div className="semester-teacher">
+              <img src={SemesterTeacher} alt="" />
+              <h1>4 semestres</h1>
+            </div>
+            <div className="students">
+              <img src={StudentsTeacher} alt="" />
+              <h1>35 alunos</h1>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-  );
+  )
 }
