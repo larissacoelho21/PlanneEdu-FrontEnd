@@ -40,9 +40,9 @@ link:active {
 }
 
 /* estilizando lista */
-.navbar-nav a {
+.navbar-link {
     font-family: var(--font);
-    color: black;
+    color: black;   
     text-align: center;
     display: flex;
     justify-content: center;
@@ -54,17 +54,29 @@ link:active {
     color: #074973;
     font-weight: bold;
     border-bottom: #074973 solid 2px;
-    transition: 100ms ease-out;
+    transition: 100ms ease-in-out;
+}
+
+.navbar-link.active {
+    color: #074973;
+    font-weight: bold;
+    border-bottom: #074973 solid 2px;
+}
+
+.navbar-link.selected {
+    color: #074973;
+    font-weight: bold;
+    border-bottom: #074973 solid 2px;
 }
 
 /* estilizando o menu */
 .dropdown-menu {
     position: absolute;
     top: 5vw;
-    right: 28vw;
+    right: 27vw;
     background-color: #fff;
     padding: 1vw 1vw;
-    width: 16vw;
+    width: 17vw;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
@@ -82,10 +94,10 @@ link:active {
     transition: var(--speed) ease;
 }
 
-.dropdown-menu li:not(:first-child) {
+.dropdown-menu .dropdownItem:not(:first-child) {
     border-top: 1px solid rgba(0, 0, 0, 0.10);
+    margin: 0;
 }
-
 
 .dropdownItem {
     display: flex;
@@ -93,19 +105,29 @@ link:active {
     padding: 1vw;  
 }
 
-.dropdownItem img {
+.dropdownItem .icon:hover, .dropdownItem .menu-a:hover{
+    color: #074973; /* cor quando o hover estiver ativo */
+    cursor: pointer;
+}
+
+/* .dropdownItem  {
+    color: #074973;
+    transform: scale(1.05); /* aumenta o ícone um pouco ao passar o mouse 
+    transition: transform 0.3s ease-in-out, color 0.2s ease-in-out; /* efeito de transição suave 
+} */
+
+.dropdownItem .icon {
     max-width: 2vw;
-    margin-right: 1vw;
+    margin-right: 0.5vw;
+    margin-top: 0.5vw;
+    color: #7F7F7F;
     align-self: center;
     transition: var(--speed);
 }
 
-.dropdownItem img:hover {
-    cursor: pointer;
-}
 
-.dropdownItem a {
-    font-size: 1vw;
+.dropdownItem .menu-a {
+    font-size: 1.1vw;
     max-width: 15vw;
     color: #7F7F7F;
     align-self: center;
@@ -113,9 +135,6 @@ link:active {
     transition: var(--speed);
 }
 
-.menu-a:hover {
-    color: #074973;
-}
 
 /* ícones lateral direita */
 

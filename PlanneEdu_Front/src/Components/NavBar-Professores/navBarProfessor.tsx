@@ -3,43 +3,44 @@ import LogoName from "../../assets/logoname.svg"
 import Notifications from "../../assets/notifications.svg"
 import Profile from "../../assets/profile.svg"
 import DarkMode from "../../assets/darkmode.svg"
-import DsIcon from "../../assets/dsIcon.svg"
+/*  import DsIcon from "../../assets/dsIcon.svg"
 import Eletromecanica from "../../assets/eletroIcon.svg"
 import Logistica from "../../assets/logIcon.svg"
 import AdmIcon from "../../assets/folderIcon.svg"
-import Geral from "../../assets/geralIcon.svg"
-
+import Geral from "../../assets/geralIcon.svg" */
 
 /* Icons */
-/* import { Settings } from 'lucide-react';
 import { CodeXml } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { GalleryVerticalEnd } from 'lucide-react';
 import { Folder } from 'lucide-react';
-import { ChartLine } from 'lucide-react'; */
-import { AlignCenter, ChevronDown } from 'lucide-react';
+import { ChartLine } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 /* funções react */
-import { Link } from "react-router-dom";
-import { /* ReactNode */ useEffect, useRef, useState } from "react"
+import { Link, NavLink } from "react-router-dom";
+import { /* ReactNode */ ReactNode, useEffect, useRef, useState } from "react"
 
 /* css */
 import "../NavBar-Professores/navBarProfessor.css"
 
 interface DropdownItemProps {
-    img: string;
+    icon: ReactNode;
     text: string;
+    to: string;
 }
 
-function DropdownItem(props: DropdownItemProps) {
+function DropdownItem({ icon, text, to }: DropdownItemProps) {
     return (
-        <li className='dropdownItem'>
-            <img src={props.img} alt="" />
-            <Link className="menu-a" to="#"> {props.text} </Link>
-        </li>
+        <NavLink to={to} className='dropdownItem'>
+            <i className="icon">{icon}</i>
+            <Link className="menu-a" to="#"> {text} </Link>
+        </NavLink>
     );
 }
 
 export function NavBarProfessor() {
+
     const [open, setOpen] = useState(false);
 
     let menuRef = useRef<HTMLDivElement>(null);
@@ -74,31 +75,43 @@ export function NavBarProfessor() {
                     <div className="left-side">
 
                         <div className="nav-list" ref={menuRef}>
-                            <ul className="navbar-nav">
+                            <ul className="navbar-nav" >
 
-                                <li>
-                                    <Link className="navbar-link" to="/homeprofessor">Ínicio</Link>
-                                </li>
+                                <NavLink
+                                    className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
+                                    to="#"> Início 
+                                </NavLink>
 
+                                    {/* < li >
+                                        <Link className="navbar-link" to="/homeprofessor">Ínicio</Link>
+                                    </li> */}
 
                                 <li className="nav-dropdown">
                                     <div className="li-inicio" onClick={() => { setOpen(!open) }}>
-                                        <Link className="navbar-link" to="#">Planos de ensino <ChevronDown /></Link>
+                                        <div className={`navbar-link ${open ? 'selected' : ''}`} >
+                                            Planos de ensino <ChevronDown />
+                                        </div>
                                     </div>
 
                                     <li>
                                         <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
-                                            <DropdownItem img={DsIcon} text={"Desen. de sistemas"} />
-                                            <DropdownItem img={Eletromecanica} text={"Eletromecânica"} />
-                                            <DropdownItem img={Logistica} text={"Logística"} />
-                                            <DropdownItem img={AdmIcon} text={"Administração"} />
-                                            <DropdownItem img={Geral} text={"Geral"} />
+                                            <DropdownItem to="/" icon={<CodeXml size={20} />} text={"Desen. de sistemas"}  />
+                                            <DropdownItem to="/" icon={<Settings size={20} />} text={"Eletromecânica"} />
+                                            <DropdownItem to="/" icon={<ChartLine size={20} />} text={"Logística"} />
+                                            <DropdownItem to="/" icon={<Folder size={20}/>} text={"Administração"} />
+                                            <DropdownItem to="/" icon={<GalleryVerticalEnd size={20}/>} text={"Geral"} />
                                         </div>
                                     </li>
 
                                 </li>
 
-                                <li><Link className="navbar-link" to="/">Planos de curso</Link></li>
+                                <NavLink
+                                    className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
+                                    to="/"
+                                >
+                                    Planos de curso 
+                                </NavLink>
+                                {/* <li><Link className="navbar-link" to="/">Planos de curso</Link></li> */}
 
                             </ul>
 
@@ -121,6 +134,6 @@ export function NavBarProfessor() {
                 </div>
 
             </nav>
-        </section>
+        </section >
     )
 }
