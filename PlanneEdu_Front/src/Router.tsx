@@ -14,7 +14,7 @@ const Router: React.FC = () => {
                     <Route path='/' element={<Login />}></Route>
                     <Route path='/redefinicaosenha' element={<PasswordReset />}></Route>
                     <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
-                    <Route path='/navbar' element={<NavBarProfessor />}></Route>
+                    npm install sweetalert2                    <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
                 </Routes>

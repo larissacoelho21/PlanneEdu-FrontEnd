@@ -1,3 +1,4 @@
+import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css";
 import SemesterTeacher from "../../assets/clock.svg";
 import StudentsTeacher from "../../assets/peoples.svg";
@@ -5,6 +6,7 @@ import StudentsTeacher from "../../assets/peoples.svg";
 export function Home() {
   return (
     <section className="homeTeacher">
+      <NavBarProfessor />
       <div className="introTeacher">
         <h1>Seja bem-vindo, Giovani!</h1>
         <h2>Visualize suas turmas ativas</h2>

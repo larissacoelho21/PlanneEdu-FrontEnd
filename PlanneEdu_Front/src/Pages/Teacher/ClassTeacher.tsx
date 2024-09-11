@@ -4,8 +4,15 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 
 import SemesterTeacher from "../../assets/clock.svg"
 import StudentsTeacher from "../../assets/peoples.svg"
+import { useState } from "react";
 
 export function ClassTeacher () {
+
+    const [showPopUp, setShowPopUp] = useState(false);
+    const togglePopUp = () => {
+        setShowPopUp(!showPopUp);
+    }
+
     return (
         <section className="class-teacher">
     <div className="subnavbar-class">
@@ -30,8 +37,19 @@ export function ClassTeacher () {
     </div>
 
     <div className="buttons-class">
-        
+        <button onClick={togglePopUp}>Plano de Ensino</button>
     </div>
+
+    {showPopUp && (
+        <div className="popup-planne">
+            <div className="popup-content">
+                <h1>Plano de Ensino</h1>
+            </div>
+            <div className="buttons-popup">
+                
+            </div>
+        </div>
+    )}
 </section>
 
     )
