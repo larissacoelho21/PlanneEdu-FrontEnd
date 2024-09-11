@@ -1,0 +1,95 @@
+body{
+  background-color: #f2f2f2;
+  font-family: "Poppins", system-ui;
+  font-style: normal;
+}
+
+.homeTeacher{
+  display: flex;
+  flex-direction: column;
+  gap: 6vw;
+}
+
+.introTeacher{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 8vw;
+}
+
+.introTeacher h1{
+  font-size: 2.2vw;
+  color: #074973;
+}
+
+.introTeacher h2{
+  font-size: 1.5vw;
+  font-weight: normal;
+  margin-bottom: 1%;
+}
+
+.introTeacher hr {
+  display: block;
+  width: 15vw; 
+  height: 3px; 
+  border: none; 
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #084973, #2685BF);
+}
+
+/* Parte dos cards */
+.cardsTeacher{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+
+.box-teacher{
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 calc(50% - 5%);
+  box-sizing: border-box;
+  background-color: #ffff;
+  width: 42vw;
+  border-radius: 0.5vw;
+  padding: 2.4vw;
+  gap: 1vw;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.box-teacher h1{
+  font-size: 1.4vw;
+}
+
+.date-badge {
+  font-size: 1vw;
+  background-color: #07678D;
+  width: 15vw;
+  padding: 0.5vw;
+  color: #ffff;
+  font-weight: normal;
+  text-align: center;
+  border-radius: 0.5vw;
+}
+
+.infos-teacher{
+  display: flex;
+  gap: 5vw;
+}
+
+.semester-teacher, .students{
+  display: flex;
+  gap: 0.5vw;
+}
+
+.semester-teacher img, .students img{
+  width: 1.6vw; 
+}
+
+.semester-teacher h1, .students h1{
+  font-size: 1.3vw;
+  font-weight: normal;
+}
