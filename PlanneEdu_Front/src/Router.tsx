@@ -5,6 +5,7 @@ import { VerificationEmail } from './Pages/Verification';
 import { NavBarProfessor } from './Components/NavBar-Professores/navBarProfessor';
 import { Home } from './Pages/Teacher/Home';
 import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
+import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
 import { ViewActivity } from './Pages/Teacher/ViewActivity';
 
 //criando rotas e caminhos 
@@ -18,6 +19,7 @@ const Router: React.FC = () => {
                     <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
+                    <Route path='/plansensino' element={<PlanEnsino />}></Route>
                     <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
                 </Routes>
         </BrowserRouter>
