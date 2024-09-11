@@ -79,3 +79,64 @@ link:active {
     transform: translateY(-20px);
     transition: var(--speed) ease;
 }
+
+.dropdown-menu .dropdownItem:not(:first-child) {
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+    margin: 0;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;  
+    padding: 1vw;  
+}
+
+.dropdownItem .icon:hover, .dropdownItem .menu-a:hover{
+    color: #074973; /* cor quando o hover estiver ativo */
+    cursor: pointer;
+}
+
+/* .dropdownItem  {
+    color: #074973;
+    transform: scale(1.05); /* aumenta o ícone um pouco ao passar o mouse 
+    transition: transform 0.3s ease-in-out, color 0.2s ease-in-out; /* efeito de transição suave 
+} */
+
+.dropdownItem .icon {
+    max-width: 2vw;
+    margin-right: 0.5vw;
+    margin-top: 0.5vw;
+    color: #7F7F7F;
+    align-self: center;
+    transition: var(--speed);
+}
+
+
+.dropdownItem .menu-a {
+    font-size: 1.1vw;
+    max-width: 15vw;
+    color: #7F7F7F;
+    align-self: center;
+    margin: 0;
+    transition: var(--speed);
+}
+
+
+/* ícones lateral direita */
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 0 auto;
+    height: 2vw;
+    margin-left: 3vw;
+}
+
+.darkMode img {
+    margin-right: 3vw;
+    width: 0 auto;
+    height: 1.8vw;
+} /* HAHAHAHAHAHAHAHHA */
