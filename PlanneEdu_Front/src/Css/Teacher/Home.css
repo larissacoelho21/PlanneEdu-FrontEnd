@@ -57,13 +57,14 @@ body{
   padding: 2.4vw;
   gap: 1vw;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 .box-teacher h1{
   font-size: 1.4vw;
 }
 
-.box-teacher h2{
+.date-badge {
   font-size: 1vw;
   background-color: #07678D;
   width: 15vw;
