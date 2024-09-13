@@ -2,7 +2,7 @@ import "../../Css/Teacher/PlanEnsino.css";
 import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
 
 /* importando icones para a construção da página */
-import { ChevronRight, Code } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Settings } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BookMarked } from 'lucide-react';
