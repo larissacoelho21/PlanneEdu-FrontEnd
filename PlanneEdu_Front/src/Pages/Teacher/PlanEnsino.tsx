@@ -151,7 +151,7 @@ export function PlanEnsino() {
                             <h3 className="Subject">Interfaces para dispositivos móveis</h3>
                             <div className="tag-course">
                                 <CodeXml size={20} color="white" />
-                                <p>Desenvolvimento</p>
+                                <p>Desenvolvimento de Sistemas</p>
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
