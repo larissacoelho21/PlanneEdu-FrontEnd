@@ -2,14 +2,13 @@ import "../../Css/Teacher/ClassTeacher.css";
 
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 
-import SemesterTeacher from "../../assets/clock.svg";
-import StudentsTeacher from "../../assets/peoples.svg";
-import eyesIcon from "../../assets/eyes.svg";
-import moreIcon from "../../assets/more.svg";
-
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { Clock3, Users, Eye } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export function ClassTeacher() {
   const [showPopUp1, setShowPopUp1] = useState(false);
@@ -35,11 +34,11 @@ export function ClassTeacher() {
         </div>
         <div className="infos-teacher">
           <div className="semester-teacher">
-            <img src={SemesterTeacher} alt="" />
+            <Clock3 size={18} />
             <h1>4 semestres</h1>
           </div>
           <div className="students">
-            <img src={StudentsTeacher} alt="" />
+            <Users size={18} />
             <h1>35 alunos</h1>
           </div>
         </div>
@@ -59,14 +58,14 @@ export function ClassTeacher() {
             <div className="buttons-action">
               <div className="button-view">
                 <Link to="">
-                    <img src={eyesIcon} alt="" />
-                    <h1>Visualizar planos</h1>
+                  <FontAwesomeIcon icon={faEye} />
+                  <h1>Visualizar planos</h1>
                 </Link>
               </div>
               <div className="button-add">
                 <Link to="">
-                    <img src={moreIcon} alt="" />
-                    <h1>Adicionar plano</h1>
+                  <FontAwesomeIcon icon={faPlus} />
+                  <h1>Adicionar plano</h1>
                 </Link>
               </div>
               <div className="button-close">
@@ -79,21 +78,21 @@ export function ClassTeacher() {
 
       {showPopUp2 && (
         <div className="overlay" onClick={togglePopUp2}>
-          <div className="popup-planne">
+          <div className="popup-planne" onClick={(e) => e.stopPropagation()}>
             <div className="popup-content">
               <h1>Situação de Aprendizagem</h1>
             </div>
             <div className="buttons-action">
               <div className="button-view">
                 <Link to="/visualizaratvd">
-                    <img src={eyesIcon} alt="" />
-                    <h1>Visualizar atividades</h1>
+                  <FontAwesomeIcon icon={faEye} />
+                  <h1>Visualizar atividades</h1>
                 </Link>
               </div>
               <div className="button-add">
                 <Link to="">
-                    <img src={moreIcon} alt="" />
-                    <h1>Adicionar atividade</h1>
+                  <FontAwesomeIcon icon={faPlus} />
+                  <h1>Adicionar atividade</h1>
                 </Link>
               </div>
               <div className="button-close">
@@ -103,8 +102,6 @@ export function ClassTeacher() {
           </div>
         </div>
       )}
-
-      
     </section>
   );
 }
