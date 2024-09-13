@@ -13,9 +13,9 @@ body {
   margin: 5% auto;
   padding: 2vw;
   background-color: #ffffff;
-  width: 90vw;
+  width: 90%;
   border-radius: 0.5vw;
-  box-shadow: 0 0.5vw 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -90,10 +90,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: solid 2px #084973;
+  border: solid 0.15625vw #084973;
   border-radius: 0.5vw;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.3125vw 0.625vw rgba(0, 0, 0, 0.1);
 }
 
 .popup-content {
@@ -121,7 +121,7 @@ body {
 .button-close button{
   cursor: pointer;
   background-color: transparent;
-  border: solid 1.5px #07678d;
+  border: solid 0.1171875vw #07678d;
   padding: 0.5vw 3vw;
   color: #07678d;
   border-radius: 0.5vw;
@@ -157,4 +157,52 @@ body {
 
 .button-add img {
   width: 1.6vw;
+}
+
+.registrationTable {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 5vw;
+  border-radius: 0.5vw;
+  overflow: hidden; /* Para garantir que a borda externa fique arredondada */
+  box-shadow: 0 0.3125vw 0.625vw rgba(0, 0, 0, 0.1);
+  margin-bottom: 5vw;
+}
+
+table {
+  font-family: "Poppins", system-ui;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.title-info > th {
+  background-color: #074973;
+  color: white;
+  font-size: 1.5vw;
+  text-align: center;
+  padding: 1vw;
+}
+
+td, th {
+  border: 0.078125vw solid #9ab9cd; /* Borda interna das células */
+  padding: 1vw;
+  text-align: left;
+}
+
+#title-name {
+  width: 65vw;
+  text-align: center;
+  padding-left: 3vw;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#number {
+  text-align: center;
 }
