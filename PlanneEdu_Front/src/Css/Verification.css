@@ -1,3 +1,20 @@
+.title-verification {
+    margin-top: 5%;
+}
+
+.title-verification h2 {
+    font-weight: 800;
+    color: #074973;
+    font-size: 2.6vw;
+}
+
+.title-verification p {
+    opacity: 60%;
+    margin-bottom: 3%;
+    font-size: 1.3vw;
+    max-width: 50vw;
+}
+
 .input-verification {
     display: flex;
     flex-direction: column;
@@ -6,7 +23,7 @@
 .verification {
     background-color: rgba(217, 217, 217, 0%);
     padding: 1vw;
-    width: 22vw;
+    width: 18vw;
     height: 5vw;
     border: rgb(7, 73, 115) solid 2px; 
     border-radius: 0.5vw;
@@ -34,14 +51,8 @@
 } 
 
 .confirm {
-    margin: 5% 0 5% 0;
+    margin: 3% 0 3% 0;
     text-align: center;
-}
-
-.time {
-    color: #074973;
-    margin-bottom: 3%;
-    font-size: 1.3vw;
 }
 
 .confirmEmail {
@@ -52,7 +63,7 @@
 .link-return {
     color: black;
     text-decoration: none;
-    opacity: 50%;
+    opacity: 80%;
     font-size: 1vw;
 }
 

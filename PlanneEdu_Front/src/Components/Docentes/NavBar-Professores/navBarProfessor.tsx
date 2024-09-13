@@ -1,17 +1,6 @@
 /* Images */
 import LogoName from "../../assets/logoname.svg"
 
-/* import Notifications from "../../assets/notifications.svg"
-import Profile from "../../assets/profile.svg"
-import DarkMode from "../../assets/darkmode.svg" */
-
-/* Imagens que não foram utilizadas, icones do dropdown */
-/*  import DsIcon from "../../assets/dsIcon.svg"
-import Eletromecanica from "../../assets/eletroIcon.svg"
-import Logistica from "../../assets/logIcon.svg"
-import AdmIcon from "../../assets/folderIcon.svg"
-import Geral from "../../assets/geralIcon.svg" */
-
 /* Icons do dropdown */
 import { CodeXml, Settings, GalleryVerticalEnd, Folder, ChartLine, ChevronDown } from 'lucide-react';
 
@@ -120,7 +109,7 @@ export function NavBarProfessor() {
 
                                     <li>
                                         <div className={`dropdown-menu ${openOne ? 'active' : 'inactive'}`}> {/* menu */}
-                                            <DropdownItem to="/" icon={<CodeXml size={20} />} text={"Desen. de sistemas"} />
+                                            <DropdownItem to="/" icon={<CodeXml size={20} />} text={"Desenvolvimento de sistemas"} />
                                             <DropdownItem to="/" icon={<Settings size={20} />} text={"Eletromecânica"} />
                                             <DropdownItem to="/" icon={<ChartLine size={20} />} text={"Logística"} />
                                             <DropdownItem to="/" icon={<Folder size={20} />} text={"Administração"} />
