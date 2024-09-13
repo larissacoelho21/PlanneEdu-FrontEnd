@@ -59,14 +59,14 @@ export function ClassTeacher() {
             <div className="buttons-action">
               <div className="button-view">
                 <Link to="">
-                    <img src={eyesIcon} alt="" />
-                    <h1>Visualizar planos</h1>
+                  <img src={eyesIcon} alt="" />
+                  <h1>Visualizar planos</h1>
                 </Link>
               </div>
               <div className="button-add">
                 <Link to="">
-                    <img src={moreIcon} alt="" />
-                    <h1>Adicionar plano</h1>
+                  <img src={moreIcon} alt="" />
+                  <h1>Adicionar plano</h1>
                 </Link>
               </div>
               <div className="button-close">
@@ -86,14 +86,14 @@ export function ClassTeacher() {
             <div className="buttons-action">
               <div className="button-view">
                 <Link to="/visualizaratvd">
-                    <img src={eyesIcon} alt="" />
-                    <h1>Visualizar atividades</h1>
+                  <img src={eyesIcon} alt="" />
+                  <h1>Visualizar atividades</h1>
                 </Link>
               </div>
               <div className="button-add">
                 <Link to="">
-                    <img src={moreIcon} alt="" />
-                    <h1>Adicionar atividade</h1>
+                  <img src={moreIcon} alt="" />
+                  <h1>Adicionar atividade</h1>
                 </Link>
               </div>
               <div className="button-close">
@@ -104,7 +104,61 @@ export function ClassTeacher() {
         </div>
       )}
 
-      
+      <div className="registrationTable">
+        <table className="table">
+          <thead>
+            <tr className="title-info">
+              <th></th>
+              <th id="title-name">Nome</th>
+              <th>Matrícula</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="number">1</td>
+              <td id="name">Ana Costa Santos</td>
+              <td id="number">25780</td>
+            </tr>
+            <tr>
+              <td id="number">2</td>
+              <td id="name">Brenda Almeida da Silva</td>
+              <td id="number">25957</td>
+            </tr>
+            <tr>
+              <td id="number">3</td>
+              <td id="name">Julia Rodrigues Cunha</td>
+              <td id="number">25762</td>
+            </tr>
+            <tr>
+              <td id="number">4</td>
+              <td id="name">Kauã Castro Cavalcanti</td>
+              <td id="number">25893</td>
+            </tr>
+            <tr>
+              <td id="number">5</td>
+              <td id="name">Marisa Silva Barbosa</td>
+              <td id="number">25866</td>
+            </tr>
+            <tr>
+              <td id="number">6</td>
+              <td id="name">Martim Costa Cardoso</td>
+              <td id="number">25031</td>
+            </tr>
+            <tr>
+              <td id="number">7</td>
+              <td id="name">Tomás Carvalho Pinto</td>
+              <td id="number">25114</td>
+            </tr>
+            <tr>
+              <td id="number">8</td>
+              <td id="name">Olivía Bernardes Oliveira</td>
+              <td id="number">25490</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
     </section>
   );
 }
