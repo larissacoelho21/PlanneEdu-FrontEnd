@@ -2,13 +2,14 @@ import "../../Css/Teacher/PlanEnsino.css";
 import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
 
 /* importando icones para a construção da página */
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Code } from 'lucide-react';
 import { Settings } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BookMarked } from 'lucide-react';
 import { ChartLine } from 'lucide-react';
 import { Folder } from 'lucide-react';
 import { Plus } from 'lucide-react';
+import { CodeXml } from 'lucide-react';
 
 
 export function PlanEnsino() {
@@ -114,6 +115,52 @@ export function PlanEnsino() {
                                 <div className="Class">
                                     <BookMarked size={21} color="black" strokeWidth={2} />
                                     <p>Tarde 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="Arrow">
+                            <ChevronRight size={50} color="black" strokeWidth={1} />
+                        </div>
+                    </div>
+
+                    <div className="Card">
+                        <div className="Data">
+                            <h3 className="Subject">Programação WEB Front-End</h3>
+                            <div className="tag-course">
+                                <CodeXml size={20} color="white" />
+                                <p>Desenvolvimento de Sistemas</p>
+                            </div>
+                            <div className="Info">
+                                <div className="Teacher">
+                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <p>Arthur Rosa</p>
+                                </div>
+                                <div className="Class">
+                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <p>Manhã 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="Arrow">
+                            <ChevronRight size={50} color="black" strokeWidth={1} />
+                        </div>
+                    </div>
+
+                    <div className="Card">
+                        <div className="Data">
+                            <h3 className="Subject">Interfaces para dispositivos móveis</h3>
+                            <div className="tag-course">
+                                <CodeXml size={20} color="white" />
+                                <p>Desenvolvimento</p>
+                            </div>
+                            <div className="Info">
+                                <div className="Teacher">
+                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <p>José Roberto</p>
+                                </div>
+                                <div className="Class">
+                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <p>Noite 2023</p>
                                 </div>
                             </div>
                         </div>
