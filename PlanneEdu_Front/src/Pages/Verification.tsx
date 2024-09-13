@@ -20,10 +20,10 @@ export function VerificationEmail() {
             {/* Mesmo nome de divs da pag "PasswordReset" já que possue a mesma configuração */}
             <div className="Reset-Info">
                 <div className="title-text">
-                    <div className="title">
+                    <div className="title-verification">
                         <h2>Verificação de E-mail</h2>
-                        <p>Enviamos um código de verificação para o seu e-mail. <br />
-                            Por favor, insira o código abaixo para confirmar sua <br />
+                        <p>Enviamos um código de verificação para o seu e-mail.
+                            Por favor, <br /> insira o código abaixo para confirmar sua 
                             identidade.</p>
                     </div>
 
@@ -35,9 +35,8 @@ export function VerificationEmail() {
                     </div>
 
                     <div className="confirm">
-                        <p className="time">00:58</p> {/* Cronometro */}
-                        <p className="confirmEmail">Não recebeu o Email?</p> {/* Verificação: só poderá acessar o link quando o cronometro finalizar */}
-                        <Link className="link-return" to="/redefinicaosenha"> Reenviar Código</Link>
+                        <p className="confirmEmail">Não recebeu o Email?<span><Link className="link-return" to="/redefinicaosenha"> Reenviar Código</Link></span></p>
+                        
                     </div>
 
                     <div className="input-reset">

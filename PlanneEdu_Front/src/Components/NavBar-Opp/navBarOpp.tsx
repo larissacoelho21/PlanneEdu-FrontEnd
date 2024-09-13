@@ -10,9 +10,8 @@ import { Link, NavLink } from "react-router-dom";
 import { ReactNode, useEffect, useRef, useState } from "react"
 
 /* css */
-import "../NavBar-Professores/navBarProfessor.css"
+import "../NavBar-Opp/navBarOpp.css"
 import { faBell, faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
-
 
 /* Criando interface para declarar as props do DropdownItem */
 interface DropdownItemProps {
@@ -50,7 +49,7 @@ function DropdownNotification({ text, secondtext, to }: DropdownNotificationProp
     )
 }
 
-export function NavBarProfessor() {
+export function NavBarOpp() {
 
     /* Criando função para identificarquando o dropdown esta ativo */
     const [openOne, setOpenOne] = useState(false);
@@ -77,7 +76,7 @@ export function NavBarProfessor() {
     }, []);
 
     return (
-        <section className="navbar-prof">
+        <section className="navbar-opp">
             <nav>
                 <div className="navbarOne">
                     <div className="right-side">
@@ -93,22 +92,23 @@ export function NavBarProfessor() {
 
                                 <NavLink /* identificando se o caminho da página selecionada corresponde */
                                     className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
-                                    to="/homeprofessor"> Início
+                                    to="/"> Início
                                 </NavLink>
 
-                                {/* < li >
-                                        <Link className="navbar-link" to="/homeprofessor">Ínicio</Link>
-                                    </li> */}
+                                <NavLink /* identificando se o caminho da página selecionada corresponde */
+                                    className={({ isActive }) => (isActive ? 'navbar-link active' : 'navbar-link')}
+                                    to="/"> Cursos
+                                </NavLink>
 
                                 <li className="nav-dropdown">
                                     <div className="li-inicio" onClick={() => { setOpenOne(!openOne) }}>
                                         <div className={`navbar-link ${openOne ? 'selected' : ''}`} > {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                                            Planos de ensino <ChevronDown />
+                                            Turmas <ChevronDown />
                                         </div>
                                     </div>
 
                                     <li>
-                                        <div className={`dropdown-menu ${openOne ? 'active' : 'inactive'}`}> {/* menu */}
+                                        <div className={`dropdownMenu ${openOne ? 'active' : 'inactive'}`}> {/* menu */}
                                             <DropdownItem to="/" icon={<CodeXml size={20} />} text={"Desenvolvimento de sistemas"} />
                                             <DropdownItem to="/" icon={<Settings size={20} />} text={"Eletromecânica"} />
                                             <DropdownItem to="/" icon={<ChartLine size={20} />} text={"Logística"} />
@@ -125,10 +125,16 @@ export function NavBarProfessor() {
                                 >
                                     Planos de curso
                                 </NavLink>
-                                {/* <li><Link className="navbar-link" to="/">Planos de curso</Link></li> */}
+
+
+                                <NavLink
+                                    className={({ isActive }) => (isActive ? 'navbar-link active last' : 'navbar-link')}
+                                    to="/"
+                                >
+                                    Gerenciar docentes
+                                </NavLink>
 
                             </ul>
-
                         </div>
 
                         <div className="Icons">
@@ -145,7 +151,7 @@ export function NavBarProfessor() {
                                             <div className={`dropdown-notification ${openTwo ? 'ativo' : 'inactive'}`}>
                                                 <DropdownNotification to="#" text={"O professor Giovani respondeu ao seu comentário."} secondtext={"Toque aqui para visualizar."} />
                                             </div>
-                                            
+
                                         </li>
 
                                     </li>
@@ -167,14 +173,10 @@ export function NavBarProfessor() {
 
                                 </ul>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
-
             </nav>
-        </section >
+        </section>
     )
 }
