@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './Pages/Login';
 import { PasswordReset } from './Pages/PasswordReset';
 import { VerificationEmail } from './Pages/Verification';
-import { NavBarProfessor } from './Components/NavBar-Professores/navBarProfessor';
+import { NavBarProfessor } from './Components/Docentes/NavBar-Professores/navBarProfessor';
 import { Home } from './Pages/Teacher/Home';
 import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
