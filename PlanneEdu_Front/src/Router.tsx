@@ -8,6 +8,7 @@ import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
 import { ViewActivity } from './Pages/Teacher/ViewActivity';
 import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
+import { NavBarOpp } from './Components/NavBar-Opp/navBarOpp';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -18,6 +19,7 @@ const Router: React.FC = () => {
                     <Route path='/redefinicaosenha' element={<PasswordReset />}></Route>
                     <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
                     <Route path='/navbar' element={<NavBarProfessor />}></Route>
+                    <Route path='/navbaropp' element={<NavBarOpp />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
                     <Route path='/plansensino' element={<PlanEnsino />}></Route>
