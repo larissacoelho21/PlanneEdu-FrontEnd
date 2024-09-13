@@ -1,5 +1,5 @@
 import "../../Css/Teacher/PlanEnsino.css";
-import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
+import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 /* importando icones para a construção da página */
 import { ChevronRight } from 'lucide-react';

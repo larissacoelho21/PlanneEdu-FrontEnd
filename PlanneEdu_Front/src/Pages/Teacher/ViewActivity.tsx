@@ -1,5 +1,3 @@
-
-
 import semesterIcon from "../../assets/clock.svg";
 import studentsIcon from "../../assets/peoples.svg";
 import moreIcon from "../../assets/more.svg";

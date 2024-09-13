@@ -1,5 +1,5 @@
 /* Images */
-import LogoName from "../../assets/logoname.svg"
+import LogoName from "../../../assets/logoname.svg"
 
 /* Icons do dropdown */
 import { CodeXml, Settings, GalleryVerticalEnd, Folder, ChartLine, ChevronDown } from 'lucide-react';
@@ -153,7 +153,7 @@ export function NavBarProfessor() {
                                     <li className="li-notification">
                                         <div className="secondPart">
                                             <div className="profile">
-                                                <NavLink to="#" className="profileIcon">
+                                                <NavLink to="/profile" className="profileIcon">
                                                     <FontAwesomeIcon icon={faUser} className="not-icons" />
                                                 </NavLink>
                                             </div>
