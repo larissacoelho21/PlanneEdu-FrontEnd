@@ -8,7 +8,7 @@ import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
 import { ViewActivity } from './Pages/Teacher/ViewActivity';
 import { NavBarOpp } from './Components/NavBar-Opp/navBarOpp';
-
+import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
 //criando rotas e caminhos 
 const Router: React.FC = () => {
     return (
@@ -23,6 +23,7 @@ const Router: React.FC = () => {
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
                     <Route path='/plansensino' element={<PlanEnsino />}></Route>
                     <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
+                    <Route path='/plansensinoespc' element={<PlanEnsinoEspc />} />
                 </Routes>
         </BrowserRouter>
 
