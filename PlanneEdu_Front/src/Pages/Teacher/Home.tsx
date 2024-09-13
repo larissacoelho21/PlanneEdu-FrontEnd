@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NavBarProfessor } from "../../Components/NavBar-Professores/navBarProfessor";
+import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css";
 import SemesterTeacher from "../../assets/clock.svg";
 import StudentsTeacher from "../../assets/peoples.svg";

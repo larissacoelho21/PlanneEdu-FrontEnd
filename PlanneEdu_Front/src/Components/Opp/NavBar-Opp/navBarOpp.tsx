@@ -1,5 +1,5 @@
 /* Images */
-import LogoName from "../../assets/logoname.svg"
+import LogoName from "../../../assets/logoname.svg"
 
 /* Icons do dropdown */
 import { CodeXml, Settings, GalleryVerticalEnd, Folder, ChartLine, ChevronDown } from 'lucide-react';

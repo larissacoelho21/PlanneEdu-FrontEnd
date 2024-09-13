@@ -8,6 +8,8 @@ import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
 import { ViewActivity } from './Pages/Teacher/ViewActivity';
 import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
+import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
+import { ProfileTeacher } from './Pages/Teacher/Profile';=
 import { AddPlans } from './Pages/Teacher/AddPlans';
 import { NavBarOpp } from './Components/NavBar-Opp/navBarOpp';
 
@@ -27,6 +29,7 @@ const Router: React.FC = () => {
                     <Route path='/plansensino' element={<PlanEnsino />}></Route>
                     <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
                     <Route path='/plansensinoespc' element={<PlanEnsinoEspc />} />
+                    <Route path='/profile' element={<ProfileTeacher />} />
                     <Route path='/addplans' element={<AddPlans />} />
                 </Routes>
         </BrowserRouter>
