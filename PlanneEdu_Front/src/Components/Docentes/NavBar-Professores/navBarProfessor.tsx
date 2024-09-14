@@ -109,11 +109,11 @@ export function NavBarProfessor() {
 
                                     <li>
                                         <div className={`dropdown-menu ${openOne ? 'active' : 'inactive'}`}> {/* menu */}
-                                            <DropdownItem to="/" icon={<CodeXml size={20} />} text={"Desenvolvimento de sistemas"} />
+                                            <DropdownItem to="/plansensinoespc" icon={<CodeXml size={20} />} text={"Desenvolvimento de sistemas"} />
                                             <DropdownItem to="/" icon={<Settings size={20} />} text={"Eletromecânica"} />
                                             <DropdownItem to="/" icon={<ChartLine size={20} />} text={"Logística"} />
                                             <DropdownItem to="/" icon={<Folder size={20} />} text={"Administração"} />
-                                            <DropdownItem to="/" icon={<GalleryVerticalEnd size={20} />} text={"Geral"} />
+                                            <DropdownItem to="/plansensino" icon={<GalleryVerticalEnd size={20} />} text={"Geral"} />
                                         </div>
                                     </li>
 

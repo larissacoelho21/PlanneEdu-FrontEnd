@@ -137,6 +137,7 @@ select:focus {
   height: 3.5vw;
   font-family: "Poppins", system-ui;
   color: #f2f2f2;
+  cursor: pointer;
 }
 
 .button button:hover {

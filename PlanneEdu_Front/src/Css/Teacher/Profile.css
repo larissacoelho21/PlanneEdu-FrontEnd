@@ -1,0 +1,125 @@
+.introProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 3vw;
+    margin-top: 2vw;
+}
+
+.introProfile h1 {
+    color: #074973;
+    font-size: 2.2vw;
+}
+
+.introProfile hr {
+    display: block;
+    width: 80vw;
+    height: 3px;
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, #084973, #2685BF);
+}
+
+.cardProfile {
+    display: flex;
+    justify-content: center;
+    margin-top: 3vw;
+}
+
+.container-profile {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    background-color: #ffff;
+    width: 88.5vw;
+    height: 31.7vw;
+    border-radius: 1.05vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rightSide img{
+    height: 34vw;
+    max-width: 0 auto;
+    margin-top: -2.3vw;
+}
+
+.leftSide {
+    padding: 1.5vw;
+    margin-left: 2vw;
+    margin-top: 6vw;
+}
+
+.name h3 {
+    font-size: 2.5vw;
+    color: #000000;
+    margin-bottom: 0.5vw;
+}
+
+.nif, .emailPersonal, .phone {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8vw;
+}
+
+.nifIcon, .mailIcon, .phoneIcon {
+    width: 1.5vw;
+    opacity: 80%;
+    margin-right: 1.2vw;
+}
+
+.textProfile {
+    color: #000000;
+    font-size: 1.2vw;
+}
+
+.courses-profile, .classes-profile {
+    margin-top: 1vw;
+}
+
+.courses-profile h3, .classes-profile h3 {
+    font-size: 1.3vw;
+    color: #000000;
+    opacity: 50%;
+}
+
+.courses-profile p, .classes-profile p {
+    display: inline-block;
+    background-color: #074973;
+    border-radius: 1vw;
+    padding: 0.2vw;
+    width: 10vw;
+    font-size: 1vw;
+    text-align: center;
+    color: #ffffffe0;
+    margin-right: 2vw;
+    margin-top: 0.3vw;
+}
+
+.buttonsProfile {
+    display: flex;
+    margin-top: 3vw;
+    justify-content: center;
+    gap: 3vw;
+}
+
+.buttonsProfile button {
+    background-color: #074973;
+    border: none;
+    margin-top: 2vw;
+    border-radius: 0.5vw;
+    font-size: 1.3vw;
+    font-weight: 300;
+    width: 22vw;
+    height: 3.5vw;
+    font-family: "Poppins", system-ui;
+    color: #f2f2f2;
+    margin-bottom: 2vw;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+}
+
+
+.buttonsProfile button:hover {
+  background-color: #07678d;
+}
