@@ -5,13 +5,17 @@ import Background from "../../assets/backgroundProfile.svg"
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 import "../../Css/Teacher/Profile.css"
-import { useState } from "react";
+/* 'import { useState } from "react";' */
+import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
+
+
 export function ProfileTeacher() {
-    const [showPopUpPassword, setShowPopUpPassword] = useState(false);
+    /* const [showPopUpPassword, setShowPopUpPassword] = useState(false);
 
     const togglePopUpPassword = () => {
         setShowPopUpPassword(!showPopUpPassword);
-    }
+    } */
 
     return (
         <section className="profileTeacher">
@@ -83,14 +87,63 @@ export function ProfileTeacher() {
                     </button>
                 </div>
 
-                <div className="password-button">
-                    <button>
-                        Trocar de senha
-                    </button>
-                </div>
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <div className="password-button">
+                            <button>
+                                Trocar de senha
+                            </button>
+                        </div>
+                    </Dialog.Trigger>
+                    <Dialog.Portal>
+                        <Dialog.Overlay className="DialogOverlay" />
+                        <Dialog.Content className="DialogContent">
+                            <Dialog.Title
+                                className="DialogTitle"
+                                style={{ display: "flex", marginTop: 10, justifyContent: "center" }}
+                            >
+                                Trocar senha
+                            </Dialog.Title>
+                            <fieldset className="Fieldset">
+                                <label className="Label" htmlFor="actualpassword">
+                                    Senha atual
+                                </label>
+                                <input className="Input" id="actualpassword" />
+                            </fieldset>
+                            <fieldset className="Fieldset">
+                                <label className="Label" htmlFor="newpassword">
+                                    Nova senha
+                                </label>
+                                <input className="Input" id="newpassword" />
+
+                            </fieldset>
+                            <fieldset className="Fieldset">
+                                <label className="Label" htmlFor="confirm">
+                                    Confirmar nova senha
+                                </label>
+                                <input className="Input" id="confirm" />
+                            </fieldset>
+                            <div
+                                style={{ display: "flex", marginTop: 25, justifyContent: "center" }}
+                            >
+                                <Dialog.Close asChild>
+                                    <button className="Button green">Salvar</button>
+                                </Dialog.Close>
+                            </div>
+                            <Dialog.Close asChild>
+                                <button className="IconButton" aria-label="Close">
+                                    <Cross2Icon />
+                                </button>
+                            </Dialog.Close>
+                        </Dialog.Content>
+                    </Dialog.Portal>
+                </Dialog.Root>
+
             </div>
 
-            {showPopUpPassword && (
+
+
+            {/* {showPopUpPassword && (
                 <div className="overlayProfile" onClick={togglePopUpPassword}>
                     <div className="popup-profile"  onClick={(e) => e.stopPropagation()}>
                         <div className="titlePopUp">
@@ -104,7 +157,7 @@ export function ProfileTeacher() {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </section>
     )
 }
