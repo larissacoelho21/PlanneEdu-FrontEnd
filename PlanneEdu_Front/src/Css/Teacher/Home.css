@@ -4,6 +4,13 @@ body{
   font-style: normal;
 }
 
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678D;
+  --white: #fff;
+  --black: #000;
+} 
+
 .homeTeacher{
   display: flex;
   flex-direction: column;
@@ -19,7 +26,7 @@ body{
 
 .introTeacher h1{
   font-size: 2.2vw;
-  color: #074973;
+  color: var(--blue-one);
 }
 
 .introTeacher h2{
@@ -49,14 +56,21 @@ body{
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: #ffff;
+  background-color: var(--white);
   width: 42vw;
   border-radius: 0.5vw;
   padding: 2.4vw;
   gap: 1vw;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  color: #000;
+  color: var(--black);
+  border: 2px solid transparent;
+  transition: 0.35s ease-out;
+}
+
+.box-teacher:hover{
+  border: 2px solid #084973;
+  transform: scale(1.015);
 }
 
 .box-teacher h1{
@@ -65,7 +79,7 @@ body{
 
 .date-badge {
   font-size: 1vw;
-  background-color: #07678D;
+  background-color: var(--blue-one);
   width: 15vw;
   padding: 0.5vw;
   color: #ffff;

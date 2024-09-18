@@ -134,13 +134,6 @@
 }
 
 
-/* Dialog */
-button,
-fieldset,
-input {
-    all: unset;
-}
-
 .DialogOverlay {
     position: fixed;
     inset: 0;
