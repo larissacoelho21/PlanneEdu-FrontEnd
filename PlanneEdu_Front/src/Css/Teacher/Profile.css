@@ -133,6 +133,7 @@
     background-color: #07678d;
 }
 
+/* Dialog */
 
 
 .DialogOverlay {
@@ -150,7 +151,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 23vw;
+    width: 26vw;
     max-width: 450px;
     max-height: 85vh;
     padding: 25px;
@@ -164,131 +165,97 @@
 .DialogTitle {
     margin: 0;
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 2.1vw;
     color: #074973;
-    margin-bottom: 2vw;
 }
 
 /* botão de salvar dentro popUp */
-.Button.green {
-    background-color: var(--green-4);
-    color: var(--green-11);
+.Button.save {
+    background-color: #074973;
+    text-align: center;
+    border: 0;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
+    font-weight: 300;
+    width: 10vw;
+    height: 3vw;
+    font-family: "Poppins", system-ui;
+    margin-top: -1.2vw;
+    color: #f2f2f2;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
 }
 
-.Button.green:hover {
-    background-color: var(--green-5);
-}
-
-.Button.green:focus {
-    box-shadow: 0 0 0 2px var(--green-7);
+.Button.save:hover {
+    background-color: #07678d;
+    border: 0;
 }
 
 .IconButton {
     font-family: inherit;
     border-radius: 100%;
-    height: 3vw;
-    width: 3vw;
+    height: 2vw;
+    width: 2vw;
+    background-color: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--violet-11);
     position: absolute;
-    top: 10px;
-    right: 10px;
+    cursor: pointer;
+    top: 1.3vw;
+    right: 1.3vw;
 }
 
 .IconButton:hover {
-    background-color: var(--violet-4);
+    color: #074973;
 }
 
-.IconButton:focus {
-    box-shadow: 0 0 0 2px var(--violet-7);
-}
 
-.Fieldset {
+/* Input */
+
+.Fieldset { /* div */
     display: flex;
     flex-direction: column;
-    margin-bottom: 4vw;
+    position: relative;
+    margin: 1.5vw 0;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
 }
 
 .Label {
     position: absolute;
-    font-size: 1.1vw;
+    font-size: 1.2vw;
     font-weight: bold;
     color: #000000;
     opacity: 50%;
     text-align: right;
+    transition: all 0.2s ease;
 }
 
 .Fieldset .Input {
-    width: 20vw;
+    width: 22vw;
+    height: 2.2vw;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
-    border-bottom: rgba(0, 0, 0, 0.4) solid 2px;
-}
-
-.Fieldset input:focus,.Fieldset input:valid {
-    border-bottom: #000000 solid 2px;
-}
-
-
-/* .Label {
-    position: absolute;
-    bottom: 10px;
-    font-size: 1.1vw;
-    font-weight: bold;
-    color: #000000;
-    opacity: 50%;
-    text-align: right;
-}
-
-.Fieldset {
-    position: relative;
-    margin: 10px 0;
-}
-
-.Input {
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1vw;
-    border-bottom: #074973 2px solid;
+    font-size: 1.6vw;
     border: none;
-    outline: 0;
-
+    border-bottom: rgba(0, 0, 0, 0.4) solid 2px;
+    margin-bottom: 1vw;
 }
- */
-/* .Input:focus~label,
-.Input:valid~label {
-    transform: translateY(-20px);
-    outline: 0;
-    border-bottom: 2px solid #07678d;
-} */
 
-/* .underline {
-    position: absolute;
-    height: 2px;
-    width: 100%;
-    bottom: 0;
-} */
+.Fieldset input:focus {
+    border-bottom: #000000 solid 2px;
+} 
 
-/* .Input .underline:before {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 100%;
-    background: #4158d0;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s ease;
-} */
+.Fieldset.filled .Label,
+.Input:focus + .Label {
+    transform: translateY(-1.5vw);
+    font-size: 1vw;
+    opacity: 1;
+}
 
-/* .Input:focus~.underline:before,
-.Input:valid~.underline:before {
-    transform: scaleX(1);
-} */
 
 @keyframes overlayShow {
     from {
