@@ -5,7 +5,7 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Clock3, Users, Eye } from "lucide-react";
+import { Clock3, Users } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -90,7 +90,7 @@ export function ClassTeacher() {
                 </Link>
               </div>
               <div className="button-add">
-                <Link to="">
+                <Link to="/addatividade">
                   <FontAwesomeIcon icon={faPlus} />
                   <h1>Adicionar atividade</h1>
                 </Link>
