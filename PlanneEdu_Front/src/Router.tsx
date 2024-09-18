@@ -12,6 +12,8 @@ import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
 import { ProfileTeacher } from './Pages/Teacher/Profile';
 import { AddPlans } from './Pages/Teacher/AddPlans';
 import { AddActivity } from './Pages/Teacher/AddActivity';
+import { HomeOpp } from './Pages/Opp/HomeOpp';
+
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -31,6 +33,7 @@ const Router: React.FC = () => {
                     <Route path='/plansensinoespc' element={<PlanEnsinoEspc />} />
                     <Route path='/profile' element={<ProfileTeacher />} />
                     <Route path='/addplans' element={<AddPlans />} />
+                    <Route path='homeopp' element={<HomeOpp/>}/>
                 </Routes>
         </BrowserRouter>
 
