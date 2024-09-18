@@ -40,11 +40,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>André Souza</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Noite 2023</p>
                                 </div>
                             </div>
@@ -63,11 +63,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>Samanta Neves</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Manhã 2023</p>
                                 </div>
                             </div>
@@ -86,11 +86,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>Maria Silva</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Manhã 2023</p>
                                 </div>
                             </div>
@@ -109,11 +109,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>Luiz dos Santos</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Tarde 2023</p>
                                 </div>
                             </div>
@@ -132,11 +132,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>Arthur Rosa</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Manhã 2023</p>
                                 </div>
                             </div>
@@ -155,11 +155,11 @@ export function PlanEnsino() {
                             </div>
                             <div className="Info">
                                 <div className="Teacher">
-                                    <GraduationCap size={25} color="black" strokeWidth={2} />
+                                    <GraduationCap size={25} color="black" strokeWidth={1.5} />
                                     <p>José Roberto</p>
                                 </div>
                                 <div className="Class">
-                                    <BookMarked size={21} color="black" strokeWidth={2} />
+                                    <BookMarked size={21} color="black" strokeWidth={1.5} />
                                     <p>Noite 2023</p>
                                 </div>
                             </div>
