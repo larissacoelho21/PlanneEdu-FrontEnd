@@ -9,13 +9,39 @@ import "../../Css/Teacher/Profile.css"
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
+import React, { useState } from 'react';
+
+/* Interface para o InputField */
+interface InputFieldProps {
+    id: string;
+    label: string;
+    type?: string;
+}
+
+function InputField({ id, label, type = "text" }: InputFieldProps) {
+    const [isFilled, setIsFilled] = useState(false);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsFilled(event.target.value !== "");
+    };
+
+    return (
+        <fieldset className={`Fieldset ${isFilled ? 'filled' : ''}`}>
+            <label className="Label" htmlFor={id}>
+                {label}
+            </label>
+            <input
+                className="Input"
+                id={id}
+                type={type}
+                onChange={handleInputChange}
+            />
+        </fieldset>
+    );
+}
+
 
 export function ProfileTeacher() {
-    /* const [showPopUpPassword, setShowPopUpPassword] = useState(false);
-
-    const togglePopUpPassword = () => {
-        setShowPopUpPassword(!showPopUpPassword);
-    } */
 
     return (
         <section className="profileTeacher">
@@ -104,60 +130,28 @@ export function ProfileTeacher() {
                             >
                                 Trocar senha
                             </Dialog.Title>
-                            <fieldset className="Fieldset">
-                                <label className="Label" htmlFor="actualpassword">
-                                    Senha atual
-                                </label>
-                                <input className="Input" id="actualpassword" />
-                            </fieldset>
-                            <fieldset className="Fieldset">
-                                <label className="Label" htmlFor="newpassword">
-                                    Nova senha
-                                </label>
-                                <input className="Input" id="newpassword" />
-
-                            </fieldset>
-                            <fieldset className="Fieldset">
-                                <label className="Label" htmlFor="confirm">
-                                    Confirmar nova senha
-                                </label>
-                                <input className="Input" id="confirm" />
-                            </fieldset>
+                            <div className="Fieldset">
+                                <InputField id="actualpassword" label="Senha atual" type="password" />
+                                <InputField id="newpassword" label="Nova senha" type="password" />
+                                <InputField id="confirm" label="Confirmar nova senha" type="password" />
+                            </div>
                             <div
                                 style={{ display: "flex", marginTop: 25, justifyContent: "center" }}
                             >
                                 <Dialog.Close asChild>
-                                    <button className="Button green">Salvar</button>
+                                    <button className="Button save">Salvar</button>
                                 </Dialog.Close>
                             </div>
                             <Dialog.Close asChild>
-                                <button className="IconButton" aria-label="Close">
-                                    <Cross2Icon />
-                                </button>
+                                <div aria-label="Close">
+                                    <Cross2Icon className="IconButton"/>
+                                </div>
                             </Dialog.Close>
                         </Dialog.Content>
                     </Dialog.Portal>
                 </Dialog.Root>
 
             </div>
-
-
-
-            {/* {showPopUpPassword && (
-                <div className="overlayProfile" onClick={togglePopUpPassword}>
-                    <div className="popup-profile"  onClick={(e) => e.stopPropagation()}>
-                        <div className="titlePopUp">
-                            Trocar Senha
-                        </div>
-
-                        <div className="inputsProfile">
-                            <div className="actual-password">
-                                <label>Senha Atual</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )} */}
         </section>
     )
 }
