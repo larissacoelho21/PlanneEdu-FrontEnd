@@ -9,10 +9,8 @@ import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
 import { ViewActivity } from './Pages/Teacher/ViewActivity';
 import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
 import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
-import { ProfileTeacher } from './Pages/Teacher/Profile';=
+import { ProfileTeacher } from './Pages/Teacher/Profile';
 import { AddPlans } from './Pages/Teacher/AddPlans';
-import { NavBarOpp } from './Components/NavBar-Opp/navBarOpp';
-
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {

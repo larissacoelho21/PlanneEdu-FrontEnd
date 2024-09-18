@@ -73,7 +73,7 @@ main{
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3vw;
+    gap: 2vw;
     justify-content: space-between;
     margin-bottom: 3vw;
 }
@@ -83,7 +83,7 @@ main{
     width: 100%;
     border-radius: 1vw;
     /* offset-x | offset-y | blur-radius | spread-radius | color */
-    box-shadow: 0px 1px 8px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1.5vw 2vw;
     display: flex;
     justify-content: space-between;
@@ -95,6 +95,7 @@ main{
 
 .Card:hover{
     border: 2px solid var(--blue-one);
+    transform: scale(1.015);
 }
 
 .Data{
@@ -105,7 +106,7 @@ main{
 
 .Subject{
     font-weight: 600;
-    font-size: 1.7vw;
+    font-size: 1.4vw;
 }
 
 .tag-course{
@@ -118,6 +119,7 @@ main{
     float: inline-end;
     gap: .5vw;
     color: #FFF;
+    font-size: 1vw;
 }
 
 .Info{
@@ -133,5 +135,6 @@ main{
 }
 
 .Teacher p, .Class p{
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 1.3vw;
 }
