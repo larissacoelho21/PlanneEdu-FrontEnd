@@ -1,0 +1,83 @@
+.container{
+    position: relative;
+    width: 35vw;
+    min-height: 1.5vw;
+    border: .2vw solid rgb(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: .5vw;
+    padding: .5vw;
+    border-radius: .5vw;
+    outline: none;
+}
+
+.container:focus{
+    border-color: red;
+}
+
+.value{
+    /* O item vai crescer para ocupar o espaço disponível no contêiner flexível */
+    flex-grow: 1;
+}
+
+.clear-btn{
+    padding: 0;
+    cursor: pointer;
+    color: #777;
+    font-size: 3.5vw;
+    font-weight: 300;
+}
+
+.clear-btn:focus,
+.clear-btn:hover{
+    color: #333;
+}
+
+.divider{
+    background: rgb(0, 0, 0, 0.2);
+    /* alinhando ele mesmo na "direção esticada" */
+    align-self: stretch;
+    width: .16vw;
+}
+
+.caret{
+    translate: 0 25%;
+    border: .7vw solid transparent;
+    border-top: .7vw #777 solid;
+}
+
+.options{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    max-height: 15vw;
+    overflow-y: auto;
+    border: .2vw solid rgb(0, 0, 0, 0.2);
+    border-radius: .5vw;
+    width: 100%;
+    left: 0;
+    top: calc(100% + .5vw);
+    background: #f2f2f2;
+    z-index: 100;
+     
+}
+
+.options.show{
+    display: block;
+}
+
+.option{
+   padding: .7vw 1vw;
+   cursor: pointer;
+}
+
+.option.selected{
+    background: hsl(200, 100%, 70%);
+}
+
+.option.highlighted{
+    background: hsl(200, 100%, 50%);
+    color: #FFF;
+}

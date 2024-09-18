@@ -3,8 +3,20 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { CodeXml } from 'lucide-react';
 import { GraduationCap } from 'lucide-react';
 import { BookMarked } from 'lucide-react';
+import { Multiselect } from "../../Components/Multiselect/Multiselect";
+import { useState } from "react";
+
+const options = [
+    {label: "First", value: 1},
+    {label: "Second", value: 2},
+    {label: "Third", value: 3},
+    {label: "Fourth", value: 4},
+    {label: "Fifth", value: 5}
+]
 
 export function AddPlans() {
+    /* define uma variável de estado value, que pode ter o mesmo tipo que o primeiro item de options ou ser undefined. */
+    const [value, setValue] = useState<typeof options[0] | undefined>(options[0]);
     return (
         <main>
             <SubNavbar />
@@ -89,6 +101,7 @@ export function AddPlans() {
                     </div>
                 </div>
 
+                <Multiselect options={options} value={value} onChange={o => setValue(o)} />
             </div>
         </main>
     )
