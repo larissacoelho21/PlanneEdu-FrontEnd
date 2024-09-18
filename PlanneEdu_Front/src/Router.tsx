@@ -12,6 +12,7 @@ import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
 import { ProfileTeacher } from './Pages/Teacher/Profile';
 import { AddPlans } from './Pages/Teacher/AddPlans';
 import { HomeOpp } from './Pages/Opp/HomeOpp';
+import { CursosOpp } from './Pages/Opp/CursosOpp';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -31,6 +32,7 @@ const Router: React.FC = () => {
                     <Route path='/profile' element={<ProfileTeacher />} />
                     <Route path='/addplans' element={<AddPlans />} />
                     <Route path='homeopp' element={<HomeOpp/>}/>
+                    <Route path='cursosopp' element={<CursosOpp/>}/>
                 </Routes>
         </BrowserRouter>
 

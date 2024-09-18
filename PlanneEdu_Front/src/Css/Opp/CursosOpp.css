@@ -1,0 +1,59 @@
+.cards-cursosopp {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 5vw;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Class-curso {
+    display: flex;
+    align-items: center;
+    margin: .5vw 0;
+    gap: 1vw;
+    margin-right: vw;
+}
+
+.Class-curso p {
+    font-weight: 400;
+    font-size: 1.3vw;
+}
+
+.semester-curso {
+    display: flex;
+    gap: 0.5vw;
+    margin-right: 2vw;
+}
+
+.semester-curso img{
+    width: 1.6vw;
+}
+
+.semester-curso h1{
+    font-size: 1.3vw;
+    font-weight: normal;
+    margin: 0.6vw;
+}
+
+.technology-curso{
+    font-size: 1vw;
+    background-color: #074973;
+    width: 20vw;
+    padding: 0.5vw;
+    color: #ffff;
+    font-weight: normal;
+    text-align: center;
+    border-radius: 0.5vw;
+}
+
+.Data-curso{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.Data-curso > p {
+    font-style: italic;
+    font-size: 1vw;
+    font-weight: 400;
+}
+

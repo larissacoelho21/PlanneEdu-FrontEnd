@@ -1,4 +1,4 @@
-import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
+import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/HomeOpp.css";
 import { Link } from "react-router-dom";
 
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export function HomeOpp() {
     return (
         <section className="homeTeacher">
-            <NavBarProfessor />
+            <NavBarOpp />
             <div className="introTeacher">
                 <h1>Seja bem-vindo, Odair!</h1>
                 <h2>Visualize os planos de ensino disponíveis</h2>
