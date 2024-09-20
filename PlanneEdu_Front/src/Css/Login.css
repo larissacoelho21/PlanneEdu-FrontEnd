@@ -140,7 +140,7 @@ select:focus {
   cursor: pointer;
 }
 
-.button button:hover {
+.button-login button:hover {
   background-color: #07678d;
 }
 
