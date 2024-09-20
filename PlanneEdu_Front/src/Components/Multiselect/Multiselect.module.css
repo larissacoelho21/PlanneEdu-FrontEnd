@@ -2,48 +2,49 @@
   position: relative;
   width: 35vw;
   min-height: 1.5vw;
-  border: 0.2vw solid rgb(0, 0, 0, 0.2);
+  border: none;
+  border-bottom: 0.2vw solid #00000033;
   display: flex;
   align-items: center;
-  gap: 0.5vw;
   padding: 0.5vw;
-  border-radius: 0.5vw;
-  outline: none;
+  gap: 0.5vw;
 }
 
 .container:focus {
-  border-color: red;
+  border-color: #074973;
 }
 
 .value {
   /* O item vai crescer para ocupar o espaço disponível no contêiner flexível */
   flex-grow: 1;
+  display: flex;
+  gap: .6vw;
+  flex-wrap: wrap;
 }
 
-.clear-btn {
-  padding: 0;
+.clear-btn{
+  border: none;
+  background: none;
   cursor: pointer;
-  color: #777;
-  font-size: 3.5vw;
-  font-weight: 300;
+  color: #696969;
 }
 
-.clear-btn:focus,
-.clear-btn:hover {
-  color: #333;
+.clear-btn svg{
+  width: 1.5vw;
 }
 
-.divider {
-  background: rgb(0, 0, 0, 0.2);
-  /* alinhando ele mesmo na "direção esticada" */
-  align-self: stretch;
-  width: 0.16vw;
+.clear-btn svg:focus,
+.clear-btn svg:hover {
+  color: #000;
 }
 
-.caret {
-  translate: 0 25%;
-  border: 0.7vw solid transparent;
-  border-top: 0.7vw #777 solid;
+.caret{
+  cursor: pointer;
+  color: #696969;
+}
+
+.caret:hover{
+  color: #000;
 }
 
 .options {
@@ -54,13 +55,13 @@
   display: none;
   max-height: 15vw;
   overflow-y: auto;
-  border: 0.2vw solid rgb(0, 0, 0, 0.2);
+  border: rgb(0,0,0, .4) .2vw solid;
   border-radius: 0.5vw;
   width: 100%;
   left: 0;
+  background: #FFF;
   top: calc(100% + 0.5vw);
-  background: #f2f2f2;
-  z-index: 100;
+  z-index: 100; 
 }
 
 .options.show {
@@ -70,13 +71,56 @@
 .option {
   padding: 0.7vw 1vw;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
 }
 
 .option.selected {
-  background: hsl(200, 100%, 70%);
+  background: rgb(7,73,115, .4);
 }
 
 .option.highlighted {
-  background: hsl(200, 100%, 50%);
-  color: #fff;
+  transition: .25s ease-in-out;
+  background: rgb(7,73,115, .2);
+}
+
+.option-badge{
+  border: none;
+  border-radius: .3vw;
+  background: rgb(7,73,115, .35);
+  padding: .1vw 1vw;
+  cursor: pointer;
+  font-size: 1.2vw;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5vw;
+}
+
+.option-badge svg{
+  width: 1.3vw;
+  height: 1.3vw;
+  vertical-align: middle;
+}
+
+span .remove-btn{
+  font-size: 1.6vw;
+  font-weight: 300;
+}
+
+.options::-webkit-scrollbar {
+  width: .65vw; 
+}
+
+.options::-webkit-scrollbar-track {
+  background: #dcdcdc;
+  border: .7px #b1b1b1;
+}
+
+.options::-webkit-scrollbar-thumb {
+  background-color: #07678D;
+  border-radius: 20px;
+  border: .5px solid #075a7b;
 }
