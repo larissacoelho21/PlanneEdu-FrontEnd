@@ -1,0 +1,99 @@
+:root {
+  --white-one: #ffffff;
+  --gray-one: #bcbbbb;
+}
+
+.form-addactivity{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2vw;
+  width: 90vw;
+  background-color: var(--white-one);
+  margin: 0 auto;
+  border-radius: 0.5vw;
+  box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 5vw;
+}
+
+.input-container {
+  position: relative;
+  margin-top: 1vw;
+}
+
+.input-add {
+  float: left;
+  width: 80vw;
+  border: none;
+  border-bottom: 2px solid var(--gray-one);
+  outline: none;
+  background: transparent;
+  border-radius: 0;
+  resize: none; 
+  padding-bottom: 0.5vw;
+}
+
+
+.label-add {
+  position: absolute;
+  top: -0.7vw;
+  left: 0;
+  font-size: 1.2vw;
+  color: var(--gray-one);
+  transition: 0.3s ease;
+}
+
+.input-add:focus ~ .label-add,
+.input.filled ~ .label-add {
+  margin-top: -1vw;
+  font-size: 1vw;
+}
+
+.input-add:focus{
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: 2px solid var(--gray-one);
+  text-transform: capitalize;
+}
+
+
+.dates-add{
+  display: flex;
+  justify-content: space-between;
+}
+
+.proposed-date, .delivery-date{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.proposed-date input::placeholder, .delivery-date input::placeholder{
+  color: var(--gray-one);
+}
+
+.proposed-date:focus, 
+.delivery-date:focus {
+  border-bottom: 2px solid var(--gray-one);
+}
+
+.proposed-date input, .delivery-date input{
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  width: 30vw;
+  cursor: pointer;
+  border-bottom: 2px solid var(--gray-one);
+}
+
+input[type="date"]:focus {
+  color: #000;
+}
+
+
+.label-date{
+  color: var(--gray-one);
+  font-size: 1.2vw;
+}

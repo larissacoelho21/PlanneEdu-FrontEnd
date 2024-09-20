@@ -1,7 +1,58 @@
 import { Clock3, Users } from "lucide-react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
+import { useState } from "react";
+import "../../Css/Teacher/AddActivity.css";
 
 export function AddActivity() {
+  function InputField({
+    id,
+    label,
+    type = "text",
+    multiline = false, // Adiciona a opção de multiline
+  }: {
+    id: string;
+    label: string;
+    type?: string;
+    multiline?: boolean;
+  }) {
+    const [isFilled, setIsFilled] = useState(false);
+
+    const handleInputChange = (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+      setIsFilled(event.target.value !== "");
+    };
+
+    return (
+      <div className="input-container">
+        {multiline ? (
+          <textarea
+          className="input-add"
+          id={id}
+          onInput={(e) => {
+            const target = e.target as HTMLTextAreaElement;
+            target.style.height = "auto";
+            target.style.height = `${target.scrollHeight}px`; // Ajusta conforme o conteúdo
+          }}
+          rows={1} // Inicialmente com 1 linha
+          style={{ overflow: "hidden" }} // Oculta a barra de rolagem
+        />
+        
+        ) : (
+          <input
+            type={type}
+            className={`input-add ${isFilled ? "filled" : ""}`}
+            id={id}
+            onChange={handleInputChange}
+          />
+        )}
+        <label className={`label-add ${isFilled ? "filled" : ""}`} htmlFor={id}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+
   return (
     <section className="add-activity">
       <div className="start-add">
@@ -28,15 +79,23 @@ export function AddActivity() {
         </div>
       </div>
 
-      <div className="forms-add-activity">
-        <div className="proposed-date">
-          <input type="date" name="" id="dateProposed"/>
-          <label htmlFor="dateProposed">Data Proposta</label>
+      <div className="form-addactivity">
+        <div className="dates-add">
+          <div className="proposed-date">
+            <label htmlFor="" className="label-date">Data Proposta</label>
+            <input type="date" />
+          </div>
+          <div className="delivery-date">
+            <label htmlFor="" className="label-date">Data de Entrega</label>
+            <input type="date" />
+          </div>
         </div>
-        <div className="delivery-date">
-          <input type="date" name="" id="dateDelivery"/>
-          <label htmlFor="dateDelivery">Data de Entrega</label>
-        </div>
+        <InputField
+          id="description"
+          label="Descrição da Atividade"
+          type="text" 
+          multiline={true} 
+        />
       </div>
     </section>
   );
