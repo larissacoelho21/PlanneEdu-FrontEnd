@@ -1,8 +1,7 @@
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/CursosOpp.css";
-import { BookMarked } from 'lucide-react';
+import { BookMarked, Clock3 } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
-import SemesterTeacher from "../../assets/clock.svg";
 
 
 
@@ -27,7 +26,7 @@ export function CursosOpp() {
                         <h3 className="Subject">Desenvolvimento de Sistemas</h3>
                         <div className="Info">
                             <div className="semester-curso">
-                                <img src={SemesterTeacher} alt="" />
+                                <Clock3 size={18} />
                                 <h1>4 semestres</h1>
                             </div>
                             <div className="Class-curso">
