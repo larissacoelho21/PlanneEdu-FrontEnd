@@ -11,9 +11,6 @@ import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
 import { NavBarOpp } from "./Components/Opp/NavBar-Opp/navBarOpp";
 import { ProfileTeacher } from "./Pages/Teacher/Profile";
 import { AddPlans } from "./Pages/Teacher/AddPlans";
-import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
-import { ProfileTeacher } from './Pages/Teacher/Profile';
-import { AddPlans } from './Pages/Teacher/AddPlans';
 import { AddActivity } from './Pages/Teacher/AddActivity';
 import { HomeOpp } from './Pages/Opp/HomeOpp';
 import { CursosOpp } from './Pages/Opp/CursosOpp';
@@ -35,29 +32,12 @@ const Router: React.FC = () => {
         <Route path="/plansensinoespc" element={<PlanEnsinoEspc />} />
         <Route path="/profile" element={<ProfileTeacher />} />
         <Route path="/addplans" element={<AddPlans />} />
+        <Route path="/addatividade" element={<AddActivity />} />
+        <Route path="/homeopp" element={<HomeOpp />} />
+        <Route path="/cursosopp" element={<CursosOpp />} />
       </Routes>
     </BrowserRouter>
   );
 };
-    return (
-       <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Login />}></Route>
-                    <Route path='/redefinicaosenha' element={<PasswordReset />}></Route>
-                    <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
-                    <Route path='/navbar' element={<NavBarProfessor />}></Route>
-                    <Route path='/navbaropp' element={<NavBarOpp />}></Route>
-                    <Route path='/homeprofessor' element={<Home />}></Route>
-                    <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
-                    <Route path='/plansensino' element={<PlanEnsino />}></Route>
-                    <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
-                    <Route path='/addatividade' element={<AddActivity/>}></Route>
-                    <Route path='/plansensinoespc' element={<PlanEnsinoEspc />} />
-                    <Route path='/profile' element={<ProfileTeacher />} />
-                    <Route path='/addplans' element={<AddPlans />} />
-                    <Route path='homeopp' element={<HomeOpp/>}/>
-                    <Route path='cursosopp' element={<CursosOpp/>}/>
-                </Routes>
-        </BrowserRouter>
 
 export default Router;
