@@ -156,7 +156,6 @@ export function ClassTeacher() {
           </tbody>
         </table>
       </div>
-
     </section>
   );
 }

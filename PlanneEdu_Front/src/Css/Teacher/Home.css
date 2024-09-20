@@ -1,9 +1,10 @@
-body{
+body {
   background-color: #f2f2f2;
   font-family: "Poppins", system-ui;
   font-style: normal;
 }
 
+.homeTeacher {
 :root {
   --blue-one: #074973;
   --blue-two: #07678D;
@@ -17,19 +18,19 @@ body{
   gap: 6vw;
 }
 
-.introTeacher{
+.introTeacher {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
 }
 
-.introTeacher h1{
+.introTeacher h1 {
   font-size: 2.2vw;
   color: var(--blue-one);
 }
 
-.introTeacher h2{
+.introTeacher h2 {
   font-size: 1.5vw;
   font-weight: normal;
   margin-bottom: 1%;
@@ -37,22 +38,22 @@ body{
 
 .introTeacher hr {
   display: block;
-  width: 15vw; 
-  height: 3px; 
-  border: none; 
+  width: 15vw;
+  height: 3px;
+  border: none;
   border-radius: 5px;
-  background-image: linear-gradient(to right, #084973, #2685BF);
+  background-image: linear-gradient(to right, #084973, #2685bf);
 }
 
 /* Parte dos cards */
-.cardsTeacher{
+.cardsTeacher {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2vw;
 }
 
-.box-teacher{
+.box-teacher {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -62,6 +63,8 @@ body{
   padding: 2.4vw;
   gap: 1vw;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   color: var(--black);
   border: 2px solid transparent;
@@ -73,12 +76,13 @@ body{
   transform: scale(1.015);
 }
 
-.box-teacher h1{
+.box-teacher h1 {
   font-size: 1.4vw;
 }
 
 .date-badge {
   font-size: 1vw;
+  background-color: #07678d;
   background-color: var(--blue-one);
   width: 15vw;
   padding: 0.5vw;
@@ -88,21 +92,24 @@ body{
   border-radius: 0.5vw;
 }
 
-.infos-class{
+.infos-class {
   display: flex;
   gap: 5vw;
 }
 
-.semester-teacher, .students{
+.semester-teacher,
+.students {
   display: flex;
   gap: 0.5vw;
 }
 
-.semester-teacher img, .students img{
-  width: 1.6vw; 
+.semester-teacher img,
+.students img {
+  width: 1.6vw;
 }
 
-.semester-teacher h1, .students h1{
+.semester-teacher h1,
+.students h1 {
   font-size: 1.3vw;
   font-weight: normal;
 }

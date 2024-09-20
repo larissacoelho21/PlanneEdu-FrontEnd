@@ -1,39 +1,39 @@
 .dropdownMenu {
-    position: absolute;
-    top: 5.5vw;
-    right: 38.5vw;
-    background-color: #fff;
-    padding: 1vw 1vw;
-    width: 17vw;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+  position: absolute;
+  top: 5.5vw;
+  right: 38.5vw;
+  background-color: #fff;
+  padding: 1vw 1vw;
+  width: 17vw;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
 .dropdownMenu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: var(--speed) ease;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
 }
 
-.dropdownMenu.inactive{
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: var(--speed) ease;
+.dropdownMenu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
 }
 
 .dropdownMenu .dropdownItem:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
-    margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
 }
 
 .dropdownMenu::before {
-    content: "";
-    position: absolute;
-    top: -2.6vw; /* Ajusta a seta acima do dropdown */
-    right: 7vw; /* Ajusta a posição horizontal da seta */
-    border-width: 1.5vw;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
-    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+  content: "";
+  position: absolute;
+  top: -2.6vw; /* Ajusta a seta acima do dropdown */
+  right: 7vw; /* Ajusta a posição horizontal da seta */
+  border-width: 1.5vw;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+  z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
 }
