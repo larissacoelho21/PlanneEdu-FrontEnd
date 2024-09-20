@@ -65,31 +65,31 @@ export function ViewActivity() {
               <h1>Filtre por categoria:</h1>
             </div>
             <div className="buttons-filter">
-            <button onClick={() => setFilterActivities("Situação-Problema")}>
-              Situação Problema
-            </button>
-            <button onClick={() => setFilterActivities("Estudo-Caso")}>
-              Estudo de Caso
-            </button>
-            <button onClick={() => setFilterActivities("Projeto")}>
-              Projeto
-            </button>
-            <button onClick={() => setFilterActivities("Projeto-Integrador")}>
-              Projeto Integrador
-            </button>
-            <button onClick={() => setFilterActivities("Pesquisa")}>
-              Pesquisa
-            </button>
-            <button onClick={() => setFilterActivities("")}>
-              Mostrar todos
-            </button>
+              <button onClick={() => setFilterActivities("Situação-Problema")}>
+                Situação Problema
+              </button>
+              <button onClick={() => setFilterActivities("Estudo-Caso")}>
+                Estudo de Caso
+              </button>
+              <button onClick={() => setFilterActivities("Projeto")}>
+                Projeto
+              </button>
+              <button onClick={() => setFilterActivities("Projeto-Integrador")}>
+                Projeto Integrador
+              </button>
+              <button onClick={() => setFilterActivities("Pesquisa")}>
+                Pesquisa
+              </button>
+              <button onClick={() => setFilterActivities("")}>
+                Mostrar todos
+              </button>
             </div>
           </div>
           <div className="filtered-items">
-              {selectedCategory.map((item) => (
-                <div key={item.id}>{item.name}</div>
-              ))}
-            </div>
+            {selectedCategory.map((item) => (
+              <div key={item.id}>{item.name}</div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
