@@ -1,6 +1,8 @@
 :root {
   --blue-one: #074973;
   --blue-two: #07678d;
+  --white: #fff;
+  --black: #000;
 }
 
 .Intro {
@@ -8,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   margin: 8vw 0 4vw 0;
+  margin: 6vw 0 4vw 0;
   gap: 0.5vw;
 }
 
@@ -46,6 +49,7 @@
   border: none;
   background: var(--blue-two);
   color: #fff;
+  color: var(--white);
   font-size: 1.3vw;
   cursor: pointer;
   transition: 0.3s ease;
@@ -84,12 +88,18 @@
   border-radius: 1vw;
   /* offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  width: 100%;
+  border-radius: 1vw;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1.5vw 2vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   border: 2px solid #c3c6ce;
+  border: 2px solid transparent;
   transition: 0.35s ease-out;
 }
 
@@ -119,6 +129,7 @@
   float: inline-end;
   gap: 0.5vw;
   color: #fff;
+  color: var(--white);
   font-size: 1vw;
 }
 
@@ -139,4 +150,6 @@
 .Class p {
   font-weight: 400;
   font-size: 1.3vw;
+}
+  font-size: 1.2vw;
 }

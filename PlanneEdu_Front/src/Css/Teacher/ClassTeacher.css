@@ -4,6 +4,13 @@ body {
   font-style: normal;
 }
 
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678D;
+  --white: #fff;
+  --black: #000;
+}
+
 .box-info-class {
   display: flex;
   flex-direction: column;
@@ -12,7 +19,7 @@ body {
   gap: 1vw;
   margin: 5% auto;
   padding: 2vw;
-  background-color: #ffffff;
+  background-color: var(--white);
   width: 90%;
   border-radius: 0.5vw;
   box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
@@ -21,10 +28,10 @@ body {
 
 .date-badge {
   font-size: 1vw;
-  background-color: #07678d;
+  background-color: var(--blue-one);
   width: 15vw;
   padding: 0.5vw;
-  color: #ffff;
+  color: var(--white);
   font-weight: normal;
   text-align: center;
   border-radius: 0.5vw;
@@ -60,9 +67,9 @@ body {
 .buttons-class button {
   width: 35vw;
   height: 11vh;
-  background-color: #07678d;
+  background-color: var(--blue-two);
   border: none;
-  color: #ffffff;
+  color: var(--white);
   border-radius: 0.5vw;
   cursor: pointer;
   font-size: 1.5vw;
@@ -73,14 +80,14 @@ body {
 .buttons-class button:focus {
   background-color: transparent;
   border: solid 2px #07678d;
-  color: #07678d;
+  color: var(--blue-two);
 }
 
 .buttons-class button:active {
   translate: 0 0.5vw;
   background-color: transparent;
   border: solid 2px #07678d;
-  color: #07678d;
+  color: var(--blue-two);
 }
 
 .overlay {
@@ -103,7 +110,7 @@ body {
   align-items: center;
   border-radius: 0.5vw;
   text-align: center;
-  box-shadow: 0 0.3125vw 0.625vw rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .popup-content {
@@ -112,6 +119,9 @@ body {
   background-color: #084973;
   padding: 1vw;
   color: #ffffff;
+  background-color: var(--blue-one);
+  padding: 1vw; 
+  color: var(--white);
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -132,7 +142,7 @@ body {
   background-color: transparent;
   border: solid 0.1171875vw #07678d;
   padding: 0.5vw 3vw;
-  color: #07678d;
+  color: var(--blue-two);
   border-radius: 0.5vw;
   margin-bottom: 5%;
   transition: 0.3s ease;
@@ -147,6 +157,9 @@ body {
   translate: 0 0.5vw;
   background-color: #07678d;
   color: #ffffff;
+.button-close button:hover{
+  background-color: var(--blue-two);
+  color: var(--white);
 }
 
 .button-add,
@@ -154,7 +167,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #07678d;
+  background-color: var(--blue-two);
   border-radius: 0.5vw;
   width: 22vw;
   height: 8vh;
@@ -171,7 +184,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1vw;
-  color: #ffffff;
+  color: var(--white);
 }
 
 .button-view img {
@@ -200,8 +213,8 @@ table {
 }
 
 .title-info > th {
-  background-color: #074973;
-  color: white;
+  background-color: var(--blue-one);
+  color: var(--white);
   font-size: 1.5vw;
   text-align: center;
   padding: 1vw;
@@ -211,6 +224,8 @@ td,
 th {
   border: 0.078125vw solid #9ab9cd;
   /* Borda interna das células */
+td, th {
+  border: 0.078125vw solid #9ab9cd;
   padding: 1vw;
   text-align: left;
 }

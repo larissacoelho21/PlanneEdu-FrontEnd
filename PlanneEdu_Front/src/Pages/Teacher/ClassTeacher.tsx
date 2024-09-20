@@ -90,7 +90,7 @@ export function ClassTeacher() {
                 </Link>
               </div>
               <div className="button-add">
-                <Link to="">
+                <Link to="/addatividade">
                   <FontAwesomeIcon icon={faPlus} />
                   <h1>Adicionar atividade</h1>
                 </Link>

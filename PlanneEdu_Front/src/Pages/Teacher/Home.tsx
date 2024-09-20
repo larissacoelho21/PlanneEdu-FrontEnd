@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css";
-import SemesterTeacher from "../../assets/clock.svg";
-import StudentsTeacher from "../../assets/peoples.svg";
+import { Clock3, Users } from "lucide-react";
 
 export function Home() {
   return (
@@ -25,11 +24,11 @@ export function Home() {
             </div>
             <div className="infos-class">
               <div className="semester-teacher">
-                <img src={SemesterTeacher} alt="" />
+                <Clock3 size={18} />
                 <h1>4 semestres</h1>
               </div>
               <div className="students">
-                <img src={StudentsTeacher} alt="" />
+                <Users size={18} />
                 <h1>35 alunos</h1>
               </div>
             </div>
@@ -42,11 +41,11 @@ export function Home() {
           </div>
           <div className="infos-class">
             <div className="semester-teacher">
-              <img src={SemesterTeacher} alt="" />
+              <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
-              <img src={StudentsTeacher} alt="" />
+              <Users size={18} />
               <h1>35 alunos</h1>
             </div>
           </div>
@@ -58,11 +57,11 @@ export function Home() {
           </div>
           <div className="infos-class">
             <div className="semester-teacher">
-              <img src={SemesterTeacher} alt="" />
+              <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
-              <img src={StudentsTeacher} alt="" />
+              <Users size={18} />
               <h1>35 alunos</h1>
             </div>
           </div>
@@ -74,11 +73,11 @@ export function Home() {
           </div>
           <div className="infos-class">
             <div className="semester-teacher">
-              <img src={SemesterTeacher} alt="" />
+              <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
-              <img src={StudentsTeacher} alt="" />
+              <Users size={18} />
               <h1>35 alunos</h1>
             </div>
           </div>

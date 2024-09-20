@@ -159,6 +159,19 @@ input {
   max-height: 85vh;
   padding: 25px;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+        hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26vw;
+    max-width: 450px;
+    max-height: 85vh;
+    padding: 25px;
+    animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .DialogContent:focus {
@@ -261,38 +274,99 @@ input {
     border-bottom: #074973 2px solid;
     border: none;
     outline: 0;
-
+    margin: 0;
+    font-weight: bold;
+    font-size: 2.1vw;
+    color: #074973;
 }
- */
-/* .Input:focus~label,
-.Input:valid~label {
-    transform: translateY(-20px);
+
+/* botão de salvar dentro popUp */
+.Button.save {
+    background-color: #074973;
+    text-align: center;
+    border: 0;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
+    font-weight: 300;
+    width: 10vw;
+    height: 3vw;
+    font-family: "Poppins", system-ui;
+    margin-top: -1.2vw;
+    color: #f2f2f2;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+}
+
+.Button.save:hover {
+    background-color: #07678d;
+    border: 0;
+}
+
+.IconButton {
+    font-family: inherit;
+    border-radius: 100%;
+    height: 2vw;
+    width: 2vw;
+    background-color: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    cursor: pointer;
+    top: 1.3vw;
+    right: 1.3vw;
+}
+
+.IconButton:hover {
+    color: #074973;
+}
+
+
+/* Input */
+
+.Fieldset { /* div */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 1.5vw 0;
+    background-color: transparent;
     outline: 0;
-    border-bottom: 2px solid #07678d;
-} */
+    border: 0;
+}
 
-/* .underline {
+.Label {
     position: absolute;
-    height: 2px;
-    width: 100%;
-    bottom: 0;
-} */
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #000000;
+    opacity: 50%;
+    text-align: right;
+    transition: all 0.2s ease;
+}
 
-/* .Input .underline:before {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 100%;
-    background: #4158d0;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s ease;
-} */
+.Fieldset .Input {
+    width: 22vw;
+    height: 2.2vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6vw;
+    border: none;
+    border-bottom: rgba(0, 0, 0, 0.4) solid 2px;
+    margin-bottom: 1vw;
+}
 
-/* .Input:focus~.underline:before,
-.Input:valid~.underline:before {
-    transform: scaleX(1);
-} */
+.Fieldset input:focus {
+    border-bottom: #000000 solid 2px;
+} 
+
+.Fieldset.filled .Label,
+.Input:focus + .Label {
+    transform: translateY(-1.5vw);
+    font-size: 1vw;
+    opacity: 1;
+}
+
 
 @keyframes overlayShow {
   from {

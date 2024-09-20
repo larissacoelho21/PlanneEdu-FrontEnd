@@ -11,10 +11,39 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 
 export function ProfileTeacher() {
   /* const [showPopUpPassword, setShowPopUpPassword] = useState(false);
+=======
+import React, { useState } from 'react';
 
-    const togglePopUpPassword = () => {
-        setShowPopUpPassword(!showPopUpPassword);
-    } */
+/* Interface para o InputField */
+interface InputFieldProps {
+    id: string;
+    label: string;
+    type?: string;
+}
+
+function InputField({ id, label, type = "text" }: InputFieldProps) {
+    const [isFilled, setIsFilled] = useState(false);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsFilled(event.target.value !== "");
+    };
+
+    return (
+        <fieldset className={`Fieldset ${isFilled ? 'filled' : ''}`}>
+            <label className="Label" htmlFor={id}>
+                {label}
+            </label>
+            <input
+                className="Input"
+                id={id}
+                type={type}
+                onChange={handleInputChange}
+            />
+        </fieldset>
+    );
+}
+
+
+export function ProfileTeacher() {
 
   return (
     <section className="profileTeacher">
@@ -153,4 +182,53 @@ export function ProfileTeacher() {
             )} */}
     </section>
   );
+
+            <div className="buttonsProfile">
+                <div className="change-button">
+                    <button>
+                        Editar Informações
+                    </button>
+                </div>
+
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <div className="password-button">
+                            <button>
+                                Trocar de senha
+                            </button>
+                        </div>
+                    </Dialog.Trigger>
+                    <Dialog.Portal>
+                        <Dialog.Overlay className="DialogOverlay" />
+                        <Dialog.Content className="DialogContent">
+                            <Dialog.Title
+                                className="DialogTitle"
+                                style={{ display: "flex", marginTop: 10, justifyContent: "center" }}
+                            >
+                                Trocar senha
+                            </Dialog.Title>
+                            <div className="Fieldset">
+                                <InputField id="actualpassword" label="Senha atual" type="password" />
+                                <InputField id="newpassword" label="Nova senha" type="password" />
+                                <InputField id="confirm" label="Confirmar nova senha" type="password" />
+                            </div>
+                            <div
+                                style={{ display: "flex", marginTop: 25, justifyContent: "center" }}
+                            >
+                                <Dialog.Close asChild>
+                                    <button className="Button save">Salvar</button>
+                                </Dialog.Close>
+                            </div>
+                            <Dialog.Close asChild>
+                                <div aria-label="Close">
+                                    <Cross2Icon className="IconButton"/>
+                                </div>
+                            </Dialog.Close>
+                        </Dialog.Content>
+                    </Dialog.Portal>
+                </Dialog.Root>
+
+            </div>
+        </section>
+    )
 }
