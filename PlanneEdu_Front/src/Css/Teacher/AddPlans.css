@@ -54,3 +54,21 @@
   display: flex;
   justify-content: space-between;
 }
+
+.table-criterios td{
+  border: none;
+  border-bottom: rgba(0, 0, 0, 0.2) .15vw solid;
+}
+
+.table-criterios th{
+  border: none;
+}
+
+tr, td, th{
+  background: #fff;
+}
+
+.table-criterios th{
+  font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.4);
+}

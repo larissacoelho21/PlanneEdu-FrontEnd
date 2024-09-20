@@ -3,7 +3,10 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { CodeXml } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
-import { Multiselect } from "../../Components/Multiselect/Multiselect";
+import {
+  Multiselect,
+  SelectOption,
+} from "../../Components/Multiselect/Multiselect";
 import { useState } from "react";
 
 const options = [
@@ -15,10 +18,11 @@ const options = [
 ];
 
 export function AddPlans() {
-  /* define uma variável de estado value, que pode ter o mesmo tipo que o primeiro item de options ou ser undefined. */
-  const [value, setValue] = useState<(typeof options)[0] | undefined>(
-    options[0]
-  );
+  const [value, setValue] = useState<SelectOption[]>([options[0]]);
+  const [value2, setValue2] = useState<SelectOption[]>([options[0]]);
+  const [value3, setValue3] = useState<SelectOption[]>([options[0]]);
+  const [value4, setValue4] = useState<SelectOption[]>([options[0]]);
+
   return (
     <main>
       <SubNavbar />
@@ -106,11 +110,68 @@ export function AddPlans() {
           </div>
         </div>
 
-        <Multiselect
-          options={options}
-          value={value}
-          onChange={(o) => setValue(o)}
-        />
+        <div className="row">
+          <div className="captecsocio">
+            <label>Capacidades Técnicas e Socioemocionais</label>
+            <Multiselect
+              options={options}
+              value={value}
+              onChange={(o) => setValue(o)}
+              multiple={true}
+            />
+          </div>
+          <div className="caprelacionadas">
+            <label>Capacidades Relacionadas</label>
+            <Multiselect
+              options={options}
+              value={value2}
+              onChange={(o) => setValue2(o)}
+              multiple={true}
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="captecsocio">
+            <label>Capacidades Técnicas e Socioemocionais</label>
+            <Multiselect
+              options={options}
+              value={value3}
+              onChange={(o) => setValue3(o)}
+              multiple={true}
+            />
+          </div>
+          <div className="caprelacionadas">
+            <label>Capacidades Relacionadas</label>
+            <Multiselect
+              options={options}
+              value={value4}
+              onChange={(o) => setValue4(o)}
+              multiple={true}
+            />
+          </div>
+        </div>
+
+        <div className="inputt">
+          <label>Perguntas Mediadoras</label>
+          <input type="text" name="pergmedia" id="pergmedia" />
+        </div>
+
+        <h3>Estratégias de avaliação de aprendizagem</h3>
+
+        <div className="inputt">
+          <label>Instrumentos de Avaliação</label>
+          <input type="text" name="inst-avalia" id="inst-avalia" />
+        </div>
+
+        <div className="criterios">
+          <table>
+            <tr>
+              <th>Critérios de Avalição</th>
+              <th>Crítico (C) ou Desejável (D)</th>
+            </tr>
+          </table>
+        </div>
       </div>
     </main>
   );
