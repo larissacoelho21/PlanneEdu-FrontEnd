@@ -126,7 +126,7 @@ select:focus {
   color: #074973;
 }
 
-.button button {
+.button-login button {
   background-color: #074973;
   border: none;
   margin-top: 2vw;

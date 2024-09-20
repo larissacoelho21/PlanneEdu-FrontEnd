@@ -86,7 +86,7 @@ export function Login() {
               </Link>
             </div>
 
-            <div className="button">
+            <div className="button-login">
               <button type="submit" style={{ cursor: "pointer" }}>
                 Entrar
               </button>
