@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackgroundLogin from "../assets/background-login.svg";
 import Computer from "../assets/computer.svg";
 import Logo from "../assets/logo.svg";
