@@ -80,110 +80,115 @@ export function AddActivity() {
         </div>
       </div>
 
-      <div className="form-addactivity">
-        <div className="dates-add">
-          <div className="proposed-date">
-            <label htmlFor="" className="label-date">
-              Data Proposta
-            </label>
-            <input type="date" />
+      <form action="">
+        <div className="form-addactivity">
+          <div className="dates-add">
+            <div className="proposed-date">
+              <label htmlFor="" className="label-date">
+                Data Proposta
+              </label>
+              <input type="date" />
+            </div>
+            <div className="delivery-date">
+              <label htmlFor="" className="label-date">
+                Data de Entrega
+              </label>
+              <input type="date" />
+            </div>
           </div>
-          <div className="delivery-date">
-            <label htmlFor="" className="label-date">
-              Data de Entrega
-            </label>
-            <input type="date" />
-          </div>
-        </div>
 
-        <div className="add-category">
-          <div className="title-add">
-            <h1>Estratégia de aprendizagem adotada</h1>
+          <div className="add-category">
+            <div className="title-add">
+              <h1>Estratégia de aprendizagem adotada</h1>
+            </div>
+            <div className="buttons-add">
+              <button>Situação Problema</button>
+              <button>Estudo de Caso</button>
+              <button>Projeto</button>
+              <button>Projeto Integrador</button>
+              <button>Pesquisa</button>
+              <button>Mostrar todos</button>
+            </div>
           </div>
-          <div className="buttons-add">
-            <button>Situação Problema</button>
-            <button>Estudo de Caso</button>
-            <button>Projeto</button>
-            <button>Projeto Integrador</button>
-            <button>Pesquisa</button>
-            <button>Mostrar todos</button>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="captecbasic">
-            <label className="label-captecbasic">
-              Capacidades Técnicas ou Básicas
-            </label>
-            <Multiselect
-              options={options}
-              value={value}
-              onChange={(o) => setValue(o)}
-              multiple={true}
+          <div className="row">
+            <div className="captecbasic">
+              <label className="label-captecbasic">
+                Capacidades Técnicas ou Básicas
+              </label>
+              <Multiselect
+                options={options}
+                value={value}
+                onChange={(o) => setValue(o)}
+                multiple={true}
+              />
+            </div>
+            <div className="capsocio">
+              <label className="label-capsocio">
+                Capacidades Socioemocionais
+              </label>
+              <Multiselect
+                options={options}
+                value={value2}
+                onChange={(o) => setValue2(o)}
+                multiple={true}
+              />
+            </div>
+          </div>
+
+          <div className="contextualization">
+            <InputField
+              id="contextualization"
+              label="Contextualização"
+              type="text"
             />
           </div>
-          <div className="capsocio">
-            <label className="label-capsocio">
-              Capacidades Socioemocionais
-            </label>
-            <Multiselect
-              options={options}
-              value={value2}
-              onChange={(o) => setValue2(o)}
-              multiple={true}
+
+          <div className="challenge">
+            <div className="tittle-challenge">
+              <h1>Desafios</h1>
+            </div>
+            <div className="button-add-challenge">
+              <button onClick={togglePopUpAdd}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+
+            <div className="card-challenge">
+              <div className="number-challenge">
+                <h1>Desafio 1</h1>
+              </div>
+              <div className="view-description">
+                <h1>
+                  Elaborar algoritmos de rotinas conforme metódos de modelagem
+                  definidos
+                </h1>
+              </div>
+              <div className="view-caps">
+                <div className="view-capbastec">
+                  <h1>Capacidades técnicas: 1, 3, 6 e 9</h1>
+                </div>
+                <div className="view-capsoc">
+                  <h1>Capacidades socioemocionais: 1, 5, 7 e 8</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="results-add">
+            <InputField
+              id="contextualization"
+              label="Resultados Esperados"
+              type="text"
             />
           </div>
-        </div>
 
-        <div className="contextualization">
-          <InputField
-            id="contextualization"
-            label="Contextualização"
-            type="text"
-          />
-        </div>
-
-        <div className="challenge">
-          <div className="tittle-challenge">
-            <h1>Desafios</h1>
-          </div>
-          <div className="button-add-challenge">
-            <button onClick={togglePopUpAdd}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
-
-          <div className="card-challenge">
-            <div className="number-challenge">
-              <h1>Desafio 1</h1>
-            </div>
-            <div className="view-description">
-              <h1>Elaborar algoritmos de rotinas conforme metódos de modelagem definidos</h1>
-            </div>
-            <div className="view-caps">
-              <div className="view-capbastec">
-                <h1>Capacidades técnicas: 1, 3, 6 e 9</h1>
-              </div>
-              <div className="view-capsoc">
-                <h1>Capacidades socioemocionais: 1, 5, 7 e 8</h1>
-              </div>
-            </div>
+          <div className="buttons-save-atvd">
+            <button>Salvar Alterações</button>
+            <button>Voltar</button>
           </div>
         </div>
-
-        <div className="results-add">
-          <InputField
-            id="contextualization"
-            label="Resultados Esperados"
-            type="text"
-          />
-        </div>
-
-        <div className="buttons-save-atvd">
-          <button>Salvar Alterações</button>
-          <button>Voltar</button>
-        </div>
-      </div>
+      </form>
 
       {/* PopUp */}
       {showPopUpAdd && (
