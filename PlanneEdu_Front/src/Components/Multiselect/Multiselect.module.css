@@ -29,11 +29,6 @@
   width: 1.5vw;
 }
 
-.clear-btn svg:focus,
-.clear-btn svg:hover {
-  color: #000;
-}
-
 .caret{
   cursor: pointer;
   color: #696969;
