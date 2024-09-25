@@ -1,11 +1,10 @@
-import semesterIcon from "../../assets/clock.svg";
-import studentsIcon from "../../assets/peoples.svg";
-import moreIcon from "../../assets/more.svg";
-
 import "../../Css/Teacher/ViewActivity.css";
 import { Link } from "react-router-dom";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
+import { Clock3, Users } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export function ViewActivity() {
   const [filterActivities, setFilterActivities] = useState("");
@@ -34,11 +33,11 @@ export function ViewActivity() {
           </div>
           <div className="infos-teacher">
             <div className="semester-teacher">
-              <img src={semesterIcon} alt="" />
+              <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
             <div className="students">
-              <img src={studentsIcon} alt="" />
+              <Users size={18} />
               <h1>35 alunos</h1>
             </div>
           </div>
@@ -50,7 +49,7 @@ export function ViewActivity() {
 
         <div className="button-addActivity">
           <Link to="">
-            <img src={moreIcon} alt="" />
+            <FontAwesomeIcon icon={faPlus} />
             <h1>Adicionar nova atividade</h1>
           </Link>
         </div>
@@ -65,31 +64,31 @@ export function ViewActivity() {
               <h1>Filtre por categoria:</h1>
             </div>
             <div className="buttons-filter">
-            <button onClick={() => setFilterActivities("Situação-Problema")}>
-              Situação Problema
-            </button>
-            <button onClick={() => setFilterActivities("Estudo-Caso")}>
-              Estudo de Caso
-            </button>
-            <button onClick={() => setFilterActivities("Projeto")}>
-              Projeto
-            </button>
-            <button onClick={() => setFilterActivities("Projeto-Integrador")}>
-              Projeto Integrador
-            </button>
-            <button onClick={() => setFilterActivities("Pesquisa")}>
-              Pesquisa
-            </button>
-            <button onClick={() => setFilterActivities("")}>
-              Mostrar todos
-            </button>
+              <button onClick={() => setFilterActivities("Situação-Problema")}>
+                Situação Problema
+              </button>
+              <button onClick={() => setFilterActivities("Estudo-Caso")}>
+                Estudo de Caso
+              </button>
+              <button onClick={() => setFilterActivities("Projeto")}>
+                Projeto
+              </button>
+              <button onClick={() => setFilterActivities("Projeto-Integrador")}>
+                Projeto Integrador
+              </button>
+              <button onClick={() => setFilterActivities("Pesquisa")}>
+                Pesquisa
+              </button>
+              <button onClick={() => setFilterActivities("")}>
+                Mostrar todos
+              </button>
             </div>
           </div>
           <div className="filtered-items">
-              {selectedCategory.map((item) => (
-                <div key={item.id}>{item.name}</div>
-              ))}
-            </div>
+            {selectedCategory.map((item) => (
+              <div key={item.id}>{item.name}</div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

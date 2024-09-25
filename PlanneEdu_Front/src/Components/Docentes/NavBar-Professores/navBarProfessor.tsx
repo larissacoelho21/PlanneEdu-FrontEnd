@@ -279,6 +279,14 @@ export function NavBarProfessor() {
                   </li>
                   <li className="li-notification">
                     <div className="secondPart">
+                      <div className="profile">
+                        <NavLink to="/profile" className="profileIcon">
+                          <FontAwesomeIcon
+                            icon={faUser}
+                            className="not-icons"
+                          />
+                        </NavLink>
+                      </div>
                       <div className="darkmode">
                         <NavLink to="#" className="darkmodeIcon">
                           <FontAwesomeIcon

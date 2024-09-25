@@ -77,15 +77,15 @@ body {
   font-family: "Poppins", system-ui;
 }
 
-.inputPassword{
+.inputPassword {
   display: flex;
   justify-content: space-between;
   border: rgba(1, 18, 38, 50%) solid 1.3px;
   padding: 1.2vw 2vw;
-  border-radius: 0.5vw; 
+  border-radius: 0.5vw;
 }
 
-.inputPassword input{
+.inputPassword input {
   background-color: transparent;
   outline: none;
   border: 0;
@@ -100,7 +100,7 @@ body {
   opacity: 50%;
 }
 
-.input-password:focus{
+.input-password:focus {
   border: none;
 }
 
@@ -126,7 +126,7 @@ select:focus {
   color: #074973;
 }
 
-.button button {
+.button-login button {
   background-color: #074973;
   border: none;
   margin-top: 2vw;
@@ -140,11 +140,12 @@ select:focus {
   cursor: pointer;
 }
 
-.button button:hover {
+.button-login button:hover {
   background-color: #07678d;
 }
 
-.input::-webkit-inner-spin-button, .verification::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.input::-webkit-inner-spin-button,
+.verification::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

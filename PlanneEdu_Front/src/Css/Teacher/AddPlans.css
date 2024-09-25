@@ -1,55 +1,74 @@
-.card-info-disc, .form{
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    margin: 3% auto;
-    width: 90vw;
-    border-radius: 1vw;
-    background: #FFF;
-    box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
+.card-info-disc,
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  margin: 3% auto;
+  width: 90vw;
+  border-radius: 1vw;
+  background: #fff;
+  box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
 }
 
-.card-info-disc{
-    justify-content: center;
-    align-items: center;
-    padding: 2vw 0;
+.card-info-disc {
+  justify-content: center;
+  align-items: center;
+  padding: 2vw 0;
 }
 
-.card-info-disc h2{
-    font-weight: 600;
+.card-info-disc h2 {
+  font-weight: 600;
 }
 
-.form{
-    padding: 5vw 5vw;
-    gap: 2vw;
+.form {
+  padding: 5vw 5vw;
+  gap: 2vw;
 }
 
-.form .inputt{
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
+.form .inputt {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
 }
 
-.form input{
-    border: none;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-    font-size: 1.4vw;
+.form input {
+  border: none;
+  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
+  font-size: 1.4vw;
 }
 
-.form label{
-    font-weight: 700;
-    font-size: 1.1vw;
-    color: rgba(0, 0, 0, 0.4);
+.form label {
+  font-weight: 700;
+  font-size: 1.1vw;
+  color: rgba(0, 0, 0, 0.4);
 }
 
-.form h3{
-    font-size: 1.7vw;
-    font-weight: 500;
-    text-align: center;
-    margin: 2.5vw 0;
+.form h3 {
+  font-size: 1.7vw;
+  font-weight: 500;
+  text-align: center;
+  margin: 2.5vw 0;
 }
 
-.row{
-    display: flex;
-    justify-content: space-between;
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-criterios td{
+  border: none;
+  border-bottom: rgba(0, 0, 0, 0.2) .15vw solid;
+}
+
+.table-criterios th{
+  border: none;
+}
+
+tr, td, th{
+  background: #fff;
+}
+
+.table-criterios th{
+  font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.4);
 }

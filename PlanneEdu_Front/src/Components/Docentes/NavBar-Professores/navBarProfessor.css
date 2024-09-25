@@ -1,125 +1,126 @@
 :root {
-    --font: font-family: "Poppins", system-ui;
-    --blue1: #074973;
-    --speed: 500ms;
+  --blue1: #074973;
+  --speed: 500ms;
 }
 
 .navbarOne {
-    height: 6vw;
-    background-color: #F2F2F2;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    display: flex;
-    justify-content: space-between;
+  height: 6vw;
+  background-color: #f2f2f2;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  justify-content: space-between;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
-a{
-    text-decoration: none;
-
+a {
+  text-decoration: none;
 }
 
 link:active {
-    color: #074973;
+  color: #074973;
 }
-.left-side, .navbar-nav, .profile {
-    display: flex;
+.left-side,
+.navbar-nav,
+.profile {
+  display: flex;
 }
 /* estilizando imagem logo */
 
 .nav-logo img {
-    width: 0 auto;
-    height: 5vw;
-    margin-left: 2vw;
+  width: 0 auto;
+  height: 5vw;
+  margin-left: 2vw;
 }
 
 /* estilizando lista */
-.navbar-link{
-    font-family: var(--font);
-    color: black;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin-left: 3vw;
-    margin-top: 2vw;
+.navbar-link {
+  font-family: var(--font);
+  color: black;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-left: 3vw;
+  margin-top: 2vw;
 }
 
-
 .navbar-link:hover {
-    color: #074973;
-    font-weight: bold;
-    border-bottom: #074973 solid 2px;
-    transition: 100ms ease-in-out;
-    cursor: pointer;
+  color: #074973;
+  font-weight: bold;
+  border-bottom: #074973 solid 2px;
+  transition: 100ms ease-in-out;
+  cursor: pointer;
 }
 
 .navbar-link.active {
-    color: #074973;
-    font-weight: bold;
-    border-bottom: #074973 solid 2px;
-    cursor: pointer;
+  color: #074973;
+  font-weight: bold;
+  border-bottom: #074973 solid 2px;
+  cursor: pointer;
 }
 
 .navbar-link.selected {
-    color: #074973;
-    font-weight: bold;
-    border-bottom: #074973 solid 2px;
-    cursor: pointer;
+  color: #074973;
+  font-weight: bold;
+  border-bottom: #074973 solid 2px;
+  cursor: pointer;
 }
 
 /* estilizando o menu */
 
 .dropdown-menu {
-    position: absolute;
-    top: 5.5vw;
-    right: 26vw;
-    background-color: #fff;
-    padding: 1vw 1vw;
-    width: 17vw;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+  position: absolute;
+  top: 5.5vw;
+  right: 26vw;
+  background-color: #fff;
+  padding: 1vw 1vw;
+  width: 17vw;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
 .dropdown-menu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: var(--speed) ease;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
 }
 
-.dropdown-menu.inactive{
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: var(--speed) ease;
+.dropdown-menu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
 }
 
 .dropdown-menu .dropdownItem:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
-    margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
 }
 
 .dropdown-menu::before {
-    content: "";
-    position: absolute;
-    top: -2.6vw; /* Ajusta a seta acima do dropdown */
-    right: 7vw; /* Ajusta a posição horizontal da seta */
-    border-width: 1.5vw;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
-    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+  content: "";
+  position: absolute;
+  top: -2.6vw; /* Ajusta a seta acima do dropdown */
+  right: 7vw; /* Ajusta a posição horizontal da seta */
+  border-width: 1.5vw;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+  z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
 }
 
 .dropdownItem {
-    display: flex;
-    align-items: center;  
-    padding: 0.2vw;  
+  display: flex;
+  align-items: center;
+  padding: 0.2vw;
 }
 
-.dropdownItem .icon:hover, .dropdownItem .menu-a:hover{
-    color: #074973; /* cor quando o hover estiver ativo */
-    cursor: pointer;
+.dropdownItem .icon:hover,
+.dropdownItem .menu-a:hover {
+  color: #074973; /* cor quando o hover estiver ativo */
+  cursor: pointer;
 }
 
 /* .dropdownItem  {
@@ -129,99 +130,100 @@ link:active {
 } */
 
 .dropdownItem .icon {
-    max-width: 2vw;
-    margin-right: 0.9vw;
-    margin-top: 0.6vw;
-    color: #7F7F7F;
-    align-self: center;
-    transition: var(--speed);
+  max-width: 2vw;
+  margin-right: 0.9vw;
+  margin-top: 0.6vw;
+  color: #7f7f7f;
+  align-self: center;
+  transition: var(--speed);
 }
 
 .dropdownItem .menu-a {
-    font-size: 1.1vw;
-    max-width: 15vw;
-    color: #7F7F7F;
-    align-self: center;
-    margin: 0;
-    transition: var(--speed);
+  font-size: 1.1vw;
+  max-width: 15vw;
+  color: #7f7f7f;
+  align-self: center;
+  margin: 0;
+  transition: var(--speed);
 }
 
 /* estilizando o segundo dropdwn */
 
 .dropdown-notification {
-    position: absolute;
-    top: 5.5vw;
-    right: 6.4vw;
-    background-color: #fff;
-    padding: 1.2vw 1.2vw;
-    width: 28vw;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+  position: absolute;
+  top: 5.5vw;
+  right: 6.4vw;
+  background-color: #fff;
+  padding: 1.2vw 1.2vw;
+  width: 28vw;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
-.dropdown-notification.ativo{
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: var(--speed) ease;
+.dropdown-notification.ativo {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
 }
 
-.dropdown-notification.inactive{
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: var(--speed) ease;
+.dropdown-notification.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
 }
 
 .dropdown-notification::before {
-    content: "";
-    position: absolute;
-    top: -2.5vw; /* Ajusta a seta acima do dropdown */
-    right: 3vw; /* Ajusta a posição horizontal da seta */
-    border-width: 1.5vw;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
-    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+  content: "";
+  position: absolute;
+  top: -2.5vw; /* Ajusta a seta acima do dropdown */
+  right: 3vw; /* Ajusta a posição horizontal da seta */
+  border-width: 1.5vw;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+  z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
 }
 
 .dropdownNotification .paragrafo {
-    font-size: 1vw;
-    max-width: 30vw;
-    color: black;
-    align-self: center;
-    margin: 0;
-    transition: var(--speed);
+  font-size: 1vw;
+  max-width: 30vw;
+  color: black;
+  align-self: center;
+  margin: 0;
+  transition: var(--speed);
 }
 
 .dropdownNotification .sub-paragrafo {
-    font-size: 0.8vw;
-    font-style: italic;
-    max-width: 15vw;
-    color: #7F7F7F;
-    transition: var(--speed);
-    margin-bottom: 1vw;
+  font-size: 0.8vw;
+  font-style: italic;
+  max-width: 15vw;
+  color: #7f7f7f;
+  transition: var(--speed);
+  margin-bottom: 1vw;
 }
 
 .dropdownNotification .sub-paragrafo:hover {
-    color: black;
+  color: black;
 }
 
-
-
-.link-bell .iconsBell, .profile .not-icons, .darkmodeIcon .not-icons{
-    width: 0 auto;
-    height: 1.6vw;
-    margin-left: 1.5vw;
-    margin-right: 1.5vw;
-    color: black;
+.link-bell .iconsBell,
+.profile .not-icons,
+.darkmodeIcon .not-icons {
+  width: 0 auto;
+  height: 1.6vw;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+  color: black;
 }
 
 .link-bell .iconsBell {
-    margin-left: 4vw;
-    cursor: pointer;
+  margin-left: 4vw;
+  cursor: pointer;
 }
 
-.icon-list ul, .secondPart {
-    display: flex;
+.icon-list ul,
+.secondPart {
+  display: flex;
 }
 
 .Icons {

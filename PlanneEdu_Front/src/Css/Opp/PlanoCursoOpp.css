@@ -1,0 +1,22 @@
+.Card-plano {
+  background-color: #fff;
+  border-radius: 1vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  width: 100%;
+  border-radius: 1vw;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 3.5vw 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #c3c6ce;
+  border: 2px solid transparent;
+  transition: 0.35s ease-out;
+}
+
+.Card-plano:hover {
+  border: 2px solid var(--blue-one);
+  transform: scale(1.015);
+}

@@ -51,63 +51,63 @@ body {
   width: 1.6vw;
 }
 
-.button-addActivity button{
+.button-addActivity button {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1vw;
   width: 35vw;
-  padding: .8vw 1.8vw;
+  padding: 0.8vw 1.8vw;
   margin-bottom: 4vw;
   border-radius: 1vw;
   border: none;
   background: var(--blue-two);
-  color: #FFF;
+  color: #fff;
   font-size: 1.3vw;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
-.button-addActivity button:active{
+.button-addActivity button:active {
   translate: 0 0.5vw;
   background: var(--blue-one);
 }
 
-.available-activities{
+.available-activities {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.activities-text{
+.activities-text {
   margin: 5% 0 1.5% 0;
 }
 
-.filter-activities-category{
+.filter-activities-category {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 90vw;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 0.5vw;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.title-filter h1{
+.title-filter h1 {
   font-size: 1.5vw;
   font-weight: 600;
   padding: 2vw 0;
 }
 
-.buttons-filter{
+.buttons-filter {
   display: flex;
-  gap: 4vw; 
+  gap: 4vw;
   margin-bottom: 3%;
 }
 
-.buttons-filter button{
+.buttons-filter button {
   background-color: transparent;
   border: 2px solid #07678d;
   border-radius: 0.5vw;
@@ -117,16 +117,16 @@ body {
   cursor: pointer;
 }
 
-.filtered-items{
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    background-color: #ffff;
-    width: 60vw;
-    border-radius: 0.5vw;
-    padding: 2.4vw;
-    gap: 1vw;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    color: #000;
+.filtered-items {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #ffff;
+  width: 60vw;
+  border-radius: 0.5vw;
+  padding: 2.4vw;
+  gap: 1vw;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #000;
 }

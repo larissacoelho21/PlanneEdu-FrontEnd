@@ -221,6 +221,7 @@
     background-color: transparent;
     outline: 0;
     border: 0;
+    cursor: pointer;
 }
 
 .Label {
@@ -239,15 +240,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     border: none;
     border-bottom: rgba(0, 0, 0, 0.4) solid 2px;
     margin-bottom: 1vw;
 }
-
-.Fieldset input:focus {
-    border-bottom: #000000 solid 2px;
-} 
 
 .Fieldset.filled .Label,
 .Input:focus + .Label {

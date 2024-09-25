@@ -11,6 +11,11 @@ import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
 import { NavBarOpp } from './Components/Opp/NavBar-Opp/navBarOpp';
 import { ProfileTeacher } from './Pages/Teacher/Profile';
 import { AddPlans } from './Pages/Teacher/AddPlans';
+import { HomeOpp } from './Pages/Opp/HomeOpp';
+import { CursosOpp } from './Pages/Opp/CursosOpp';
+import { TurmaOpp } from './Pages/Opp/TurmaOpp';
+import { PlanoCursoOpp } from './Pages/Opp/PlanoCursoOpp';
+import { AddActivity } from './Pages/Teacher/AddActivity';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -23,12 +28,17 @@ const Router: React.FC = () => {
                     <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/navbaropp' element={<NavBarOpp />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
+                    <Route path='/addatividade' element={<AddActivity />}></Route>
                     <Route path='/turmaprofessor' element={<ClassTeacher/>}></Route>
                     <Route path='/plansensino' element={<PlanEnsino />}></Route>
                     <Route path='/visualizaratvd' element={<ViewActivity/>}></Route>
                     <Route path='/plansensinoespc' element={<PlanEnsinoEspc />} />
                     <Route path='/profile' element={<ProfileTeacher />} />
                     <Route path='/addplans' element={<AddPlans />} />
+                    <Route path='/homeopp' element={<HomeOpp/>}/>
+                    <Route path='/cursosopp' element={<CursosOpp/>}/>
+                    <Route path='/turmaopp' element={<TurmaOpp/>}/>
+                    <Route path='/planocursoopp' element={<PlanoCursoOpp/>}/>
                 </Routes>
         </BrowserRouter>
 
