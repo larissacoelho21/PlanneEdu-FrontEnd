@@ -1,6 +1,9 @@
 :root {
   --white-one: #ffffff;
   --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --black: #000;
 }
 
 .form-addactivity{
@@ -15,6 +18,7 @@
   box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 5vw;
+  margin-bottom: 4vw;
 }
 
 .dates-add{
@@ -47,7 +51,7 @@
 }
 
 input[type="date"]:focus {
-  color: #000;
+  color: var(--black);
 }
 
 
@@ -78,18 +82,18 @@ input[type="date"]:focus {
 
 .buttons-add button{
   background-color: transparent;
-  border: 2px solid #07678d;
+  border: 2px solid var(--blue-two);
   border-radius: 0.5vw;
   padding: 0.7vw 1.2vw;
   font-size: 1.05vw;
-  color: #07678d;
+  color: var(--blue-two);
   cursor: pointer;
   transition: 0.3s ease; 
 }
 
 .buttons-add button:hover{
-  background-color: #07678d;
-  color: #ffffff;
+  background-color: var(--blue-two);
+  color: var(--white-one);
 }
 
 .captecbasic, .capsocio{
@@ -116,7 +120,7 @@ input[type="date"]:focus {
   border: none;
   border-bottom: var(--gray-one) solid 2px;
   margin-top: 0.5vw;
-  margin-bottom: 0.5vw;
+  margin-bottom: 1vw;
 }
 
 .Fieldset.filled .label-add,
@@ -131,5 +135,129 @@ input[type="date"]:focus {
   border-top: transparent;
   border-left: transparent;
   border-right: transparent;
-  border-color: var(--gray-one);
+  border-bottom: var(--gray-one) solid 2px;
+}
+
+.challenge{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5vw;
+}
+
+.tittle-challenge h1{
+  color: var(--gray-one);
+  font-size: 1.5vw;
+}
+
+.button-add-challenge button{
+  width: 3vw;
+  height: 3vw;
+  cursor: pointer;
+  border: solid 2px var(--blue-two);
+  border-radius: 0.5vw;
+  background-color: transparent;
+  font-size: 1.3vw;
+  color: var(--blue-two);
+  transition: 0.3s ease;
+}
+
+.button-add-challenge button:hover,
+.button-add-challenge button:focus{
+  background-color: var(--blue-two);
+  color: var(--white-one);
+}
+
+.buttons-save-atvd{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons-save-atvd button{
+  font-size: 1.3vw;
+  width: 30vw;
+  height: 4vw;
+  background-color: var(--blue-two);
+  border: none;
+  border-radius: 0.5vw;
+  color: var(--white-one);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.buttons-save-atvd button:hover,
+.buttons-popup-challenge button:hover{
+  background-color: var(--white-one);
+  color: var(--blue-two);
+  border: solid var(--blue-two);
+}
+
+/* PopUp */
+.popup-challenge{
+  padding: 3vw 3vw;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content-challenge{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.forms-add-challenge{
+  display: flex;
+  flex-direction: column;
+}
+
+.captecbasic-ch, .capsocio-ch{
+  margin-bottom: 10%;
+  text-align: left;
+}
+
+.texts-challenge h1{
+  font-size: 2vw;
+  font-weight: 600;
+  color: var(--blue-one);
+}
+
+.texts-challenge h2{
+  font-size: 1.3vw;
+  font-weight: 400;
+  width: 40vw;
+}
+
+.description{
+  margin-top: 7%;
+}
+
+.description input{
+  width: 35vw;
+  background-color: transparent;
+}
+
+.buttons-popup-challenge{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons-popup-challenge button{
+  width: 15vw;
+  height: 3vw;
+  background-color: var(--blue-two);
+  color: var(--white-one);
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  transition: 0.3s ease;
 }

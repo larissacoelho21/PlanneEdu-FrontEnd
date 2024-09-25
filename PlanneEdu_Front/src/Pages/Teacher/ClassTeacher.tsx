@@ -1,25 +1,15 @@
 import "../../Css/Teacher/ClassTeacher.css";
-
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
 import { Clock3, Users } from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Popup } from "../../Components/PopUpClass/PopUp";
 
 export function ClassTeacher() {
   const [showPopUp1, setShowPopUp1] = useState(false);
-  const togglePopUp1 = () => {
-    setShowPopUp1(!showPopUp1);
-  };
-
   const [showPopUp2, setShowPopUp2] = useState(false);
-  const togglePopUp2 = () => {
-    setShowPopUp2(!showPopUp2);
-  };
+
+  const togglePopUp1 = () => setShowPopUp1(!showPopUp1);
+  const togglePopUp2 = () => setShowPopUp2(!showPopUp2);
 
   return (
     <section className="class-teacher">
@@ -49,58 +39,28 @@ export function ClassTeacher() {
         <button onClick={togglePopUp2}>Situação de Aprendizagem</button>
       </div>
 
+      {/* Popup para Plano de Ensino */}
       {showPopUp1 && (
-        <div className="overlay" onClick={togglePopUp1}>
-          <div className="popup-planne" onClick={(e) => e.stopPropagation()}>
-            <div className="popup-content">
-              <h1>Plano de Ensino</h1>
-            </div>
-            <div className="buttons-action">
-              <div className="button-view">
-                <Link to="">
-                  <FontAwesomeIcon icon={faEye} />
-                  <h1>Visualizar planos</h1>
-                </Link>
-              </div>
-              <div className="button-add">
-                <Link to="">
-                  <FontAwesomeIcon icon={faPlus} />
-                  <h1>Adicionar plano</h1>
-                </Link>
-              </div>
-              <div className="button-close">
-                <button onClick={togglePopUp1}>Fechar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Popup
+          title="Plano de Ensino"
+          viewLink="/plansensino"
+          viewText="Visualizar planos"
+          addLink="/addplans"
+          addText="Adicionar plano"
+          onClose={togglePopUp1}
+        />
       )}
 
+      {/* Popup para Situação de Aprendizagem */}
       {showPopUp2 && (
-        <div className="overlay" onClick={togglePopUp2}>
-          <div className="popup-planne" onClick={(e) => e.stopPropagation()}>
-            <div className="popup-content">
-              <h1>Situação de Aprendizagem</h1>
-            </div>
-            <div className="buttons-action">
-              <div className="button-view">
-                <Link to="/visualizaratvd">
-                  <FontAwesomeIcon icon={faEye} />
-                  <h1>Visualizar atividades</h1>
-                </Link>
-              </div>
-              <div className="button-add">
-                <Link to="/addatividade">
-                  <FontAwesomeIcon icon={faPlus} />
-                  <h1>Adicionar atividade</h1>
-                </Link>
-              </div>
-              <div className="button-close">
-                <button onClick={togglePopUp2}>Fechar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Popup
+          title="Situação de Aprendizagem"
+          viewLink="/visualizaratvd"
+          viewText="Visualizar atividades"
+          addLink="/addatividade"
+          addText="Adicionar atividade"
+          onClose={togglePopUp2}
+        />
       )}
 
       <div className="registrationTable">

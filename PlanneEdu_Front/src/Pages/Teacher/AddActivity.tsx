@@ -6,6 +6,8 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface InputFieldProps {
   id: string;
@@ -44,9 +46,13 @@ const options = [
 ];
 
 export function AddActivity() {
-
   const [value, setValue] = useState<SelectOption[]>([options[0]]);
   const [value2, setValue2] = useState<SelectOption[]>([options[0]]);
+
+  const [showPopUpAdd, setShowPopUpAdd] = useState(false);
+  const togglePopUpAdd = () => {
+    setShowPopUpAdd(!showPopUpAdd);
+  };
 
   return (
     <section className="add-activity">
@@ -106,7 +112,9 @@ export function AddActivity() {
 
         <div className="row">
           <div className="captecbasic">
-            <label className="label-captecbasic">Capacidades Técnicas ou Básicas</label>
+            <label className="label-captecbasic">
+              Capacidades Técnicas ou Básicas
+            </label>
             <Multiselect
               options={options}
               value={value}
@@ -115,7 +123,9 @@ export function AddActivity() {
             />
           </div>
           <div className="capsocio">
-            <label className="label-capsocio">Capacidades Socioemocionais</label>
+            <label className="label-capsocio">
+              Capacidades Socioemocionais
+            </label>
             <Multiselect
               options={options}
               value={value2}
@@ -126,13 +136,87 @@ export function AddActivity() {
         </div>
 
         <div className="contextualization">
-          <InputField id="contextualization" label="Contextualização" type="text" />
+          <InputField
+            id="contextualization"
+            label="Contextualização"
+            type="text"
+          />
+        </div>
+
+        <div className="challenge">
+          <div className="tittle-challenge">
+            <h1>Desafios</h1>
+          </div>
+          <div className="button-add-challenge">
+            <button onClick={togglePopUpAdd}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
         </div>
 
         <div className="results-add">
-          <InputField id="contextualization" label="Resultados Esperados" type="text" />
+          <InputField
+            id="contextualization"
+            label="Resultados Esperados"
+            type="text"
+          />
+        </div>
+
+        <div className="buttons-save-atvd">
+          <button>Salvar Alterações</button>
+          <button>Voltar</button>
         </div>
       </div>
+
+      {/* PopUp */}
+      {showPopUpAdd && (
+        <div className="overlay" onClick={togglePopUpAdd}>
+          <div className="popup-challenge" onClick={(e) => e.stopPropagation()}>
+            <div className="popup-content-challenge">
+              <div className="texts-challenge">
+                <h1>Desafio</h1>
+                <h2>
+                  Descreva o desafio e selecione as capacidades a serem
+                  desenvolvidas.
+                </h2>
+              </div>
+
+              <div className="forms-add-challenge">
+                <div className="description">
+                  <InputField id="description" label="Descrição" type="text" />
+                </div>
+                <div className="captecbasic-ch">
+                  <label className="label-captecbasic">
+                    Capacidades Técnicas ou Básicas
+                  </label>
+                  <Multiselect
+                    options={options}
+                    value={value}
+                    onChange={(o) => setValue(o)}
+                    multiple={true}
+                  />
+                </div>
+                <div className="capsocio-ch">
+                  <label className="label-capsocio">
+                    Capacidades Socioemocionais
+                  </label>
+                  <Multiselect
+                    options={options}
+                    value={value2}
+                    onChange={(o) => setValue2(o)}
+                    multiple={true}
+                  />
+                </div>
+
+                <div className="buttons-popup-challenge">
+                  <button>Criar Desafio</button>
+                  <button onClick={togglePopUpAdd}>Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
