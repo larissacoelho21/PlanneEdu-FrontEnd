@@ -9,6 +9,8 @@ import {
   Folder,
   ChartLine,
   ChevronDown,
+  LogOut,
+  UserPen,
 } from "lucide-react";
 
 /* funções react */
@@ -20,6 +22,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import "../NavBar-Professores/navBarProfessor.css";
 import { faBell, faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
 
+/* Dropdown Planos ensinos */
 /* Criando interface para declarar as props do DropdownItem */
 interface DropdownItemProps {
   icon: ReactNode /* React Node utilizado para aceitar icone(svg) ou string */;
@@ -43,6 +46,8 @@ function DropdownItem({ icon, text, to }: DropdownItemProps) {
   );
 }
 
+/* Dropdown notificação */
+
 interface DropdownNotificationProps {
   text: string;
   secondtext: string;
@@ -62,13 +67,35 @@ function DropdownNotification({
   );
 }
 
+/* Dropdown Perfil */
+interface DropdownProfileProps {
+  icon: ReactNode /* React Node utilizado para aceitar icone(svg) ou string */;
+  text: string;
+  to: string;
+}
+
+function DropdownProfile({ icon, text, to }: DropdownProfileProps) {
+  return (
+    <NavLink to={to} className="dropdownProfile">
+      <i className="icon">{icon}</i> {/* imagem */}
+      <Link className="menu-a" to="#">
+        {" "}
+        {text}{" "}
+      </Link>{" "}
+      {/* Link */}
+    </NavLink>
+  );
+}
+
 export function NavBarProfessor() {
   /* Criando função para identificarquando o dropdown esta ativo */
   const [openOne, setOpenOne] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
+  const [opentThree, setOpenThree] = useState(false);
 
   let menuRef = useRef<HTMLDivElement>(null);
   let notRef = useRef<HTMLDivElement>(null);
+  let notRefP = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -77,6 +104,9 @@ export function NavBarProfessor() {
       }
       if (notRef.current && !notRef.current.contains(e.target as Node)) {
         setOpenTwo(false);
+      }
+      if (notRefP.current && !notRefP.current.contains(e.target as Node)) {
+        setOpenThree(false);
       }
     };
 
@@ -182,7 +212,7 @@ export function NavBarProfessor() {
             </div>
 
             <div className="Icons">
-              <div className="icon-list" ref={notRef}>
+              <div className="icon-list">
                 <ul>
                   <li className="notification-dropdown">
                     <div
@@ -190,6 +220,7 @@ export function NavBarProfessor() {
                       onClick={() => {
                         setOpenTwo(!openTwo);
                       }}
+                      ref={notRef}
                     >
                       <div className="link-bell">
                         <FontAwesomeIcon icon={faBell} className="iconsBell" />
@@ -211,8 +242,41 @@ export function NavBarProfessor() {
                         />
                       </div>
                     </li>
+                  </li>{" "}
+                  {/* Notificação */}
+                  <li className="profile-notification">
+                    {" "}
+                    {/* Perfil */}
+                    <div
+                      className="profile"
+                      onClick={() => {
+                        setOpenThree(!opentThree);
+                      }}
+                      ref={notRefP}
+                    >
+                      <div className="profileIcon">
+                        <FontAwesomeIcon icon={faUser} className="not-icons" />
+                      </div>
+                    </div>
+                    <li>
+                      <div
+                        className={`dropdown-profile ${
+                          opentThree ? "activeOne" : "inactiveOne"
+                        }`}
+                      >
+                        <DropdownProfile
+                          to="/profile"
+                          icon={<UserPen size={20} />}
+                          text={"Visualizar Perfil"}
+                        />
+                        <DropdownProfile
+                          to="#"
+                          icon={<LogOut  size={20} />}
+                          text={"Sair"}
+                        />
+                      </div>
+                    </li>
                   </li>
-
                   <li className="li-notification">
                     <div className="secondPart">
                       <div className="profile">

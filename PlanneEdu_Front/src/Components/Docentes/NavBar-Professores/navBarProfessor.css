@@ -227,6 +227,76 @@ link:active {
 }
 
 .Icons {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Dropdown Profile */
+.dropdown-profile {
+    position: absolute;
+    top: 5.5vw;
+    right: 2vw;
+    background-color: #fff;
+    padding: 1.2vw 1.2vw;
+    width: 14vw;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+}
+
+.dropdown-profile.activeOne{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: var(--speed) ease;
+}
+
+.dropdown-profile.inactiveOne{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: var(--speed) ease;
+}
+.dropdown-profile::before {
+    content: "";
+    position: absolute;
+    top: -2.5vw; /* Ajusta a seta acima do dropdown */
+    right: 3vw; /* Ajusta a posição horizontal da seta */
+    border-width: 1.5vw;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+}
+
+.dropdown-profile .dropdownProfile:not(:first-child) {
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+    margin: 0;
+}
+
+.dropdownProfile {
+    display: flex;
+    align-items: center;  
+    padding: 0.2vw;  
+}
+
+.dropdownProfile .icon:hover, .dropdownProfile .menu-a:hover{
+    color: #074973; /* cor quando o hover estiver ativo */
+    cursor: pointer;
+}
+
+.dropdownProfile .icon {
+    max-width: 2vw;
+    margin-right: 0.9vw;
+    margin-top: 0.6vw;
+    color: #7F7F7F;
+    align-self: center;
+    transition: var(--speed);
+}
+
+.dropdownProfile .menu-a {
+    font-size: 1.1vw;
+    max-width: 15vw;
+    color: #7F7F7F;
+    align-self: center;
+    margin: 0;
+    transition: var(--speed);
 }
