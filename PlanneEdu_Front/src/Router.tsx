@@ -26,7 +26,6 @@ const Router: React.FC = () => {
                     <Route path='/' element={<Login />}></Route>
                     <Route path='/redefinicaosenha' element={<PasswordReset />}></Route>
                     <Route path='/verificacaoemail' element={<VerificationEmail />}></Route>
-                    <Route path='/navbar' element={<NavBarProfessor />}></Route>
                     <Route path='/navbaropp' element={<NavBarOpp />}></Route>
                     <Route path='/homeprofessor' element={<Home />}></Route>
                     <Route path='/addatividade' element={<AddActivity />}></Route>
