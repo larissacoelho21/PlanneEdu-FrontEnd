@@ -2,13 +2,23 @@ import { Link } from "react-router-dom";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css";
 import { Clock3, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function Home() {
+  const [userName, setUserName] = useState<string | null>("");
+
+  useEffect(() => {
+    // Recupera o nome do usuário do localStorage
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
   return (
     <section className="homeTeacher">
       <NavBarProfessor />
       <div className="introTeacher">
-        <h1>Seja bem-vindo, Giovani!</h1>
+        <h1>Seja bem-vindo, {userName || "Usuário"}</h1>
         <h2>Visualize suas turmas ativas</h2>
         <hr />
       </div>

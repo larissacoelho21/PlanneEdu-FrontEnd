@@ -30,28 +30,31 @@ export function Login() {
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault(); // Evita o reload da página
 
-    fetch(`${BaseUrl}/auth/login`, { //conectando com o computador que está rodando o back-end
+    fetch(`${BaseUrl}/auth/login`, {
+      //conectando com o computador que está rodando o back-end
       method: "POST", //method post de envio
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({//transformando os valores de nif e senha em string
-        nif: nifValue, 
+      body: JSON.stringify({
+        //transformando os valores de nif e senha em string
+        nif: nifValue,
         password: passwordValue,
       }),
     })
       .then((response) => {
         if (!response.ok) {
           return response.json().then((err) => {
-            throw new Error(
-              err.error || "valores não encontrados"
-            );
+            throw new Error(err.error || "valores não encontrados");
           });
         }
         return response.json();
       })
       .then((data) => {
-        if (data.user.defaultUser === true) { //identifcando se o usuário é padrão
+        // Armazenar o nome do usuário no localStorage
+        localStorage.setItem("userName", data.user.name);
+        if (data.user.defaultUser === true) {
+          //identifcando se o usuário é padrão
           navigate("/profile"); // Redireciona para a página de perfil
           toast.info("Por favor, atualize suas informações.");
         }
@@ -68,7 +71,7 @@ export function Login() {
         }
       })
       .catch((error) => {
-        toast.error("NIF ou senha incorretos, tente novamente");//alert
+        toast.error("NIF ou senha incorretos, tente novamente"); //alert
         console.error("Erro ao carregar dados dos usuários: ", error);
       });
   };
