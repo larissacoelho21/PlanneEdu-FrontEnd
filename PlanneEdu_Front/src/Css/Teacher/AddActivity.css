@@ -261,3 +261,24 @@ input[type="date"]:focus {
   cursor: pointer;
   transition: 0.3s ease;
 }
+
+.card-challenge{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 3vh 2vw;
+  border: solid 1.5px var(--black);
+  border-radius: 0.5vw;
+}
+
+.number-challenge h1{
+  font-size: 1.5vw;
+  font-weight: 700;
+  margin-bottom: 1vw;
+}
+
+.view-description h1,
+.view-caps h1{
+  font-size: 1vw;
+  font-weight: 400;
+}

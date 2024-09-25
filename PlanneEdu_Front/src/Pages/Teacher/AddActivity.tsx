@@ -152,6 +152,23 @@ export function AddActivity() {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
+
+          <div className="card-challenge">
+            <div className="number-challenge">
+              <h1>Desafio 1</h1>
+            </div>
+            <div className="view-description">
+              <h1>Elaborar algoritmos de rotinas conforme metódos de modelagem definidos</h1>
+            </div>
+            <div className="view-caps">
+              <div className="view-capbastec">
+                <h1>Capacidades técnicas: 1, 3, 6 e 9</h1>
+              </div>
+              <div className="view-capsoc">
+                <h1>Capacidades socioemocionais: 1, 5, 7 e 8</h1>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="results-add">
