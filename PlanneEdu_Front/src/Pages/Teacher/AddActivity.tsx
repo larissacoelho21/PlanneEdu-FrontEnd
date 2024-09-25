@@ -22,6 +22,14 @@ function InputField({ id, label, type = "text" }: InputFieldProps) {
     setIsFilled(event.target.value !== "");
   };
 
+  /* Conectando com o Back */
+  const [dataProposta, setDataProposta] = useState("")
+  const [dataEntrega, setDataEntrega] = useState("")
+  const [estrategiaApre, setEstrategiaApre] = useState("")
+  const [capacidadesBT, setCapacidadesBT ] = useState("")
+  const [capaScio, setCapaSocio] = useState("")
+  const [contextualizacao, setContextualizacao] = useState("")
+
   return (
     <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
       <label className="label-add" htmlFor={id}>
