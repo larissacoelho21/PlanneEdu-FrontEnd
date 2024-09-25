@@ -38,6 +38,8 @@ export function PasswordReset() {
       })
       .then((data) => {
         console.log("email enviado:", data);
+        // Armazena o e-mail no localStorage
+        localStorage.setItem("emailValue", emailValue);
         toast.success("E-mail enviado, verifique sua caixa de mensagens!");
         navigate("/verificacaoemail");
       })

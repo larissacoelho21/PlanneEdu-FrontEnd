@@ -1,0 +1,109 @@
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --white: #fff;
+  --black: #000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-planne {
+  width: 40vw;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5vw;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content {
+  width: 100%;
+  height: 7vw;
+  background-color: #084973;
+  padding: 1vw;
+  color: #ffffff;
+  background-color: var(--blue-one);
+  padding: 1vw;
+  color: var(--white);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 5%;
+  border-radius: 0.5vw 0.5vw 5vw 5vw;
+}
+
+.buttons-action {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 2vw;
+}
+
+.button-close button {
+  cursor: pointer;
+  background-color: transparent;
+  border: solid 0.1171875vw #07678d;
+  padding: 0.5vw 3vw;
+  color: var(--blue-two);
+  border-radius: 0.5vw;
+  margin-bottom: 5%;
+  transition: 0.3s ease;
+}
+
+.button-close button:hover {
+  background-color: #07678d;
+  color: #ffffff;
+}
+
+.button-close button:active {
+  translate: 0 0.5vw;
+  background-color: #07678d;
+  color: #ffffff;
+}
+
+.button-close button:hover {
+  background-color: var(--blue-two);
+  color: var(--white);
+}
+
+.button-add,
+.button-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blue-two);
+  border-radius: 0.5vw;
+  width: 22vw;
+  height: 8vh;
+}
+
+.button-add h1,
+.button-view h1 {
+  font-weight: normal;
+  font-size: 1.3vw;
+}
+
+.button-add a,
+.button-view a {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  color: var(--white);
+}
+
+.button-view img {
+  width: 2vw;
+}
