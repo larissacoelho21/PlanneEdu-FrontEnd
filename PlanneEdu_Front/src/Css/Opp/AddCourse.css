@@ -1,0 +1,43 @@
+:root{
+  --blue-one: #074973;
+  --white-one: #ffffff;
+  --gray-one: #bcbbbb;
+}
+
+.introduction-course{
+  text-align: center;
+}
+
+.introduction-course h1{
+  font-weight: 600;
+  color: var(--blue-one);
+}
+
+.introduction-course h2{
+  font-size: 1.5vw;
+  font-weight: 400;
+}
+
+.select-planne-course{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+
+
+.select-planne-course select{
+  width: 80vw;
+  outline: none;
+  border-bottom: solid 2px var(--gray-one);
+  border-top: transparent;
+  border-right: transparent;
+  border-left: transparent;
+  background-color: transparent;
+}
+
+.select-planne-course option:focus{
+  background-color: transparent;
+}
