@@ -111,3 +111,47 @@ thead th {
 .button:hover {
     background-color: #165d89b2;
 }
+
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+    .introTeacher h1 {
+        font-size: 4.5vw;
+    }
+
+    .introTeacher h2 {
+        font-size: 3vw;
+    }
+
+    .introTeacher hr {
+        width: 25vw;
+        height: 0.5vw;
+        margin-top: 1vw;
+    }
+
+    .table-container {
+        width: 90%;
+    }
+
+    thead th {
+        font-size: 3vw;
+    }
+
+    .turmas-homeopp {
+        font-size: 2.5vw;
+    }
+
+    .turmas-homeopp1 {
+        font-size: 2.5vw;
+    }
+
+    #subtitle {
+        font-size: 2.8vw;
+    }
+
+    .button {
+        font-size: 2.4vw;
+        border-radius: 2vw;
+    }
+}
