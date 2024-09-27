@@ -68,8 +68,34 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-  .introTeacher h2 {
+  .introTurma h1 {
+    font-size: 4.5vw;
+  }
+
+  .introTurma h2 {
     font-size: 3vw;
-    width: 60%;
+  }
+
+  .introTurma hr {
+    margin-top: 1vw;
+    width: 25vw;
+    height: 0.5vw;
+  }
+
+  .technology-turma {
+    font-size: 1.8vw;
+    width: 40vw;
+  }
+
+  .highlight {
+    font-size: 2.2vw;
+  }
+
+  .open-class p {
+    font-size: 2.2vw;
+  }
+
+  .Arrow svg {
+    width: 50vw;
   }
 }
