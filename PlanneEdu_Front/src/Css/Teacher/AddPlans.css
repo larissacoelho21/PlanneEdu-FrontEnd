@@ -56,6 +56,10 @@
   justify-content: space-between;
 }
 
+.captecsocio, .caprelacionadas, .estra-ensino, .recur-amb{
+  width: 45%;
+}
+
 .inputt select{
   border: none;
   border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
@@ -126,6 +130,25 @@
   text-align: left;
 }
 
+.card-info{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 3vh 2vw;
+  border: solid 1.5px #000;
+  border-radius: 0.5vw;
+  width: 45%;
+}
+
+.date-plan h1{
+  font-size: 1.5vw;
+  font-weight: 700;
+}
+
+.selections p{
+  font-size: 1vw;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -162,6 +185,8 @@
 
 .popup-edit h2{
   margin: 0 auto;
+  color: #075a7b;
+  font-size: 1.5vw;
 }
 
 .popup-edit .select-pop{
@@ -181,6 +206,7 @@
   display: flex;
   gap: 2vw;
   justify-content: center;
+  margin-top: 1.5vw;
 }
 
 .edit-btns button:hover{
@@ -234,11 +260,22 @@
   justify-content: center;
   gap: 1vw;
   width: 40vw;
-  height: 90vh;
+  height: 93vh;
   z-index: 1001;
+  overflow: auto;
 }
 
-.popup-plan input{
+.dates{
+  display: flex;
+  justify-content: space-between;
+}
+
+.proposta, .final{
+  width: 15vw;
+}
+
+.popup-plan input,
+.popup-plan select{
   font-size: 1.1vw;
 }
 
@@ -252,6 +289,51 @@
 }
 
 .popup-plan h3{
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   font-weight: 400;
+
+}
+
+.popup-plan::-webkit-scrollbar {
+  width: .65vw; 
+}
+
+.popup-plan::-webkit-scrollbar-track {
+  background: #dcdcdc;
+  border: .7px #b1b1b1;
+}
+
+.popup-plan::-webkit-scrollbar-thumb {
+  background-color: #07678D;
+  border-radius: 20px;
+  border: .5px solid #075a7b;
+}
+
+.form-actions{
+  display: flex;
+  gap: 5vw;
+  justify-content: center;
+  margin-bottom: 3vw;
+}
+
+.save{
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.form-actions button{
+  border: #07678D solid 2px;
+  padding: .8vw 7vw;
+  border-radius: .5vh;
+  background: #07678D;
+  color: #FFF;
+  font-size: 1.2vw;
+}
+
+.form-actions button:hover{
+  background: none;
+  color: #07678D;
+  cursor: pointer;
+  transition: .3s ease-in-out;
 }

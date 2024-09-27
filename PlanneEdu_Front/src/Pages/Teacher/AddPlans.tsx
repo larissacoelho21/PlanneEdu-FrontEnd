@@ -5,6 +5,7 @@ import { CodeXml } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { Plus } from "lucide-react";
+import { Check } from "lucide-react";
 import {
   Multiselect,
   SelectOption,
@@ -21,12 +22,12 @@ const options = [
 
 export function AddPlans() {
   /* ======== configurações utilizadas no multiselect ======== */
-  const [value, setValue] = useState<SelectOption[]>([options[0]]);
-  const [value2, setValue2] = useState<SelectOption[]>([options[0]]);
-  const [value3, setValue3] = useState<SelectOption[]>([options[0]]);
-  const [value4, setValue4] = useState<SelectOption[]>([options[0]]);
-  const [value5, setValue5] = useState<SelectOption[]>([options[0]]);
-  const [value6, setValue6] = useState<SelectOption[]>([options[0]]);
+  const [value, setValue] = useState<SelectOption[]>([]);
+  const [value2, setValue2] = useState<SelectOption[]>([]);
+  const [value3, setValue3] = useState<SelectOption[]>([]);
+  const [value4, setValue4] = useState<SelectOption[]>([]);
+  const [value5, setValue5] = useState<SelectOption[]>([]);
+  const [value6, setValue6] = useState<SelectOption[]>([]);
 
   /* ======== funções e configurações para a criação da tabela ======== */
 
@@ -48,7 +49,7 @@ export function AddPlans() {
   /* array das opções presentes no select */
   const selectOptions = ["C", "D"];
 
-  const addData = () => {
+  const addData = (event: React.FormEvent<HTMLButtonElement>) => {
     if (textInput && selectedOption) {
       const newData: TableData = {
         text: textInput,
@@ -57,10 +58,38 @@ export function AddPlans() {
       setTableData([...tableData, newData]);
       setTextInput("");
       setSelectedOption("");
+      event.preventDefault();
     }
   };
 
-  const SaveEdit = () => {
+  /* ======== configurações para a criação do card referente ao planejamento de ensino ======== */
+  interface Plans {
+    dateInicial: string;
+    dateFinal: string;
+    conhecimentos: (string | number)[];
+    estrategias: (string | number)[];
+    recursos: (string | number)[];
+  }
+
+  const [plans, setPlans] = useState<Plans[]>([]);
+  const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>([]);
+  const [valueEstrategias, setValueEstrategias] = useState<SelectOption[]>([]);
+  const [valueRecursos, setValueRecursos] = useState<SelectOption[]>([]);
+
+  const createPlans = () => {
+    const newPlan: Plans = {
+      dateInicial: (document.getElementById("data-proposta") as HTMLInputElement).value,
+      dateFinal: (document.getElementById("data-final") as HTMLInputElement).value,
+      conhecimentos: valueConhecimentos.map((conhecimento) => conhecimento.value),
+      estrategias: valueEstrategias.map((estrategia) => estrategia.value),
+      recursos: valueRecursos.map((recurso) => recurso.value),
+    };
+
+    setPlans([...plans, newPlan]);
+    setShowPopUpPlan(false);
+  };
+
+  const SaveEdit = (event: React.FormEvent<HTMLButtonElement>) => {
     if (editingIndex !== null) {
       const updatedData = [...tableData];
       updatedData[editingIndex] = {
@@ -72,7 +101,8 @@ export function AddPlans() {
       setTextInput("");
       setSelectedOption("");
       setEditingIndex(null);
-      setShowPopUpAdd(false);
+      setShowPopUpEdit(false);
+      event.preventDefault();
     }
   };
 
@@ -81,9 +111,9 @@ export function AddPlans() {
     setTableData(updatedData);
   };
 
-  const [showPopUpAdd, setShowPopUpAdd] = useState(false);
-  const togglePopUpAdd = () => {
-    setShowPopUpAdd(!showPopUpAdd);
+  const [showPopUpEdit, setShowPopUpEdit] = useState(false);
+  const togglePopUpEdit = () => {
+    setShowPopUpEdit(!showPopUpEdit);
   };
 
   const [showPopUpPlan, setShowPopUpPlan] = useState(false);
@@ -116,7 +146,7 @@ export function AddPlans() {
         </div>
       </div>
 
-      <div className="form">
+      <form className="form">
         <div className="inputt">
           <label>Nome</label>
           <input type="text" name="name" id="name" />
@@ -198,8 +228,8 @@ export function AddPlans() {
         </div>
 
         <div className="row">
-          <div className="captecsocio">
-            <label>Capacidades Técnicas e Socioemocionais</label>
+          <div className="estra-ensino">
+            <label>Estratégias de ensino</label>
             <Multiselect
               options={options}
               value={value3}
@@ -207,8 +237,8 @@ export function AddPlans() {
               multiple={true}
             />
           </div>
-          <div className="caprelacionadas">
-            <label>Capacidades Relacionadas</label>
+          <div className="recur-amb">
+            <label>Recursos e Ambientes Pedagógicos</label>
             <Multiselect
               options={options}
               value={value4}
@@ -223,7 +253,9 @@ export function AddPlans() {
           <input type="text" name="pergmedia" id="pergmedia" />
         </div>
 
-        <h3 className="title-section">Estratégias de avaliação de aprendizagem</h3>
+        <h3 className="title-section">
+          Estratégias de avaliação de aprendizagem
+        </h3>
 
         <div className="inputt">
           <label>Instrumentos de Avaliação</label>
@@ -277,11 +309,12 @@ export function AddPlans() {
                   <td>
                     <button
                       className="action-btn"
-                      onClick={() => {
+                      onClick={(event) => {
                         setEditingIndex(index);
                         setTextInput(data.text);
                         setSelectedOption(data.selectedOption);
-                        setShowPopUpAdd(true);
+                        setShowPopUpEdit(true);
+                        event.preventDefault();
                       }}
                     >
                       Editar
@@ -300,34 +333,36 @@ export function AddPlans() {
             </tbody>
           </table>
 
-          {showPopUpAdd && (
+          {showPopUpEdit && (
             <div className="popup-overlay">
               <div className="popup-edit">
                 <h2>Editar</h2>
-                <div className="inputt">
-                  <label>Critérios de avaliação</label>
-                  <input
-                    type="text"
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                  />
-                </div>
-                <div className="select-pop">
-                  <label>Crítico (C) ou Desejável (D)</label>
-                  <select
-                    value={selectedOption}
-                    onChange={(e) => setSelectedOption(e.target.value)}
-                  >
-                    <option value="C">Crítico (C)</option>
-                    <option value="D">Desejável (D)</option>
-                  </select>
-                </div>
-                <div className="edit-btns">
-                  <button onClick={SaveEdit}>Salvar alterações</button>
-                  <button onClick={() => setShowPopUpAdd(false)}>
-                    Cancelar
-                  </button>
-                </div>
+                <form action="">
+                  <div className="inputt">
+                    <label>Critérios de avaliação</label>
+                    <input
+                      type="text"
+                      value={textInput}
+                      onChange={(e) => setTextInput(e.target.value)}
+                    />
+                  </div>
+                  <div className="select-pop">
+                    <label>Crítico (C) ou Desejável (D)</label>
+                    <select
+                      value={selectedOption}
+                      onChange={(e) => setSelectedOption(e.target.value)}
+                    >
+                      <option value="C">Crítico (C)</option>
+                      <option value="D">Desejável (D)</option>
+                    </select>
+                  </div>
+                  <div className="edit-btns">
+                    <button onClick={SaveEdit}>Salvar alterações</button>
+                    <button onClick={() => setShowPopUpEdit(false)}>
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           )}
@@ -338,49 +373,80 @@ export function AddPlans() {
           <label>Datas e conhecimentos abordados</label>
           <button
             className="add-plan"
-            onClick={() => {
+            onClick={(event) => {
               setShowPopUpPlan(true);
+              event.preventDefault();
             }}
           >
             <Plus width={25} height={25} strokeWidth={2} />
           </button>
 
+          {plans.map((plans) => (
+            <div className="card-info">
+            <div className="date-plan">
+              <h1>De {plans.dateInicial} até {plans.dateFinal}</h1>
+            </div>
+            <div className="selections">
+              <p>Conhecimentos: {plans.conhecimentos.join(", ")}</p>
+              <p>Estratégias: {plans.estrategias.join(", ")}</p>
+              <p>Recursos: {plans.recursos.join(", ")}</p>
+            </div>
+          </div>
+          ))
+          }
+          
+
           {showPopUpPlan && (
             <div className="popup-overlay">
               <div className="popup-plan">
                 <h2>Planejamento de aulas</h2>
-                <h3>Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas.
+                <h3>
+                  Descreva o conteúdo das aulas e selecione os conhecimentos,
+                  recursos e estratégias a serem desenvolvidas.
                 </h3>
                 <div className="dates">
                   <div className="proposta">
                     <label>Data proposta</label>
-                    <input type="date" name="" id="" />
+                    <input type="date" name="" id="data-proposta" />
                   </div>
                   <div className="final">
                     <label>Data final</label>
-                    <input type="date" name="" id="" />
+                    <input type="date" name="" id="data-final" />
                   </div>
                 </div>
-                <Multiselect
-                  options={options}
-                  value={value4}
-                  onChange={(o) => setValue4(o)}
-                  multiple={true}
-                />
-                <Multiselect
-                  options={options}
-                  value={value5}
-                  onChange={(o) => setValue5(o)}
-                  multiple={true}
-                />
-                <Multiselect
-                  options={options}
-                  value={value6}
-                  onChange={(o) => setValue6(o)}
-                  multiple={true}
-                />
+                <div className="conhecimentos">
+                  <label>Conhecimentos</label>
+                  <Multiselect
+                    options={options}
+                    value={valueConhecimentos}
+                    onChange={(o) => setValueConhecimentos(o)}
+                    multiple={true}
+                  />
+                </div>
+
+                <div className="estrategias">
+                  <label>Estratégias</label>
+                  <Multiselect
+                    options={options}
+                    value={valueEstrategias}
+                    onChange={(o) => setValueEstrategias(o)}
+                    multiple={true}
+                  />
+                </div>
+
+                <div className="recursos">
+                  <label>Recursos</label>
+                  <Multiselect
+                    options={options}
+                    value={valueRecursos}
+                    onChange={(o) => setValueRecursos(o)}
+                    multiple={true}
+                  />
+                </div>
                 <div className="edit-btns">
-                  <button>Salvar</button>
+                  <button onClick={createPlans}>
+                    Salvar
+                  </button>
                   <button onClick={() => setShowPopUpPlan(false)}>
                     Cancelar
                   </button>
@@ -389,6 +455,14 @@ export function AddPlans() {
             </div>
           )}
         </div>
+      </form>
+
+      <div className="form-actions">
+        <button className="save">
+          <Check />
+          Salvar alterações
+        </button>
+        <button>Cancelar</button>
       </div>
     </main>
   );
