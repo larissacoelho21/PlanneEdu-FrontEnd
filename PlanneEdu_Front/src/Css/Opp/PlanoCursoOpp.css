@@ -20,3 +20,12 @@
   border: 2px solid var(--blue-one);
   transform: scale(1.015);
 }
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .introTeacher h2 {
+    font-size: 3vw;
+    width: 60%;
+  }
+}
