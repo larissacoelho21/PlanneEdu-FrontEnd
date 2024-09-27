@@ -21,7 +21,7 @@ export function PasswordReset() {
       //conectando com o computador que está rodando o back-end
       method: "POST", //method post de envio
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", 
       },
       body: JSON.stringify({
         //transformando os valores de nif e senha em string
