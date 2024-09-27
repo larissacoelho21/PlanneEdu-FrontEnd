@@ -54,6 +54,31 @@ export function AddActivity() {
     setShowPopUpAdd(!showPopUpAdd);
   };
 
+  interface Challenge {
+    id: number;
+    description: string;
+    capTecBas: (string | number)[];
+    capSoc: (string | number)[];
+  }
+
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+
+  const createChallenge = () => {
+    const newChallenge: Challenge = {
+      id: challenges.length + 1,
+      description: (document.getElementById("description") as HTMLInputElement)
+        .value,
+      capTecBas: value.map((cap) => cap.value),
+      capSoc: value.map((cap) => cap.value),
+    };
+
+    setChallenges([...challenges, newChallenge]);
+    togglePopUpAdd();
+
+    setValue([options[0]]);
+    setValue2([options[0]]);
+  };
+
   return (
     <section className="add-activity">
       <div className="start-add">
@@ -149,30 +174,38 @@ export function AddActivity() {
               <h1>Desafios</h1>
             </div>
             <div className="button-add-challenge">
-              <button onClick={togglePopUpAdd}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  togglePopUpAdd();
+                }}
+              >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
 
-            <div className="card-challenge">
-              <div className="number-challenge">
-                <h1>Desafio 1</h1>
-              </div>
-              <div className="view-description">
-                <h1>
-                  Elaborar algoritmos de rotinas conforme metódos de modelagem
-                  definidos
-                </h1>
-              </div>
-              <div className="view-caps">
-                <div className="view-capbastec">
-                  <h1>Capacidades técnicas: 1, 3, 6 e 9</h1>
+            {challenges.map((challenge) => (
+              <div className="card-challenge">
+                <div className="number-challenge">
+                  <h1>Desafio {challenge.id}</h1>
                 </div>
-                <div className="view-capsoc">
-                  <h1>Capacidades socioemocionais: 1, 5, 7 e 8</h1>
+                <div className="view-description">
+                  <h1>{challenge.description}</h1>
+                </div>
+                <div className="view-caps">
+                  <div className="view-capbastec">
+                    <h1>
+                      Capacidades técnicas: {challenge.capTecBas.join(", ")}
+                    </h1>
+                  </div>
+                  <div className="view-capsoc">
+                    <h1>
+                      Capacidades socioemocionais: {challenge.capSoc.join(", ")}
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
 
           <div className="results-add">
@@ -231,7 +264,7 @@ export function AddActivity() {
                 </div>
 
                 <div className="buttons-popup-challenge">
-                  <button>Criar Desafio</button>
+                  <button onClick={createChallenge}>Criar Desafio</button>{" "}
                   <button onClick={togglePopUpAdd}>Cancelar</button>
                 </div>
               </div>
