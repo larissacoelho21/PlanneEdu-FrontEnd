@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  width: 35vw;  
+  width: 100%;  
   border: none;
   border-bottom: 0.2vw solid #00000033;
   display: flex;
@@ -27,11 +27,6 @@
 
 .clear-btn svg{
   width: 1.5vw;
-}
-
-.clear-btn svg:focus,
-.clear-btn svg:hover {
-  color: #000;
 }
 
 .caret{
