@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Login } from './Pages/Login';
 import { PasswordReset } from './Pages/PasswordReset';
 import { VerificationEmail } from './Pages/Verification';
-import { NavBarProfessor } from './Components/Docentes/NavBar-Professores/navBarProfessor';
 import { Home } from './Pages/Teacher/Home';
 import { ClassTeacher } from './Pages/Teacher/ClassTeacher';
 import { PlanEnsino } from './Pages/Teacher/PlanEnsino';
@@ -17,6 +16,8 @@ import { TurmaOpp } from './Pages/Opp/TurmaOpp';
 import { PlanoCursoOpp } from './Pages/Opp/PlanoCursoOpp';
 import { AddActivity } from './Pages/Teacher/AddActivity';
 import { AddCourse } from './Pages/Opp/AddCourse';
+import { AddPlanoCurso } from './Pages/Opp/AddPlanoCursoOpp';
+import { Competencias } from './Components/PlanoDeCurso/Competencias';
 
 //criando rotas e caminhos 
 const Router: React.FC = () => {
@@ -40,6 +41,9 @@ const Router: React.FC = () => {
                     <Route path='/turmaopp' element={<TurmaOpp/>}/>
                     <Route path='/planocursoopp' element={<PlanoCursoOpp/>}/>
                     <Route path='/addcurso' element={<AddCourse/>}/>
+                    <Route path='/addplancurso' element={<AddPlanoCurso/>}/>
+                    <Route path='/addComp' element={<Competencias/>}/>
+                    
                 </Routes>
         </BrowserRouter>
 
