@@ -26,6 +26,10 @@ body {
   text-align: center;
 }
 
+.box-info-class > h1 {
+  font-size: 1.85vw;
+}
+
 .date-badge {
   font-size: 1vw;
   background-color: var(--blue-one);
