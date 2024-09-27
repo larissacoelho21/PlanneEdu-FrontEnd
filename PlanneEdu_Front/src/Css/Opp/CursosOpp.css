@@ -61,26 +61,26 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-    .buttons-class {
-        display: none;
-    }
+  .buttons-class {
+    display: none;
+  }
 
-    .Subject {
-        padding-top: 1vw;
-        font-size: 3vw;
-    }
+  .Subject {
+    padding-top: 1vw;
+    font-size: 3vw;
+  }
 
-    .semester-curso h1,
-    .Class-curso p {
-        font-size: 2vw;
-    }
+  .semester-curso h1,
+  .Class-curso p {
+    font-size: 2vw;
+  }
 
-    .technology-curso {
-        font-size: 1.8vw;
-        width: 40vw;
-    }
+  .technology-curso {
+    font-size: 1.8vw;
+    width: 40vw;
+  }
 
-    .Data-curso > p {
-        font-size: 1.5vw;
-    }
+  .Data-curso > p {
+    font-size: 1.5vw;
+  }
 }

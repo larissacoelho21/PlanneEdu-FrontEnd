@@ -64,3 +64,12 @@
 .classOpp {
   margin-bottom: 5vw;
 }
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .introTeacher h2 {
+    font-size: 3vw;
+    width: 60%;
+  }
+}
