@@ -1,277 +1,274 @@
 .introProfile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 3vw;
-    margin-top: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 3vw;
+  margin-top: 2vw;
 }
 
 .introProfile h1 {
-    color: #074973;
-    font-size: 2.2vw;
+  color: #074973;
+  font-size: 2.2vw;
 }
 
 .introProfile hr {
-    display: block;
-    width: 80vw;
-    height: 3px;
-    border: none;
-    border-radius: 5px;
-    background-image: linear-gradient(to right, #084973, #2685BF);
+  display: block;
+  width: 80vw;
+  height: 3px;
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #084973, #2685bf);
 }
 
 .cardProfile {
-    display: flex;
-    justify-content: center;
-    margin-top: 3vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 3vw;
 }
 
 .container-profile {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    background-color: #ffff;
-    width: 88.5vw;
-    height: 31.7vw;
-    border-radius: 1.05vw;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  background-color: #ffff;
+  width: 88.5vw;
+  height: 31.7vw;
+  border-radius: 1.05vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .rightSide img {
-    height: 34vw;
-    max-width: 0 auto;
-    margin-top: -2.3vw;
+  height: 34vw;
+  max-width: 0 auto;
+  margin-top: -2.3vw;
 }
 
 .leftSide {
-    padding: 1.5vw;
-    margin-left: 2vw;
-    margin-top: 6vw;
+  padding: 1.5vw;
+  margin-left: 2vw;
+  margin-top: 6vw;
 }
 
 .name h3 {
-    font-size: 2.5vw;
-    color: #000000;
-    margin-bottom: 0.5vw;
+  font-size: 2.5vw;
+  color: #000000;
+  margin-bottom: 0.5vw;
 }
 
 .nif,
 .emailPersonal,
 .phone {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.8vw;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8vw;
 }
 
 .nifIcon,
 .mailIcon,
 .phoneIcon {
-    width: 1.5vw;
-    opacity: 80%;
-    margin-right: 1.2vw;
+  width: 1.5vw;
+  opacity: 80%;
+  margin-right: 1.2vw;
 }
 
 .textProfile {
-    color: #000000;
-    font-size: 1.2vw;
+  color: #000000;
+  font-size: 1.2vw;
 }
 
 .courses-profile,
 .classes-profile {
-    margin-top: 1vw;
+  margin-top: 1vw;
 }
 
 .courses-profile h3,
 .classes-profile h3 {
-    font-size: 1.3vw;
-    color: #000000;
-    opacity: 50%;
+  font-size: 1.3vw;
+  color: #000000;
+  opacity: 50%;
 }
 
 .courses-profile p,
 .classes-profile p {
-    display: inline-block;
-    background-color: #074973;
-    border-radius: 1vw;
-    padding: 0.2vw;
-    width: 10vw;
-    font-size: 1vw;
-    text-align: center;
-    color: #ffffffe0;
-    margin-right: 2vw;
-    margin-top: 0.3vw;
+  display: inline-block;
+  background-color: #074973;
+  border-radius: 1vw;
+  padding: 0.2vw;
+  width: 10vw;
+  font-size: 1vw;
+  text-align: center;
+  color: #ffffffe0;
+  margin-right: 2vw;
+  margin-top: 0.3vw;
 }
 
 .buttonsProfile {
-    display: flex;
-    margin-top: 3vw;
-    justify-content: center;
-    gap: 3vw;
+  display: flex;
+  margin-top: 3vw;
+  justify-content: center;
+  gap: 3vw;
 }
 
 .change-button button,
 .password-button button {
-    background-color: #074973;
-    text-align: center;
-    border: none;
-    margin-top: 2vw;
-    border-radius: 0.5vw;
-    font-size: 1.3vw;
-    font-weight: 300;
-    width: 22vw;
-    height: 3.5vw;
-    font-family: "Poppins", system-ui;
-    color: #f2f2f2;
-    margin-bottom: 2vw;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  background-color: #074973;
+  text-align: center;
+  border: none;
+  margin-top: 2vw;
+  border-radius: 0.5vw;
+  font-size: 1.3vw;
+  font-weight: 300;
+  width: 22vw;
+  height: 3.5vw;
+  font-family: "Poppins", system-ui;
+  color: #f2f2f2;
+  margin-bottom: 2vw;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
 }
-
 
 .buttonsProfile button:hover {
-    background-color: #07678d;
+  background-color: #07678d;
 }
-
 
 /* Dialog */
 
 .DialogOverlay {
-    position: fixed;
-    inset: 0;
-    animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .DialogContent {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-        hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26vw;
-    max-width: 450px;
-    max-height: 85vh;
-    padding: 25px;
-    animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26vw;
+  max-width: 450px;
+  max-height: 85vh;
+  padding: 25px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .DialogContent:focus {
-    outline: none;
+  outline: none;
 }
 
 .DialogTitle {
-    margin: 0;
-    font-weight: bold;
-    font-size: 2.1vw;
-    color: #074973;
+  margin: 0;
+  font-weight: bold;
+  font-size: 2.1vw;
+  color: #074973;
 }
 
 /* botão de salvar dentro popUp */
 .Button.save {
-    background-color: #074973;
-    text-align: center;
-    border: 0;
-    border-radius: 0.5vw;
-    font-size: 1.2vw;
-    font-weight: 300;
-    width: 10vw;
-    height: 3vw;
-    font-family: "Poppins", system-ui;
-    margin-top: -1.2vw;
-    color: #f2f2f2;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  background-color: #074973;
+
+  justify-content: center;
+  border: 0;
+  border-radius: 0.5vw;
+  font-size: 1.2vw;
+  font-weight: 300;
+  width: 10vw;
+  height: 3vw;
+  font-family: "Poppins", system-ui;
+  margin-top: -1.2vw;
+  color: #f2f2f2;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
 }
 
 .Button.save:hover {
-    background-color: #07678d;
-    border: 0;
+  background-color: #07678d;
+  border: 0;
 }
 
 .IconButton {
-    font-family: inherit;
-    border-radius: 100%;
-    height: 2vw;
-    width: 2vw;
-    background-color: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    cursor: pointer;
-    top: 1.3vw;
-    right: 1.3vw;
+  font-family: inherit;
+  border-radius: 100%;
+  height: 2vw;
+  width: 2vw;
+  background-color: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  top: 1.3vw;
+  right: 1.3vw;
 }
 
 .IconButton:hover {
-    color: #074973;
+  color: #074973;
 }
-
 
 /* Input */
 
-.Fieldset { /* div */
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin: 1.5vw 0;
-    background-color: transparent;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
+.Fieldset {
+  /* div */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 1.5vw 0;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
 }
 
 .Label {
-    position: absolute;
-    font-size: 1.2vw;
-    font-weight: bold;
-    color: #000000;
-    opacity: 50%;
-    text-align: right;
-    transition: all 0.2s ease;
+  position: absolute;
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: var(--gray-one);
+  text-align: right;
+  transition: all 0.2s ease;
 }
 
 .Fieldset .Input {
-    width: 22vw;
-    height: 2.2vw;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2vw;
-    border: none;
-    border-bottom: rgba(0, 0, 0, 0.4) solid 2px;
-    margin-bottom: 1vw;
+  width: 22vw;
+  height: 2.2vw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2vw;
+  border: none;
+  border-bottom: var(--gray-one) solid 2px;
+  margin-bottom: 1vw;
 }
 
 .Fieldset.filled .Label,
 .Input:focus + .Label {
-    transform: translateY(-1.5vw);
-    font-size: 1vw;
-    opacity: 1;
+  transform: translateY(-1.5vw);
+  font-size: 1vw;
+  opacity: 1;
 }
 
-
 @keyframes overlayShow {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes contentShow {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -48%) scale(0.96);
-    }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
