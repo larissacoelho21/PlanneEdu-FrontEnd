@@ -72,21 +72,36 @@ export function AddPlans() {
   }
 
   const [plans, setPlans] = useState<Plans[]>([]);
-  const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>([]);
+  const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>(
+    []
+  );
   const [valueEstrategias, setValueEstrategias] = useState<SelectOption[]>([]);
   const [valueRecursos, setValueRecursos] = useState<SelectOption[]>([]);
 
   const createPlans = () => {
+    const dateInicial = formatDate(
+      (document.getElementById("data-proposta") as HTMLInputElement).value
+    );
+    const dateFinal = formatDate(
+      (document.getElementById("data-final") as HTMLInputElement).value
+    );
+
     const newPlan: Plans = {
-      dateInicial: (document.getElementById("data-proposta") as HTMLInputElement).value,
-      dateFinal: (document.getElementById("data-final") as HTMLInputElement).value,
-      conhecimentos: valueConhecimentos.map((conhecimento) => conhecimento.value),
+      dateInicial,
+      dateFinal,
+      conhecimentos: valueConhecimentos.map(
+        (conhecimento) => conhecimento.value
+      ),
       estrategias: valueEstrategias.map((estrategia) => estrategia.value),
       recursos: valueRecursos.map((recurso) => recurso.value),
     };
 
     setPlans([...plans, newPlan]);
-    setShowPopUpPlan(false);
+    /* resetar as informações dos selects */
+    setValueConhecimentos([]);
+    setValueEstrategias([]);
+    setValueRecursos([]);
+    togglePopUpPlan();
   };
 
   const SaveEdit = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -106,9 +121,11 @@ export function AddPlans() {
     }
   };
 
-  const DeleteData = (index: number) => {
-    const updatedData = tableData.filter((_, i) => i !== index);
-    setTableData(updatedData);
+  /* função que remove um item de um array com base no índice fornecido */
+  /* "React.Dispatch<React.SetStateAction<any[]>>" => define o tipo de 'setData' como uma função que atualiza o estado de um array de qualquer tipo (any) */
+  const DeleteData = (data: any[], setData: React.Dispatch<React.SetStateAction<any[]>>, index: number) => {
+    const updatedData = data.filter((_, i) => i !== index);
+    setData(updatedData);
   };
 
   const [showPopUpEdit, setShowPopUpEdit] = useState(false);
@@ -121,8 +138,18 @@ export function AddPlans() {
     setShowPopUpPlan(!showPopUpPlan);
   };
 
-  /* ======== layout e estrutura da página ======== */
+  const [showPopUpClasses, setShowPopUpClasses] = useState(false);
+  const togglePopUpClasses = () => {
+    setShowPopUpClasses(!showPopUpClasses);
+  };
 
+  /* ======== formatação das datas ======== */
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
+  /* ======== layout e estrutura da página ======== */
   return (
     <main>
       <SubNavbar />
@@ -148,8 +175,8 @@ export function AddPlans() {
 
       <form className="form">
         <div className="inputt">
-          <label>Nome</label>
-          <input type="text" name="name" id="name" />
+          <label>Curso</label>
+          <input type="text" name="course" id="course" />
         </div>
         <div className="inputt">
           <label>Unidade Curricular</label>
@@ -198,11 +225,11 @@ export function AddPlans() {
         <div className="row">
           <div className="inputt">
             <label>Data</label>
-            <input type="date" name="horas" id="horas" />
+            <input type="date" name="date" id="datte" className="large-input" />
           </div>
           <div className="inputt">
             <label>Carga Horária</label>
-            <input type="number" name="hrs" id="hrs" />
+            <input type="number" name="hrs" id="hrs" className="large-input" />
           </div>
         </div>
 
@@ -288,7 +315,11 @@ export function AddPlans() {
             </select>
           </div>
 
-          <button className="add-btn" onClick={addData}>
+          <button
+            className="add-btn"
+            onClick={addData}
+            disabled={!textInput || !selectedOption}
+          >
             Adicionar à Tabela
           </button>
 
@@ -310,11 +341,11 @@ export function AddPlans() {
                     <button
                       className="action-btn"
                       onClick={(event) => {
+                        event.preventDefault();
                         setEditingIndex(index);
                         setTextInput(data.text);
                         setSelectedOption(data.selectedOption);
-                        setShowPopUpEdit(true);
-                        event.preventDefault();
+                        togglePopUpEdit();
                       }}
                     >
                       Editar
@@ -323,7 +354,7 @@ export function AddPlans() {
                   <td>
                     <button
                       className="action-btn"
-                      onClick={() => DeleteData(index)}
+                      onClick={() => DeleteData(tableData, setTableData, index)}
                     >
                       Deletar
                     </button>
@@ -335,8 +366,13 @@ export function AddPlans() {
 
           {showPopUpEdit && (
             <div className="popup-overlay">
-              <div className="popup-edit">
-                <h2>Editar</h2>
+              <div className="popup-editt">
+                <div className="title">
+                  <h2>Editar</h2>
+                  <h3>
+                    Edite as informações referente aos critérios de avaliação
+                  </h3>
+                </div>
                 <form action="">
                   <div className="inputt">
                     <label>Critérios de avaliação</label>
@@ -346,6 +382,7 @@ export function AddPlans() {
                       onChange={(e) => setTextInput(e.target.value)}
                     />
                   </div>
+
                   <div className="select-pop">
                     <label>Crítico (C) ou Desejável (D)</label>
                     <select
@@ -356,11 +393,10 @@ export function AddPlans() {
                       <option value="D">Desejável (D)</option>
                     </select>
                   </div>
+
                   <div className="edit-btns">
-                    <button onClick={SaveEdit}>Salvar alterações</button>
-                    <button onClick={() => setShowPopUpEdit(false)}>
-                      Cancelar
-                    </button>
+                    <button onClick={SaveEdit}>Salvar</button>
+                    <button onClick={() => togglePopUpEdit()}>Cancelar</button>
                   </div>
                 </form>
               </div>
@@ -374,27 +410,57 @@ export function AddPlans() {
           <button
             className="add-plan"
             onClick={(event) => {
-              setShowPopUpPlan(true);
+              togglePopUpPlan();
               event.preventDefault();
             }}
           >
             <Plus width={25} height={25} strokeWidth={2} />
           </button>
 
-          {plans.map((plans) => (
+          {plans.map((plan, index) => (
             <div className="card-info">
-            <div className="date-plan">
-              <h1>De {plans.dateInicial} até {plans.dateFinal}</h1>
+              <div className="date-plan">
+                <h1>
+                  {plan.dateInicial} — {plan.dateFinal}
+                </h1>
+              </div>
+              <div className="selections">
+                <p>Conhecimentos: {plan.conhecimentos.join(", ")}</p>
+                <p>Estratégias: {plan.estrategias.join(", ")}</p>
+                <p>Recursos: {plan.recursos.join(", ")}</p>
+              </div>
+              <div className="card-btns">
+                <button
+                  onClick={(event) => {
+                    togglePopUpClasses();
+                    event.preventDefault();
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    DeleteData(plans, setPlans, index);;
+                  }}
+                >
+                  Deletar
+                </button>
+              </div>
             </div>
-            <div className="selections">
-              <p>Conhecimentos: {plans.conhecimentos.join(", ")}</p>
-              <p>Estratégias: {plans.estrategias.join(", ")}</p>
-              <p>Recursos: {plans.recursos.join(", ")}</p>
+          ))}
+
+          {showPopUpClasses && (
+            <div className="popup-overlay">
+              <div className="popup-classes">
+                <h2>Editar planejamento</h2>
+                <h3>
+                  Altere e salve as alterações desejada referente ao
+                  planejamento de aulas
+                </h3>
+              </div>
             </div>
-          </div>
-          ))
-          }
-          
+          )}
 
           {showPopUpPlan && (
             <div className="popup-overlay">
@@ -444,12 +510,8 @@ export function AddPlans() {
                   />
                 </div>
                 <div className="edit-btns">
-                  <button onClick={createPlans}>
-                    Salvar
-                  </button>
-                  <button onClick={() => setShowPopUpPlan(false)}>
-                    Cancelar
-                  </button>
+                  <button onClick={createPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
                 </div>
               </div>
             </div>

@@ -18,24 +18,22 @@
   flex-wrap: wrap;
 }
 
-.clear-btn{
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #696969;
-}
-
-.clear-btn svg{
-  width: 1.5vw;
+.container:focus-within .clear-btn{
+  display: block;
 }
 
 .caret{
   cursor: pointer;
   color: #696969;
+  transition: transform 0.3s ease;
 }
 
 .caret:hover{
   color: #000;
+}
+
+.caret.open {
+  transform: rotate(180deg);
 }
 
 .options {
