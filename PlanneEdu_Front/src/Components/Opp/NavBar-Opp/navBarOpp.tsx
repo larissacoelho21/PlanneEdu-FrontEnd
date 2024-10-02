@@ -108,7 +108,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbar-link active" : "navbar-link"
                   }
-                  to="/"
+                  to="/homeopp"
                 >
                   {" "}
                   Início
@@ -118,7 +118,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbar-link active" : "navbar-link"
                   }
-                  to="/"
+                  to="/cursosopp"
                 >
                   {" "}
                   Cursos
@@ -179,7 +179,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbar-link active last" : "navbar-link"
                   }
-                  to="/"
+                  to="/planocursoopp"
                 >
                   Planos de curso
                 </NavLink>

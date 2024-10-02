@@ -144,10 +144,6 @@ export function NavBarProfessor() {
                   Início
                 </NavLink>
 
-                {/* < li >
-                                        <Link className="navbar-link" to="/homeprofessor">Ínicio</Link>
-                                    </li> */}
-
                 <li className="nav-dropdown">
                   <div
                     className="li-inicio"

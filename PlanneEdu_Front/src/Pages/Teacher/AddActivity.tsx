@@ -8,6 +8,9 @@ import {
 } from "../../Components/Multiselect/Multiselect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { BaseUrl } from "../../Config/config";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface InputFieldProps {
   id: string;
@@ -21,14 +24,6 @@ function InputField({ id, label, type = "text" }: InputFieldProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
   };
-
-  /* Conectando com o Back */
-  const [dataProposta, setDataProposta] = useState("")
-  const [dataEntrega, setDataEntrega] = useState("")
-  const [estrategiaApre, setEstrategiaApre] = useState("")
-  const [capacidadesBT, setCapacidadesBT ] = useState("")
-  const [capaScio, setCapaSocio] = useState("")
-  const [contextualizacao, setContextualizacao] = useState("")
 
   return (
     <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
@@ -53,7 +48,34 @@ const options = [
   { label: "Fifth", value: 5 },
 ];
 
+/* Interface conexão com  Back-End */
+interface Desafio {
+  descricao: string;
+  capacidadesBT: string[];
+  capaSocio: string[];
+}
+
+interface SA {
+  dataProposta: string; // Usar string para datas, pois a conversão pode ser feita antes de enviar para o back-end
+  dataEntrega: string;
+  estrategiaApre:
+    | "situacao problema"
+    | "estudos de caso"
+    | "projeto"
+    | "projeto integrador"
+    | "pesquisa";
+  capacidadesBT: string[];
+  capaSocio: string[];
+  contextualizacao: string;
+  desafios: Desafio[];
+  resultados: string;
+  user: string; // Supondo que seja o ID do usuário
+  materia: string; // Supondo que seja o ID da matéria
+}
+
 export function AddActivity() {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState<SelectOption[]>([options[0]]);
   const [value2, setValue2] = useState<SelectOption[]>([options[0]]);
 
@@ -87,6 +109,69 @@ export function AddActivity() {
     setValue2([options[0]]);
   };
 
+  /* Conectando com o Back */
+  const [formData, setFormData] = useState<SA>({
+    dataProposta: "",
+    dataEntrega: "",
+    estrategiaApre: "situacao problema",
+    capacidadesBT: [],
+    capaSocio: [],
+    contextualizacao: "",
+    desafios: [], // Lista de desafios
+    resultados: "",
+    user: "",
+    materia: "",
+  });
+
+  const handleAct = (event: React.FormEvent) => {
+    event.preventDefault(); // Evita o reload da página
+
+    fetch(`${BaseUrl}/sa/create`, {
+      //conectando com o computador que está rodando o back-end
+      method: "POST", //method post de envio
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((err) => {
+            throw new Error(err.error || "Erro ao cadastrar SA");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Após o cadastro bem-sucedido, redireciona e notifica o usuário
+        toast.success("Atividade cadastrada com sucesso!");
+        navigate("/visualizaratvd"); // Exemplo de redirecionamento após sucesso
+      })
+      .catch((error) => {
+        toast.error("Erro ao cadastrar Atividade, tente novamente.");
+        console.error("Erro ao cadastrar SA: ", error);
+      });
+  };
+
+  // Função para lidar com mudanças nos inputs
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Função para adicionar um novo desafio
+  const adicionarDesafio = () => {
+    setFormData({
+      ...formData,
+      desafios: [
+        ...formData.desafios,
+        { descricao: "", capacidadesBT: [], capaSocio: [] },
+      ],
+    });
+  };
+
   return (
     <section className="add-activity">
       <div className="start-add">
@@ -113,20 +198,30 @@ export function AddActivity() {
         </div>
       </div>
 
-      <form action="">
+      <form onSubmit={handleAct}>
         <div className="form-addactivity">
           <div className="dates-add">
             <div className="proposed-date">
               <label htmlFor="" className="label-date">
                 Data Proposta
               </label>
-              <input type="date" />
+              <input
+                type="date"
+                name="dataProposta"
+                value={formData.dataProposta}
+                onChange={handleChange}
+              />
             </div>
             <div className="delivery-date">
               <label htmlFor="" className="label-date">
                 Data de Entrega
               </label>
-              <input type="date" />
+              <input
+                type="date"
+                name="dataEntrega"
+                value={formData.dataEntrega}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -135,11 +230,55 @@ export function AddActivity() {
               <h1>Estratégia de aprendizagem adotada</h1>
             </div>
             <div className="buttons-add">
-              <button>Situação Problema</button>
-              <button>Estudo de Caso</button>
-              <button>Projeto</button>
-              <button>Projeto Integrador</button>
-              <button>Pesquisa</button>
+              <button
+                value="situacao problema"
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    estrategiaApre: "situacao problema",
+                  })
+                }
+              >
+                Situação Problema
+              </button>
+              <button
+                value="estudos de caso"
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    estrategiaApre: "estudos de caso",
+                  })
+                }
+              >
+                Estudo de Caso
+              </button>
+              <button
+                value="projeto"
+                onClick={() =>
+                  setFormData({ ...formData, estrategiaApre: "projeto" })
+                }
+              >
+                Projeto
+              </button>
+              <button
+                value="projeto integrador"
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    estrategiaApre: "projeto integrador",
+                  })
+                }
+              >
+                Projeto Integrador
+              </button>
+              <button
+                value="pesquisa"
+                onClick={() =>
+                  setFormData({ ...formData, estrategiaApre: "pesquisa" })
+                }
+              >
+                Pesquisa
+              </button>
               <button>Mostrar todos</button>
             </div>
           </div>
@@ -174,6 +313,9 @@ export function AddActivity() {
               id="contextualization"
               label="Contextualização"
               type="text"
+              name="contextualizacao"
+              value={formData.contextualizacao}
+              onChange={handleChange}
             />
           </div>
 
@@ -221,12 +363,15 @@ export function AddActivity() {
               id="contextualization"
               label="Resultados Esperados"
               type="text"
+              name="resultados"
+              value={formData.resultados}
+              onChange={handleChange}
             />
           </div>
 
           <div className="buttons-save-atvd">
-            <button>Salvar Alterações</button>
-            <button>Voltar</button>
+            <button type="submit">Salvar Alterações</button>
+            <button type="button" onClick={() => navigate("/voltar")}>Voltar</button>
           </div>
         </div>
       </form>
@@ -246,7 +391,9 @@ export function AddActivity() {
 
               <div className="forms-add-challenge">
                 <div className="description">
-                  <InputField id="description" label="Descrição" type="text" />
+                  <InputField id="description" label="Descrição" type="text" 
+                    value={formData.contextualizacao}
+                    onChange={handleChange}/>
                 </div>
                 <div className="captecbasic-ch">
                   <label className="label-captecbasic">
@@ -257,6 +404,9 @@ export function AddActivity() {
                     value={value}
                     onChange={(o) => setValue(o)}
                     multiple={true}
+                    onSelect={(selectedList) => setValue(selectedList)}
+                    onRemove={(selectedList) => setValue(selectedList)}
+                    displayValue="name"
                   />
                 </div>
                 <div className="capsocio-ch">
@@ -268,6 +418,9 @@ export function AddActivity() {
                     value={value2}
                     onChange={(o) => setValue2(o)}
                     multiple={true}
+                    onSelect={(selectedList) => setValue2(selectedList)}
+                    onRemove={(selectedList) => setValue2(selectedList)}
+                    displayValue="name"
                   />
                 </div>
 
