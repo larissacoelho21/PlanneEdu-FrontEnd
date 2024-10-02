@@ -143,6 +143,7 @@ export function AddActivity() {
         return response.json();
       })
       .then((data) => {
+        console.log("sucesso", data);
         // Após o cadastro bem-sucedido, redireciona e notifica o usuário
         toast.success("Atividade cadastrada com sucesso!");
         navigate("/visualizaratvd"); // Exemplo de redirecionamento após sucesso
