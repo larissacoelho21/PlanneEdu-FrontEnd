@@ -1,0 +1,101 @@
+.cards-turmaopp {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 2vw;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.highlight {
+  color: #000000f0;
+  font-weight: 700;
+  font-size: 1.7vw;
+}
+
+.open-class {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 1vw;
+}
+
+.open-class p {
+  font-size: 1.5vw;
+}
+
+.introTurma {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 6vw;
+  margin-bottom: 6vw;
+}
+
+.introTurma h1 {
+  font-size: 2.2vw;
+  color: var(--blue-one);
+}
+
+.introTurma h2 {
+  font-size: 1.5vw;
+  font-weight: normal;
+  margin-bottom: 1%;
+}
+
+.introTurma hr {
+  display: block;
+  width: 15vw;
+  height: 3px;
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #084973, #2685bf);
+}
+
+.technology-turma {
+  font-size: 1vw;
+  background-color: #074973;
+  width: 23vw;
+  padding: 0.5vw;
+  color: #ffff;
+  font-weight: normal;
+  text-align: center;
+  border-radius: 0.5vw;
+}
+
+.classOpp {
+  margin-bottom: 5vw;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .introTurma h1 {
+    font-size: 4.5vw;
+  }
+
+  .introTurma h2 {
+    font-size: 3vw;
+  }
+
+  .introTurma hr {
+    margin-top: 1vw;
+    width: 25vw;
+    height: 0.5vw;
+  }
+
+  .technology-turma {
+    font-size: 1.8vw;
+    width: 40vw;
+  }
+
+  .highlight {
+    font-size: 2.2vw;
+  }
+
+  .open-class p {
+    font-size: 2.2vw;
+  }
+
+  .Arrow svg {
+    width: 50vw;
+  }
+}

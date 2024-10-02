@@ -1,0 +1,153 @@
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --white: #fff;
+  --black: #000;
+}
+
+.Intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8vw 0 4vw 0;
+  margin: 6vw 0 4vw 0;
+  gap: 0.5vw;
+}
+
+.Title {
+  font-size: 2.2vw;
+  color: var(--blue-one);
+}
+
+.Description {
+  font-size: 1.5vw;
+  font-weight: 500;
+}
+
+.Line {
+  width: 25vw;
+  height: 0.23vw;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(8, 73, 115, 1) 0%,
+    rgba(38, 133, 191, 1) 100%
+  );
+  border-radius: 2vw;
+  margin: 1vw 0;
+}
+
+.Add-Plano button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  width: 35vw;
+  padding: 0.8vw 1.8vw;
+  margin-bottom: 4vw;
+  border-radius: 1vw;
+  border: none;
+  background: var(--blue-two);
+  color: #fff;
+  color: var(--white);
+  font-size: 1.3vw;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.Add-Plano button:active {
+  translate: 0 0.5vw;
+  background: var(--blue-one);
+}
+
+.Planos,
+.Add-Plano {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vw;
+}
+
+.Planos h2 {
+  font-size: 1.8vw;
+}
+
+.Cards {
+  padding: 0 4vw;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vw;
+  justify-content: space-between;
+  margin-bottom: 3vw;
+}
+
+.Card {
+  background-color: #fff;
+  width: 100%;
+  border-radius: 1vw;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  width: 100%;
+  border-radius: 1vw;
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5vw 2vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #c3c6ce;
+  border: 2px solid transparent;
+  transition: 0.35s ease-out;
+}
+
+.Card:hover {
+  border: 2px solid var(--blue-one);
+  transform: scale(1.015);
+}
+
+.Data {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.Subject {
+  font-weight: 600;
+  font-size: 1.4vw;
+}
+
+.tag-course {
+  background-color: var(--blue-one);
+  width: max-content;
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  display: flex;
+  align-items: center;
+  float: inline-end;
+  gap: 0.5vw;
+  color: #fff;
+  color: var(--white);
+  font-size: 1vw;
+}
+
+.Info {
+  display: flex;
+}
+
+.Teacher,
+.Class {
+  display: flex;
+  align-items: center;
+  margin: 0.5vw 0;
+  gap: 0.5vw;
+  margin-right: 2vw;
+}
+
+.Teacher p,
+.Class p {
+  font-weight: 400;
+  font-size: 1.3vw;
+}
