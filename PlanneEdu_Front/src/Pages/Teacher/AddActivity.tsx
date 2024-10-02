@@ -134,7 +134,7 @@ export function AddActivity() {
             <div className="title-add">
               <h1>Estratégia de aprendizagem adotada</h1>
             </div>
-            <div className="buttons-category">
+            <div className="buttons-add">
               <button>Situação Problema</button>
               <button>Estudo de Caso</button>
               <button>Projeto</button>
@@ -224,7 +224,7 @@ export function AddActivity() {
             />
           </div>
 
-          <div className="buttons-save">
+          <div className="buttons-save-atvd">
             <button>Salvar Alterações</button>
             <button>Voltar</button>
           </div>

@@ -1,129 +1,65 @@
 import { useState } from "react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddCourse.css";
-import { Link } from "react-router-dom";
 
 export function AddCourse() {
-  // Estados
+  /* ======== funções e configurações para a criação da tabela ======== */
+
+  /* definindo a estrutura dos dados da tabela, todos os itens terão uma propriedade de texto (text) e seleção (selectedOption) */
   type TableData = {
-    subject: string;
-    hours: string;
-    semester: string;
+    text: string;
+    selectedOption: string;
   };
 
+  /* gerencia o valor inputado no input de texto */
   const [textInput, setTextInput] = useState<string>("");
-  const [hoursInput, setHoursInput] = useState<string>("");
+  /* gerencia o valor inputado no select */
   const [selectedOption, setSelectedOption] = useState<string>("");
-
-  const [semestersData, setSemestersData] = useState<{
-    [key: string]: TableData[];
-  }>({});
+  /* armazena os dados da tabela, é uma array de objetos*/
+  const [tableData, setTableData] = useState<TableData[]>([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingSemester, setEditingSemester] = useState<string | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-  const selectOptions = [
-    "1º Semestre",
-    "2º Semestre",
-    "3º Semestre",
-    "4º Semestre",
-  ];
-
-  // -- Estados
-
-  // Funções
+  /* array das opções presentes no select */
+  const selectOptions = [1, 2, 3, 4];
 
   const addData = () => {
-    if (textInput && selectedOption && hoursInput) {
+    if (textInput && selectedOption) {
       const newData: TableData = {
-        subject: textInput,
-        hours: hoursInput,
-        semester: selectedOption,
+        text: textInput,
+        selectedOption: selectedOption,
       };
-
-      setSemestersData((prevData) => ({
-        ...prevData,
-        [selectedOption]: [...(prevData[selectedOption] || []), newData],
-      }));
-
+      setTableData([...tableData, newData]);
       setTextInput("");
-      setHoursInput("");
       setSelectedOption("");
     }
   };
 
   const SaveEdit = () => {
-    if (editingIndex !== null && editingSemester) {
-      if (editingSemester !== selectedOption) {
-        const updatedPreviousSemesterData = semestersData[
-          editingSemester
-        ].filter((_, i) => i !== editingIndex);
-
-        const newData: TableData = {
-          subject: textInput,
-          hours: hoursInput,
-          semester: selectedOption,
-        };
-
-        setSemestersData((prevData) => ({
-          ...prevData,
-          [editingSemester]: updatedPreviousSemesterData,
-          [selectedOption]: [...(prevData[selectedOption] || []), newData],
-        }));
-      } else {
-        const updatedData = [...(semestersData[editingSemester] || [])];
-        updatedData[editingIndex] = {
-          subject: textInput,
-          hours: hoursInput,
-          semester: selectedOption,
-        };
-
-        setSemestersData((prevData) => ({
-          ...prevData,
-          [editingSemester]: updatedData,
-        }));
-      }
-
-      resetEditState();
+    if (editingIndex !== null) {
+      const updatedData = [...tableData];
+      updatedData[editingIndex] = {
+        text: textInput,
+        selectedOption: selectedOption,
+      };
+      setTableData(updatedData);
+      setIsEditing(false);
+      setTextInput("");
+      setSelectedOption("");
+      setEditingIndex(null);
+      setShowPopUpEdit(false);
     }
   };
 
-  const resetEditState = () => {
-    setIsEditing(false);
-    setTextInput("");
-    setHoursInput("");
-    setSelectedOption("");
-    setEditingIndex(null);
-    setEditingSemester(null);
-    setShowPopUpEdit(false);
+  const DeleteData = (index: number) => {
+    const updatedData = tableData.filter((_, i) => i !== index);
+    setTableData(updatedData);
   };
 
-  const DeleteData = (semester: string, index: number) => {
-    const updatedData = semestersData[semester].filter((_, i) => i !== index);
-    setSemestersData((prevData) => ({
-      ...prevData,
-      [semester]: updatedData,
-    }));
-  };
-
-  // -- Funções
-
-  // PopUp de edição
   const [showPopUpEdit, setShowPopUpEdit] = useState(false);
   const togglePopUpEdit = () => {
     setShowPopUpEdit(!showPopUpEdit);
   };
-
-  // -- PopUp de edição
-
-  // PopUp deletar curso
-  const [showPopUpDelete, setShowPopUpDelete] = useState(false);
-  const togglePopUpDelete = () => {
-    setShowPopUpDelete(!showPopUpDelete);
-  };
-
-  // -- PopUp de deletar
-
   return (
     <section className="add-new-course">
       <SubNavbar />
@@ -218,10 +154,7 @@ export function AddCourse() {
             <div className="table-grid-hours">
               <div className="forms-grid-hours">
                 <div className="select-semester-grid">
-                  <label
-                    style={{ color: "var(--gray-one)" }}
-                    className="label-select"
-                  >
+                  <label style={{ color: "var(--gray-one)" }}>
                     Selecione o Semestre
                   </label>
                   <select
@@ -236,45 +169,31 @@ export function AddCourse() {
                     ))}
                   </select>
                 </div>
-
-                <div className="grid-table">
-                  <label
-                    style={{ color: "var(--gray-one)" }}
-                    className="label-select"
-                  >
-                    Matéria
-                  </label>
-                  <select
-                    className="matter"
+                <div className="matter-grid-table">
+                  <label style={{ color: "var(--gray-one)" }}>Matéria</label>
+                  <input
+                    type="text"
+                    name="matter"
                     id="matter-grid"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
-                  >
-                    <option value=""></option>
-                  </select>
+                  />
                 </div>
-
-                <div className="grid-table">
-                  <label
-                    style={{ color: "var(--gray-one)" }}
-                    className="label-select"
-                  >
-                    Carga Horária
-                  </label>
-                  <select
-                    className="hours"
-                    id="hours-grid"
-                    value={hoursInput}
-                    onChange={(e) => setHoursInput(e.target.value)}
-                  >
-                    <option value=""></option>
-                  </select>
+                <div className="matter-grid-table">
+                  <label style={{ color: "var(--gray-one)" }}>Carga Horária</label>
+                  <input
+                    type="text"
+                    name="matter"
+                    id="matter-grid"
+                    value={textInput}
+                    onChange={(e) => setTextInput(e.target.value)}
+                  />
                 </div>
 
                 <button
                   className="add-table"
                   onClick={(e) => {
-                    e.preventDefault();
+                    e.preventDefault(); 
                     addData();
                   }}
                 >
@@ -282,80 +201,52 @@ export function AddCourse() {
                 </button>
               </div>
 
-              {Object.keys(semestersData)
-                .sort((a, b) => parseInt(a) - parseInt(b))
-                .map((semester) => (
-                  <div key={semester} className="semester-grid">
-                    <h2>{semester}</h2>
-                    <table className="table-infos-grid">
-                      <thead>
-                        <tr>
-                          <th>Matéria</th>
-                          <th>Carga Horária</th>
-                          <th>Editar</th>
-                          <th>Deletar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {semestersData[semester].map((data, index) => (
-                          <tr key={index}>
-                            <td>{data.subject}</td>
-                            <td>{data.hours}</td>
-                            <td>
-                              <button
-                                className="action-btn"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setEditingIndex(index);
-                                  setEditingSemester(semester);
-                                  setTextInput(data.subject);
-                                  setHoursInput(data.hours);
-                                  setSelectedOption(semester);
-                                  setShowPopUpEdit(true);
-                                }}
-                              >
-                                Editar
-                              </button>
-                            </td>
-                            <td>
-                              <button
-                                className="action-btn"
-                                onClick={() => DeleteData(semester, index)}
-                              >
-                                Deletar
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ))}
+              <table className="table-infos-grid">
+                <thead>
+                  <tr>
+                    <th>Semestre</th>
+                    <th>Matéria</th>
+                    <th>Carga Horária</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.map((data, index) => (
+                    <tr key={index}>
+                      <td>{data.text}</td>
+                      <td>{data.selectedOption}</td>
+                      <td>
+                        <button
+                          className="action-btn"
+                          onClick={(e) => {
+                            setEditingIndex(index);
+                            setTextInput(data.text);
+                            setSelectedOption(data.selectedOption);
+                            setShowPopUpEdit(true);
+                            e.preventDefault(); 
+                          }}
+                        >
+                          Editar
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="action-btn"
+                          onClick={() => DeleteData(index)}
+                        >
+                          Deletar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
               {showPopUpEdit && (
-                <div className="popup-overlay" onClick={togglePopUpEdit}>
-                  <div
-                    className="popup-edit"
-                    onClick={(e) => e.stopPropagation()} 
-                  >
-                    <h2>Editar Matéria</h2>
-                    <div className="inputt">
-                      <label>Semestre</label>
-                      <select
-                        value={selectedOption}
-                        onChange={(e) => setSelectedOption(e.target.value)}
-                      >
-                        <option value="" disabled>
-                          Selecione o Semestre
-                        </option>
-                        {selectOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
+                <div className="popup-overlay">
+                  <div className="popup-edit">
+                    <h2>Editar</h2>
                     <div className="inputt">
                       <label>Matéria</label>
                       <input
@@ -364,16 +255,16 @@ export function AddCourse() {
                         onChange={(e) => setTextInput(e.target.value)}
                       />
                     </div>
-
-                    <div className="inputt">
-                      <label>Carga Horária</label>
-                      <input
-                        type="text"
-                        value={hoursInput}
-                        onChange={(e) => setHoursInput(e.target.value)}
-                      />
+                    <div className="select-pop">
+                      <label>Crítico (C) ou Desejável (D)</label>
+                      <select
+                        value={selectedOption}
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                      >
+                        <option value="C">Crítico (C)</option>
+                        <option value="D">Desejável (D)</option>
+                      </select>
                     </div>
-
                     <div className="edit-btns">
                       <button onClick={SaveEdit}>Salvar alterações</button>
                       <button onClick={() => setShowPopUpEdit(false)}>
@@ -386,41 +277,10 @@ export function AddCourse() {
             </div>
           </div>
 
-          <div className="buttons-save">
-            <button>Salvar alerações</button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setShowPopUpDelete(true);
-              }}
-            >
-              Excluir curso
-            </button>
+          <div className="buttons-save-atvd">
+            <button>Salvar Alterações</button>
+            <button>Voltar</button>
           </div>
-
-          {showPopUpDelete && (
-            <div className="popup-overlay-delete" onClick={togglePopUpDelete}>
-              <div
-                className="message-delete-course"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h1>AVISO!</h1>
-                <h2>Não foi possível deletar este curso.</h2>
-                <h3>
-                  Existem{" "}
-                  <span style={{ color: "#074973", fontWeight: "bold" }}>
-                    {" "}
-                    5
-                  </span>{" "}
-                  turmas atribuídas a ele. Por favor, remova as turmas
-                  associadas antes de tentar excluir o curso.
-                </h3>
-                <div className="button-view-class">
-                  <Link to={"/turmaopp"}>Ver minhas turmas</Link>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </form>
     </section>

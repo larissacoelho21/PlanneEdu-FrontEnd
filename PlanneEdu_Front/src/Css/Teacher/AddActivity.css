@@ -74,13 +74,13 @@ input[type="date"]:focus {
   font-weight: 600;
 }
 
-.buttons-category{
+.buttons-add{
   display: flex;
   gap: 4.2vw;
   margin-bottom: 3%;
 }
 
-.buttons-category button{
+.buttons-add button{
   background-color: transparent;
   border: 2px solid var(--blue-two);
   border-radius: 0.5vw;
@@ -91,7 +91,7 @@ input[type="date"]:focus {
   transition: 0.3s ease; 
 }
 
-.buttons-category button:hover{
+.buttons-add button:hover{
   background-color: var(--blue-two);
   color: var(--white-one);
 }
@@ -168,16 +168,16 @@ input[type="date"]:focus {
   color: var(--white-one);
 }
 
-.buttons-save{
+.buttons-save-atvd{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.buttons-save button{
+.buttons-save-atvd button{
   font-size: 1.3vw;
   width: 30vw;
-  height: 5vw;
+  height: 4vw;
   background-color: var(--blue-two);
   border: none;
   border-radius: 0.5vw;
@@ -186,7 +186,7 @@ input[type="date"]:focus {
   transition: 0.3s ease;
 }
 
-.buttons-save button:hover,
+.buttons-save-atvd button:hover,
 .buttons-popup-challenge button:hover{
   background-color: var(--white-one);
   color: var(--blue-two);
