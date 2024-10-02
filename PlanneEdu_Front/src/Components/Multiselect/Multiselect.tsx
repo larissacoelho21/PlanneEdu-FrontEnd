@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Multiselect.module.css";
 import { ChevronDown } from "lucide-react";
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
 
 /* definindo a estrutura dos objetos, todos terão uma label (texto exibido) e um value (valor associado) */
 export type SelectOption = {
@@ -97,20 +97,14 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
             }}
             className={styles["option-badge"]}
           >
-            {v.label} <span className={styles["remove-btn"]}><X /></span>
+            {v.label}{" "}
+            <span className={styles["remove-btn"]}>
+              <X />
+            </span>
           </button>
         ))}
       </span>
-      <button
-        className={styles["clear-btn"]}
-        onClick={(e) => {
-          e.stopPropagation();
-          clearOptions();
-        }}
-      >
-        <X />
-      </button>
-      <div className={styles.caret}>
+      <div className={`${styles.caret} ${isOpen ? styles.open : ""}`}>
         <ChevronDown className="icon-down" />
       </div>
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
