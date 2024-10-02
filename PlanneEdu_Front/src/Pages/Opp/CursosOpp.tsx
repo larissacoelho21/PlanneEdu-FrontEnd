@@ -16,7 +16,7 @@ export function CursosOpp() {
             </div>
 
             <div className="buttons-class">
-                <button>+ Adicionar um novo curso</button>
+                <a href="/addcurso"><button>+ Adicionar um novo curso</button></a>
             </div>
 
             <div className="cards-cursosopp">
