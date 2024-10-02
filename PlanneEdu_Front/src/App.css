@@ -2,25 +2,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", system-ui;
 }
 
 :root {
   --font: font-family: "Poppins", system-ui;
   --blue1: #074973;
-}
-
-body::-webkit-scrollbar {
-  width: .9vw; 
-}
-
-body::-webkit-scrollbar-track {
-  background: #dcdcdc;
-  border: 1px #b1b1b1;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #07678D;
-  border-radius: 20px;
-  border: 1px solid #075a7b;
 }
