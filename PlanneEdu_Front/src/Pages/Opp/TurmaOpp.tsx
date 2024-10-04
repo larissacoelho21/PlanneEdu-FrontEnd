@@ -1,6 +1,6 @@
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/TurmaOpp.css";
-import { BookMarked, Clock3, Users } from "lucide-react";
+import { Clock3, Users } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 
 export function TurmaOpp() {
