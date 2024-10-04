@@ -79,7 +79,7 @@ body {
   font-size: 1.4vw;
 }
 
-.date-badge {
+.dateBadge {
   font-size: 1vw;
   background-color: #07678d;
   background-color: var(--blue-one);
@@ -96,19 +96,19 @@ body {
   gap: 5vw;
 }
 
-.semester-teacher,
-.students {
+.semesterTeacher,
+.student {
   display: flex;
   gap: 0.5vw;
 }
 
-.semester-teacher img,
-.students img {
+.semesterTeacher img,
+.student img {
   width: 1.6vw;
 }
 
-.semester-teacher h1,
-.students h1 {
+.semesterTeacher h1,
+.student h1 {
   font-size: 1.3vw;
   font-weight: normal;
 }
@@ -134,12 +134,13 @@ body {
     font-size: 3vw;
   }
 
-  .date-badge {
+  .dateBadge {
     font-size: 1.8vw;
     width: 25vw;
   }
 
-  .students h1 {
+  .semesterTeacher h1,
+  .student h1 {
     font-size: 1.8vw;
   }
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
-import "../../Css/Teacher/Home.css";
+import "../../Css/Teacher/Home.css"
 import { Clock3, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -29,15 +29,15 @@ export function Home() {
           {/* Evita sublinhado no texto */}
           <div className="box-teacher">
             <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-            <div className="date-badge">
+            <div className="dateBadge">
               <span>23/02/2023 — 18/12/2024</span>
             </div>
             <div className="infos-class">
-              <div className="semester-teacher">
+              <div className="semesterTeacher">
                 <Clock3 size={18} />
                 <h1>4 semestres</h1>
               </div>
-              <div className="students">
+              <div className="student">
                 <Users size={18} />
                 <h1>35 alunos</h1>
               </div>
@@ -46,15 +46,15 @@ export function Home() {
         </Link>
         <div className="box-teacher">
           <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="date-badge">
+          <div className="dateBadge">
             <span>23/02/2023 — 18/12/2024</span>
           </div>
           <div className="infos-class">
-            <div className="semester-teacher">
+            <div className="semesterTeacher">
               <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
-            <div className="students">
+            <div className="student">
               <Users size={18} />
               <h1>35 alunos</h1>
             </div>
@@ -62,15 +62,15 @@ export function Home() {
         </div>
         <div className="box-teacher">
           <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="date-badge">
+          <div className="dateBadge">
             <span>23/02/2023 — 18/12/2024</span>
           </div>
           <div className="infos-class">
-            <div className="semester-teacher">
+            <div className="semesterTeacher">
               <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
-            <div className="students">
+            <div className="student">
               <Users size={18} />
               <h1>35 alunos</h1>
             </div>
@@ -78,15 +78,15 @@ export function Home() {
         </div>
         <div className="box-teacher">
           <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="date-badge">
+          <div className="dateBadge">
             <span>23/02/2023 — 18/12/2024</span>
           </div>
           <div className="infos-class">
-            <div className="semester-teacher">
+            <div className="semesterTeacher">
               <Clock3 size={18} />
               <h1>4 semestres</h1>
             </div>
-            <div className="students">
+            <div className="student">
               <Users size={18} />
               <h1>35 alunos</h1>
             </div>
