@@ -1,16 +1,13 @@
 /* importações dos icones, css e componentes */
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import { CodeXml } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { BookMarked } from "lucide-react";
-import { Plus } from "lucide-react";
-import { Check } from "lucide-react";
+import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
 import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
-import { useState } from "react";
+import { PopUp } from "../../Components/PopUp/PopUp-v2";
+import { useEffect, useState } from "react";
 
 const options = [
   { label: "First", value: 1 },
@@ -26,8 +23,20 @@ export function AddPlans() {
   const [value2, setValue2] = useState<SelectOption[]>([]);
   const [value3, setValue3] = useState<SelectOption[]>([]);
   const [value4, setValue4] = useState<SelectOption[]>([]);
-  const [value5, setValue5] = useState<SelectOption[]>([]);
-  const [value6, setValue6] = useState<SelectOption[]>([]);
+
+  /* ======== popups ======== */
+  const [showPopUpEdit, setShowPopUpEdit] = useState(false);
+  const togglePopUpEdit = () => {
+    setShowPopUpEdit(!showPopUpEdit);
+  };
+  const [showPopUpPlan, setShowPopUpPlan] = useState(false);
+  const togglePopUpPlan = () => {
+    setShowPopUpPlan(!showPopUpPlan);
+  };
+  const [showPopUpClasses, setShowPopUpClasses] = useState(false);
+  const togglePopUpClasses = () => {
+    setShowPopUpClasses(!showPopUpClasses);
+  };
 
   /* ======== funções e configurações para a criação da tabela ======== */
 
@@ -43,8 +52,11 @@ export function AddPlans() {
   const [selectedOption, setSelectedOption] = useState<string>("");
   /* armazena os dados da tabela, é uma array de objetos*/
   const [tableData, setTableData] = useState<TableData[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  const [isEditingTable, setIsEditingTable] = useState(false);
+  const [editingTableIndex, setEditingTableIndex] = useState<number | null>(
+    null
+  );
 
   /* array das opções presentes no select */
   const selectOptions = ["C", "D"];
@@ -62,6 +74,56 @@ export function AddPlans() {
     }
   };
 
+  const editTable = (event: React.FormEvent<HTMLButtonElement>) => {
+    if (editingTableIndex !== null) {
+      const updatedData = [...tableData];
+      updatedData[editingTableIndex] = {
+        text: textInput,
+        selectedOption: selectedOption,
+      };
+      setTableData(updatedData);
+      setIsEditingTable(false);
+      setTextInput("");
+      setSelectedOption("");
+      setEditingTableIndex(null);
+      setShowPopUpEdit(false);
+      event.preventDefault();
+    }
+  };
+
+  /* função que remove um item de um array com base no índice fornecido */
+  /* "React.Dispatch<React.SetStateAction<any[]>>" => define o tipo de 'setData' como uma função que atualiza o estado de um array de qualquer tipo (any) */
+  const DeleteData = (
+    data: any[],
+    setData: React.Dispatch<React.SetStateAction<any[]>>,
+    index: number
+  ) => {
+    const updatedData = data.filter((_, i) => i !== index);
+    setData(updatedData);
+  };
+
+  /* ======== fuções e configurações do popup de planejamento de aulas ======== */
+  /* definindo a estrutura genérica de itens complexos */
+  type itemComplex = {
+    label: string;
+    value: number;
+  }
+
+  /* tipificando cada categoria */
+  type conhecimentos = itemComplex;
+  type estrategias = itemComplex;
+  type recursos = itemComplex;
+
+
+  /* definindo a estrutura do card */
+  type cardPlan = {
+    dataInicial: string;
+    dataFinal: string;
+    conhecimentos: (string | number)[];
+    estrategias: (string | number)[];
+    recursos: (string | number)[];
+  };
+
   /* ======== configurações para a criação do card referente ao planejamento de ensino ======== */
   interface Plans {
     dateInicial: string;
@@ -71,12 +133,20 @@ export function AddPlans() {
     recursos: (string | number)[];
   }
 
+  /* armazena os dados referente ao planejamento, é uma array */
   const [plans, setPlans] = useState<Plans[]>([]);
+  /* gerencia os valores inputados para cada categoria */
   const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>(
     []
   );
   const [valueEstrategias, setValueEstrategias] = useState<SelectOption[]>([]);
   const [valueRecursos, setValueRecursos] = useState<SelectOption[]>([]);
+
+  /* ======== formatação das datas ======== */
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
 
   const createPlans = () => {
     const dateInicial = formatDate(
@@ -104,56 +174,11 @@ export function AddPlans() {
     togglePopUpPlan();
   };
 
-  const SaveEdit = (event: React.FormEvent<HTMLButtonElement>) => {
-    if (editingIndex !== null) {
-      const updatedData = [...tableData];
-      updatedData[editingIndex] = {
-        text: textInput,
-        selectedOption: selectedOption,
-      };
-      setTableData(updatedData);
-      setIsEditing(false);
-      setTextInput("");
-      setSelectedOption("");
-      setEditingIndex(null);
-      setShowPopUpEdit(false);
-      event.preventDefault();
-    }
-  };
-
-  /* função que remove um item de um array com base no índice fornecido */
-  /* "React.Dispatch<React.SetStateAction<any[]>>" => define o tipo de 'setData' como uma função que atualiza o estado de um array de qualquer tipo (any) */
-  const DeleteData = (data: any[], setData: React.Dispatch<React.SetStateAction<any[]>>, index: number) => {
-    const updatedData = data.filter((_, i) => i !== index);
-    setData(updatedData);
-  };
-
-  const [showPopUpEdit, setShowPopUpEdit] = useState(false);
-  const togglePopUpEdit = () => {
-    setShowPopUpEdit(!showPopUpEdit);
-  };
-
-  const [showPopUpPlan, setShowPopUpPlan] = useState(false);
-  const togglePopUpPlan = () => {
-    setShowPopUpPlan(!showPopUpPlan);
-  };
-
-  const [showPopUpClasses, setShowPopUpClasses] = useState(false);
-  const togglePopUpClasses = () => {
-    setShowPopUpClasses(!showPopUpClasses);
-  };
-
-  /* ======== formatação das datas ======== */
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
-
   /* ======== layout e estrutura da página ======== */
   return (
     <main>
       <SubNavbar />
-      <div className="card-info-disc">
+      <div className="info-course">
         <h2>Programação WEB Front-End</h2>
 
         <div className="tag-course">
@@ -174,45 +199,54 @@ export function AddPlans() {
       </div>
 
       <form className="form">
-        <div className="inputt">
+        <div className="input-field">
           <label>Curso</label>
           <input type="text" name="course" id="course" />
         </div>
-        <div className="inputt">
+
+        <div className="input-field">
           <label>Unidade Curricular</label>
           <input type="text" name="uc" id="uc" />
         </div>
-        <div className="inputt">
+
+        <div className="input-field">
           <label>Docente</label>
           <input type="text" name="docent" id="docent" />
         </div>
+
         <div className="row">
-          <div className="inputt">
+          <div className="input-field">
             <label>Carga Horária</label>
             <input type="number" name="horas" id="horas" />
           </div>
-          <div className="inputt">
+
+          <div className="input-field">
             <label>Quantidade de Aulas</label>
             <input type="number" name="aulas" id="aulas" />
           </div>
-          <div className="inputt">
+
+          <div className="input-field">
             <label>Semestre</label>
             <input type="number" name="semestre" id="semestre" />
           </div>
-          <div className="inputt">
+
+          <div className="input-field">
             <label>Ano</label>
             <input type="number" name="ano" id="ano" />
           </div>
         </div>
-        <div className="inputt">
+
+        <div className="input-field">
           <label>Descrição da Unidade de Competência</label>
           <input type="text" name="desc-uc" id="desc-uc" />
         </div>
-        <div className="inputt">
+
+        <div className="input-field">
           <label>Objetivo da Unidade Curricular</label>
           <input type="text" name="obj-uc" id="obj-uc" />
         </div>
-        <div className="inputt">
+
+        <div className="input-field">
           <label>Turma</label>
           <input type="text" name="turma" id="turma" />
         </div>
@@ -223,11 +257,11 @@ export function AddPlans() {
         </h3>
 
         <div className="row">
-          <div className="inputt">
+          <div className="input-field">
             <label>Data</label>
             <input type="date" name="date" id="datte" className="large-input" />
           </div>
-          <div className="inputt">
+          <div className="input-field">
             <label>Carga Horária</label>
             <input type="number" name="hrs" id="hrs" className="large-input" />
           </div>
@@ -275,7 +309,7 @@ export function AddPlans() {
           </div>
         </div>
 
-        <div className="inputt">
+        <div className="input-field">
           <label>Perguntas Mediadoras</label>
           <input type="text" name="pergmedia" id="pergmedia" />
         </div>
@@ -284,13 +318,13 @@ export function AddPlans() {
           Estratégias de avaliação de aprendizagem
         </h3>
 
-        <div className="inputt">
+        <div className="input-field">
           <label>Instrumentos de Avaliação</label>
           <input type="text" name="inst-avalia" id="inst-avalia" />
         </div>
 
         <div className="criterios">
-          <div className="inputt">
+          <div className="input-field">
             <label>Critérios de avaliação</label>
             <input
               type="text"
@@ -300,7 +334,7 @@ export function AddPlans() {
               onChange={(e) => setTextInput(e.target.value)}
             />
           </div>
-          <div className="inputt">
+          <div className="input-field">
             <label>Crítico (C) ou Desejável (D)</label>
             <select
               value={selectedOption}
@@ -342,7 +376,7 @@ export function AddPlans() {
                       className="action-btn"
                       onClick={(event) => {
                         event.preventDefault();
-                        setEditingIndex(index);
+                        setEditingTableIndex(index);
                         setTextInput(data.text);
                         setSelectedOption(data.selectedOption);
                         togglePopUpEdit();
@@ -365,42 +399,37 @@ export function AddPlans() {
           </table>
 
           {showPopUpEdit && (
-            <div className="popup-overlay">
-              <div className="popup-editt">
-                <div className="title">
-                  <h2>Editar</h2>
-                  <h3>
-                    Edite as informações referente aos critérios de avaliação
-                  </h3>
+            <PopUp
+              title="Editar"
+              subtitle="Edite as informações referente aos critérios de avaliação"
+            >
+              <form action="">
+                <div className="input-field">
+                  <label>Critérios de avaliação</label>
+                  <input
+                    type="text"
+                    value={textInput}
+                    onChange={(e) => setTextInput(e.target.value)}
+                  />
                 </div>
-                <form action="">
-                  <div className="inputt">
-                    <label>Critérios de avaliação</label>
-                    <input
-                      type="text"
-                      value={textInput}
-                      onChange={(e) => setTextInput(e.target.value)}
-                    />
-                  </div>
 
-                  <div className="select-pop">
-                    <label>Crítico (C) ou Desejável (D)</label>
-                    <select
-                      value={selectedOption}
-                      onChange={(e) => setSelectedOption(e.target.value)}
-                    >
-                      <option value="C">Crítico (C)</option>
-                      <option value="D">Desejável (D)</option>
-                    </select>
-                  </div>
+                <div className="select-pop">
+                  <label>Crítico (C) ou Desejável (D)</label>
+                  <select
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                    <option value="C">Crítico (C)</option>
+                    <option value="D">Desejável (D)</option>
+                  </select>
+                </div>
 
-                  <div className="edit-btns">
-                    <button onClick={SaveEdit}>Salvar</button>
-                    <button onClick={() => togglePopUpEdit()}>Cancelar</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+                <div className="edit-btns">
+                  <button onClick={editTable}>Salvar</button>
+                  <button onClick={() => togglePopUpEdit()}>Cancelar</button>
+                </div>
+              </form>
+            </PopUp>
           )}
         </div>
 
@@ -414,7 +443,7 @@ export function AddPlans() {
               event.preventDefault();
             }}
           >
-            <Plus width={25} height={25} strokeWidth={2} />
+            <Plus width={40} height={40} strokeWidth={1.5} />
           </button>
 
           {plans.map((plan, index) => (
@@ -432,7 +461,6 @@ export function AddPlans() {
               <div className="card-btns">
                 <button
                   onClick={(event) => {
-                    togglePopUpClasses();
                     event.preventDefault();
                   }}
                 >
@@ -441,7 +469,7 @@ export function AddPlans() {
                 <button
                   onClick={(event) => {
                     event.preventDefault();
-                    DeleteData(plans, setPlans, index);;
+                    DeleteData(plans, setPlans, index);
                   }}
                 >
                   Deletar
@@ -451,70 +479,60 @@ export function AddPlans() {
           ))}
 
           {showPopUpClasses && (
-            <div className="popup-overlay">
-              <div className="popup-classes">
-                <h2>Editar planejamento</h2>
-                <h3>
-                  Altere e salve as alterações desejada referente ao
-                  planejamento de aulas
-                </h3>
+            <PopUp
+              title="Editar"
+              subtitle="Edite as informações referente ao planejamento de aula"
+            >
+              <div className="date-plan">
+                <h1>oi</h1>
               </div>
-            </div>
+            </PopUp>
           )}
 
           {showPopUpPlan && (
-            <div className="popup-overlay">
-              <div className="popup-plan">
-                <h2>Planejamento de aulas</h2>
-                <h3>
-                  Descreva o conteúdo das aulas e selecione os conhecimentos,
-                  recursos e estratégias a serem desenvolvidas.
-                </h3>
+            <PopUp
+              title="Planejamento de aulas"
+              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
+            >
+              <div className="popup-body">
                 <div className="dates">
-                  <div className="proposta">
+                  <div className="data-prop">
                     <label>Data proposta</label>
-                    <input type="date" name="" id="data-proposta" />
+                    <input type="date" id="data-proposta" />
                   </div>
-                  <div className="final">
+                  <div className="data-fin">
                     <label>Data final</label>
-                    <input type="date" name="" id="data-final" />
+                    <input type="date" id="data-final" />
                   </div>
                 </div>
-                <div className="conhecimentos">
+
+                <div className="multiselects">
                   <label>Conhecimentos</label>
                   <Multiselect
                     options={options}
                     value={valueConhecimentos}
-                    onChange={(o) => setValueConhecimentos(o)}
-                    multiple={true}
+                    onChange={setValueConhecimentos}
+                    multiple
                   />
-                </div>
 
-                <div className="estrategias">
                   <label>Estratégias</label>
                   <Multiselect
                     options={options}
                     value={valueEstrategias}
-                    onChange={(o) => setValueEstrategias(o)}
-                    multiple={true}
+                    onChange={setValueEstrategias}
+                    multiple
                   />
-                </div>
 
-                <div className="recursos">
                   <label>Recursos</label>
                   <Multiselect
                     options={options}
                     value={valueRecursos}
-                    onChange={(o) => setValueRecursos(o)}
-                    multiple={true}
+                    onChange={setValueRecursos}
+                    multiple
                   />
                 </div>
-                <div className="edit-btns">
-                  <button onClick={createPlans}>Salvar</button>
-                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
-                </div>
               </div>
-            </div>
+            </PopUp>
           )}
         </div>
       </form>

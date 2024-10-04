@@ -1,0 +1,89 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-contents {
+  position: relative;
+  background: #fff;
+  padding: 2vw 3vw;
+  border-radius: 0.5vw;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5vw;
+  width: 39%;
+  height: auto;
+  z-index: 1001;
+  overflow: auto;
+}
+
+.popup-contents h2 {
+  color: #075a7b;
+  font-size: 1.5vw;
+}
+
+.popup-contents h3 {
+  font-size: 1.1vw;
+  font-weight: 400;
+  color: #000;
+}
+
+.popup-contents select {
+  border: none;
+  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
+  font-size: 1.2vw;
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  width: 95%;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 1.5vw;
+}
+
+.popup-actions button {
+  border: #07678d solid 2px;
+  padding: 0.3vw 1.5vw;
+  border-radius: 0.5vh;
+  background: #07678d;
+  color: #fff;
+  font-size: 1vw;
+  cursor: pointer;
+}
+
+.popup-actions button:hover {
+  background: none;
+  color: #075a7b;
+  border: #07678d solid 2px;
+  transition: ease-in-out 0.3s;
+}
+
+.popup-contents::-webkit-scrollbar {
+  width: 0.75vw;
+}
+
+.popup-contents::-webkit-scrollbar-track {
+  background: #dcdcdc;
+  border: 0.7px #b1b1b1;
+}
+
+.popup-contents::-webkit-scrollbar-thumb {
+  background-color: #07678d;
+  border-radius: 20px;
+  border: 0.5px solid #075a7b;
+}
