@@ -45,10 +45,7 @@ export function ProfileTeacher() {
 
     return (
         <section className="profileTeacher">
-            <div className="navbar">
-                <NavBarProfessor />
-            </div>
-
+            
             <div className="introProfile">
                 <h1>Perfil</h1>
                 <hr />
