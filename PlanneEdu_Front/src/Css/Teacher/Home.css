@@ -6,12 +6,12 @@ body {
 
 :root {
   --blue-one: #074973;
-  --blue-two: #07678D;
+  --blue-two: #07678d;
   --white: #fff;
   --black: #000;
-} 
+}
 
-.homeTeacher{
+.homeTeacher {
   display: flex;
   flex-direction: column;
   gap: 6vw;
@@ -64,13 +64,13 @@ body {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: var(--black);
   border: 2px solid transparent;
   transition: 0.35s ease-out;
 }
 
-.box-teacher:hover{
+.box-teacher:hover {
   border: 2px solid #084973;
   transform: scale(1.015);
 }
@@ -111,4 +111,35 @@ body {
 .students h1 {
   font-size: 1.3vw;
   font-weight: normal;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .cardsTeacher {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2vw;
+    margin: 0 auto;
+    margin-bottom: 5vw;
+  }
+
+  .box-teacher {
+    width: 80vw;
+  }
+
+  .box-teacher h1 {
+    font-size: 3vw;
+  }
+
+  .date-badge {
+    font-size: 1.8vw;
+    width: 25vw;
+  }
+
+  .students h1 {
+    font-size: 1.8vw;
+  }
 }
