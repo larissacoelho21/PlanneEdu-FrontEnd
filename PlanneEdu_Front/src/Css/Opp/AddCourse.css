@@ -1,11 +1,14 @@
+/* ===== Variáveis de Cor ===== */
 :root {
   --blue-one: #074973;
   --blue-two: #07678D;
   --blue-three: #00a3ff;
   --gray-one: #bbbb;
+  --gray-two: #848484bb;
   --white: #ffff;
 }
 
+/* ===== Introdução ao Curso ===== */
 .introduction-course {
   text-align: center;
   margin-bottom: 5%;
@@ -21,6 +24,7 @@
   font-weight: 400;
 }
 
+/* ===== Seleção de Cursos ===== */
 .select-planne-course,
 .select-add-course {
   display: flex;
@@ -33,44 +37,46 @@
 
 .label-select {
   align-self: flex-start;
-  color: var(--gray-one);
+  font-weight: 600;
+  color: var(--gray-two);
 }
 
 .select-planne-course h2 {
   align-self: flex-start;
-  font-size: 0.8vw;
   margin-top: 0.5vw;
+  margin-bottom: 5%;
+  font-size: 0.8vw;
   font-weight: 500;
   color: var(--blue-three);
-  margin-bottom: 5%;
 }
 
 .select-planne-course select,
 .select-add-course select {
   width: 100%;
-  border: none;
-  border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
   font-size: 1.2vw;
   background-color: transparent;
+  border: none;
+  border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
 }
 
 .select-planne-course option:focus {
   background-color: transparent;
 }
 
+/* ===== Formulário de Adição de Curso ===== */
 .form-addcourse {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 3vw;
   width: 90vw;
-  background-color: var(--white-one);
   margin: 0 auto;
+  margin-bottom: 4vw;
+  padding: 5vw;
+  background-color: var(--white-one);
   border-radius: 0.5vw;
   box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 5vw;
-  margin-bottom: 4vw;
 }
 
 .select-numbers {
@@ -78,13 +84,14 @@
   gap: 8vw;
 }
 
+/* ===== Títulos e Horas das Matérias ===== */
 .subjects-and-hours h1 {
   font-weight: 600;
-  color: var(--blue-one);
   margin-top: 5%;
+  color: var(--blue-one);
 }
 
-.forms-grid-hours{
+.forms-grid-hours {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -92,8 +99,9 @@
   margin-bottom: 5%;
 }
 
+/* ===== Grid de Semestre e Tabelas de Matérias ===== */
 .select-semester-grid, 
-.matter-grid-table {
+.grid-table {
   display: flex;
   flex-direction: column;
   width: 80vw;
@@ -101,23 +109,41 @@
 }
 
 .select-semester-grid select,
-.matter-grid-table input{
+.matter-grid-table input {
   width: 100%;
+  font-size: 1.2vw;
   border: none;
   border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
-  font-size: 1.2vw;
 }
 
-.add-table{
-  padding: 2vh 5vw;
+/* ===== Botões de Ação ===== */
+.add-table,
+.action-btn-course {
+  display: block;
+  padding: 1vh 2vw;
   background-color: var(--blue-two);
-  border: none;
+  border: 2px solid transparent;
   border-radius: .5vw;
   color: var(--white);
+  cursor: pointer;
+  transition: .3s ease;
 }
 
+.action-btn-course{
+  margin-left: 25%;
+}
+
+.add-table:hover, 
+.action-btn-course:hover {
+  background-color: transparent;
+  border: solid 2px var(--blue-two);
+  color: var(--blue-two);
+}
+
+/* ===== Tabelas de Informações ===== */
 .table-infos-grid {
   width: 100%;
+  margin-bottom: 5%;
 }
 
 .table-infos-grid th {
@@ -142,58 +168,58 @@
   text-align: left;
 }
 
-.popup-overlay {
+/* ===== Popup de Edição ===== */
+.popup-overlay, 
+.popup-overlay-delete {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
 
-.proposta,
-.final {
-  display: flex;
-  flex-direction: column;
-}
-
-.popup-edit {
+.popup-edit,
+.message-delete-course {
   position: relative;
-  background: #fff;
-  padding: 2vw 5vw;
-  border-radius: 0.5vw;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2vw;
   width: 40vw;
-  height: 60vh;
+  height: 70vh;
+  padding: 2vw 5vw;
+  background: #fff;
+  border-radius: 0.5vw;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   z-index: 1001;
   overflow: auto;
 }
 
 .popup-edit h2 {
   margin: 0 auto;
+  color: var(--blue-one);
 }
 
-.popup-edit .select-pop {
+.popup-edit {
   display: flex;
   flex-direction: column;
-  gap: 1vw;
+  gap: 2.5vw;
 }
+
 
 .popup-edit select {
+  width: 100%;
+  font-size: 1.2vw;
   border: none;
   border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
-  font-size: 1.2vw;
-  width: 100%;
 }
 
+/* ===== Botões de Edição ===== */
 .edit-btns {
   display: flex;
   gap: 2vw;
@@ -201,27 +227,94 @@
   margin-top: 1.5vw;
 }
 
-.edit-btns button:hover {
-  background: none;
-  color: #07678d;
+.edit-btns button {
+  border: 2px solid var(--blue-two);
+  padding: 0.6vw 1vw;
+  border-radius: 0.5vh;
+  background: var(--blue-two);
+  color: var(--white);
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
 
-.edit-btns button {
-  border: #07678d solid 2px;
-  padding: 0.6vw 1vw;
-  border-radius: 0.5vh;
-  background: #07678d;
-  color: #fff;
+.edit-btns button:hover {
+  background: none;
+  color: var(--blue-two);
 }
 
-.inputt select{
+/* ===== Inputs e Campos de Seleção ===== */
+.inputs-edit{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vw;
+}
+
+.inputs-edit select {
+  font-size: 1.2vw;
   border: none;
   border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
-  font-size: 1.2vw;
 }
 
-.inputt option:hover{
-  background: rgb(7,73,115, .2);
+.inputs-edit label{
+  float: left;
+  font-size: 1.2vw;
+  color: var(--gray-two);
+}
+
+.inputs-edit option:hover {
+  background: rgba(7, 73, 115, 0.2);
+}
+
+.grid-table select {
+  border: transparent;
+  border-bottom: solid 2px var(--gray-one);
+}
+
+.semester-grid h2 {
+  text-align: start;
+  font-size: 1.2vw;
+  color: var(--gray-two);
+}
+
+/* ===== Estilos para Inputs de Número ===== */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* PopUp delete */
+.message-delete-course{
+  display: flex;
+  gap: .5vw;
+}
+.message-delete-course h1{
+  color: var(--blue-one);
+  font-size: 3vw;
+}
+
+.message-delete-course h2{
+  font-size: 1.6vw;
+  margin-bottom: 3%;
+}
+
+.message-delete-course h3{
+  font-size: 1.5vw;
+  font-weight: 400;
+}
+
+.button-view-class{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 10vh;
+  background-color: var(--blue-one);
+  margin: 0 auto;
+  border-radius: .5vw;
+  margin-top: 3%;
+  cursor: pointer;
+}
+
+.button-view-class a{
+  color: var(--white);
 }
