@@ -2,7 +2,9 @@ import { AddMateria } from "../../Components/PlanoDeCurso/AddMateria";
 import { Competencias } from "../../Components/PlanoDeCurso/Competencias";
 
 export function AddPlanoCurso() {
-   return (
+  
+
+  return (
     <section className="AddPlanCourses">
       <div className="AddInfo">
         <form>

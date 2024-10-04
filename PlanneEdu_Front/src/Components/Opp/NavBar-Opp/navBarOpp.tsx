@@ -9,11 +9,13 @@ import {
   Folder,
   ChartLine,
   ChevronDown,
+  UserPen,
+  LogOut,
 } from "lucide-react";
 
 /* funções react */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 /* css */
@@ -62,13 +64,36 @@ function DropdownNotification({
   );
 }
 
+/* Dropdown Perfil */
+interface DropdownProfileProps {
+  icon: ReactNode /* React Node utilizado para aceitar icone(svg) ou string */;
+  text: string;
+  to: string;
+  onClick?: () => void; // Adicione o onClick como prop opcional
+}
+
+function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
+  return (
+    <NavLink to={to} className="dropdownProfile" onClick={onClick}>
+      <i className="icon">{icon}</i> {/* imagem */}
+      <Link className="menu-a" to="#">
+        {" "}
+        {text}{" "}
+      </Link>{" "}
+      {/* Link */}
+    </NavLink>
+  );
+}
+
 export function NavBarOpp() {
   /* Criando função para identificarquando o dropdown esta ativo */
   const [openOne, setOpenOne] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
+  const [opentThree, setOpenThree] = useState(false);
 
   let menuRef = useRef<HTMLDivElement>(null);
   let notRef = useRef<HTMLDivElement>(null);
+  let notRefP = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -78,6 +103,9 @@ export function NavBarOpp() {
       if (notRef.current && !notRef.current.contains(e.target as Node)) {
         setOpenTwo(false);
       }
+      if (notRefP.current && !notRefP.current.contains(e.target as Node)) {
+        setOpenThree(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -86,6 +114,15 @@ export function NavBarOpp() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear(); //para limpar tudo
+
+    // Redireciona o usuário para a página de login
+    navigate("/");
+  };
 
   return (
     <section className="navbar-opp">
@@ -227,16 +264,45 @@ export function NavBarOpp() {
                     </li>
                   </li>
 
+                  {/* Notificação */}
+                  <li className="profile-notification">
+                    {" "}
+                    {/* Perfil */}
+                    <div
+                      className="profile"
+                      onClick={() => {
+                        setOpenThree(!opentThree);
+                      }}
+                      ref={notRefP}
+                    >
+                      <div className="profileIcon">
+                        <FontAwesomeIcon icon={faUser} className="not-icons" />
+                      </div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div
+                          className={`dropdown-profile ${
+                            opentThree ? "activeOne" : "inactiveOne"
+                          }`}
+                        >
+                          <DropdownProfile
+                            to="#"
+                            icon={<UserPen size={20} />}
+                            text={"Visualizar Perfil"}
+                          />
+                          <DropdownProfile
+                            to="#"
+                            icon={<LogOut size={20} />}
+                            text={"Sair"}
+                            onClick={logout} // Chama a função de logout ao clicar
+                          />
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
                   <li className="li-notification">
                     <div className="secondPart">
-                      <div className="profile">
-                        <NavLink to="#" className="profileIcon">
-                          <FontAwesomeIcon
-                            icon={faUser}
-                            className="not-icons"
-                          />
-                        </NavLink>
-                      </div>
                       <div className="darkmode">
                         <NavLink to="#" className="darkmodeIcon">
                           <FontAwesomeIcon

@@ -13,13 +13,7 @@ export function PasswordReset() {
 
   const navigate = useNavigate();
 
- /*  const promise = () =>
-    new Promise((resolve) => setTimeout(() => resolve, 1000));
-
-  const toastId = toast.promise(promise, {
-    loading: "Loading...",
-  }); */
-  /* const postEmail = (event: React.FormEvent) => {
+  const postEmail = (event: React.FormEvent) => {
     event.preventDefault();
 
     setIsLoading(true); // Inicia o estado de carregamento
@@ -28,6 +22,14 @@ export function PasswordReset() {
 
     console.log(isLoading);
 
+    /* const toastId = toast.loading("Enviando e-mail..."); */
+    const promise = () =>
+      new Promise((resolve) => setTimeout(() => resolve, 1000));
+
+    const toastId = toast.promise(promise, {
+      loading: "Aguarde, estamos enviando seu e-mail...",
+    });
+
     fetch(`${BaseUrl}/auth/forgot_password`, {
       //conectando com o computador que está rodando o back-end
       method: "POST", //method post de envio
@@ -35,7 +37,7 @@ export function PasswordReset() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        //transformando os valores de nif e senha em string
+        //transformando os valores de email em string
         email: emailValue,
       }),
     })
@@ -51,6 +53,8 @@ export function PasswordReset() {
         console.log("email enviado:", data);
         // Armazena o e-mail no localStorage
         localStorage.setItem("emailValue", emailValue);
+
+        toast.dismiss(toastId);
         toast.success(
           "E-mail enviado com sucesso! Verifique sua caixa de entrada."
         );
@@ -59,50 +63,8 @@ export function PasswordReset() {
       })
       .catch((error) => {
         setIsLoading(false); // Finaliza o estado de carregamento em caso de erro
-        toast.error("Não foi possível enviar o email, tente novamente"); //alert
-        console.error("Erro ao enviar email: ", error);
-      });
-  }; */
-
-  const postEmail = (event: React.FormEvent) => {
-    event.preventDefault();
-  
-    setIsLoading(true); // Inicia o estado de carregamento
-  
-    // Exibe o toast de carregamento
-    const toastId = toast.loading("Enviando e-mail...");
-  
-    fetch(`${BaseUrl}/auth/forgot_password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailValue,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((err) => {
-            throw new Error(err.error || "Erro ao enviar o e-mail");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("email enviado:", data);
-        localStorage.setItem("emailValue", emailValue);
-  
-        // Remove o toast de carregamento e exibe o toast de sucesso
-        toast.dismiss(toastId);
-        toast.success("E-mail enviado com sucesso! Verifique sua caixa de entrada.");
-        setIsLoading(false); // Finaliza o estado de carregamento
-        navigate("/verificacaoemail"); // Navega para a próxima página
-      })
-      .catch((error) => {
-        setIsLoading(false); // Finaliza o estado de carregamento em caso de erro
         toast.dismiss(toastId); // Remove o toast de carregamento
-        toast.error("Não foi possível enviar o email, tente novamente.");
+        toast.error("Não foi possível enviar o email, tente novamente"); //alert
         console.error("Erro ao enviar email: ", error);
       });
   };
@@ -112,14 +74,6 @@ export function PasswordReset() {
       <div className="background">
         <BackgroundPassword /> {/* Componente do fundo forma + saída + logo */}
       </div>
-
-      {/*  {isLoading === true
-        ? toast.dismiss(toastId)
-        /*  toast.promise(promise, {
-            loading: "Carregando...",
-          }) 
-        : null 
-        }  */}
       <div className="Reset-Info">
         {" "}
         {/* Div maior - não possue css */}

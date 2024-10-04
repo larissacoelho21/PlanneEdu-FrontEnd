@@ -53,6 +53,8 @@ export function Login() {
       .then((data) => {
         // Armazenar o nome do usuário no localStorage
         localStorage.setItem("userName", data.user.name);
+        localStorage.setItem("Authorization", data.token);
+        console.log(localStorage)
         if (data.user.defaultUser === true) {
           //identifcando se o usuário é padrão
           navigate("/profile"); // Redireciona para a página de perfil
