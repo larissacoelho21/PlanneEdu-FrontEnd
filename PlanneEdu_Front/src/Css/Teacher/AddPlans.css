@@ -1,4 +1,18 @@
-.card-info-disc,
+button{
+  cursor: pointer;
+}
+
+.info-course {
+  justify-content: center;
+  align-items: center;
+  padding: 2vw 0;
+}
+
+.info-course h2 {
+  font-weight: 600;
+}
+
+.info-course,
 .form {
   display: flex;
   flex-direction: column;
@@ -10,24 +24,15 @@
   box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
 }
 
-.card-info-disc {
-  justify-content: center;
-  align-items: center;
-  padding: 2vw 0;
-}
-
-.card-info-disc h2 {
-  font-weight: 600;
-}
-
 .form {
   padding: 5vw 5vw;
   gap: 2vw;
 }
 
-.form .inputt {
+.form .input-field {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1vw;
 }
 
@@ -49,13 +54,6 @@
   -webkit-appearance: none;
 }
 
-.title-section {
-  font-size: 1.7vw;
-  font-weight: 500;
-  text-align: center;
-  margin: 2.5vw 0;
-}
-
 .row {
   display: flex;
   justify-content: space-between;
@@ -72,14 +70,21 @@
   width: 45%;
 }
 
-.inputt select {
+.input-field select {
   border: none;
   border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
   font-size: 1.2vw;
 }
 
-.inputt option:hover {
+.input-field option:hover {
   background: rgb(7, 73, 115, 0.2);
+}
+
+.title-section {
+  font-size: 1.7vw;
+  font-weight: 500;
+  text-align: center;
+  margin: 2.5vw 0;
 }
 
 .criterios {
@@ -88,26 +93,21 @@
   gap: 2vw;
 }
 
-.criterios button {
+.add-btn {
   background: #07678d;
   border: 0.13vw #07678d solid;
   color: #fff;
-  cursor: pointer;
-}
-
-.criterios button:hover {
-  background: #fff;
-  border: 0.13vw #07678d solid;
-  color: #07678d;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-.criterios .add-btn {
   width: 25%;
   padding: 1vw;
   border-radius: 0.5vh;
   font-size: 1.1vw;
+}
+
+.add-btn:hover, .card-btns button:hover, .form-actions button:hover {
+  background: none;
+  border: 0.13vw #07678d solid;
+  color: #07678d;
+  transition: 0.3s ease-in-out;
 }
 
 .add-btn:disabled, .add-btn:disabled:hover{
@@ -117,10 +117,13 @@
   color: #FFF;
 }
 
-.criterios .action-btn {
+.action-btn{
   width: 90%;
   padding: 0.5vw;
   border-radius: 0.5vh;
+  background: #07678d;
+  border: none;
+  color: #FFF;
 }
 
 .table-criterios {
@@ -169,189 +172,24 @@
   font-size: 1vw;
 }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
 .proposta,
 .final {
   display: flex;
   flex-direction: column;
 }
 
-.popup-editt {
-  position: relative;
-  background: #fff;
-  padding: 1vw 3vw;
-  border-radius: 0.5vw;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+.card-btns{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5vw;
-  width: 39%;
-  height: 70%;
-  z-index: 1001;
-  overflow: auto;
-}
-
-.title {
-  text-align: center;
-  width: 95%;
-}
-
-.popup-editt h2 {
-  margin: 0 auto;
-  color: #075a7b;
-  font-size: 1.5vw;
-}
-
-.popup-editt h3 {
-  font-size: 1.1vw;
-  font-weight: 400;
-}
-
-.popup-editt form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5vw;
-}
-
-.popup-editt .select-pop {
-  display: flex;
-  flex-direction: column;
-  gap: 1vw;
-}
-
-.popup-editt select {
-  border: none;
-  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
-  font-size: 1.2vw;
-  width: 100%;
-}
-
-.edit-btns,
-.card-btns {
-  display: flex;
-}
-
-.edit-btns {
-  gap: 2vw;
-  justify-content: center;
-}
-
-.card-btns {
   gap: 0.9vw;
   margin-top: 0.5vw;
 }
 
-.edit-btns button,
-.card-btns button {
+.card-btns button{
   border: #07678d solid 2px;
   border-radius: 0.5vh;
   background: #07678d;
   color: #fff;
-}
-
-.edit-btns button {
-  padding: 0.6vw 1vw;
-  font-size: 1.1vw;
-  width: 13vw;
-}
-
-.edit-btns button:hover,
-.card-btns button:hover {
-  background: none;
-  color: #07678d;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-.card-btns button {
-  padding: 0.3vw 1vw;
-  font-size: 0.9vw;
-  width: 6vw;
-}
-
-.planneraulas {
-  display: flex;
-  flex-direction: column;
-  gap: 1vw;
-}
-
-.planneraulas .add-plan {
-  width: 3vw;
-  height: 3vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: #07678d solid 2px;
-  border-radius: 0.5vw;
-  color: #07678d;
-}
-
-.planneraulas .add-plan:hover {
-  background: #07678d;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-
-.popup-plan {
-  position: relative;
-  background: #fff;
-  padding: 2vw 3vw;
-  border-radius: 0.5vw;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1vw;
-  width: 40vw;
-  height: 93vh;
-  z-index: 1001;
-  overflow: auto;
-}
-
-.dates {
-  display: flex;
-  justify-content: space-between;
-}
-
-.proposta,
-.final {
-  width: 15vw;
-}
-
-.popup-plan input,
-.popup-plan select {
-  font-size: 1.1vw;
-}
-
-.popup-plan h2,
-.popup-plan h3 {
-  text-align: center;
-}
-
-.popup-plan h2 {
-  font-size: 1.5vw;
-  color: #07678d;
-}
-
-.popup-plan h3 {
-  font-size: 1.1vw;
-  font-weight: 400;
+  padding: .3vw 1.5vw;
 }
 
 .popup-plan::-webkit-scrollbar {
@@ -367,6 +205,31 @@
   background-color: #07678d;
   border-radius: 20px;
   border: 0.5px solid #075a7b;
+}
+
+.planneraulas {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.add-plan {
+  width: 4vw;
+  height: 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: #07678d solid 2px;
+  border-radius: 0.5vw;
+  color: #07678d;
+}
+
+.add-plan:hover {
+  background: #07678d;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
 .form-actions {
@@ -389,11 +252,4 @@
   background: #07678d;
   color: #fff;
   font-size: 1.2vw;
-}
-
-.form-actions button:hover {
-  background: none;
-  color: #07678d;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
 }
