@@ -150,6 +150,10 @@ select:focus {
   margin: 0;
 }
 
+.login-mobile {
+  display: none !important;
+}
+
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
