@@ -149,3 +149,111 @@ select:focus {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .images {
+    display: none;
+  }
+
+  .right-side {
+    display: none;
+  }
+
+  .login-mobile {
+    display: block !important;
+  }
+
+  .login-img {
+    position: absolute;
+  }
+
+  #forma {
+    width: 99vw;
+  }
+
+  .login-logo {
+    position: absolute;
+  }
+
+  .login-logo > img {
+    width: 8vw;
+    margin-left: 85vw;
+    margin-top: 8vw;
+  }
+
+  .login-info {
+    position: absolute;
+    color: white;
+    margin-top: 28vw;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15vw;
+  }
+
+  .login-info h1 {
+    font-size: 5vw;
+  }
+
+  .login-info p {
+    font-size: 4.5vw;
+  }
+
+  .bottom {
+    position: absolute;
+    margin-top: 85vw;
+    margin-left: 8.5vw;
+  }
+
+  .input {
+    background-color: rgba(217, 217, 217, 0);
+    margin-bottom: 4vw;
+    padding: 4vw;
+    width: 80vw;
+    height: 4vw;
+    border: rgba(1, 18, 38, 50%) solid 1.3px;
+    border-radius: 2vw;
+    font-size: 2.5vw;
+  }
+
+  .inputPassword {
+    display: flex;
+    justify-content: space-between;
+    border: rgba(1, 18, 38, 50%) solid 1.3px;
+    padding: 2.15vw;
+    border-radius: 2.5vw;
+  }
+
+  .inputPassword input {
+    font-size: 2.5vw;
+    margin-left: 1.7vw;
+  }
+
+  .password a {
+    text-decoration: none;
+    font-size: 2vw;
+    margin-left: 45vw;
+    color: #074973;
+  }
+
+  .button-login button {
+    background-color: #074973;
+    border: none;
+    margin-top: 5vw;
+    border-radius: 2vw;
+    font-size: 2.5vw;
+    font-weight: 300;
+    width: 25vw;
+    height: 8vw;
+    font-family: "Poppins", system-ui;
+    color: #f2f2f2;
+    cursor: pointer;
+  }
+
+  .button-login {
+    text-align: center;
+    margin-bottom: 10vw;
+  }
+}
