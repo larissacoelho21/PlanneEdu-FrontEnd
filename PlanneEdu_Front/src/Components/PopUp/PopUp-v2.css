@@ -22,8 +22,8 @@
   justify-content: center;
   align-items: center;
   gap: 1.5vw;
-  width: 39%;
-  height: auto;
+  width: 45%;
+  max-height: 90vh;
   z-index: 1001;
   overflow: auto;
 }
@@ -86,4 +86,18 @@
   background-color: #07678d;
   border-radius: 20px;
   border: 0.5px solid #075a7b;
+}
+
+.popup-body {
+  width: 100%; 
+  height: auto;
+  max-height: 70vh; 
+  overflow-y: auto; 
+  padding: 1vw; 
+}
+
+.popup-body form{
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
 }
