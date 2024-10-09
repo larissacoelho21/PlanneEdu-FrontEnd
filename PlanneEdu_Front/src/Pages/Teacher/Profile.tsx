@@ -2,7 +2,6 @@
 import { KeyRound, Mail, Phone } from "lucide-react";
 import Background from "../../assets/backgroundProfile.svg"
 
-import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 import "../../Css/Teacher/Profile.css"
 /* 'import { useState } from "react";' */
