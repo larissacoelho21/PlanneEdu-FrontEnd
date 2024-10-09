@@ -152,6 +152,12 @@ button{
   text-align: left;
 }
 
+.select-pop{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
 .card-info {
   display: flex;
   flex-direction: column;
@@ -192,19 +198,55 @@ button{
   padding: .3vw 1.5vw;
 }
 
-.popup-plan::-webkit-scrollbar {
+.popup-body::-webkit-scrollbar {
   width: 0.65vw;
 }
 
-.popup-plan::-webkit-scrollbar-track {
+.popup-body::-webkit-scrollbar-track {
   background: #dcdcdc;
   border: 0.7px #b1b1b1;
 }
 
-.popup-plan::-webkit-scrollbar-thumb {
+.popup-body::-webkit-scrollbar-thumb {
   background-color: #07678d;
   border-radius: 20px;
   border: 0.5px solid #075a7b;
+}
+
+.dates{
+  display: flex;
+  justify-content: space-between;
+  gap: 5vw;
+}
+
+.dates input{
+  width: 100%;
+}
+
+.planpop-btn button{
+  padding: 1vw 6vw;
+}
+
+.popup-btns{
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  margin-top: 1.5vw;
+}
+
+.popup-btns button{
+  border: 2px solid #07678d;
+  padding: .7vw 3vw;
+  border-radius: 0.5vh;
+  background: #07678d;
+  color: #FFF;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.popup-btns button:hover{
+  background: #FFF;
+  color: #07678d;
 }
 
 .planneraulas {

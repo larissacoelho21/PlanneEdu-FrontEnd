@@ -2,12 +2,13 @@
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
-import { useEffect, useState } from "react";
 
 const options = [
   { label: "First", value: 1 },
@@ -58,10 +59,15 @@ export function AddPlans() {
     null
   );
 
+  /* estados para a edição de dados */
+  const [editTextInput, setEditTextInput] = useState("");
+  const [editSelectedOption, setEditSelectedOption] = useState("");
+
   /* array das opções presentes no select */
   const selectOptions = ["C", "D"];
 
   const addData = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     if (textInput && selectedOption) {
       const newData: TableData = {
         text: textInput,
@@ -70,24 +76,23 @@ export function AddPlans() {
       setTableData([...tableData, newData]);
       setTextInput("");
       setSelectedOption("");
-      event.preventDefault();
     }
   };
 
   const editTable = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     if (editingTableIndex !== null) {
       const updatedData = [...tableData];
       updatedData[editingTableIndex] = {
-        text: textInput,
-        selectedOption: selectedOption,
+        text: editTextInput,
+        selectedOption: editSelectedOption,
       };
       setTableData(updatedData);
       setIsEditingTable(false);
-      setTextInput("");
-      setSelectedOption("");
       setEditingTableIndex(null);
       setShowPopUpEdit(false);
-      event.preventDefault();
+      setEditTextInput("");
+      setEditSelectedOption("");
     }
   };
 
@@ -107,13 +112,12 @@ export function AddPlans() {
   type itemComplex = {
     label: string;
     value: number;
-  }
+  };
 
   /* tipificando cada categoria */
   type conhecimentos = itemComplex;
   type estrategias = itemComplex;
   type recursos = itemComplex;
-
 
   /* definindo a estrutura do card */
   type cardPlan = {
@@ -142,19 +146,15 @@ export function AddPlans() {
   const [valueEstrategias, setValueEstrategias] = useState<SelectOption[]>([]);
   const [valueRecursos, setValueRecursos] = useState<SelectOption[]>([]);
 
-  /* ======== formatação das datas ======== */
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
+  /* estado para armazenar datas */
+  const [dateInicial, setDateInicial] = useState<string>("");
+  const [dateFinal, setDateFinal] = useState<string>("");
 
-  const createPlans = () => {
-    const dateInicial = formatDate(
-      (document.getElementById("data-proposta") as HTMLInputElement).value
-    );
-    const dateFinal = formatDate(
-      (document.getElementById("data-final") as HTMLInputElement).value
-    );
+  const createPlans = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (!validateDates(dateInicial, dateFinal)) {
+      return;
+    }
 
     const newPlan: Plans = {
       dateInicial,
@@ -172,6 +172,24 @@ export function AddPlans() {
     setValueEstrategias([]);
     setValueRecursos([]);
     togglePopUpPlan();
+  };
+
+  /* ======== formatação e validação das datas ======== */
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
+  const validateDates = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+  if (end < start) {
+      toast.error("A data final não pode ser menor que a data inicial.");
+      return false;
+    } else {
+      return true;
+    }
   };
 
   /* ======== layout e estrutura da página ======== */
@@ -408,23 +426,23 @@ export function AddPlans() {
                   <label>Critérios de avaliação</label>
                   <input
                     type="text"
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
+                    value={editTextInput}
+                    onChange={(e) => setEditTextInput(e.target.value)}
                   />
                 </div>
 
                 <div className="select-pop">
                   <label>Crítico (C) ou Desejável (D)</label>
                   <select
-                    value={selectedOption}
-                    onChange={(e) => setSelectedOption(e.target.value)}
+                    value={editSelectedOption}
+                    onChange={(e) => setEditSelectedOption(e.target.value)}
                   >
                     <option value="C">Crítico (C)</option>
                     <option value="D">Desejável (D)</option>
                   </select>
                 </div>
 
-                <div className="edit-btns">
+                <div className="popup-btns">
                   <button onClick={editTable}>Salvar</button>
                   <button onClick={() => togglePopUpEdit()}>Cancelar</button>
                 </div>
@@ -462,6 +480,7 @@ export function AddPlans() {
                 <button
                   onClick={(event) => {
                     event.preventDefault();
+                    togglePopUpClasses();
                   }}
                 >
                   Editar
@@ -483,26 +502,15 @@ export function AddPlans() {
               title="Editar"
               subtitle="Edite as informações referente ao planejamento de aula"
             >
-              <div className="date-plan">
-                <h1>oi</h1>
-              </div>
-            </PopUp>
-          )}
-
-          {showPopUpPlan && (
-            <PopUp
-              title="Planejamento de aulas"
-              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
-            >
               <div className="popup-body">
                 <div className="dates">
                   <div className="data-prop">
                     <label>Data proposta</label>
-                    <input type="date" id="data-proposta" />
+                    <input type="date" value={dateInicial} id="data-proposta" />
                   </div>
                   <div className="data-fin">
                     <label>Data final</label>
-                    <input type="date" id="data-final" />
+                    <input type="date" value={dateFinal} id="data-final" />
                   </div>
                 </div>
 
@@ -531,19 +539,75 @@ export function AddPlans() {
                     multiple
                   />
                 </div>
+
+                <div className="popup-btns">
+                  <button onClick={createPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
+                </div>
+              </div>
+            </PopUp>
+          )}
+
+          {showPopUpPlan && (
+            <PopUp
+              title="Planejamento de aulas"
+              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
+            >
+              <div className="popup-body">
+                <div className="dates">
+                  <div className="data-prop">
+                    <label>Data proposta</label>
+                    <input type="date" value={dateInicial} id="data-proposta" />
+                  </div>
+                  <div className="data-fin">
+                    <label>Data final</label>
+                    <input type="date" value={dateFinal} id="data-final" />
+                  </div>
+                </div>
+
+                <div className="multiselects">
+                  <label>Conhecimentos</label>
+                  <Multiselect
+                    options={options}
+                    value={valueConhecimentos}
+                    onChange={setValueConhecimentos}
+                    multiple
+                  />
+
+                  <label>Estratégias</label>
+                  <Multiselect
+                    options={options}
+                    value={valueEstrategias}
+                    onChange={setValueEstrategias}
+                    multiple
+                  />
+
+                  <label>Recursos</label>
+                  <Multiselect
+                    options={options}
+                    value={valueRecursos}
+                    onChange={setValueRecursos}
+                    multiple
+                  />
+                </div>
+
+                <div className="popup-btns">
+                  <button onClick={createPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
+                </div>
               </div>
             </PopUp>
           )}
         </div>
+        <div className="form-actions">
+          <button className="save">
+            <Check />
+            Salvar alterações
+          </button>
+          <button>Cancelar</button>
+        </div>
       </form>
-
-      <div className="form-actions">
-        <button className="save">
-          <Check />
-          Salvar alterações
-        </button>
-        <button>Cancelar</button>
-      </div>
+      <Toaster richColors />;
     </main>
   );
 }
