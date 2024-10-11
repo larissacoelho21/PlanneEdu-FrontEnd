@@ -4,10 +4,10 @@ body {
   font-style: normal;
 }
 
-.back {
+.back{
   position: fixed;
-  width: 60%;
-  height: 100%;
+  width: auto;
+  height: 46vw;
   object-fit: cover; /* Ajusta a imagem para preencher o container */
 }
 
