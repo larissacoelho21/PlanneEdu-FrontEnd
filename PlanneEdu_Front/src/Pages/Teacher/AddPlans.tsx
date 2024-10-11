@@ -1,16 +1,18 @@
-/* importações dos icones, css e componentes */
+/* importações dos icones, bibliotecas, css e componentes */
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
+import { PopUp } from "../../Components/PopUp/PopUp-v2";
 import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ReactInputMask from "react-input-mask";
 import { Toaster, toast } from "sonner";
 import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
-import { PopUp } from "../../Components/PopUp/PopUp-v2";
 
-const options = [
+/* definindo as opções que serão usadas no multiselect */
+const options: SelectOption[] = [
   { label: "First", value: 1 },
   { label: "Second", value: 2 },
   { label: "Third", value: 3 },
@@ -150,15 +152,48 @@ export function AddPlans() {
   const [dateInicial, setDateInicial] = useState<string>("");
   const [dateFinal, setDateFinal] = useState<string>("");
 
+  /* ======== formatação e validação das datas ======== */
+  const convertToISO = (dateString: string) => {
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`; // Formato ISO (YYYY-MM-DD)
+  };
+
+  const validateDates = (startISO: string, endISO: string) => {
+    const start = new Date(startISO);
+    const end = new Date(endISO);
+
+    if (end < start) {
+      toast.error("A data final não pode ser menor que a data inicial! Tente novamente com uma data válida.");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const createPlans = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (!validateDates(dateInicial, dateFinal)) {
+
+    /* converte para o formato ISO */
+    const startDateISO = convertToISO(dateInicial);
+    const endDateISO = convertToISO(dateFinal);
+
+    if (!validateDates(startDateISO, endDateISO)) {
+      return;
+    }
+
+    // garantindo que todos os campos foram preenchidos
+    if (
+      valueConhecimentos.length === 0 ||
+      valueEstrategias.length === 0 ||
+      valueRecursos.length === 0
+    ) {
+      toast.error("Preencha todos os campos necessários!");
       return;
     }
 
     const newPlan: Plans = {
-      dateInicial,
-      dateFinal,
+      dateInicial: dateInicial,
+      dateFinal: dateFinal,
       conhecimentos: valueConhecimentos.map(
         (conhecimento) => conhecimento.value
       ),
@@ -171,25 +206,97 @@ export function AddPlans() {
     setValueConhecimentos([]);
     setValueEstrategias([]);
     setValueRecursos([]);
+    setDateInicial("");
+    setDateFinal("");
+
+    toast.success("Planejamento adicionado com sucesso!");
     togglePopUpPlan();
   };
 
-  /* ======== formatação e validação das datas ======== */
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
+  /* configurações e função para editar os dados referente ao planejamento de aulas */
+  /* estado para rastrear o índice do plano que está sendo editado */
+  const [editingPlanIndex, setEditingPlanIndex] = useState<number | null>(null);
+
+  /*  */
+  const startEditingPlan = (index: number) => {
+    const planToEdit = plans[index];
+
+    setEditingPlanIndex(index);
+    console.log("Index being edited:", editingPlanIndex);
+    setDateInicial(planToEdit.dateInicial);
+    setDateFinal(planToEdit.dateFinal);
+    setValueConhecimentos(
+      planToEdit.conhecimentos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setValueEstrategias(
+      planToEdit.estrategias
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setValueRecursos(
+      planToEdit.recursos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    togglePopUpClasses();
   };
 
-  const validateDates = (startDate: string, endDate: string) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    
-  if (end < start) {
-      toast.error("A data final não pode ser menor que a data inicial.");
-      return false;
-    } else {
-      return true;
+  const editPlans = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const startDateISO = convertToISO(dateInicial);
+    const endDateISO = convertToISO(dateFinal);
+
+    if (!validateDates(startDateISO, endDateISO)) {
+      return;
     }
+
+    /* verifique se todos os campos estão preenchidos */
+    if (
+      valueConhecimentos.length === 0 ||
+      valueEstrategias.length === 0 ||
+      valueRecursos.length === 0
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
+    /* cria um novo plano usando a lógica existente */
+    const updatedPlan: Plans = {
+      dateInicial: dateInicial,
+      dateFinal: dateFinal,
+      conhecimentos: valueConhecimentos.map(
+        (conhecimento) => conhecimento.value
+      ),
+      estrategias: valueEstrategias.map((estrategia) => estrategia.value),
+      recursos: valueRecursos.map((recurso) => recurso.value),
+    };
+
+    /* verifica se o índice de edição não é nulo */
+    if (editingPlanIndex !== null) {
+      /* atualiza o plano na posição correspondente */
+      const updatedPlans = [...plans];
+      updatedPlans[editingPlanIndex] = updatedPlan;
+
+      /* atualiza o estado com os novos planos */
+      setPlans(updatedPlans);
+    } else {
+      toast.error("Erro: índice de edição não encontrado.");
+      return;
+    }
+
+    /* reseta os valores dos selects e das datas */
+    setValueConhecimentos([]);
+    setValueEstrategias([]);
+    setValueRecursos([]);
+    setDateInicial("");
+    setDateFinal("");
+
+    toast.success("Planejamento editado com sucesso!");
+    togglePopUpClasses();
   };
 
   /* ======== layout e estrutura da página ======== */
@@ -215,7 +322,6 @@ export function AddPlans() {
           </div>
         </div>
       </div>
-
       <form className="form">
         <div className="input-field">
           <label>Curso</label>
@@ -395,8 +501,8 @@ export function AddPlans() {
                       onClick={(event) => {
                         event.preventDefault();
                         setEditingTableIndex(index);
-                        setTextInput(data.text);
-                        setSelectedOption(data.selectedOption);
+                        setEditTextInput(data.text);
+                        setEditSelectedOption(data.selectedOption);
                         togglePopUpEdit();
                       }}
                     >
@@ -480,7 +586,7 @@ export function AddPlans() {
                 <button
                   onClick={(event) => {
                     event.preventDefault();
-                    togglePopUpClasses();
+                    startEditingPlan(index);
                   }}
                 >
                   Editar
@@ -497,20 +603,30 @@ export function AddPlans() {
             </div>
           ))}
 
-          {showPopUpClasses && (
+          {showPopUpPlan && (
             <PopUp
-              title="Editar"
-              subtitle="Edite as informações referente ao planejamento de aula"
+              title="Planejamento de aulas"
+              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
               <div className="popup-body">
                 <div className="dates">
                   <div className="data-prop">
                     <label>Data proposta</label>
-                    <input type="date" value={dateInicial} id="data-proposta" />
+                    <ReactInputMask
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateInicial}
+                      onChange={(e) => setDateInicial(e.target.value)}
+                    />
                   </div>
                   <div className="data-fin">
                     <label>Data final</label>
-                    <input type="date" value={dateFinal} id="data-final" />
+                    <ReactInputMask
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateFinal}
+                      onChange={(e) => setDateFinal(e.target.value)}
+                    />
                   </div>
                 </div>
 
@@ -548,20 +664,30 @@ export function AddPlans() {
             </PopUp>
           )}
 
-          {showPopUpPlan && (
+          {showPopUpClasses && (
             <PopUp
-              title="Planejamento de aulas"
-              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
+              title="Editar"
+              subtitle="Edite as informações referente ao planejamento de aula"
             >
               <div className="popup-body">
                 <div className="dates">
                   <div className="data-prop">
                     <label>Data proposta</label>
-                    <input type="date" value={dateInicial} id="data-proposta" />
+                    <ReactInputMask
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateInicial}
+                      onChange={(e) => setDateInicial(e.target.value)}
+                    />
                   </div>
                   <div className="data-fin">
                     <label>Data final</label>
-                    <input type="date" value={dateFinal} id="data-final" />
+                    <ReactInputMask
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateFinal}
+                      onChange={(e) => setDateFinal(e.target.value)}
+                    />
                   </div>
                 </div>
 
@@ -592,8 +718,8 @@ export function AddPlans() {
                 </div>
 
                 <div className="popup-btns">
-                  <button onClick={createPlans}>Salvar</button>
-                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
+                  <button onClick={editPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpClasses()}>Cancelar</button>
                 </div>
               </div>
             </PopUp>
@@ -607,7 +733,6 @@ export function AddPlans() {
           <button>Cancelar</button>
         </div>
       </form>
-      <Toaster richColors />;
     </main>
   );
 }

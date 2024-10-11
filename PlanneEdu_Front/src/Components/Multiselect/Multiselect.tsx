@@ -97,7 +97,7 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
             }}
             className={styles["option-badge"]}
           >
-            {v.label}{" "}
+            {v.label ? v.label : v.value}{" "}
             <span className={styles["remove-btn"]}>
               <X />
             </span>
