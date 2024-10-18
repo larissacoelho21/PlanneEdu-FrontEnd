@@ -16,7 +16,7 @@ export const PopUp: React.FC<PopUpProps> = ({
   return (
     <div className="popup-overlay">
       <div className="popup-contents">
-        <div className="title">
+        <div className="title-pop">
           <h2>{title}</h2>
           <h3>{subtitle}</h3>
         </div>

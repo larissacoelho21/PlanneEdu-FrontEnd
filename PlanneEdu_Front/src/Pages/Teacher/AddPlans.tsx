@@ -3,9 +3,9 @@ import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
 import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import ReactInputMask from "react-input-mask";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import {
   Multiselect,
   SelectOption,
@@ -21,17 +21,7 @@ const options: SelectOption[] = [
 ];
 
 export function AddPlans() {
-  /* ======== configurações utilizadas no multiselect ======== */
-  const [value, setValue] = useState<SelectOption[]>([]);
-  const [value2, setValue2] = useState<SelectOption[]>([]);
-  const [value3, setValue3] = useState<SelectOption[]>([]);
-  const [value4, setValue4] = useState<SelectOption[]>([]);
-
-  /* ======== popups ======== */
-  const [showPopUpEdit, setShowPopUpEdit] = useState(false);
-  const togglePopUpEdit = () => {
-    setShowPopUpEdit(!showPopUpEdit);
-  };
+  /* ======== declaração de estados dos popups ======== */
   const [showPopUpPlan, setShowPopUpPlan] = useState(false);
   const togglePopUpPlan = () => {
     setShowPopUpPlan(!showPopUpPlan);
@@ -41,64 +31,12 @@ export function AddPlans() {
     setShowPopUpClasses(!showPopUpClasses);
   };
 
-  /* ======== funções e configurações para a criação da tabela ======== */
-
-  /* definindo a estrutura dos dados da tabela, todos os itens terão uma propriedade de texto (text) e seleção (selectedOption) */
-  type TableData = {
-    text: string;
-    selectedOption: string;
+  const [showPopUpStrategy, setShowPopUpStrategy] = useState(false);
+  const togglePopUpStrategy = () => {
+    setShowPopUpStrategy(!showPopUpStrategy);
   };
 
-  /* gerencia o valor inputado no input de texto */
-  const [textInput, setTextInput] = useState<string>("");
-  /* gerencia o valor inputado no select */
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  /* armazena os dados da tabela, é uma array de objetos*/
-  const [tableData, setTableData] = useState<TableData[]>([]);
-
-  const [isEditingTable, setIsEditingTable] = useState(false);
-  const [editingTableIndex, setEditingTableIndex] = useState<number | null>(
-    null
-  );
-
-  /* estados para a edição de dados */
-  const [editTextInput, setEditTextInput] = useState("");
-  const [editSelectedOption, setEditSelectedOption] = useState("");
-
-  /* array das opções presentes no select */
-  const selectOptions = ["C", "D"];
-
-  const addData = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (textInput && selectedOption) {
-      const newData: TableData = {
-        text: textInput,
-        selectedOption: selectedOption,
-      };
-      setTableData([...tableData, newData]);
-      setTextInput("");
-      setSelectedOption("");
-    }
-  };
-
-  const editTable = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (editingTableIndex !== null) {
-      const updatedData = [...tableData];
-      updatedData[editingTableIndex] = {
-        text: editTextInput,
-        selectedOption: editSelectedOption,
-      };
-      setTableData(updatedData);
-      setIsEditingTable(false);
-      setEditingTableIndex(null);
-      setShowPopUpEdit(false);
-      setEditTextInput("");
-      setEditSelectedOption("");
-    }
-  };
-
-  /* função que remove um item de um array com base no índice fornecido */
+  /* ======== função para a remoção de itens com base em seu índice ======== */
   /* "React.Dispatch<React.SetStateAction<any[]>>" => define o tipo de 'setData' como uma função que atualiza o estado de um array de qualquer tipo (any) */
   const DeleteData = (
     data: any[],
@@ -107,9 +45,75 @@ export function AddPlans() {
   ) => {
     const updatedData = data.filter((_, i) => i !== index);
     setData(updatedData);
+    toast.success("Deletado com sucesso!");
   };
 
-  /* ======== fuções e configurações do popup de planejamento de aulas ======== */
+  /* ======== funções e configurações referentes as estratégias ======== */
+  const [strategies, setStrategies] = useState<Strategy[]>([]);
+  /* armazena as datas escolhidas, é uma array/lista */
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  const [cargaHoraria, setCargaHoraria] = useState<number | null>(null);
+  const [valueConhecimentosStra, setValueConhecimentosStra] = useState<
+    SelectOption[]
+  >([]);
+  const [valueEstrategiasStra, setValueEstrategiasStra] = useState<
+    SelectOption[]
+  >([]);
+  const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
+    []
+  );
+  const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
+
+
+  /* definindo a estrutura do tipo dos dados */
+  type Strategy = {
+    dates: string[];
+    cargaHoraria: number | null;
+    conhecimentos: (string | number)[];
+    estrategias: (string | number)[];
+    recursos: (string | number)[];
+    perguntasMediadoras: string;
+  };
+
+  const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // Verifique se todos os campos necessários estão preenchidos
+    if (
+      !perguntasMediadoras ||
+      valueConhecimentosStra.length === 0 ||
+      valueEstrategiasStra.length === 0 ||
+      valueRecursosStra.length === 0
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
+    const newStrategy = {
+      dates: selectedDates,
+      cargaHoraria,
+      conhecimentos: valueConhecimentosStra.map(
+        (conhecimento) => conhecimento.value
+      ),
+      estrategias: valueEstrategiasStra.map((estrategia) => estrategia.value),
+      recursos: valueRecursosStra.map((recurso) => recurso.value),
+      perguntasMediadoras,
+    };
+
+    setStrategies([...strategies, newStrategy]);
+
+    setSelectedDates([]);
+    setCargaHoraria(null);
+    setValueConhecimentosStra([]);
+    setValueEstrategiasStra([]);
+    setValueRecursosStra([]);
+    setPerguntasMediadoras("");
+
+    toast.success("Estratégia adicionada com sucesso!");
+    togglePopUpStrategy();
+  };
+
+  /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
   type itemComplex = {
     label: string;
@@ -130,7 +134,7 @@ export function AddPlans() {
     recursos: (string | number)[];
   };
 
-  /* ======== configurações para a criação do card referente ao planejamento de ensino ======== */
+  /* configurações para a criação do card referente ao planejamento */
   interface Plans {
     dateInicial: string;
     dateFinal: string;
@@ -163,7 +167,9 @@ export function AddPlans() {
     const end = new Date(endISO);
 
     if (end < start) {
-      toast.error("A data final não pode ser menor que a data inicial! Tente novamente com uma data válida.");
+      toast.error(
+        "A data final não pode ser menor que a data inicial! Tente novamente com uma data válida."
+      );
       return false;
     } else {
       return true;
@@ -217,7 +223,7 @@ export function AddPlans() {
   /* estado para rastrear o índice do plano que está sendo editado */
   const [editingPlanIndex, setEditingPlanIndex] = useState<number | null>(null);
 
-  /*  */
+  /* início do processo de edição, preenchimento do formulário com os dados do plano existente e marcando o índice do plano que está sendo editado. */
   const startEditingPlan = (index: number) => {
     const planToEdit = plans[index];
 
@@ -244,6 +250,7 @@ export function AddPlans() {
     togglePopUpClasses();
   };
 
+  /* conclusão do processo de edição, salvando as alterações feitas no plano e atualizando o estado com os novos dados */
   const editPlans = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -375,193 +382,128 @@ export function AddPlans() {
           <input type="text" name="turma" id="turma" />
         </div>
 
-        <h3 className="title-section">
-          Estratégias para o desenvolvimento da situação de aprendizagem e
-          planejamento da intervenção mediadora
-        </h3>
-
-        <div className="row">
-          <div className="input-field">
-            <label>Data</label>
-            <input type="date" name="date" id="datte" className="large-input" />
-          </div>
-          <div className="input-field">
-            <label>Carga Horária</label>
-            <input type="number" name="hrs" id="hrs" className="large-input" />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="captecsocio">
-            <label>Capacidades Técnicas e Socioemocionais</label>
-            <Multiselect
-              options={options}
-              value={value}
-              onChange={(o) => setValue(o)}
-              multiple={true}
-            />
-          </div>
-          <div className="caprelacionadas">
-            <label>Capacidades Relacionadas</label>
-            <Multiselect
-              options={options}
-              value={value2}
-              onChange={(o) => setValue2(o)}
-              multiple={true}
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="estra-ensino">
-            <label>Estratégias de ensino</label>
-            <Multiselect
-              options={options}
-              value={value3}
-              onChange={(o) => setValue3(o)}
-              multiple={true}
-            />
-          </div>
-          <div className="recur-amb">
-            <label>Recursos e Ambientes Pedagógicos</label>
-            <Multiselect
-              options={options}
-              value={value4}
-              onChange={(o) => setValue4(o)}
-              multiple={true}
-            />
-          </div>
-        </div>
-
-        <div className="input-field">
-          <label>Perguntas Mediadoras</label>
-          <input type="text" name="pergmedia" id="pergmedia" />
-        </div>
-
-        <h3 className="title-section">
-          Estratégias de avaliação de aprendizagem
-        </h3>
-
-        <div className="input-field">
-          <label>Instrumentos de Avaliação</label>
-          <input type="text" name="inst-avalia" id="inst-avalia" />
-        </div>
-
-        <div className="criterios">
-          <div className="input-field">
-            <label>Critérios de avaliação</label>
-            <input
-              type="text"
-              name="crit-avalia"
-              id="crit-avalia"
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-            />
-          </div>
-          <div className="input-field">
-            <label>Crítico (C) ou Desejável (D)</label>
-            <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-            >
-              <option value="" disabled></option>
-              {selectOptions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
+        <div className="estrategias">
+          <h3 className="title-section">
+            Estratégias para o desenvolvimento da situação de aprendizagem e
+            planejamento da intervenção mediadora
+          </h3>
+          <label>Estratégias</label>
           <button
-            className="add-btn"
-            onClick={addData}
-            disabled={!textInput || !selectedOption}
+            className="add-card"
+            onClick={(event) => {
+              togglePopUpStrategy();
+              event.preventDefault();
+            }}
           >
-            Adicionar à Tabela
+            <Plus width={40} height={40} strokeWidth={1.5} />
           </button>
 
-          <table className="table-criterios">
-            <thead>
-              <tr>
-                <th>Critérios de avaliação</th>
-                <th>Crítico (C) e Desejável (D)</th>
-                <th>Editar</th>
-                <th>Deletar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.text}</td>
-                  <td>{data.selectedOption}</td>
-                  <td>
-                    <button
-                      className="action-btn"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setEditingTableIndex(index);
-                        setEditTextInput(data.text);
-                        setEditSelectedOption(data.selectedOption);
-                        togglePopUpEdit();
-                      }}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="action-btn"
-                      onClick={() => DeleteData(tableData, setTableData, index)}
-                    >
-                      Deletar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {showPopUpEdit && (
+          {showPopUpStrategy && (
             <PopUp
-              title="Editar"
-              subtitle="Edite as informações referente aos critérios de avaliação"
+              title="Criar estratégia"
+              subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
             >
-              <form action="">
+              <div className="pop-body">
                 <div className="input-field">
-                  <label>Critérios de avaliação</label>
-                  <input
+                  <label>Datas</label>
+                  <ReactInputMask
                     type="text"
-                    value={editTextInput}
-                    onChange={(e) => setEditTextInput(e.target.value)}
+                    mask="99/99/9999"
+                    value={dateInicial}
+                    onChange={(e) => setDateInicial(e.target.value)}
                   />
                 </div>
 
-                <div className="select-pop">
-                  <label>Crítico (C) ou Desejável (D)</label>
-                  <select
-                    value={editSelectedOption}
-                    onChange={(e) => setEditSelectedOption(e.target.value)}
-                  >
-                    <option value="C">Crítico (C)</option>
-                    <option value="D">Desejável (D)</option>
-                  </select>
+                <div className="input-field">
+                  <label>Carga Horária</label>
+                  <input type="number" name="carga-h" id="carga-h" />
+                </div>
+
+                <div className="multiselects">
+                  <div className="multi-conherel">
+                    <label>Conhecimentos Relacionados</label>
+                    <Multiselect
+                      options={options}
+                      value={valueConhecimentos}
+                      onChange={setValueConhecimentos}
+                      multiple
+                    />
+                  </div>
+
+                  <div className="multi-estra">
+                    <label>Estratégias de Ensino</label>
+                    <Multiselect
+                      options={options}
+                      value={valueEstrategias}
+                      onChange={setValueEstrategias}
+                      multiple
+                    />
+                  </div>
+
+                  <div className="multi-recNam">
+                    <label>Recursos e Ambientes Pedagógicos</label>
+                    <Multiselect
+                      options={options}
+                      value={valueRecursos}
+                      onChange={setValueRecursos}
+                      multiple
+                    />
+                  </div>
+                </div>
+
+                <div className="input-field">
+                  <label>Peguntas Mediadoras</label>
+                  <input type="text" name="perg-medi" id="perg-medi" />
                 </div>
 
                 <div className="popup-btns">
-                  <button onClick={editTable}>Salvar</button>
-                  <button onClick={() => togglePopUpEdit()}>Cancelar</button>
+                  <button onClick={createStrategy}>Salvar</button>
+                  <button onClick={() => togglePopUpStrategy()}>
+                    Cancelar
+                  </button>
                 </div>
-              </form>
+              </div>
             </PopUp>
           )}
+
+          {strategies.map((strategy, index) => (
+            <div className="card-info">
+              <div className="pergunta-estra">
+                <h1>{strategy.perguntasMediadoras}</h1>
+              </div>
+              <div className="selections">
+                <p>Datas : {strategy.dates.join(", ")}</p>
+                <p>Conhecimentos: {strategy.conhecimentos.join(", ")}</p>
+                <p>Estratégias: {strategy.estrategias.join(", ")}</p>
+                <p>Recursos: {strategy.recursos.join(", ")}</p>
+              </div>
+              <div className="card-btns">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    startEditingPlan(index);
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    DeleteData(strategies, setStrategies, index);
+                  }}
+                >
+                  Deletar
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="planneraulas">
           <h3 className="title-section">Planejamento de aulas</h3>
           <label>Datas e conhecimentos abordados</label>
           <button
-            className="add-plan"
+            className="add-card"
             onClick={(event) => {
               togglePopUpPlan();
               event.preventDefault();
@@ -608,7 +550,7 @@ export function AddPlans() {
               title="Planejamento de aulas"
               subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
-              <div className="popup-body">
+              <div className="pop-body">
                 <div className="dates">
                   <div className="data-prop">
                     <label>Data proposta</label>
@@ -629,33 +571,35 @@ export function AddPlans() {
                     />
                   </div>
                 </div>
-
                 <div className="multiselects">
-                  <label>Conhecimentos</label>
-                  <Multiselect
-                    options={options}
-                    value={valueConhecimentos}
-                    onChange={setValueConhecimentos}
-                    multiple
-                  />
-
-                  <label>Estratégias</label>
-                  <Multiselect
-                    options={options}
-                    value={valueEstrategias}
-                    onChange={setValueEstrategias}
-                    multiple
-                  />
-
-                  <label>Recursos</label>
-                  <Multiselect
-                    options={options}
-                    value={valueRecursos}
-                    onChange={setValueRecursos}
-                    multiple
-                  />
+                  <div className="multi-conhe">
+                    <label>Conhecimentos</label>
+                    <Multiselect
+                      options={options}
+                      value={valueConhecimentos}
+                      onChange={setValueConhecimentos}
+                      multiple
+                    />
+                  </div>
+                  <div className="multi-estra">
+                    <label>Estratégias</label>
+                    <Multiselect
+                      options={options}
+                      value={valueEstrategias}
+                      onChange={setValueEstrategias}
+                      multiple
+                    />
+                  </div>
+                  <div className="multi-rec">
+                    <label>Recursos</label>
+                    <Multiselect
+                      options={options}
+                      value={valueRecursos}
+                      onChange={setValueRecursos}
+                      multiple
+                    />
+                  </div>
                 </div>
-
                 <div className="popup-btns">
                   <button onClick={createPlans}>Salvar</button>
                   <button onClick={() => togglePopUpPlan()}>Cancelar</button>
