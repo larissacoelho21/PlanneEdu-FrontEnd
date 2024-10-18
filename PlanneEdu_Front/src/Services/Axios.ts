@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BaseUrl = "http://10.92.199.30:3000"; // Substitua com sua URL base
+const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
 export const login = async (nif: string, password: string) => {
   try {
