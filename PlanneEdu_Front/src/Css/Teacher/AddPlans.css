@@ -87,12 +87,6 @@ button{
   margin: 2.5vw 0;
 }
 
-.criterios {
-  display: flex;
-  flex-direction: column;
-  gap: 2vw;
-}
-
 .add-btn {
   background: #07678d;
   border: 0.13vw #07678d solid;
@@ -169,7 +163,7 @@ button{
   gap: 0.5vw;
 }
 
-.date-plan h1 {
+.date-plan h1, .pergunta-estra {
   font-size: 1.5vw;
   font-weight: 700;
 }
@@ -213,6 +207,12 @@ button{
   border: 0.5px solid #075a7b;
 }
 
+.pop-body, .multiselects {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
 .dates{
   display: flex;
   justify-content: space-between;
@@ -249,13 +249,13 @@ button{
   color: #07678d;
 }
 
-.planneraulas {
+.planneraulas, .estrategias {
   display: flex;
   flex-direction: column;
   gap: 1vw;
 }
 
-.add-plan {
+.add-card {
   width: 4vw;
   height: 4vw;
   display: flex;
@@ -267,7 +267,7 @@ button{
   color: #07678d;
 }
 
-.add-plan:hover {
+.add-card:hover {
   background: #07678d;
   color: #fff;
   cursor: pointer;
