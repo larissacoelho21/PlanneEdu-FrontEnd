@@ -33,15 +33,19 @@ interface DropdownItemProps {
 function DropdownItem({ icon, text, to }: DropdownItemProps) {
   return (
     <NavLink to={to} className="dropdownItem">
-      {" "}
-      {/* usado para navegar as páginas de forma renderizada */}
       <i className="icon">{icon}</i> {/* imagem */}
+      <span className="menu-text">{text}</span> {/* texto */}
+    </NavLink>
+    /* <NavLink to={to} className="dropdownItem">
+      {" "}
+      {/* usado para navegar as páginas de forma renderizada }
+      <i className="icon">{icon}</i> {/* imagem }
       <Link className="menu-a" to="#">
         {" "}
         {text}{" "}
       </Link>{" "}
-      {/* Link */}
-    </NavLink>
+      {/* Link }
+    </NavLink> */
   );
 }
 
@@ -76,11 +80,7 @@ function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
   return (
     <NavLink to={to} className="dropdownProfile" onClick={onClick}>
       <i className="icon">{icon}</i> {/* imagem */}
-      <Link className="menu-a" to="#">
-        {" "}
-        {text}{" "}
-      </Link>{" "}
-      {/* Link */}
+      <span className="menu-text">{text}</span> {/* texto */}
     </NavLink>
   );
 }
@@ -184,27 +184,27 @@ export function NavBarOpp() {
                       {" "}
                       {/* menu */}
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<CodeXml size={20} />}
                         text={"Desenvolvimento de sistemas"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<Settings size={20} />}
                         text={"Eletromecânica"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<ChartLine size={20} />}
                         text={"Logística"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<Folder size={20} />}
                         text={"Administração"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="# "
                         icon={<GalleryVerticalEnd size={20} />}
                         text={"Geral"}
                       />
@@ -233,7 +233,7 @@ export function NavBarOpp() {
             </div>
 
             <div className="Icons">
-              <div className="icon-list" ref={notRef}>
+              <div className="icon-list" >
                 <ul>
                   <li className="notification-dropdown">
                     <div
@@ -241,6 +241,7 @@ export function NavBarOpp() {
                       onClick={() => {
                         setOpenTwo(!openTwo);
                       }}
+                      ref={notRef}
                     >
                       <div className="link-bell">
                         <FontAwesomeIcon icon={faBell} className="iconsBell" />
@@ -292,7 +293,7 @@ export function NavBarOpp() {
                             text={"Visualizar Perfil"}
                           />
                           <DropdownProfile
-                            to="#"
+                            to="/"
                             icon={<LogOut size={20} />}
                             text={"Sair"}
                             onClick={logout} // Chama a função de logout ao clicar

@@ -3,6 +3,8 @@
   --speed: 500ms;
 }
 
+
+
 .navbarOne {
   height: 6vw;
   background-color: #f2f2f2;
@@ -10,6 +12,7 @@
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se necessário */
 }
 
 ul {
@@ -23,11 +26,14 @@ a {
 link:active {
   color: #074973;
 }
+
 .left-side,
 .navbar-nav,
 .profile {
   display: flex;
+  margin: 0;
 }
+
 /* estilizando imagem logo */
 
 .nav-logo img {
@@ -40,11 +46,10 @@ link:active {
 .navbar-link {
   font-family: var(--font);
   color: black;
-  text-align: center;
   display: flex;
   justify-content: center;
-  margin-left: 3vw;
-  margin-top: 2vw;
+  font-size: 1.1rem;
+  margin: 1.5rem 1rem; /* Espaçamento entre links */
 }
 
 .navbar-link:hover {
@@ -118,16 +123,10 @@ link:active {
 }
 
 .dropdownItem .icon:hover,
-.dropdownItem .menu-a:hover {
+.dropdownItem .menu-text:hover, .menu-a:hover{
   color: #074973; /* cor quando o hover estiver ativo */
   cursor: pointer;
 }
-
-/* .dropdownItem  {
-    color: #074973;
-    transform: scale(1.05); /* aumenta o ícone um pouco ao passar o mouse 
-    transition: transform 0.3s ease-in-out, color 0.2s ease-in-out; /* efeito de transição suave 
-} */
 
 .dropdownItem .icon {
   max-width: 2vw;
@@ -138,8 +137,8 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownItem .menu-a {
-  font-size: 1.1vw;
+.dropdownItem .menu-text{
+  font-size: 0.8rem;
   max-width: 15vw;
   color: #7f7f7f;
   align-self: center;
@@ -227,76 +226,77 @@ link:active {
 }
 
 .Icons {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* Dropdown Profile */
 .dropdown-profile {
-    position: absolute;
-    top: 5.5vw;
-    right: 2vw;
-    background-color: #fff;
-    padding: 1.2vw 1.2vw;
-    width: 14vw;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+  position: absolute;
+  top: 5.5vw;
+  right: 2vw;
+  background-color: #fff;
+  padding: 1.2vw 1.2vw;
+  width: 14vw;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
-.dropdown-profile.activeOne{
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: var(--speed) ease;
+.dropdown-profile.activeOne {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
 }
 
-.dropdown-profile.inactiveOne{
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: var(--speed) ease;
+.dropdown-profile.inactiveOne {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
 }
 .dropdown-profile::before {
-    content: "";
-    position: absolute;
-    top: -2.5vw; /* Ajusta a seta acima do dropdown */
-    right: 3vw; /* Ajusta a posição horizontal da seta */
-    border-width: 1.5vw;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
-    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+  content: "";
+  position: absolute;
+  top: -2.5vw; /* Ajusta a seta acima do dropdown */
+  right: 3vw; /* Ajusta a posição horizontal da seta */
+  border-width: 1.5vw;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+  z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
 }
 
 .dropdown-profile .dropdownProfile:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
-    margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
 }
 
 .dropdownProfile {
-    display: flex;
-    align-items: center;  
-    padding: 0.2vw;  
+  display: flex;
+  align-items: center;
+  padding: 0.2vw;
 }
 
-.dropdownProfile .icon:hover, .dropdownProfile .menu-a:hover{
-    color: #074973; /* cor quando o hover estiver ativo */
-    cursor: pointer;
+.dropdownProfile .icon:hover,
+.dropdownProfile .menu-text:hover {
+  color: #074973; /* cor quando o hover estiver ativo */
+  cursor: pointer;
 }
 
 .dropdownProfile .icon {
-    max-width: 2vw;
-    margin-right: 0.9vw;
-    margin-top: 0.6vw;
-    color: #7F7F7F;
-    align-self: center;
-    transition: var(--speed);
+  max-width: 2vw;
+  margin-right: 0.9vw;
+  margin-top: 0.6vw;
+  color: #7f7f7f;
+  align-self: center;
+  transition: var(--speed);
 }
 
-.dropdownProfile .menu-a {
-    font-size: 1.1vw;
-    max-width: 15vw;
-    color: #7F7F7F;
-    align-self: center;
-    margin: 0;
-    transition: var(--speed);
+.dropdownProfile .menu-text{
+  font-size: 1.1rem;
+  max-width: 15vw;
+  color: #7f7f7f;
+  align-self: center;
+  margin: 0;
+  transition: var(--speed);
 }
