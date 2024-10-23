@@ -175,10 +175,11 @@ export function NavBarProfessor() {
                       className={`dropdown-menu ${
                         openOne ? "active" : "inactive"
                       }`}
+                      //TODO: Transformar textos responsivos
                     >
                       {" "}
                       {/* menu */}
-                      <DropdownItem
+                      <DropdownItem 
                         to="/plansensinoespc"
                         icon={<CodeXml size={20} />}
                         text={"Desenvolvimento de sistemas"}

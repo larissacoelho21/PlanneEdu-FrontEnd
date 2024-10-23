@@ -85,7 +85,7 @@ function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
   );
 }
 
-export function NavBarOpp() {
+export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Professor
   /* Criando função para identificarquando o dropdown esta ativo */
   const [openOne, setOpenOne] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);

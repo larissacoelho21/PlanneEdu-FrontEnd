@@ -30,7 +30,9 @@ export function VerificationEmail() {
     if (storedEmail) {
       setEmail(storedEmail);
     } else {
-      toast.error("Erro: e-mail não encontrado. Por favor, recomece o processo.");
+      toast.error(
+        "Erro: e-mail não encontrado. Por favor, recomece o processo."
+      );
       navigate("/redefinicaoemail"); // Redireciona para o início caso o e-mail não seja encontrado
     }
   }, [navigate]);
@@ -66,7 +68,7 @@ export function VerificationEmail() {
         navigate("/");
       })
       .catch((error) => {
-        toast.error(`Erro ao redefinir a senha: ${error.message}`) //alert
+        toast.error(`Erro ao redefinir a senha: ${error.message}`); //alert
         console.error(error.message);
       });
   };
@@ -93,7 +95,7 @@ export function VerificationEmail() {
               {" "}
               {/* Input para a verificação do código */}
               {/* verificação de quantidade de caracteres */}
-              <input
+              <input //TODO: Adicionar max de caracteres
                 type="number"
                 className="verification"
                 value={code}
@@ -124,13 +126,14 @@ export function VerificationEmail() {
                   onChange={(event) => setPassword(event.target.value)}
                   required
                 />
-                <button onClick={handlePassword} type="button">
+                <button onClick={handlePassword} type="button" //TODO: Icone acionando junto com o input de confirme senha 
+                >
                   {isShow && <Eye size={18} />}
                   {!isShow && <EyeOff size={18} />}
                 </button>
               </label>
               <label className="inputReset">
-                <input
+                <input //TODO: Adicionar max de caracteres
                   className="input-password"
                   type={isShow ? "text" : "password"}
                   placeholder="Confirme sua senha"
@@ -138,7 +141,8 @@ export function VerificationEmail() {
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
                 />
-                <button onClick={handlePassword} type="button">
+                <button onClick={handlePassword} type="button" //TODO: Icone acionando junto com o input de informe senha 
+                >
                   {isShow && <Eye size={18} />}
                   {!isShow && <EyeOff size={18} />}
                 </button>

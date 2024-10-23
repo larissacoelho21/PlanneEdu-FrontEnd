@@ -33,7 +33,7 @@ export function AddUser() {
     telefone,
   });
 
-  const AddUser = async (event: React.FormEvent) => {
+  const AddUser = async (event: React.FormEvent) => { //TODO: Iniciar Css
     event.preventDefault();
 
     await fetch(`${BaseUrl}/register`, {

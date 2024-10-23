@@ -120,7 +120,8 @@ export function ViewActivity() {
             <div className="title-filter">
               <h1>Filtre por categoria:</h1>
             </div>
-            <div className="buttons-filter">
+            <div className="buttons-filter" //TODO: Adicionar hover nos botões
+            > 
               <button onClick={() => setFilterActivities("Situação-Problema")}>
                 Situação Problema
               </button>
