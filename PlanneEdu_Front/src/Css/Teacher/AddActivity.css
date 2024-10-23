@@ -76,7 +76,7 @@ input[type="date"]:focus {
 
 .buttons-add{
   display: flex;
-  gap: 4.2vw;
+  gap: 3.6vw;
   margin-bottom: 3%;
 }
 
@@ -84,7 +84,7 @@ input[type="date"]:focus {
   background-color: transparent;
   border: 2px solid var(--blue-two);
   border-radius: 0.5vw;
-  padding: 0.7vw 1.2vw;
+  padding: 0.7vw 1.4vw;
   font-size: 1.05vw;
   color: var(--blue-two);
   cursor: pointer;
