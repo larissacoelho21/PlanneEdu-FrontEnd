@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundPassword";
+import FormaBottom from "../assets/formaBottom.svg";
+import Logo from "../assets/logo.svg";
 
 import "../Css/PasswordReset.css";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +10,7 @@ import { toast } from "sonner";
 
 /* Redefinição de senha */
 export function PasswordReset() {
+  const [code, setCode] = useState("");
   const [emailValue, setemailValue] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -107,6 +110,69 @@ export function PasswordReset() {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <div className="login-mobile">
+        <div className="redefinacao-logo">
+          <img src={Logo} alt="" />
+        </div>
+
+        <div className="info-login-mobile">
+          <h1>Verificação de e-mail</h1>
+
+          <p>
+            Enviamos um código de verificação para o seu e-mail. Por favor,
+            insira o código abaixo para confirmar sua identidade.
+          </p>
+        </div>
+
+        <div className="top">
+          <div className="login-img">
+            <img id="formaBottom" src={FormaBottom} alt="" />
+          </div>
+
+          <div className="login-redefinicao">
+            
+            <form onSubmit={postEmail}>
+              <div className="input-reset">
+                {" "}
+                {/* Inputs - colocando novo css pela posição do objeto */}
+                <input
+                  type="email"
+                  className="reset"
+                  placeholder="Insira seu email"
+                  value={emailValue}
+                  onChange={(event) => setemailValue(event.target.value)}
+                  required
+                />
+              </div>
+            </form>
+
+            <div className="input-verification">
+              {" "}
+              {/* Input para a verificação do código */}
+              {/* verificação de quantidade de caracteres */}
+              <input
+                type="number"
+                className="verification1"
+                value={code}
+                onChange={(event) => setCode(event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="info-redefinicao">
+              <p>Não recebeu o e-mail? Reenviar o código</p>
+            </div>
+
+            <div className="button-password">
+              <button type="submit" style={{ cursor: "pointer" }}>
+                Enviar
+              </button>
+            </div>
+            
+          </div>
         </div>
       </div>
     </section>
