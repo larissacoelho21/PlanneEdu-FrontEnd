@@ -6,16 +6,73 @@ import { Clock3, Users } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+interface ActivityCardProps {
+  name: string;
+  dateI: string;
+  dateE: string;
+}
+
+export function ActivityCard({ name, dateI, dateE }: ActivityCardProps) {
+  return (
+    <div className="activity-card">
+      <h2>{name}</h2>
+      <div className="dates-card">
+        <div className="items-card-atvd">
+          <p>{dateI}</p>
+          <p>-</p>
+          <p>{dateE}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ViewActivity() {
   const [filterActivities, setFilterActivities] = useState("");
 
   const items = [
-    { id: 1, category: "Situação-Problema", name: "Situação Problema" },
-    { id: 2, category: "Estudo-Caso", name: "Estudo de Caso" },
-    { id: 3, category: "Projeto", name: "Projeto" },
-    { id: 4, category: "Pesquisa", name: "Pesquisa" },
-    { id: 5, category: "Pesquisa", name: "Pesquia" },
-    { id: 6, category: "Projeto-Integrador", name: "Projeto Integrador" },
+    {
+      id: 1,
+      category: "Situação-Problema",
+      name: "Situação Problema",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
+    {
+      id: 2,
+      category: "Estudo-Caso",
+      name: "Estudo de Caso",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
+    {
+      id: 3,
+      category: "Projeto",
+      name: "Projeto",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
+    {
+      id: 4,
+      category: "Pesquisa",
+      name: "Pesquisa",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
+    {
+      id: 5,
+      category: "Pesquisa",
+      name: "Pesquisa",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
+    {
+      id: 6,
+      category: "Projeto-Integrador",
+      name: "Projeto Integrador",
+      dateI: "02/08/2024",
+      dateE: "08/08/2024",
+    },
   ];
 
   const selectedCategory = filterActivities
@@ -86,7 +143,12 @@ export function ViewActivity() {
           </div>
           <div className="filtered-items">
             {selectedCategory.map((item) => (
-              <div key={item.id}>{item.name}</div>
+              <ActivityCard
+                key={item.id}
+                name={item.name}
+                dateI={item.dateI}
+                dateE={item.dateE}
+              />
             ))}
           </div>
         </div>

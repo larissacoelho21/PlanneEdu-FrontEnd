@@ -30,13 +30,14 @@ body {
   align-items: center;
   background-color: #07678d;
   width: 35vw;
-  height: 10vh;
+  height: 12vh;
   border-radius: 0.5vw;
   cursor: pointer;
 }
 
 .button-addActivity a {
   display: flex;
+  align-items: center;
   text-decoration: none;
   gap: 2vw;
   color: #ffff;
@@ -103,7 +104,7 @@ body {
 
 .buttons-filter {
   display: flex;
-  gap: 4vw;
+  gap: 2vw;
   margin-bottom: 3%;
 }
 
@@ -111,22 +112,58 @@ body {
   background-color: transparent;
   border: 2px solid #07678d;
   border-radius: 0.5vw;
-  padding: 0.7vw 1.5vw;
+  padding: 0.7vw 1.4vw;
   font-size: 1.2vw;
   color: #07678d;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.buttons-filter button:active,
+.buttons-filter button:focus,
+.buttons-filter button:hover {
+  background-color: #07678d;
+  color: #f2f2f2;
 }
 
 .filtered-items {
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: #ffff;
-  width: 60vw;
-  border-radius: 0.5vw;
-  padding: 2.4vw;
-  gap: 1vw;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.8vw;
+  margin-top: 5%;
+}
+
+.activity-card {
+  background-color: var(--white);
+  border-radius: .5vw;
+  padding: 2vw;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  width: 44vw;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #000;
+}
+
+.activity-card h2 {
+  font-size: 1.8vw;
+  margin-bottom: 1vw;
+}
+
+.activity-card p {
+  font-size: 1.3vw;
+}
+
+.dates-card{
+  width: 20vw;
+  background-color: #084973;
+  color: #fff;
+  border-radius: .5vw;
+}
+
+.items-card-atvd{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5vw;
+  padding: .7vw; 
 }
