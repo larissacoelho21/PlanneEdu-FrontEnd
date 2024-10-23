@@ -2,7 +2,14 @@
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
-import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
+import {
+  CodeXml,
+  GraduationCap,
+  BookMarked,
+  Plus,
+  Check,
+  X,
+} from "lucide-react";
 import React, { useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
@@ -19,6 +26,63 @@ const options: SelectOption[] = [
   { label: "Fourth", value: 4 },
   { label: "Fifth", value: 5 },
 ];
+
+interface InputFieldProps {
+  id: string;
+  label: string;
+  type?: string;
+  mask?: string;
+  value?: string | number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function InputField({
+  id,
+  label,
+  type = "text",
+  mask,
+  onChange,
+}: InputFieldProps) {
+  const [isFilled, setIsFilled] = useState(false);
+  const [value, setValue] = useState<string | number>("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+
+    // Se o type for number, converte o valor para number
+    if (type === "number") {
+      setValue(inputValue !== "" ? parseFloat(inputValue) : ""); // Armazena como número ou string vazia
+    } else {
+      setValue(inputValue); // Armazena como string
+    }
+
+    setIsFilled(inputValue !== "");
+  };
+
+  return (
+    <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
+      <label className="label-all" htmlFor={id}>
+        {label}
+      </label>
+      {mask ? (
+        <ReactInputMask
+          mask={mask}
+          className="input-all"
+          id={id}
+          onChange={handleInputChange}
+        />
+      ) : (
+        /* operador ternário, declaração de uma condição. traduz para: condição (máscara) ? expresão_se_verdadeiro : (':' é como o 'ou') expressão_se_falso */
+        <input
+          className="input-all"
+          id={id}
+          type={type}
+          onChange={handleInputChange}
+        />
+      )}
+    </fieldset>
+  );
+}
 
 export function AddPlans() {
   /* ======== declaração de estados dos popups ======== */
@@ -52,6 +116,8 @@ export function AddPlans() {
   const [strategies, setStrategies] = useState<Strategy[]>([]);
   /* armazena as datas escolhidas, é uma array/lista */
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  /* armazena a data inputada no momento */
+  const [dateInput, setDateInput] = useState("");
   const [cargaHoraria, setCargaHoraria] = useState<number | null>(null);
   const [valueConhecimentosStra, setValueConhecimentosStra] = useState<
     SelectOption[]
@@ -63,7 +129,6 @@ export function AddPlans() {
     []
   );
   const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
-
 
   /* definindo a estrutura do tipo dos dados */
   type Strategy = {
@@ -78,16 +143,33 @@ export function AddPlans() {
   const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    // Verifique se todos os campos necessários estão preenchidos
+    console.log("Conhecimentos Relacionados:", valueConhecimentosStra);
+    console.log("Estratégias de Ensino:", valueEstrategiasStra);
+    console.log("Recursos e Ambientes Pedagógicos:", valueRecursosStra);
+    console.log("Datas:", selectedDates);
+
+    // verificando se todos os campos necessários estão preenchidos
     if (
-      !perguntasMediadoras ||
+      selectedDates.length === 0 ||
+      !cargaHoraria ||
       valueConhecimentosStra.length === 0 ||
       valueEstrategiasStra.length === 0 ||
-      valueRecursosStra.length === 0
+      valueRecursosStra.length === 0 ||
+      !perguntasMediadoras
     ) {
+      console.log(selectedDates, cargaHoraria, perguntasMediadoras);
       toast.error("Preencha todos os campos necessários!");
       return;
     }
+
+    console.log(
+      dateInput,
+      cargaHoraria,
+      perguntasMediadoras,
+      valueConhecimentosStra,
+      valueEstrategiasStra,
+      valueRecursosStra
+    );
 
     const newStrategy = {
       dates: selectedDates,
@@ -103,7 +185,7 @@ export function AddPlans() {
     setStrategies([...strategies, newStrategy]);
 
     setSelectedDates([]);
-    setCargaHoraria(null);
+    setCargaHoraria(0);
     setValueConhecimentosStra([]);
     setValueEstrategiasStra([]);
     setValueRecursosStra([]);
@@ -113,6 +195,45 @@ export function AddPlans() {
     togglePopUpStrategy();
   };
 
+  /* função para lidar com a mudança de dados no input de carga horária */
+  const handleCargaHorariaChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+
+    if (value === "") {
+      setCargaHoraria(null);
+    } else {
+      setCargaHoraria(Number(value));
+    }
+  };
+
+  function validateDate(dateString: string) {
+    /* variável chamada regex é definida, contendo uma expressão regular. tal expressão é utilizada para validar se a data inputada está ou não no formato correto */
+    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([0-9]{4})$/;
+  
+    /* o método '.test()' é usado para trabalhar com as expressões regulares, ele verifica se a string corresponde a um padrão definido*/
+    if (!regex.test(dateString)) {
+      return false; // Não corresponde ao formato
+    }
+
+    const [day, month, year] = dateString.split("/").map(Number);
+
+    /* como o mês começa em 0, somamos 1 */
+    const date = new Date(year, month - 1, day);
+
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
+
+  const addDate = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+     if (validateDate(dateInput)) {
+      setSelectedDates([...selectedDates, dateInput]);
+      setDateInput('');
+      toast.success("Data adicionada com sucesso!");
+    }
+  }
   /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
   type itemComplex = {
@@ -331,55 +452,63 @@ export function AddPlans() {
       </div>
       <form className="form">
         <div className="input-field">
-          <label>Curso</label>
-          <input type="text" name="course" id="course" />
+          <InputField label="Curso" type="text" id="course" />
         </div>
 
         <div className="input-field">
-          <label>Unidade Curricular</label>
-          <input type="text" name="uc" id="uc" />
+          <InputField label="Unidade Curricular" type="text" id="uc" />
         </div>
 
         <div className="input-field">
-          <label>Docente</label>
-          <input type="text" name="docent" id="docent" />
+          <label className="label">Docente</label>
+          <select name="docent">
+            <option value="" disabled selected></option>
+            <option value="Arthur">Arthur</option>
+            <option value="Giovani">Giovani</option>
+            <option value="Samuel">Samuel</option>
+          </select>
         </div>
 
         <div className="row">
           <div className="input-field">
-            <label>Carga Horária</label>
-            <input type="number" name="horas" id="horas" />
+            <InputField label="Carga Horária" type="number" id="carg-h" />
           </div>
 
           <div className="input-field">
-            <label>Quantidade de Aulas</label>
-            <input type="number" name="aulas" id="aulas" />
+            <InputField
+              label="Quantidade de Aulas"
+              type="number"
+              id="qtd-aulas"
+            />
           </div>
 
           <div className="input-field">
-            <label>Semestre</label>
-            <input type="number" name="semestre" id="semestre" />
+            <InputField label="Semestre" type="number" id="semestre" />
           </div>
 
           <div className="input-field">
-            <label>Ano</label>
-            <input type="number" name="ano" id="ano" />
+            <InputField label="Ano" type="number" id="ano" />
           </div>
         </div>
 
         <div className="input-field">
-          <label>Descrição da Unidade de Competência</label>
-          <input type="text" name="desc-uc" id="desc-uc" />
+          <InputField
+            label="Descrição da Unidade de Competência"
+            type="text"
+            id="desc-uc"
+          />
         </div>
 
         <div className="input-field">
-          <label>Objetivo da Unidade Curricular</label>
-          <input type="text" name="obj-uc" id="obj-uc" />
+          <InputField
+            label="Objetivo da Unidade Curricular"
+            type="text"
+            id="obj-uc"
+          />
         </div>
 
         <div className="input-field">
-          <label>Turma</label>
-          <input type="text" name="turma" id="turma" />
+          <InputField label="Turma" type="text" id="turma" />
         </div>
 
         <div className="estrategias">
@@ -404,56 +533,87 @@ export function AddPlans() {
               subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
             >
               <div className="pop-body">
-                <div className="input-field">
-                  <label>Datas</label>
-                  <ReactInputMask
-                    type="text"
-                    mask="99/99/9999"
-                    value={dateInicial}
-                    onChange={(e) => setDateInicial(e.target.value)}
-                  />
+                <div className="dates-add">
+                  <div className="input-field">
+                    <InputField
+                      label="Datas"
+                      type="text"
+                      id="dates"
+                      mask="99/99/9999"
+                      value={dateInput}
+                      onChange={(event) => setDateInput(event.target.value)}
+                    />
+
+                    {selectedDates.length > 0 ? (
+                      selectedDates.map((date, index) => (
+                        <div key={date} className="date-card">
+                          <p>{date}</p>
+                          <button>
+                            &times;
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Nenhuma data selecionada</p>
+                    )}
+                  </div>
+
+                  <button className="add-btn" onClick={addDate}>
+                    <X />
+                  </button>
                 </div>
 
                 <div className="input-field">
-                  <label>Carga Horária</label>
-                  <input type="number" name="carga-h" id="carga-h" />
+                  <InputField
+                    type="number"
+                    label="Carga Horária"
+                    id="carga-h"
+                    onChange={handleCargaHorariaChange}
+                  />
                 </div>
 
                 <div className="multiselects">
                   <div className="multi-conherel">
-                    <label>Conhecimentos Relacionados</label>
+                    <label className="label">
+                      Conhecimentos Relacionados
+                    </label>
                     <Multiselect
                       options={options}
-                      value={valueConhecimentos}
-                      onChange={setValueConhecimentos}
+                      value={valueConhecimentosStra}
+                      onChange={setValueConhecimentosStra}
                       multiple
                     />
                   </div>
 
                   <div className="multi-estra">
-                    <label>Estratégias de Ensino</label>
+                    <label className="label">Estratégias de Ensino</label>
                     <Multiselect
                       options={options}
-                      value={valueEstrategias}
-                      onChange={setValueEstrategias}
+                      value={valueEstrategiasStra}
+                      onChange={setValueEstrategiasStra}
                       multiple
                     />
                   </div>
 
                   <div className="multi-recNam">
-                    <label>Recursos e Ambientes Pedagógicos</label>
+                    <label className="label">Recursos e Ambientes Pedagógicos</label>
                     <Multiselect
                       options={options}
-                      value={valueRecursos}
-                      onChange={setValueRecursos}
+                      value={valueRecursosStra}
+                      onChange={setValueRecursosStra}
                       multiple
                     />
                   </div>
                 </div>
 
                 <div className="input-field">
-                  <label>Peguntas Mediadoras</label>
-                  <input type="text" name="perg-medi" id="perg-medi" />
+                  <InputField
+                    type="text"
+                    label="Perguntas Mediadoras"
+                    id="perg-medi"
+                    value={perguntasMediadoras}
+                    onChange={(e) => setPerguntasMediadoras(e.target.value)}
+                  />
                 </div>
 
                 <div className="popup-btns">
@@ -555,6 +715,7 @@ export function AddPlans() {
                   <div className="data-prop">
                     <label>Data proposta</label>
                     <ReactInputMask
+                      className="input-all"
                       type="text"
                       mask="99/99/9999"
                       value={dateInicial}
@@ -564,6 +725,7 @@ export function AddPlans() {
                   <div className="data-fin">
                     <label>Data final</label>
                     <ReactInputMask
+                      className="input-all"
                       type="text"
                       mask="99/99/9999"
                       value={dateFinal}
@@ -618,6 +780,7 @@ export function AddPlans() {
                   <div className="data-prop">
                     <label>Data proposta</label>
                     <ReactInputMask
+                      className="input-all"
                       type="text"
                       mask="99/99/9999"
                       value={dateInicial}
@@ -627,6 +790,7 @@ export function AddPlans() {
                   <div className="data-fin">
                     <label>Data final</label>
                     <ReactInputMask
+                      className="input-all"
                       type="text"
                       mask="99/99/9999"
                       value={dateFinal}
