@@ -128,7 +128,7 @@ export function PasswordReset() {
         </div>
 
         <div className="top">
-          <div className="login-img">
+          <div className="reset-img">
             <img id="formaBottom" src={FormaBottom} alt="" />
           </div>
 

@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundPassword";
+import FormaBottom from "../assets/formaBottom.svg";
+import Logo from "../assets/logo.svg";
 
 /* Página de verificação de email, solicitação do código */
 import "../Css/Verification.css";
@@ -25,7 +27,7 @@ export function VerificationEmail() {
   // Estado para armazenar o e-mail recuperado
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
+  /* useEffect(() => {
     const storedEmail = localStorage.getItem("emailValue");
     if (storedEmail) {
       setEmail(storedEmail);
@@ -35,7 +37,7 @@ export function VerificationEmail() {
       );
       navigate("/redefinicaoemail"); // Redireciona para o início caso o e-mail não seja encontrado
     }
-  }, [navigate]);
+  }, [navigate]); */
 
   const Verification = (event: React.FormEvent) => {
     event.preventDefault();
@@ -157,6 +159,62 @@ export function VerificationEmail() {
           </div>
         </div>
       </form>
+
+      <div className="login-mobile">
+        <div className="veri-logo">
+          <img src={Logo} alt="" />
+        </div>
+
+        <div className="info-login-mobile">
+          <h1>Criar nova senha</h1>
+
+          <p>Sua nova senha deve ser diferente da sua senha anterior.</p>
+        </div>
+
+        <div className="top">
+          <div className="verification-img">
+            <img id="formaBottom" src={FormaBottom} alt="" />
+          </div>
+
+          <div className="input-vali">
+            <label className="inputVali">
+              <input
+                className="input-password"
+                type={isShow ? "text" : "password"}
+                placeholder="Insira sua nova senha"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+              <button onClick={handlePassword} type="button">
+                {isShow && <Eye size={22} color="white" />}
+                {!isShow && <EyeOff size={22} color="white" />}
+              </button>
+            </label>
+            <label className="inputVali">
+              <input
+                className="input-password"
+                type={isShow ? "text" : "password"}
+                placeholder="Confirme sua senha"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                required
+              />
+              <button onClick={handlePassword} type="button">
+                {isShow && <Eye size={22} color="white" />}
+                {!isShow && <EyeOff size={22} color="white" />}
+              </button>
+            </label>
+          </div>
+
+          <div className="button-verification">
+            <button type="submit" style={{ cursor: "pointer" }}>
+              Criar
+            </button>
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }
