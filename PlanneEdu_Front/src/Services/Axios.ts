@@ -2,6 +2,7 @@ import axios from "axios";
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
+
 export const login = async (nif: string, password: string) => {
   try {
     const response = await axios.post(`${BaseUrl}/auth/login`, {
