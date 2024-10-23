@@ -161,6 +161,7 @@ export function Login() {
       </div>
 
       <div className="login-mobile">
+        
         <div className="top">
           <div className="login-img">
             <img id="forma" src={Forma} alt="" />
