@@ -1,25 +1,28 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+/* Login */
 import { Login } from "./Pages/Login";
 import { PasswordReset } from "./Pages/PasswordReset";
 import { VerificationEmail } from "./Pages/Verification";
+
+/* Teacher */
 import { Home } from "./Pages/Teacher/Home";
 import { ClassTeacher } from "./Pages/Teacher/ClassTeacher";
 import { PlanEnsino } from "./Pages/Teacher/PlanEnsino";
 import { ViewActivity } from "./Pages/Teacher/ViewActivity";
+import { AddActivity } from "./Pages/Teacher/AddActivity";
 import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
-import { NavBarOpp } from "./Components/Opp/NavBar-Opp/navBarOpp";
 import { ProfileTeacher } from "./Pages/Teacher/Profile";
 import { AddPlans } from "./Pages/Teacher/AddPlans";
+
+/* Opp */
 import { HomeOpp } from "./Pages/Opp/HomeOpp";
 import { CursosOpp } from "./Pages/Opp/CursosOpp";
 import { TurmaOpp } from "./Pages/Opp/TurmaOpp";
 import { PlanoCursoOpp } from "./Pages/Opp/PlanoCursoOpp";
-import { AddActivity } from "./Pages/Teacher/AddActivity";
 import { AddCourse } from "./Pages/Opp/AddCourse";
 import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { Competencias } from "./Components/PlanoDeCurso/Competencias";
 import { AddUser } from "./Pages/Opp/AddUser";
-import { NavBarProfessor } from "./Components/Docentes/NavBar-Professores/navBarProfessor";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -39,7 +42,6 @@ const Router: React.FC = () => {
         <Route path="/plansensinoespc" element={<PlanEnsinoEspc />} />
         <Route path="/profile" element={<ProfileTeacher />} />
         <Route path="/addplans" element={<AddPlans />} />
-        <Route path="/navbarprofessor" element={<NavBarProfessor/>}/>
         {/* Opp */}
         <Route path="/homeopp" element={<HomeOpp />} />
         <Route path="/cursosopp" element={<CursosOpp />} />

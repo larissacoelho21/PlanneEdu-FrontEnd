@@ -9,6 +9,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import React, { useState } from 'react';
+import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 /* Interface para o InputField */
 interface InputFieldProps {
@@ -44,6 +45,7 @@ export function ProfileTeacher() {
 
     return (
         <section className="profileTeacher">
+            <NavBarProfessor />
             
             <div className="introProfile">
                 <h1>Perfil</h1>

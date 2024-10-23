@@ -173,7 +173,7 @@ export function Login() {
               required
             />
             <label className="inputPassword">
-              <input
+              <input //TODO: Adicionar lidação maximo de caracteres
                 className="input-password"
                 type={isShow ? "text" : "password"}
                 placeholder="Insira sua senha"
