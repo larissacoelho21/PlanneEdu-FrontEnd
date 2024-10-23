@@ -60,10 +60,6 @@ function DropdownNotification({
         <p className="sub-paragrafo">{secondtext}</p>
       </NavLink>
     </div>
-    /* <NavLink to={to} className="dropdownNotification">
-      <p className="paragrafo">{text}</p>
-      <p className="sub-paragrafo">{secondtext}</p>
-    </NavLink> */
   );
 }
 
@@ -81,14 +77,6 @@ function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
       <i className="icon">{icon}</i> {/* imagem */}
       <span className="menu-text">{text}</span> {/* texto */}
     </NavLink>
-    /* <NavLink to={to} className="dropdownProfile">
-      <i className="icon">{icon}</i> {/* imagem }
-      <Link className="menu-a" to="#">
-        {" "}
-        {text}{" "}
-      </Link>{" "}
-      {/* Link }
-    </NavLink> */
   );
 }
 
@@ -97,10 +85,12 @@ export function NavBarProfessor() {
   const [openOne, setOpenOne] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
   const [opentThree, setOpenThree] = useState(false);
+  const [MenuOpen, setMenuOpen] = useState(false);
 
   let menuRef = useRef<HTMLDivElement>(null);
   let notRef = useRef<HTMLDivElement>(null);
   let notRefP = useRef<HTMLDivElement>(null);
+  let menuOpenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -112,6 +102,12 @@ export function NavBarProfessor() {
       }
       if (notRefP.current && !notRefP.current.contains(e.target as Node)) {
         setOpenThree(false);
+      }
+      if (
+        menuOpenRef.current &&
+        !menuOpenRef.current.contains(e.target as Node)
+      ) {
+        setMenuOpen(false); // Fecha o menu ao clicar fora dele
       }
     };
 
@@ -154,8 +150,7 @@ export function NavBarProfessor() {
                   }
                   to="/homeprofessor"
                 >
-                  {" "}
-                  Início
+                  <p>Início</p>
                 </NavLink>
 
                 <li className="nav-dropdown">
@@ -168,7 +163,10 @@ export function NavBarProfessor() {
                     <div className={`navbar-link ${openOne ? "selected" : ""}`}>
                       {" "}
                       {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                      Planos de ensino <ChevronDown />
+                      <p>
+                        Planos de ensinos{" "}
+                        <ChevronDown className="icon-dropdown" />{" "}
+                      </p>
                     </div>
                   </div>
 
@@ -215,7 +213,7 @@ export function NavBarProfessor() {
                   }
                   to="/"
                 >
-                  Planos de curso
+                  <p> Planos de curso</p>
                 </NavLink>
                 {/* <li><Link className="navbar-link" to="/">Planos de curso</Link></li> */}
               </ul>
@@ -306,6 +304,14 @@ export function NavBarProfessor() {
               </div>
             </div>
           </div>
+
+          {/* Ícone de hambúrguer para telas pequenas */}
+          <button
+            className="hamburger-menu"
+            onClick={() => setMenuOpen(!MenuOpen)}
+          >
+            {MenuOpen ? "before" : "after"}
+          </button>
         </div>
       </nav>
     </section>
