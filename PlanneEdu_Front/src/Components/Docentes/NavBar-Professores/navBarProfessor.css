@@ -3,7 +3,7 @@
   --speed: 500ms;
 }
 .navbar-container {
-  display: none ;
+  display: none;
 }
 .hamburger-menu {
   border: none;
@@ -47,11 +47,20 @@ link:active {
   margin-left: 2vw;
 }
 
+/* estilizando logo do mobile  */
+.logoMobile img {
+  display: none;
+}
+
+.menu-mobile {
+  display: none;
+}
+
 /* estilizando lista */
 .navbar-nav {
   display: flex;
   flex-direction: row;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   gap: 2vw;
 }
@@ -60,7 +69,6 @@ link:active {
   font-family: var(--font);
   color: black;
   font-size: 1.3vw;
-
 }
 
 .navbar-link p:hover {
@@ -85,7 +93,8 @@ link:active {
   cursor: pointer;
 }
 
-.li-inicio .icon-dropdown, .li-inicio p {
+.li-inicio .icon-dropdown,
+.li-inicio p {
   display: flex;
   align-items: center;
 }
@@ -139,7 +148,8 @@ link:active {
 }
 
 .dropdownItem .icon:hover,
-.dropdownItem .menu-text:hover, .menu-a:hover{
+.dropdownItem .menu-text:hover,
+.menu-a:hover {
   color: var(--blue1); /* cor quando o hover estiver ativo */
   cursor: pointer;
 }
@@ -153,7 +163,7 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownItem .menu-text{
+.dropdownItem .menu-text {
   font-size: 0.8rem;
   max-width: 15vw;
   color: #7f7f7f;
@@ -308,7 +318,7 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownProfile .menu-text{
+.dropdownProfile .menu-text {
   font-size: 0.8rem;
   max-width: 15vw;
   color: #7f7f7f;
@@ -317,66 +327,139 @@ link:active {
   transition: var(--speed);
 }
 
-
 /* --------------------Versão Mobile-------------------- */
-@media only screen and (max-width: 800px) { 
-
+@media only screen and (max-width: 800px) {
   .navbarOne {
     background-color: none;
     box-shadow: none;
+    height: 10vw;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-mobile {
+    display: block;
   }
 
   .right-side {
     display: block;
+  }
 
+  .nav-logo img {
+    display: none;
+  }
+
+  .right-side .logoMobile img {
+    display: block;
+    height: 8vw;
+    margin: 2vw 2vw 2vw 5vw;
   }
 
   .nav-list {
     display: none;
   }
 
+  .Icons {
+    display: flex;
+    align-items: center;
+    margin-top: 2vw;
+  }
+
+  .left-side {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 5vw;
+  }
+
+  .profile {
+    display: none;
+  }
+
+  .link-bell .iconsBell,
+  .darkmodeIcon .not-icons {
+    width: 0 auto;
+    height: 3.5vw;
+  }
+
+  .hamburger-menu .x-icon,
+  .hamburger-menu .hamburguer {
+    color: black;
+    margin-top: -0.5vw;
+  }
 
   .hamburger-menu {
     display: block;
-    justify-content: flex-end;
     cursor: pointer;
     margin-right: 5%;
     width: 0 auto;
     height: 2vw;
   }
 
-  /* Esconde o menu de navegação por padrão */
-  .nav-menu {
-    display: none;
-    flex-direction: column;
+  .menu {
     position: absolute;
-    top: 60px;
-    left: 0;
+    top: 10vw;
     right: 0;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2; /* Fundo claro */
+    width: 100%;
+    padding: 2vw;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1;
   }
 
-  /* Mostra o menu quando o estado 'menuOpen' for true */
-  .nav-menu.active {
+  .menu.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu ul li {
+    margin: 2vw 0;
+  }
+
+  .dropdownMobile p:hover,
+  .dropdown-Mobile a:hover,
+  .dropdownProfileMob a:hover {
+    opacity: 80%;
+  }
+  .dropdownMobile p,
+  .menu li {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2rem; /* Tamanho do texto */
+  }
+
+  .dropdown-Mobile,
+  .dropdownProfileMob {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    transition: all 0.5s ease;
+  }
+
+  .dropdown-Mobile li a,
+  .dropdownProfileMob li a {
+    color: #333;
+    font-size: 1rem;
+    margin-left: 2vw;
+  }
+
+  .dropdown li {
+    margin: 5px 0;
+  }
+
+  .dropdownMobile p {
     display: flex;
+    align-items: center;
   }
-
-  /* Estilos para os links no menu em dispositivos móveis */
-  .nav-link {
-    padding: 1rem;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  /* Centraliza o logo */
-  .nav-logo img {
-    height: 30px;
-  }
-
-  /* Ícones de notificações e perfil ajustados */
-  .nav-icons {
-    display: none; /* Opcional, esconder ícones em telas pequenas */
-  }
-  
 }
