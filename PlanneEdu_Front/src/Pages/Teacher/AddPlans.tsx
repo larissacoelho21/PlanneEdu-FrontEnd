@@ -158,7 +158,7 @@ export function AddPlans() {
       !perguntasMediadoras
     ) {
       console.log(selectedDates, cargaHoraria, perguntasMediadoras);
-      toast.error("Preencha todos os campos necessários!");
+      toast.error("Preencha todos os campos para continuar!");
       return;
     }
 
@@ -191,7 +191,7 @@ export function AddPlans() {
     setValueRecursosStra([]);
     setPerguntasMediadoras("");
 
-    toast.success("Estratégia adicionada com sucesso!");
+    toast.success("Estratégia criada com sucesso!");
     togglePopUpStrategy();
   };
 
