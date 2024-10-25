@@ -22,7 +22,7 @@ export function Home() {
         <h2>Visualize suas turmas ativas</h2>
         <hr />
       </div>
-
+      
       <div className="cardsTeacher">
         <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
           {" "}
