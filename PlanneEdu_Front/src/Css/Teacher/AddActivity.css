@@ -214,10 +214,7 @@ input[type="date"]:focus {
   text-align: center;
 }
 
-.forms-add-challenge{
-  display: flex;
-  flex-direction: column;
-}
+
 
 .captecbasic-ch, .capsocio-ch{
   margin-bottom: 10%;
@@ -262,23 +259,46 @@ input[type="date"]:focus {
   transition: 0.3s ease;
 }
 
-.card-challenge{
+.challenge-card{
   display: flex;
   flex-direction: column;
   text-align: left;
   padding: 3vh 2vw;
   border: solid 1.5px var(--black);
   border-radius: 0.5vw;
+  width: 50%;
 }
 
-.number-challenge h1{
+.items-card-challenge{
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.items-card-challenge h3{
   font-size: 1.5vw;
   font-weight: 700;
-  margin-bottom: 1vw;
+  margin-bottom: .3rem;
 }
 
-.view-description h1,
-.view-caps h1{
-  font-size: 1vw;
-  font-weight: 400;
+.buttons-card-challenge{
+  display: flex;
+  margin-top: 3%;
+  gap: 1rem;
+}
+
+.buttons-card-challenge button{
+  padding: .4rem 1rem;
+  background-color: var(--blue-two);
+  border: transparent solid 2px;
+  color: var(--white-one);
+  border-radius: .5vw;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.buttons-card-challenge button:hover{
+  background-color: var(--white-one);
+  border: var(--blue-two) solid 2px;
+  color: var(--blue-two);
 }
