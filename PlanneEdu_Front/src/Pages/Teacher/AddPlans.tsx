@@ -10,7 +10,7 @@ import {
   Check,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { ButtonHTMLAttributes, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
 import {
@@ -49,11 +49,11 @@ function InputField({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
-    // Se o type for number, converte o valor para number
+    /* se o type for number, converte o valor para number */
     if (type === "number") {
-      setValue(inputValue !== "" ? parseFloat(inputValue) : ""); // Armazena como número ou string vazia
+      setValue(inputValue !== "" ? parseFloat(inputValue) : "");
     } else {
-      setValue(inputValue); // Armazena como string
+      setValue(inputValue);
     }
 
     setIsFilled(inputValue !== "");
@@ -118,6 +118,8 @@ export function AddPlans() {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   /* armazena a data inputada no momento */
   const [dateInput, setDateInput] = useState("");
+  const [isDateSubmitted, setIsDateSubmitted] = useState(false)
+
   const [cargaHoraria, setCargaHoraria] = useState<number | null>(null);
   const [valueConhecimentosStra, setValueConhecimentosStra] = useState<
     SelectOption[]
@@ -129,6 +131,7 @@ export function AddPlans() {
     []
   );
   const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
+  
 
   /* definindo a estrutura do tipo dos dados */
   type Strategy = {
@@ -143,12 +146,7 @@ export function AddPlans() {
   const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    console.log("Conhecimentos Relacionados:", valueConhecimentosStra);
-    console.log("Estratégias de Ensino:", valueEstrategiasStra);
-    console.log("Recursos e Ambientes Pedagógicos:", valueRecursosStra);
-    console.log("Datas:", selectedDates);
-
-    // verificando se todos os campos necessários estão preenchidos
+    /* verificando se todos os campos necessários estão preenchidos */
     if (
       selectedDates.length === 0 ||
       !cargaHoraria ||
@@ -157,19 +155,9 @@ export function AddPlans() {
       valueRecursosStra.length === 0 ||
       !perguntasMediadoras
     ) {
-      console.log(selectedDates, cargaHoraria, perguntasMediadoras);
       toast.error("Preencha todos os campos necessários!");
       return;
     }
-
-    console.log(
-      dateInput,
-      cargaHoraria,
-      perguntasMediadoras,
-      valueConhecimentosStra,
-      valueEstrategiasStra,
-      valueRecursosStra
-    );
 
     const newStrategy = {
       dates: selectedDates,
@@ -208,32 +196,6 @@ export function AddPlans() {
     }
   };
 
-  function validateDate(dateString: string) {
-    /* variável chamada regex é definida, contendo uma expressão regular. tal expressão é utilizada para validar se a data inputada está ou não no formato correto */
-    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([0-9]{4})$/;
-  
-    /* o método '.test()' é usado para trabalhar com as expressões regulares, ele verifica se a string corresponde a um padrão definido*/
-    if (!regex.test(dateString)) {
-      return false; // Não corresponde ao formato
-    }
-
-    const [day, month, year] = dateString.split("/").map(Number);
-
-    /* como o mês começa em 0, somamos 1 */
-    const date = new Date(year, month - 1, day);
-
-    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-}
-
-  const addDate = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-     if (validateDate(dateInput)) {
-      setSelectedDates([...selectedDates, dateInput]);
-      setDateInput('');
-      toast.success("Data adicionada com sucesso!");
-    }
-  }
   /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
   type itemComplex = {
@@ -277,10 +239,11 @@ export function AddPlans() {
   const [dateInicial, setDateInicial] = useState<string>("");
   const [dateFinal, setDateFinal] = useState<string>("");
 
+  /* funções referentes as datas utilizadas na aplicação */
   /* ======== formatação e validação das datas ======== */
   const convertToISO = (dateString: string) => {
     const [day, month, year] = dateString.split("/");
-    return `${year}-${month}-${day}`; // Formato ISO (YYYY-MM-DD)
+    return `${year}-${month}-${day}`;
   };
 
   const validateDates = (startISO: string, endISO: string) => {
@@ -304,11 +267,17 @@ export function AddPlans() {
     const startDateISO = convertToISO(dateInicial);
     const endDateISO = convertToISO(dateFinal);
 
+    /* verificando se as datas estão no formato adequado */
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
+    }
+
     if (!validateDates(startDateISO, endDateISO)) {
       return;
     }
 
-    // garantindo que todos os campos foram preenchidos
+    /* garantindo que todos os campos foram preenchidos */
     if (
       valueConhecimentos.length === 0 ||
       valueEstrategias.length === 0 ||
@@ -378,6 +347,11 @@ export function AddPlans() {
     const startDateISO = convertToISO(dateInicial);
     const endDateISO = convertToISO(dateFinal);
 
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
+    }
+
     if (!validateDates(startDateISO, endDateISO)) {
       return;
     }
@@ -428,7 +402,8 @@ export function AddPlans() {
   };
 
   /* ======== layout e estrutura da página ======== */
-  return ( //TODO: Adicionar max de caracteres em inputs de numeros
+  return (
+    /* TODO: Adicionar max de caracteres em inputs de numeros */
     <main>
       <SubNavbar />
       <div className="info-course">
@@ -538,29 +513,15 @@ export function AddPlans() {
                     <InputField
                       label="Datas"
                       type="text"
-                      id="dates"
+                      id="datesi"
                       mask="99/99/9999"
                       value={dateInput}
-                      onChange={(event) => setDateInput(event.target.value)}
+                      onChange={(event) => {
+                        console.log("Input alterado:", event.target.value); // Log para verificar a alteração
+                        setDateInput(event.target.value);
+                    }}
                     />
-
-                    {selectedDates.length > 0 ? (
-                      selectedDates.map((date, index) => (
-                        <div key={date} className="date-card">
-                          <p>{date}</p>
-                          <button>
-                            &times;
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Nenhuma data selecionada</p>
-                    )}
                   </div>
-
-                  <button className="add-btn" onClick={addDate}>
-                    <X />
-                  </button>
                 </div>
 
                 <div className="input-field">
@@ -574,9 +535,7 @@ export function AddPlans() {
 
                 <div className="multiselects">
                   <div className="multi-conherel">
-                    <label className="label">
-                      Conhecimentos Relacionados
-                    </label>
+                    <label className="label">Conhecimentos Relacionados</label>
                     <Multiselect
                       options={options}
                       value={valueConhecimentosStra}
@@ -596,7 +555,9 @@ export function AddPlans() {
                   </div>
 
                   <div className="multi-recNam">
-                    <label className="label">Recursos e Ambientes Pedagógicos</label>
+                    <label className="label">
+                      Recursos e Ambientes Pedagógicos
+                    </label>
                     <Multiselect
                       options={options}
                       value={valueRecursosStra}
@@ -711,7 +672,7 @@ export function AddPlans() {
               subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
               <div className="pop-body">
-                <div className="dates">
+                <div className="datess">
                   <div className="data-prop">
                     <label>Data proposta</label>
                     <ReactInputMask
