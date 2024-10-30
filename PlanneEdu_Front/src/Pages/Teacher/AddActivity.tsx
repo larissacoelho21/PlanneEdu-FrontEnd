@@ -136,6 +136,8 @@ export function AddActivity() {
     togglePopUpChallenge();
   };
 
+
+
   // /multiselect
 
   // editando card de desafio
@@ -209,14 +211,19 @@ export function AddActivity() {
   ) => {
     const updateData = data.filter((_, i) => i !== index);
     setData(updateData);
-    toast.success("Desafio deletado com sucesso!")
-  }
+    toast.success("Desafio deletado com sucesso!");
+  };
 
   const navigate = useNavigate();
 
   const [showPopUpChallenge, setShowPopUpChallenge] = useState(false);
   const togglePopUpChallenge = () => {
     setShowPopUpChallenge(!showPopUpChallenge);
+    if(!showPopUpChallenge) {
+      setDescricao("");
+      setValueCapTecPop([]);
+      setValueCapTecPop([]);
+    }
   };
 
   //lairssa
@@ -403,11 +410,23 @@ export function AddActivity() {
               <label className="label-captecbasic">
                 Capacidades Técnicas ou Básicas
               </label>
+              <Multiselect
+                options={options}
+                value={valueCapTecB}
+                onChange={setValueCapTecB}
+                multiple
+              />  
             </div>
             <div className="capsocio">
               <label className="label-capsocio">
                 Capacidades Socioemocionais
               </label>
+              <Multiselect
+                options={options}
+                value={valueCapSoc}
+                onChange={setValueCapSoc}
+                multiple
+              />
             </div>
           </div>
 
@@ -457,9 +476,11 @@ export function AddActivity() {
                 <button
                   onClick={(event) => {
                     event.preventDefault();
-                    deleteChallenge(challenges, setChallenges, index)
+                    deleteChallenge(challenges, setChallenges, index);
                   }}
-                >Deletar</button>
+                >
+                  Deletar
+                </button>
               </div>
             </div>
           ))}
@@ -497,7 +518,7 @@ export function AddActivity() {
               </div>
 
               <div className="forms-add-challenge">
-                <div className="description" style={{cursor: "pointer"}}>
+                <div className="description" style={{ cursor: "pointer" }}>
                   <InputField
                     id="description"
                     label="Descrição"
