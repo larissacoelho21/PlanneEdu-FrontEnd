@@ -51,7 +51,7 @@ button{
   color: rgba(0, 0, 0, 0.2);
 }
 
-.input-all {
+.input-all{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -127,63 +127,20 @@ button{
   margin: 2.5vw 0;
 }
 
-.add-btn {
-  background: #07678d;
-  border: 0.13vw #07678d solid;
-  color: #fff;
-  width: 25%;
-  padding: 1vw;
-  border-radius: 0.5vh;
-  font-size: 1.1vw;
-}
-
-.add-btn:hover, .card-btns button:hover, .form-actions button:hover {
-  background: none;
-  border: 0.13vw #07678d solid;
-  color: #07678d;
-  transition: 0.3s ease-in-out;
-}
-
-.add-btn:disabled, .add-btn:disabled:hover{
-  background-color: #72909c;
-  cursor: not-allowed;
-  border: #72909c solid;
-  color: #FFF;
-}
-
-.action-btn{
-  width: 90%;
-  padding: 0.5vw;
-  border-radius: 0.5vh;
-  background: #07678d;
-  border: none;
-  color: #FFF;
-}
-
-.table-criterios {
+.dates-add .input-field {
   width: 100%;
 }
 
-.table-criterios th {
-  font-size: 1.2vw;
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.table-criterios td {
-  background: #fff;
-}
-
-.table-criterios th,
-.table-criterios td {
-  text-align: center;
+.dates-add .input-field input{
   border: none;
-  border-bottom: 0.15vw rgba(0, 0, 0, 0.2) solid;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  font-size: 1.2vw;
 }
 
-.table-criterios th:nth-child(1),
-.table-criterios td:nth-child(1) {
-  width: 40%;
-  text-align: left;
+.dates-add .input-field input:focus{
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .select-pop{
