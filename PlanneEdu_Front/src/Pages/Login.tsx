@@ -159,7 +159,7 @@ export function Login() {
             {" "}
             {/* Input */}
             <input
-              className="input"
+              className="input-login"
               type="text"
               placeholder="Insira seu NIF"
               value={nifValue}
@@ -172,7 +172,7 @@ export function Login() {
               }}
               required
             />
-            <label className="inputPassword">
+            <label className="inputLogin">
               <input //TODO: Adicionar lidação maximo de caracteres
                 className="input-password"
                 type={isShow ? "text" : "password"}
@@ -180,10 +180,10 @@ export function Login() {
                 value={passwordValue}
                 onChange={(event) => setPasswordValue(event.target.value)} // Captura a senha
                 required
-              />
+              />  
               <button onClick={handlePassword} type="button">
-                {isShow && <Eye size={18} />}
-                {!isShow && <EyeOff size={18} />}
+                {isShow && <Eye size={22} />}
+                {!isShow && <EyeOff size={22} />}
               </button>
             </label>
           </div>

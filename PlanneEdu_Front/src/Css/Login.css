@@ -4,7 +4,7 @@ body {
   font-style: normal;
 }
 
-.back{
+.back {
   position: fixed;
   width: auto;
   height: 46vw;
@@ -69,7 +69,7 @@ body {
   padding: 2vw;
   width: 36vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  border: rgba(1, 18, 38, 50%) solid 0.2vw;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +80,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  border: rgba(1, 18, 38, 50%) solid 0.2vw;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
@@ -107,7 +107,7 @@ body {
 textarea:focus,
 input:focus,
 select:focus {
-  border: rgba(1, 18, 38, 80%) solid 1.3px;
+  border: rgba(1, 18, 38, 80%) solid 0.2vw;
   outline: none;
 }
 
@@ -157,6 +157,12 @@ select:focus {
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
+  .text {
+    display: none !important;
+  }
+  .logo {
+    display: none !important;
+  }
   .images {
     display: none;
   }
@@ -211,34 +217,58 @@ select:focus {
     margin-left: 8.5vw;
   }
 
-  .input {
+  .input-login {
     background-color: rgba(217, 217, 217, 0);
     margin-bottom: 4vw;
     padding: 4vw;
     width: 80vw;
-    height: 4vw;
-    border: rgba(1, 18, 38, 50%) solid 1.3px;
+    height: 12vw;
+    border: rgba(1, 18, 38, 50%) solid 0.2vw;
     border-radius: 2vw;
-    font-size: 2.5vw;
+    font-size: 3.5vw;
   }
 
-  .inputPassword {
+  .inputLogin {
     display: flex;
+    width: 80vw;
+    height: 12vw;
     justify-content: space-between;
-    border: rgba(1, 18, 38, 50%) solid 1.3px;
+    border: rgba(1, 18, 38, 50%) solid 0.2vw;
     padding: 2.15vw;
-    border-radius: 2.5vw;
+    border-radius: 2vw;
+    font-size: 3.5vw;
+    color: #000;
+    margin-bottom: 1vw;
   }
 
-  .inputPassword input {
-    font-size: 2.5vw;
+  .inputLogin input {
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    font-size: 3.5vw;
     margin-left: 1.7vw;
+    color: #000;
+  }
+
+  .inputLogin button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: #000;
+    opacity: 50%;
+  }
+
+  label .input-password::placeholder {
+    color: black; /* Define a cor preta para o placeholder */
+    opacity: 50%; /* Garante que o placeholder fique totalmente opaco */
+    font-size: 3.5vw;
   }
 
   .password a {
     text-decoration: none;
-    font-size: 2vw;
-    margin-left: 45vw;
+    font-size: 3vw;
+    margin-left: 30vw;
     color: #074973;
   }
 
@@ -247,10 +277,10 @@ select:focus {
     border: none;
     margin-top: 5vw;
     border-radius: 2vw;
-    font-size: 2.5vw;
+    font-size: 4.5vw;
     font-weight: 300;
-    width: 25vw;
-    height: 8vw;
+    width: 30vw;
+    height: 10vw;
     font-family: "Poppins", system-ui;
     color: #f2f2f2;
     cursor: pointer;
