@@ -179,7 +179,7 @@ export function VerificationEmail() {
           <div className="input-vali">
             <label className="inputVali">
               <input
-                className="input-password"
+                className="input-password1"
                 type={isShow ? "text" : "password"}
                 placeholder="Insira sua nova senha"
                 value={password}
@@ -193,7 +193,7 @@ export function VerificationEmail() {
             </label>
             <label className="inputVali">
               <input
-                className="input-password"
+                className="input-password1"
                 type={isShow ? "text" : "password"}
                 placeholder="Confirme sua senha"
                 value={confirmPassword}

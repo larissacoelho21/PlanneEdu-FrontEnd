@@ -150,20 +150,26 @@ select:focus,
     padding: 1.2vw 2vw;
     border-radius: 2vw;
     width: 80vw;
-    height: 10vw;
+    height: 12vw;
     cursor: pointer;
     color: white;
     margin-bottom: 5vw;
   }
 
-  .input-password::placeholder {
-    font-size: 3vw;
+  .input-password1::placeholder {
+    font-size: 3.5vw;
     color: white;
     margin: 0 auto;
   }
 
-  .input-password::value {
+  .input-password1::value {
     font-size: 2vw;
+  }
+
+  label .input-password1::placeholder {
+    color: rgb(255, 255, 255); /* Define a cor preta para o placeholder */
+    opacity: 100%; /* Garante que o placeholder fique totalmente opaco */
+    font-size: 3.5vw;
   }
 
   .inputVali input {
@@ -210,7 +216,7 @@ select:focus,
     background-color: white;
     border: none;
     border-radius: 2vw;
-    font-size: 4vw;
+    font-size: 4.5vw;
     font-weight: 300;
     width: 30vw;
     height: 10vw;
