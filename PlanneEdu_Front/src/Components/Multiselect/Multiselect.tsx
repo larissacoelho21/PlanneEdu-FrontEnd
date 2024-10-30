@@ -28,15 +28,19 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
   }
 
   function selectOption(option: SelectOption) {
-    if (value.includes(option)) {
-      onChange(value.filter((o) => o !== option));
+    if (value.some((selectedOption) => selectedOption.value === option.value)) {
+      onChange(value.filter((o) => o.value !== option.value));
     } else {
       onChange([...value, option]);
     }
   }
 
   function isOptionSelected(option: SelectOption) {
-    return value.includes(option);
+    const isSelected = value.some(
+      (selectedOption) => selectedOption.value === option.value
+    );
+    console.log(`Option "${option.label}" selected:`, isSelected);
+    return isSelected;
   }
 
   useEffect(() => {
@@ -88,9 +92,9 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
       className={styles.container}
     >
       <span className={styles.value}>
-        {value.map((v) => (
+        {value.map((v, index) => (
           <button
-            key={v.value}
+            key={`${v.value}-${index}`} // Adiciona índice para unicidade
             onClick={(e) => {
               e.stopPropagation();
               selectOption(v);
@@ -104,18 +108,19 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
           </button>
         ))}
       </span>
+
       <div className={`${styles.caret} ${isOpen ? styles.open : ""}`}>
         <ChevronDown className="icon-down" />
       </div>
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
         {options.map((option, index) => (
           <li
+            key={`${option.value}-${index}`} // Ajuda a garantir unicidade
             onClick={(e) => {
               e.stopPropagation();
               selectOption(option);
             }}
             onMouseEnter={() => setHighlightedIndex(index)}
-            key={option.value}
             className={`${styles.option} ${
               isOptionSelected(option) ? styles.selected : ""
             } ${index === highlightedIndex ? styles.highlighted : ""}`}

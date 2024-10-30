@@ -65,8 +65,8 @@
   gap: 1.5vw;
 }
 
-.option.selected {
-  background: rgb(7,73,115, .4);
+.selected {
+  background: rgba(7, 73, 115, 0.4) !important;
 }
 
 .option.highlighted {
