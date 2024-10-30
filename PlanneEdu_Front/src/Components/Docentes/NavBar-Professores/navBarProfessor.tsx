@@ -23,7 +23,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 
 /* css */
 import "../NavBar-Professores/navBarProfessor.css";
-import { faBell, faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 
 /* Dropdown Planos ensinos */
 /* Criando interface para declarar as props do DropdownItem */
@@ -312,18 +312,6 @@ export function NavBarProfessor() {
                         </div>
                       </li>
                     </ul>
-                  </li>
-                  <li className="li-notification">
-                    <div className="secondPart">
-                      <div className="darkmode">
-                        <NavLink to="#" className="darkmodeIcon">
-                          <FontAwesomeIcon
-                            icon={faMoon}
-                            className="not-icons"
-                          />
-                        </NavLink>
-                      </div>
-                    </div>
                   </li>
                 </ul>
               </div>

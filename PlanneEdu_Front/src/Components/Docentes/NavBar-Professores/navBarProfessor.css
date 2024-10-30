@@ -99,12 +99,12 @@ link:active {
   align-items: center;
 }
 
-/* estilizando o menu */
+/* --------------------Menu Dropdown-------------------- */
 
 .dropdown-menu {
   position: absolute;
   top: 5.5vw;
-  right: 26vw;
+  right: 23vw;
   background-color: #fff;
   padding: 1vw 1vw;
   width: 17vw;
@@ -147,9 +147,9 @@ link:active {
   padding: 0.2vw;
 }
 
-.dropdownItem .icon:hover,
-.dropdownItem .menu-text:hover,
-.menu-a:hover {
+
+.dropdownItem .menu-text:hover
+{
   color: var(--blue1); /* cor quando o hover estiver ativo */
   cursor: pointer;
 }
@@ -172,12 +172,12 @@ link:active {
   transition: var(--speed);
 }
 
-/* estilizando o segundo dropdwn */
+/* --------------------Dropdown Notificação-------------------- */
 
 .dropdown-notification {
   position: absolute;
   top: 5.5vw;
-  right: 6.4vw;
+  right: 3.5vw;
   background-color: #fff;
   padding: 1.2vw 1.2vw;
   width: 28vw;
@@ -232,12 +232,11 @@ link:active {
 }
 
 .link-bell .iconsBell,
-.profile .not-icons,
-.darkmodeIcon .not-icons {
+.profile .not-icons {
   width: 0 auto;
   height: 1.6vw;
-  margin-left: 1.5vw;
-  margin-right: 1.5vw;
+  margin-left: 0.8vw;
+  margin-right: 2.5vw;
   color: black;
 }
 
@@ -257,14 +256,15 @@ link:active {
   cursor: pointer;
 }
 
-/* Dropdown Profile */
+/* --------------------Dropdown Perfil-------------------- */
+
 .dropdown-profile {
   position: absolute;
   top: 5.5vw;
-  right: 2vw;
+  right: 1vw;
   background-color: #fff;
   padding: 1.2vw 1.2vw;
-  width: 14vw;
+  width: 13vw;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
@@ -285,7 +285,7 @@ link:active {
   content: "";
   position: absolute;
   top: -2.5vw; /* Ajusta a seta acima do dropdown */
-  right: 3vw; /* Ajusta a posição horizontal da seta */
+  right: 0.7vw; /* Ajusta a posição horizontal da seta */
   border-width: 1.5vw;
   border-style: solid;
   border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
@@ -303,7 +303,6 @@ link:active {
   padding: 0.2vw;
 }
 
-.dropdownProfile .icon:hover,
 .dropdownProfile .menu-text:hover {
   color: #074973; /* cor quando o hover estiver ativo */
   cursor: pointer;
@@ -376,8 +375,7 @@ link:active {
     display: none;
   }
 
-  .link-bell .iconsBell,
-  .darkmodeIcon .not-icons {
+  .link-bell .iconsBell{
     width: 0 auto;
     height: 3.5vw;
   }
