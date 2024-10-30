@@ -58,8 +58,8 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   background-color: var(--white);
-  max-width: 500px;
-  width:  42vw;
+  max-width: 100%;
+  width: 42vw;
   border-radius: 0.5vw;
   padding: 2.4vw;
   gap: 1vw;
@@ -80,7 +80,7 @@ body {
 }
 
 .dateBadge {
-  font-size: 0.8rem;
+  font-size: 1vw;
   background-color: #07678d;
   background-color: var(--blue-one);
   width: 15vw;

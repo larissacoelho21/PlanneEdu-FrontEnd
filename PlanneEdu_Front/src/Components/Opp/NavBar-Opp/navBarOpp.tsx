@@ -1,5 +1,6 @@
 /* Images */
 import LogoName from "../../../assets/logoname.svg";
+import LogoMobile from "../../../assets/logoMobile.svg";
 
 /* Icons do dropdown */
 import {
@@ -11,6 +12,8 @@ import {
   ChevronDown,
   UserPen,
   LogOut,
+  X,
+  Menu,
 } from "lucide-react";
 
 /* funções react */
@@ -20,7 +23,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 
 /* css */
 import "../NavBar-Opp/navBarOpp.css";
-import { faBell, faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 
 /* Criando interface para declarar as props do DropdownItem */
 interface DropdownItemProps {
@@ -85,15 +88,31 @@ function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
   );
 }
 
-export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Professor
+export function NavBarOpp() {
+  //TODO: Adicionar alterações feitas na NavBar Professor
   /* Criando função para identificarquando o dropdown esta ativo */
   const [openOne, setOpenOne] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
   const [opentThree, setOpenThree] = useState(false);
 
+  /* Mobile */
+  const [MenuOpen, setMenuOpen] = useState(false);
+  const [ProfileDropdownOpen, SetProfileDropdownOpen] = useState(false);
+  const [DropdownMobileOpen, SetIsDropdownMobileOpen] = useState(false);
+  const toggleDropdwonMobile = () => {
+    SetIsDropdownMobileOpen(!DropdownMobileOpen);
+  };
+
+  const toggleDropdwonMobileProfile = () => {
+    SetProfileDropdownOpen(!ProfileDropdownOpen);
+  };
+
+  /* Fim mobile */
+
   let menuRef = useRef<HTMLDivElement>(null);
   let notRef = useRef<HTMLDivElement>(null);
   let notRefP = useRef<HTMLDivElement>(null);
+  let menuOpenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -105,6 +124,12 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
       }
       if (notRefP.current && !notRefP.current.contains(e.target as Node)) {
         setOpenThree(false);
+      }
+      if (
+        menuOpenRef.current &&
+        !menuOpenRef.current.contains(e.target as Node)
+      ) {
+        setMenuOpen(false); // Fecha o menu ao clicar fora dele
       }
     };
 
@@ -136,6 +161,14 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
                 <img src={LogoName} alt="" />
               </Link>
             </div>
+
+            <div className="logoMobile">
+              {" "}
+              {/* logo versão mobile */}
+              <Link to="/homeprofessor">
+                <img src={LogoMobile} alt="" />
+              </Link>
+            </div>
           </div>
 
           <div className="left-side">
@@ -143,22 +176,22 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
               <ul className="navbar-nav">
                 <NavLink /* identificando se o caminho da página selecionada corresponde */
                   className={({ isActive }) =>
-                    isActive ? "navbar-link active" : "navbar-link"
+                    isActive ? "navbarLink active" : "navbarLink"
                   }
                   to="/homeopp"
                 >
                   {" "}
-                  Início
+                  <p>Início</p>
                 </NavLink>
 
                 <NavLink /* identificando se o caminho da página selecionada corresponde */
                   className={({ isActive }) =>
-                    isActive ? "navbar-link active" : "navbar-link"
+                    isActive ? "navbarLink active" : "navbarLink"
                   }
                   to="/cursosopp"
                 >
                   {" "}
-                  Cursos
+                  <p>Cursos</p>
                 </NavLink>
 
                 <li className="nav-dropdown">
@@ -168,72 +201,72 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
                       setOpenOne(!openOne);
                     }}
                   >
-                    <div className={`navbar-link ${openOne ? "selected" : ""}`}>
+                    <div className={`navbarLink ${openOne ? "selected" : ""}`}>
                       {" "}
                       {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                      Turmas <ChevronDown />
+                      <p>
+                        Turmas <ChevronDown />
+                      </p>
                     </div>
                   </div>
 
-                  <li>
-                    <div
-                      className={`dropdownMenu ${
-                        openOne ? "active" : "inactive"
-                      }`}
-                    >
-                      {" "}
-                      {/* menu */}
-                      <DropdownItem
-                        to="#"
-                        icon={<CodeXml size={20} />}
-                        text={"Desenvolvimento de sistemas"}
-                      />
-                      <DropdownItem
-                        to="#"
-                        icon={<Settings size={20} />}
-                        text={"Eletromecânica"}
-                      />
-                      <DropdownItem
-                        to="#"
-                        icon={<ChartLine size={20} />}
-                        text={"Logística"}
-                      />
-                      <DropdownItem
-                        to="#"
-                        icon={<Folder size={20} />}
-                        text={"Administração"}
-                      />
-                      <DropdownItem
-                        to="# "
-                        icon={<GalleryVerticalEnd size={20} />}
-                        text={"Geral"}
-                      />
-                    </div>
-                  </li>
+                  <div
+                    className={`dropdownMenu ${
+                      openOne ? "active" : "inactive"
+                    }`}
+                  >
+                    {" "}
+                    {/* menu */}
+                    <DropdownItem
+                      to="#"
+                      icon={<CodeXml size={20} />}
+                      text={"Desenvolvimento de sistemas"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<Settings size={20} />}
+                      text={"Eletromecânica"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<ChartLine size={20} />}
+                      text={"Logística"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<Folder size={20} />}
+                      text={"Administração"}
+                    />
+                    <DropdownItem
+                      to="# "
+                      icon={<GalleryVerticalEnd size={20} />}
+                      text={"Geral"}
+                    />
+                  </div>
                 </li>
 
                 <NavLink
                   className={({ isActive }) =>
-                    isActive ? "navbar-link active last" : "navbar-link"
+                    isActive ? "navbarLink active last" : "navbarLink"
                   }
                   to="/planocursoopp"
                 >
-                  Planos de curso
+                  <p>Planos de curso</p>
                 </NavLink>
 
                 <NavLink
                   className={({ isActive }) =>
-                    isActive ? "navbar-link active last" : "navbar-link"
+                    isActive ? "navbarLink active last" : "navbarLink"
                   }
-                  to="/"
+                  to="/addUser"
                 >
-                  Gerenciar docentes
+                  <p>Gerenciar docentes</p>
                 </NavLink>
               </ul>
             </div>
 
             <div className="Icons">
-              <div className="icon-list" >
+              <div className="icon-list">
                 <ul>
                   <li className="notification-dropdown">
                     <div
@@ -248,21 +281,19 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
                       </div>
                     </div>
 
-                    <li>
-                      <div
-                        className={`dropdown-notification ${
-                          openTwo ? "ativo" : "inactive"
-                        }`}
-                      >
-                        <DropdownNotification
-                          to="#"
-                          text={
-                            "O professor Giovani respondeu ao seu comentário."
-                          }
-                          secondtext={"Toque aqui para visualizar."}
-                        />
-                      </div>
-                    </li>
+                    <div
+                      className={`dropdown-notification ${
+                        openTwo ? "ativo" : "inactive"
+                      }`}
+                    >
+                      <DropdownNotification
+                        to="#"
+                        text={
+                          "O professor Giovani respondeu ao seu comentário."
+                        }
+                        secondtext={"Toque aqui para visualizar."}
+                      />
+                    </div>
                   </li>
 
                   {/* Notificação */}
@@ -302,17 +333,94 @@ export function NavBarOpp() { //TODO: Adicionar alterações feitas na NavBar Pr
                       </li>
                     </ul>
                   </li>
-                  <li className="li-notification">
-                    <div className="secondPart">
-                      <div className="darkmode">
-                        <NavLink to="#" className="darkmodeIcon">
-                          <FontAwesomeIcon
-                            icon={faMoon}
-                            className="not-icons"
-                          />
-                        </NavLink>
-                      </div>
+                </ul>
+              </div>
+            </div>
+
+            <div className="menu-mobile">
+              {/* Ícone de hambúrguer para mobile */}
+              <NavLink
+                to={"#"}
+                className="hamburger-menu"
+                onClick={() => setMenuOpen(!MenuOpen)}
+              >
+                <p>
+                  {MenuOpen ? (
+                    <X className="x-icon" size={35} />
+                  ) : (
+                    <Menu className="hamburguer" size={35} />
+                  )}
+                </p>
+              </NavLink>
+
+              <div
+                /* className="menulist" */ className={`menu ${
+                  MenuOpen ? "open" : ""
+                }`}
+              >
+                <ul>
+                  <li
+                    className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
+                  >
+                    <div
+                      className="dropdownMobile"
+                      onClick={toggleDropdwonMobile}
+                    >
+                      <p>
+                        Planos de ensinos{" "}
+                        <ChevronDown className="icon-dropdownMobile" />{" "}
+                      </p>
                     </div>
+
+                    {DropdownMobileOpen && (
+                      <ul className="dropdown-Mobile">
+                        <li>
+                          <a href="#">Administração</a>
+                        </li>
+                        <li>
+                          <a href="#">Desenvolvimento de Sistemas</a>
+                        </li>
+                        <li>
+                          <a href="#">Eletromecânica</a>
+                        </li>
+                        <li>
+                          <a href="#">Logística</a>
+                        </li>
+                        <li>
+                          <a href="#">Geral</a>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="#"
+                    >
+                      <p>Plano de curso</p>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <div
+                      className="dropdownMobile"
+                      onClick={toggleDropdwonMobileProfile}
+                    >
+                      <p>
+                        Perfil <ChevronDown className="icon-dropdownMobile" />{" "}
+                      </p>
+                    </div>
+
+                    {ProfileDropdownOpen && (
+                      <ul className="dropdownProfileMob">
+                        <li>
+                          <a href="#">Visualizar perfil</a>
+                        </li>
+                        <li>
+                          <a href="#">Sair</a>
+                        </li>
+                      </ul>
+                    )}
                   </li>
                 </ul>
               </div>

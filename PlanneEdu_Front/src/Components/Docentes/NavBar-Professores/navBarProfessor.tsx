@@ -33,7 +33,7 @@ interface DropdownItemProps {
   to: string /* path para as páginas */;
 }
 
-/* props ciradas na Interface */
+/* props criadas na Interface */
 function DropdownItem({ icon, text, to }: DropdownItemProps) {
   return (
     <NavLink to={to} className="dropdownItem">

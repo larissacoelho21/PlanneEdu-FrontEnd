@@ -5,6 +5,7 @@
 .navbar-container {
   display: none;
 }
+
 .hamburger-menu {
   border: none;
   background: none;
@@ -103,7 +104,7 @@ link:active {
 
 .dropdown-menu {
   position: absolute;
-  top: 5.5vw;
+  top: 6vw;
   right: 23vw;
   background-color: #fff;
   padding: 1vw 1vw;
@@ -164,7 +165,7 @@ link:active {
 }
 
 .dropdownItem .menu-text {
-  font-size: 0.8rem;
+  font-size: 1.1vw;
   max-width: 15vw;
   color: #7f7f7f;
   align-self: center;
@@ -318,7 +319,7 @@ link:active {
 }
 
 .dropdownProfile .menu-text {
-  font-size: 0.8rem;
+  font-size: 1vw;
   max-width: 15vw;
   color: #7f7f7f;
   align-self: center;
