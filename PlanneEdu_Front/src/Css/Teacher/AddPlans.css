@@ -156,13 +156,23 @@ button{
   padding: 3vh 2vw;
   border: solid 1.5px #000;
   border-radius: 0.5vw;
-  width: 45%;
-  gap: 0.5vw;
+  width: 70%;
+  gap: 0.6vw;
 }
 
-.date-plan h1, .pergunta-estra {
-  font-size: 1.5vw;
+.title-card h1 {
+  font-size: 1.6vw;
   font-weight: 700;
+}
+
+.tag-card{
+  background-color: #075a7b;
+  color: #FFF;
+  font-size: .9vw;
+  width: 25%;
+  text-align: center;
+  padding: .3vw;
+  border-radius: .5vw;
 }
 
 .selections p {

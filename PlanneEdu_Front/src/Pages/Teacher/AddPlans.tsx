@@ -21,8 +21,16 @@ import {
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
-  { label: "First", value: 1 },
-  { label: "Second", value: 2 },
+  {
+    label:
+      "1. Identificar as características de programação backend em ambiente web",
+    value: 1,
+  },
+  {
+    label:
+      "1.1Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+    value: 2,
+  },
   { label: "Third", value: 3 },
   { label: "Fourth", value: 4 },
   { label: "Fifth", value: 5 },
@@ -34,13 +42,8 @@ interface InputFieldProps {
   type?: string;
   value?: string | number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onMouse?: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
 }
-
-/* função para lidar com o evento de mouse nos inputs de número, para que não seja possível a alteração com o mouse */
-const handleMouse = (event: React.MouseEvent<HTMLInputElement>) => {
-  event.preventDefault();
-};
 
 /* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
 function InputField({
@@ -49,6 +52,7 @@ function InputField({
   type = "text",
   value = "",
   onChange,
+  onWheel,
 }: InputFieldProps) {
   /* `isFilled` para controlar se o campo está preenchido (booleano) */
   const [isFilled, setIsFilled] = useState(false);
@@ -92,6 +96,7 @@ function InputField({
         type={type}
         value={localValue}
         onChange={handleInputChange}
+        onWheel={onWheel}
       />
     </fieldset>
   );
@@ -100,25 +105,27 @@ function InputField({
 export function AddPlans() {
   /* ======== declaração de estados dos popups ======== */
   const [showPopUpPlan, setShowPopUpPlan] = useState(false);
-  const togglePopUpPlan = () => {
-    setShowPopUpPlan(!showPopUpPlan);
-  };
+  const togglePopUpPlan = () => setShowPopUpPlan(!showPopUpPlan);
+
   const [showPopUpClasses, setShowPopUpClasses] = useState(false);
-  const togglePopUpClasses = () => {
-    setShowPopUpClasses(!showPopUpClasses);
-  };
+  const togglePopUpClasses = () => setShowPopUpClasses(!showPopUpClasses);
+
+  const [showPopUpStrategy, setShowPopUpStrategy] = useState(false);
+  const togglePopUpStrategy = () => setShowPopUpStrategy(!showPopUpStrategy);
 
   const [strategyIdEdit, setStrategyIdEdit] = useState<number | null>(null);
 
-  const [showPopUpStrategy, setShowPopUpStrategy] = useState(false);
-  const togglePopUpStrategy = () => {
-
-    setShowPopUpStrategy(!showPopUpStrategy);
-
-    if(showPopUpStrategy == false) {
-      console.log(strategyIdEdit)
-      setStrategyIdEdit(null);
-    }
+  const closePopup = () => {
+    setShowPopUpPlan(false);
+    setShowPopUpClasses(false);
+    setShowPopUpStrategy(false);
+    setEditingStrategyIndex(null);
+    setSelectedDates([]);
+    setCargaHoraria(null);
+    setValueConhecimentosStra([]);
+    setValueEstrategiasStra([]);
+    setValueRecursosStra([]);
+    setPerguntasMediadoras("");
   };
 
   /* ======== função para a remoção de itens com base em seu índice ======== */
@@ -168,12 +175,7 @@ export function AddPlans() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
-
-    if (value === "") {
-      setCargaHoraria(null);
-    } else {
-      setCargaHoraria(Number(value));
-    }
+    setCargaHoraria(value ? Number(value) : null);
   };
 
   const [editingStrategyIndex, setEditingStrategyIndex] = useState<
@@ -181,14 +183,14 @@ export function AddPlans() {
   >(null);
 
   useEffect(() => {
-    console.log("passou aqui")
+    console.log("passou aqui");
   }, [togglePopUpStrategy]);
 
   /* função para iniciar a edição de uma estratégia */
   const startEditingStra = (index: number, id: number) => {
-    const strategyToEdit = strategies[index];  
+    const strategyToEdit = strategies[index];
 
-    console.log(id)
+    console.log(id);
 
     setStrategyIdEdit(id);
 
@@ -257,15 +259,14 @@ export function AddPlans() {
 
       /* reseta os valores dos campos */
       setSelectedDates([]);
-      setCargaHoraria(0);
+      setCargaHoraria(null);
       setValueConhecimentosStra([]);
       setValueEstrategiasStra([]);
       setValueRecursosStra([]);
       setPerguntasMediadoras("");
 
       toast.success("Estratégia editada com sucesso!");
-
-      setEditingStrategyIndex(null)
+      setEditingStrategyIndex(null);
       togglePopUpStrategy();
     }
   };
@@ -307,7 +308,7 @@ export function AddPlans() {
     setStrategies([...strategies, newStrategy]);
 
     setSelectedDates([]);
-    setCargaHoraria(0);
+    setCargaHoraria(null);
     setValueConhecimentosStra([]);
     setValueEstrategiasStra([]);
     setValueRecursosStra([]);
@@ -316,6 +317,16 @@ export function AddPlans() {
     toast.success("Estratégia criada com sucesso!");
     togglePopUpStrategy();
   };
+
+  type LabelMap = {
+    [key: string]: string;
+  };
+  
+  const labelMap: LabelMap = options.reduce((acc: LabelMap, option) => {
+    acc[option.value] = option.label;
+    return acc;
+  }, {} as LabelMap);
+  
 
   /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
@@ -572,7 +583,7 @@ export function AddPlans() {
               label="Carga Horária"
               type="number"
               id="carg-h"
-              onMouse={handleMouse}
+              onWheel={(event) => event.currentTarget.blur()}
             />
           </div>
 
@@ -581,7 +592,7 @@ export function AddPlans() {
               label="Quantidade de Aulas"
               type="number"
               id="qtd-aulas"
-              onMouse={handleMouse}
+              onWheel={(event) => event.currentTarget.blur()}
             />
           </div>
 
@@ -590,7 +601,7 @@ export function AddPlans() {
               label="Semestre"
               type="number"
               id="semestre"
-              onMouse={handleMouse}
+              onWheel={(event) => event.currentTarget.blur()}
             />
           </div>
 
@@ -599,7 +610,7 @@ export function AddPlans() {
               label="Ano"
               type="number"
               id="ano"
-              onMouse={handleMouse}
+              onWheel={(event) => event.currentTarget.blur()}
             />
           </div>
         </div>
@@ -644,6 +655,7 @@ export function AddPlans() {
             <PopUp
               title="Criar estratégia"
               subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
+              onClose={closePopup}
             >
               <div className="pop-body">
                 <div className="dates-add">
@@ -672,8 +684,9 @@ export function AddPlans() {
                     type="number"
                     label="Carga Horária"
                     id="carga-h"
+                    value={cargaHoraria !== null ? cargaHoraria : ""}
                     onChange={handleCargaHorariaChange}
-                    onMouse={handleMouse}
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
 
@@ -722,21 +735,19 @@ export function AddPlans() {
                 </div>
 
                 <div className="popup-btns">
-                <button 
-            onClick={(event) => {
-                if (editingStrategyIndex !== null) {
-                    editStrategy(event);
-                } else {
-                    createStrategy(event);
-                }
-            }}
-        >
-            {editingStrategyIndex !== null ? "Salvar Edição" : "Criar Estratégia"}
-        </button>
-
-                  <button onClick={() => togglePopUpStrategy()}>
-                    Cancelar
+                  <button
+                    onClick={(event) => {
+                      if (editingStrategyIndex !== null) {
+                        editStrategy(event);
+                      } else {
+                        createStrategy(event);
+                      }
+                    }}
+                  >
+                    {editingStrategyIndex !== null ? "Salvar" : "Criar"}
                   </button>
+
+                  <button onClick={closePopup}>Cancelar</button>
                 </div>
               </div>
             </PopUp>
@@ -744,15 +755,15 @@ export function AddPlans() {
 
           {strategies.map((strategy, index) => (
             <div className="card-info">
-              <div className="pergunta-estra">
+              <div className="title-card">
                 <h1>{strategy.perguntasMediadoras}</h1>
               </div>
-              <div className="carga-hor">
+              <div className="tag-card">
                 <p>Carga Horária: {strategy.cargaHoraria}</p>
               </div>
               <div className="selections">
                 <p>Datas : {strategy.dates.join(", ")}</p>
-                <p>Conhecimentos: {strategy.conhecimentos.join(", ")}</p>
+                <p>Conhecimentos: {strategy.conhecimentos.map(value => labelMap[value]).join(", ")}</p>
                 <p>Estratégias: {strategy.estrategias.join(", ")}</p>
                 <p>Recursos: {strategy.recursos.join(", ")}</p>
               </div>
@@ -793,7 +804,7 @@ export function AddPlans() {
 
           {plans.map((plan, index) => (
             <div className="card-info">
-              <div className="date-plan">
+              <div className="title-card">
                 <h1>
                   {plan.dateInicial} — {plan.dateFinal}
                 </h1>
@@ -826,6 +837,7 @@ export function AddPlans() {
 
           {showPopUpPlan && (
             <PopUp
+              onClose={closePopup}
               title="Planejamento de aulas"
               subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
@@ -891,6 +903,7 @@ export function AddPlans() {
 
           {showPopUpClasses && (
             <PopUp
+              onClose={closePopup}
               title="Editar"
               subtitle="Edite as informações referente ao planejamento de aula"
             >
