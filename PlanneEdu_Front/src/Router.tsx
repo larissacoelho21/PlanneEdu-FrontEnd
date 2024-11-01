@@ -22,6 +22,7 @@ import { PlanoCursoOpp } from "./Pages/Opp/PlanoCursoOpp";
 import { AddCourse } from "./Pages/Opp/AddCourse";
 import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { AddUser } from "./Pages/Opp/AddUser";
+import { FilterCategory } from "./Components/FilterCategory/FilterCategory";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -49,6 +50,8 @@ const Router: React.FC = () => {
         <Route path="/addcurso" element={<AddCourse />} />
         <Route path="/addplancurso" element={<AddPlanoCurso />} />
         <Route path="/addUser" element={<AddUser />} />
+        {/* Filtro */}
+        <Route path="/filtercategory" element={<FilterCategory/>}/> 
       </Routes>
     </BrowserRouter>
   );
