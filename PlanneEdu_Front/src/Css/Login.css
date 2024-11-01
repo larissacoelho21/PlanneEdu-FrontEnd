@@ -67,9 +67,9 @@ body {
   background-color: rgba(217, 217, 217, 0);
   margin-bottom: 3%;
   padding: 2vw;
-  width: 36vw;
+  width: 36.5vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 0.2vw;
+  border: rgba(1, 18, 38, 50%) solid 0.11vw;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +80,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 0.2vw;
+  border: rgba(1, 18, 38, 50%) solid 0.11vw;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
@@ -114,7 +114,7 @@ select:focus {
 .password a {
   text-decoration: none;
   font-size: 1vw;
-  margin-left: 18vw;
+  margin-left: 19.2vw;
   color: #074973;
 }
 
