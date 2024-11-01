@@ -1,6 +1,6 @@
 import { Clock3, Users } from "lucide-react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Css/Teacher/AddActivity.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -149,18 +149,23 @@ export function AddActivity() {
     setEditCardC(index);
     setDescricao(cardToEdit.descricao);
     setValueCapTecPop(
-      cardToEdit.capsTecBasP
-        .map((value) => options.find((option) => option.value === value))
-        .filter((option): option is SelectOption => option?.value !== undefined)
+        cardToEdit.capsTecBasP
+            .map((value) => options.find((option) => option.value === value))
+            .filter((option): option is SelectOption => option !== undefined)
     );
     setValueCapSocPop(
-      cardToEdit.capsSocP
-        .map((value) => options.find((option) => option.value === value))
-        .filter((option): option is SelectOption => option?.value !== undefined)
+        cardToEdit.capsSocP
+            .map((value) => options.find((option) => option.value === value))
+            .filter((option): option is SelectOption => option !== undefined)
     );
+};
 
-    togglePopUpChallenge();
-  };
+useEffect(() => {
+  if (editCardC !== null) {
+      setShowPopUpChallenge(true);  // Abre o pop-up apenas após `editCardC` ser configurado
+  }
+}, [editCardC]);
+
 
   const editChallenge = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -197,8 +202,6 @@ export function AddActivity() {
       setValueCapSocPop([]);
       setEditCardC(null);
       togglePopUpChallenge();
-    } else {
-      toast.error("Erro: índice de edição não definido.");
     }
   };
   // /edit
@@ -219,12 +222,13 @@ export function AddActivity() {
   const [showPopUpChallenge, setShowPopUpChallenge] = useState(false);
   const togglePopUpChallenge = () => {
     setShowPopUpChallenge(!showPopUpChallenge);
-    if(!showPopUpChallenge) {
-      setDescricao("");
-      setValueCapTecPop([]);
-      setValueCapTecPop([]);
+    if (showPopUpChallenge) {
+        setDescricao("");
+        setValueCapTecPop([]);
+        setValueCapSocPop([]);
+        setEditCardC(null);
     }
-  };
+};
 
   //lairssa
 
