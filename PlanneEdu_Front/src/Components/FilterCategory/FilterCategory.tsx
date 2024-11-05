@@ -1,4 +1,4 @@
-
+import "../FilterCategory/Filter.css";
 
 import { useState } from "react";
 
@@ -59,9 +59,10 @@ export function FilterCategory() {
         </div>
         <div className="categoriesCheck">
           {categories.map((category) => (
-            <label key={category}>
+            <label key={category} className="labelCheck">
               <input
                 type="checkbox"
+                className="inputCheck"
                 checked={selectedCategory.includes(category)}
                 onChange={() => handleCheckbox(category)}
               />
