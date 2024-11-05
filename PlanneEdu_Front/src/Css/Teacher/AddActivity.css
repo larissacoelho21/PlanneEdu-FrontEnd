@@ -207,7 +207,7 @@ input[type="date"]:focus {
 
 /* PopUp */
 .popup-challenge {
-  max-width: 35rem !important;
+  max: 35rem;
   padding: 3vw 3vw;
   background-color: #f2f2f2;
   display: flex;
@@ -235,6 +235,13 @@ input[type="date"]:focus {
   max-width: 28rem;
 }
 
+.forms-add-challenge{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30rem;
+}
+
 .texts-challenge h1 {
   font-size: 2vw;
   font-weight: 600;
@@ -254,7 +261,7 @@ input[type="date"]:focus {
 }
 
 .description input {
-  width: 35vw;
+  width: 29vw;
   background-color: transparent;
 }
 
@@ -262,6 +269,7 @@ input[type="date"]:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
 }
 
 .buttons-popup-challenge button {
