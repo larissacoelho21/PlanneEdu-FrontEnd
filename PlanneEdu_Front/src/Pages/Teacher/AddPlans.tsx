@@ -43,6 +43,8 @@ interface InputFieldProps {
   value?: string | number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  maxValue?: number;
 }
 
 /* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
@@ -53,6 +55,8 @@ function InputField({
   value = "",
   onChange,
   onWheel,
+  maxLength,
+  maxValue,
 }: InputFieldProps) {
   /* `isFilled` para controlar se o campo está preenchido (booleano) */
   const [isFilled, setIsFilled] = useState(false);
@@ -69,17 +73,34 @@ function InputField({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     /* `inputValue` armazena o valor digitado pelo usuário */
-    const inputValue = event.target.value;
+    let inputValue: string | number = event.target.value;
 
-    /* verifica se o `type` do input é "number" */
+    /* verifica se o `type` do input é "number". se o tipo for "number", converta o valor para um número ou uma string vazia */
     if (type === "number") {
-      /* se for "number" e o input não estiver vazio, converte para número; caso contrário, deixa vazio. o valor inputado é covertido para número, pois no HTML o valor de um input é sempre uma string, mesmo que o tipo seja "number" */
-      setLocalValue(inputValue !== "" ? parseFloat(inputValue) : "");
-    } else {
-      /* já se o tipo não for "number", define `localValue` como `inputValue` */
-      setLocalValue(inputValue);
+      inputValue = inputValue !== "" ? parseFloat(inputValue as string) : "";
+
+      /* garantir que inputValue seja um número antes de comparações */
+      if (typeof inputValue === "number") {
+        /* verificando se o valor não ultrapassa o limite máximo */
+        if (maxValue !== undefined && inputValue > maxValue) {
+          inputValue = maxValue; 
+        }
+      }
     }
 
+    /* analisando comprimento do valor */
+    if (
+      maxLength &&
+      typeof inputValue === "string" &&
+      inputValue.length > maxLength
+    ) {
+      inputValue = inputValue.slice(0, maxLength);
+    }
+
+    /* atualizando o estado com o valor modificado */
+    setLocalValue(inputValue); 
+
+    /* propaga a mudança se necessário */
     if (onChange) {
       onChange(event);
     }
@@ -225,6 +246,14 @@ export function AddPlans() {
   const editStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
+
     /* analisa se todos os campos necessários estão preenchidos */
     if (
       selectedDates.length === 0 ||
@@ -274,12 +303,13 @@ export function AddPlans() {
   const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    console.log("selectedDates:", selectedDates);
-    console.log("cargaHoraria:", cargaHoraria);
-    console.log("valueConhecimentosStra:", valueConhecimentosStra);
-    console.log("valueEstrategiasStra:", valueEstrategiasStra);
-    console.log("valueRecursosStra:", valueRecursosStra);
-    console.log("perguntasMediadoras:", perguntasMediadoras);
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
 
     /* verificando se todos os campos necessários estão preenchidos */
     if (
@@ -321,12 +351,11 @@ export function AddPlans() {
   type LabelMap = {
     [key: string]: string;
   };
-  
+
   const labelMap: LabelMap = options.reduce((acc: LabelMap, option) => {
     acc[option.value] = option.label;
     return acc;
   }, {} as LabelMap);
-  
 
   /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
@@ -687,6 +716,8 @@ export function AddPlans() {
                     value={cargaHoraria !== null ? cargaHoraria : ""}
                     onChange={handleCargaHorariaChange}
                     onWheel={(event) => event.currentTarget.blur()}
+                    min={1}
+                    max={3}
                   />
                 </div>
 
@@ -762,10 +793,26 @@ export function AddPlans() {
                 <p>Carga Horária: {strategy.cargaHoraria}</p>
               </div>
               <div className="selections">
-                <p>Datas : {strategy.dates.join(", ")}</p>
-                <p>Conhecimentos: {strategy.conhecimentos.map(value => labelMap[value]).join(", ")}</p>
-                <p>Estratégias: {strategy.estrategias.join(", ")}</p>
-                <p>Recursos: {strategy.recursos.join(", ")}</p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Datas:</span>{" "}
+                  {strategy.dates.join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {strategy.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {strategy.estrategias
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {strategy.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
               </div>
               <div className="card-btns">
                 <button
@@ -810,9 +857,20 @@ export function AddPlans() {
                 </h1>
               </div>
               <div className="selections">
-                <p>Conhecimentos: {plan.conhecimentos.join(", ")}</p>
-                <p>Estratégias: {plan.estrategias.join(", ")}</p>
-                <p>Recursos: {plan.recursos.join(", ")}</p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {plan.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {plan.estrategias.map((value) => labelMap[value]).join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {plan.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
               </div>
               <div className="card-btns">
                 <button
