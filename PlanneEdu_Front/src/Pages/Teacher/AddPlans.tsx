@@ -58,50 +58,40 @@ function InputField({
   maxLength,
   maxValue,
 }: InputFieldProps) {
-  /* `isFilled` para controlar se o campo está preenchido (booleano) */
-  const [isFilled, setIsFilled] = useState(false);
-  /* `localValue` para armazenar o valor do input e gerenciar alterações locais */
   const [localValue, setLocalValue] = useState<string | number>(value);
-
-  /* `useEffect` que executa um efeito sempre que `localValue` muda */
+  /* verificando se o campo está preenchido para aplicar estilos ou animações (booleano) */
+  const [isFilled, setIsFilled] = useState(false);
   useEffect(() => {
-    /* define se 'isFilled' como true se o localValue não estiver vazio, acionando as animações */
     setIsFilled(localValue !== "");
-
-    /* lista de dependências: o efeito só funciona quando `localValue` é alterado */
   }, [localValue]);
 
+  /* função para gerenciar a mudança de valor do input */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    /* `inputValue` armazena o valor digitado pelo usuário */
-    let inputValue: string | number = event.target.value;
+    let inputValue: string = event.target.value;
 
-    /* verifica se o `type` do input é "number". se o tipo for "number", converta o valor para um número ou uma string vazia */
+    /* limita o comprimento do valor de entrada */
+    if (maxLength && inputValue.length > maxLength) {
+      /* corta o excedente */
+      inputValue = inputValue.slice(0, maxLength); 
+    }
+
+    /* converte para número se o tipo do input for "number" */
     if (type === "number") {
-      inputValue = inputValue !== "" ? parseFloat(inputValue as string) : "";
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
 
-      /* garantir que inputValue seja um número antes de comparações */
-      if (typeof inputValue === "number") {
-        /* verificando se o valor não ultrapassa o limite máximo */
-        if (maxValue !== undefined && inputValue > maxValue) {
-          inputValue = maxValue; 
-        }
+      /* verifica o valor máximo permitido */
+      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+        numericValue = maxValue;
       }
+      
+      setLocalValue(numericValue);
+    } else {
+      setLocalValue(inputValue);
     }
 
-    /* analisando comprimento do valor */
-    if (
-      maxLength &&
-      typeof inputValue === "string" &&
-      inputValue.length > maxLength
-    ) {
-      inputValue = inputValue.slice(0, maxLength);
-    }
-
-    /* atualizando o estado com o valor modificado */
-    setLocalValue(inputValue); 
-
-    /* propaga a mudança se necessário */
+    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
     if (onChange) {
+      event.target.value = inputValue;
       onChange(event);
     }
   };
@@ -179,6 +169,12 @@ export function AddPlans() {
   const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
     []
   );
+  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<SelectOption[]>(
+    []
+  );
+  const [valueCapSocioStra, setValueCapSocioStra] = useState<SelectOption[]>(
+    []
+  );
   const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
 
   /* definindo a estrutura do tipo dos dados */
@@ -202,10 +198,6 @@ export function AddPlans() {
   const [editingStrategyIndex, setEditingStrategyIndex] = useState<
     number | null
   >(null);
-
-  useEffect(() => {
-    console.log("passou aqui");
-  }, [togglePopUpStrategy]);
 
   /* função para iniciar a edição de uma estratégia */
   const startEditingStra = (index: number, id: number) => {
@@ -613,6 +605,7 @@ export function AddPlans() {
               type="number"
               id="carg-h"
               onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
             />
           </div>
 
@@ -622,6 +615,7 @@ export function AddPlans() {
               type="number"
               id="qtd-aulas"
               onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
             />
           </div>
 
@@ -631,6 +625,7 @@ export function AddPlans() {
               type="number"
               id="semestre"
               onWheel={(event) => event.currentTarget.blur()}
+              maxLength={1}
             />
           </div>
 
@@ -640,6 +635,7 @@ export function AddPlans() {
               type="number"
               id="ano"
               onWheel={(event) => event.currentTarget.blur()}
+              maxLength={4}
             />
           </div>
         </div>
@@ -669,6 +665,28 @@ export function AddPlans() {
             Estratégias para o desenvolvimento da situação de aprendizagem e
             planejamento da intervenção mediadora
           </h3>
+
+          <div className="capacidades">
+            <div className="tecnicas">
+              <label>Capacidades Técnicas</label>
+              <Multiselect
+                options={options}
+                value={valueCapTecnicasStra}
+                onChange={setValueCapTecnicasStra}
+                multiple
+              />
+            </div>
+            <div className="socioemocionais">
+              <label>Capacidades Socioemocionais</label>
+              <Multiselect
+                options={options}
+                value={valueCapSocioStra}
+                onChange={setValueCapSocioStra}
+                multiple
+              />
+            </div>
+          </div>
+
           <label>Estratégias</label>
           <button
             className="add-card"
@@ -716,8 +734,7 @@ export function AddPlans() {
                     value={cargaHoraria !== null ? cargaHoraria : ""}
                     onChange={handleCargaHorariaChange}
                     onWheel={(event) => event.currentTarget.blur()}
-                    min={1}
-                    max={3}
+                    maxLength={3}
                   />
                 </div>
 

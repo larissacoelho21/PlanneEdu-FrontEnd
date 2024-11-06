@@ -262,6 +262,17 @@ button{
   gap: 1vw;
 }
 
+.capacidades{
+  margin: 1vw 0 3vw 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.capacidades .tecnicas, .capacidades .socioemocionais{
+  width: 45%;
+}
+
 .add-card {
   width: 4vw;
   height: 4vw;
