@@ -1,0 +1,54 @@
+.cards-planscourses {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2vw;
+  margin: 5% 0 5% 0;
+}
+
+.box-teacher-plancourse {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--white);
+  max-width: 100%;
+  width: 42vw;
+  border-radius: 0.5vw;
+  padding: 2.4vw;
+  gap: .5vw;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--black);
+  border: 2px solid transparent;
+  transition: 0.35s ease-out;
+}
+
+.box-teacher-plancourse:hover {
+  border: 2px solid #084973;
+  transform: scale(1.015);
+}
+
+.semesterCourse{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.semesterCourse span{
+  font-size: 1.1rem;
+}
+
+.categoryBadge{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blue-one);
+  width: 18rem;
+  height: 2.5rem;
+  color: var(--white);
+  border-radius: .5vw;
+}
+
+.dowload-pdf span{
+  font-style: italic;
+}

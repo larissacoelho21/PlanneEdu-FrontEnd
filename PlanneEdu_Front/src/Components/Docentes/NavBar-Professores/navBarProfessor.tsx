@@ -236,7 +236,7 @@ export function NavBarProfessor() {
                   className={({ isActive }) =>
                     isActive ? "navbar-link active last" : "navbar-link"
                   }
-                  to="/"
+                  to="/planscourse"
                 >
                   <p> Planos de curso</p>
                 </NavLink>
