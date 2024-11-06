@@ -22,7 +22,6 @@ import { PlanoCursoOpp } from "./Pages/Opp/PlanoCursoOpp";
 import { AddCourse } from "./Pages/Opp/AddCourse";
 import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { AddUser } from "./Pages/Opp/AddUser";
-import { FilterCategory } from "./Components/FilterCategory/FilterCategory";
 import { PlanCourse } from "./Pages/Teacher/PlanCourse";
 
 //criando rotas e caminhos

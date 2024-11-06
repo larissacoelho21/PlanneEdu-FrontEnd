@@ -8,22 +8,6 @@
   --white: #ffff;
 }
 
-/* ===== Introdução ao Curso ===== */
-.introduction-course {
-  text-align: center;
-  margin-bottom: 5%;
-}
-
-.introduction-course h1 {
-  font-weight: 600;
-  color: var(--blue-one);
-}
-
-.introduction-course h2 {
-  font-size: 1.5vw;
-  font-weight: 400;
-}
-
 /* ===== Seleção de Cursos ===== */
 .select-planne-course,
 .select-add-course {

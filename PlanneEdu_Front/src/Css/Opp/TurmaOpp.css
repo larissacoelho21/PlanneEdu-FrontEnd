@@ -21,35 +21,6 @@
   font-size: 1.5vw;
 }
 
-.introTurma {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  margin-top: 6vw;
-  margin-bottom: 6vw;
-}
-
-.introTurma h1 {
-  font-size: 2.2vw;
-  color: var(--blue-one);
-}
-
-.introTurma h2 {
-  font-size: 1.5vw;
-  font-weight: normal;
-  margin-bottom: 1%;
-}
-
-.introTurma hr {
-  display: block;
-  width: 15vw;
-  height: 3px;
-  border: none;
-  border-radius: 5px;
-  background-image: linear-gradient(to right, #084973, #2685bf);
-}
-
 .technology-turma {
   font-size: 1vw;
   background-color: #074973;

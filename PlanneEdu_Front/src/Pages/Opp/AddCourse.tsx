@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddCourse.css";
 import { Link } from "react-router-dom";
+import { IntroForms } from "../../Components/IntroForms/IntroForms";
 
 export function AddCourse() {
   // Estados
@@ -130,9 +131,11 @@ export function AddCourse() {
     <section className="add-new-course">
       <SubNavbar />
 
-      <div className="introduction-course">
-        <h1>Adicione um novo curso</h1>
-        <h2>Todos os campos são obrigatórios</h2>
+      <div className="title-addcourse" style={{marginBottom: "5%"}}>
+        <IntroForms
+          titleText="Adicione um novo curso"
+          subtitleText="Todos os campos são obrigatórios"
+        />
       </div>
 
       <div className="select-planne-course">
