@@ -2,7 +2,8 @@ import { useState } from "react";
 import { AddMateria } from "../../Components/PlanoDeCurso/AddMateria";
 import { Competencias } from "../../Components/PlanoDeCurso/Competencias";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import "../../Css/Opp/AddPlanoCurso.css"
+import "../../Css/Opp/AddPlanoCurso.css";
+import { Check, Plus } from "lucide-react";
 
 export function AddPlanoCurso() {
   interface InputFieldProps {
@@ -31,11 +32,11 @@ export function AddPlanoCurso() {
 
     return (
       <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
-        <label className="label-add" htmlFor={id}>
+        <label className="label-course" htmlFor={id}>
           {label}
         </label>
         <input
-          className="input-add"
+          className="input-course"
           id={id}
           type={type}
           value={value}
@@ -57,27 +58,27 @@ export function AddPlanoCurso() {
 
         <form className="form-course">
           <div className="inputs-opp">
-            <div className="input-f">
+            <div className="input-field">
               <InputField label="Nome do Curso" type="text" id="nome-course" />
             </div>
-            <div className="input-f">
+            <div className="input-field">
               <InputField label="Categoria" type="text" id="category-course" />
             </div>
-            <div className="input-f">
+            <div className="input-field">
               <InputField label="Objetivo" type="text" id="obj-course" />
             </div>
-            <div className="input-f">
+            <div className="input-field">
               <InputField label="Competências" type="text" id="compt-course" />
             </div>
             <div className="input-row">
-              <div className="cargah">
+              <div className="input-f">
                 <InputField
                   label="Carga Horária"
-                  type="text"
+                  type="number"
                   id="cargah-course"
                 />
               </div>
-              <div className="qtd-semestre">
+              <div className="input-f">
                 <InputField
                   label="Quantidade de semestres"
                   type="number"
@@ -87,7 +88,52 @@ export function AddPlanoCurso() {
             </div>
           </div>
 
-          <div className="grade-horaria">
+          <div className="grade-curricular">
+            <h2>Grade Horária</h2>
+            <div className="semestres">
+              <div className="semestre">
+                <h3>1° Semestre</h3>
+                <div className="add-btn">
+                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                </div>
+              </div>
+              <div className="semestre">
+                <h3>2° Semestre</h3>
+                <div className="add-btn">
+                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                </div>
+              </div>
+              <div className="semestre">
+                <h3>3° Semestre</h3>
+                <div className="add-btn">
+                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                </div>
+              </div>
+              <div className="semestre">
+                <h3>4° Semestre</h3>
+                <div className="add-btn">
+                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="actions-btns">
+            <div className="save">
+              <button formAction="submit"><Check width={25} height={25} strokeWidth={1.5} textAnchor="middle" /> Salvar Informações</button>
+            </div>
+            <div className="cancel">
+              <button>Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+{
+  /* <div className="grade-horaria">
             <AddMateria />
           </div>
 
@@ -114,9 +160,5 @@ export function AddPlanoCurso() {
 
           <div className="botao">
             <button>✓ Salvar Informações</button>
-          </div>
-        </form>
-      </div>
-    </section>
-  );
+          </div> */
 }
