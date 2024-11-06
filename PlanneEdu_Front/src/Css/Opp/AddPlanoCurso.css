@@ -1,0 +1,32 @@
+.AddInfo {
+  justify-content: center;
+  align-items: center;
+  padding: 2vw 0;
+}
+
+.intro h2 {
+  font-weight: 600;
+}
+
+.form-course {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+  gap: 1vw;
+  padding: 5vw 5vw;
+  margin: 3% auto;
+  width: 90vw;
+  border-radius: 1vw;
+  background: #fff;
+  box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
+}
+
+.input-row{
+  display: flex;
+  justify-content: space-between;
+  gap: 4vw;
+}
+
+.cargah, .qtd-semestre, .tempo-course{
+  width: 50%;
+}
