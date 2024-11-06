@@ -1,0 +1,26 @@
+.introTextStandard {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.introTextStandard h1 {
+  font-size: 2rem;
+  color: var(--blue-one);
+}
+
+.introTextStandard h2 {
+  font-size: 1.3rem;
+  font-weight: normal;
+  margin-bottom: 1%;
+}
+
+.introTextStandard hr {
+  display: block;
+  width: 15vw;
+  height: 3px;
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #084973, #2685bf);
+}

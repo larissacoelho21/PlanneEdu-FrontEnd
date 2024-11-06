@@ -2,6 +2,7 @@ import { Clock3 } from "lucide-react";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 import { FilterCategory } from "../../Components/FilterCategory/FilterCategory";
 import "../../Css/Teacher/PlanCourse.css";
+import { IntroText } from "../../Components/IntroTexts/IntroText";
 
 export function PlanCourse() {
   return (
@@ -10,10 +11,11 @@ export function PlanCourse() {
         <NavBarProfessor />
       </div>
 
-      <div className="introTeacher" style={{ marginTop: "5%" }}>
-        <h1>Planos de curso</h1>
-        <h2>Visualize os planos de curso disponíveis </h2>
-        <hr />
+      <div className="title-plancourse" style={{marginTop: "5%"}}>
+        <IntroText
+          titleText="Planos de Curso"
+          subtitleText="Visualize os planos de curso disponíveis "
+        />
       </div>
 
       <div className="filter-plancourse">

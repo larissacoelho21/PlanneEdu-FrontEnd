@@ -1,3 +1,4 @@
+import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/PlanoCursoOpp.css";
 import { Clock3, GraduationCap } from "lucide-react";
@@ -7,10 +8,11 @@ export function PlanoCursoOpp() {
   return (
     <section className="homeTeacher">
       <NavBarOpp />
-      <div className="introTeacher">
-        <h1>Gerencie seus planos de curso</h1>
-        <h2>crie, edite e exclua os planos de curso disponíveis</h2>
-        <hr />
+      <div className="title-plancourseopp">
+        <IntroText
+          titleText="Gerencie seus planos de curso"
+          subtitleText="crie, edite e exclua os planos de curso disponíveis"
+        />
       </div>
 
       <div className="buttons-class">
