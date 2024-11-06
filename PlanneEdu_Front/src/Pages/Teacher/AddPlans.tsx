@@ -557,7 +557,6 @@ export function AddPlans() {
 
   /* ======== layout e estrutura da página ======== */
   return (
-    /* TODO: Adicionar max de caracteres em inputs de numeros */
     <main>
       <SubNavbar />
       <div className="info-course">
