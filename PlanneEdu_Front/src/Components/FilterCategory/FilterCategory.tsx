@@ -59,8 +59,13 @@ export function FilterCategory() {
         </div>
         <div className="categoriesCheck">
           {categories.map((category) => (
-            <label key={category} className="labelCheck">
+            <label
+              key={category}
+              className="labelCheck"
+              style={{ cursor: "pointer" }}
+            >
               <input
+                style={{ cursor: "pointer" }}
                 type="checkbox"
                 className="inputCheck"
                 checked={selectedCategory.includes(category)}
