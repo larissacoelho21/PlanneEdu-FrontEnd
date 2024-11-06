@@ -12,8 +12,8 @@
   flex-direction: column;
   margin-top: 5%;
   background-color: var(--white-one);
-  padding: 1rem 5rem;
-  gap: 1rem;
+  padding: 3rem 5rem;
+  gap: 2rem;
   border-radius: .5vw;
 }
 
@@ -26,4 +26,5 @@
   display: flex;
   align-items: center;
   gap: .3rem;
+  font-size: 1.11rem;
 }
