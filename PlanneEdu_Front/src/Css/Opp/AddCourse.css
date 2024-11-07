@@ -1,7 +1,7 @@
 /* ===== Variáveis de Cor ===== */
 :root {
   --blue-one: #074973;
-  --blue-two: #07678D;
+  --blue-two: #07678d;
   --blue-three: #00a3ff;
   --gray-one: #bbbb;
   --gray-two: #848484bb;
@@ -19,7 +19,8 @@
   margin: 0 auto;
 }
 
-.label-select {
+.label-select,
+.select-add-course input {
   align-self: flex-start;
   font-weight: 600;
   color: var(--gray-two);
@@ -34,13 +35,12 @@
   color: var(--blue-three);
 }
 
-.select-planne-course select,
-.select-add-course select {
+.select-planne-course select {
   width: 100%;
   font-size: 1.2vw;
   background-color: transparent;
   border: none;
-  border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
 }
 
 .select-planne-course option:focus {
@@ -51,7 +51,6 @@
 .form-addcourse {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 3vw;
   width: 90vw;
   margin: 0 auto;
@@ -68,6 +67,17 @@
   gap: 8vw;
 }
 
+.select-numbers input {
+  width: 21vw !important;
+}
+
+.select-add-course input {
+  background-color: var(--white);
+  border: none;
+  border-bottom: 0.15vw solid rgba(0, 0, 0, 0.2) !important;
+  width: 80vw;
+}
+
 /* ===== Títulos e Horas das Matérias ===== */
 .subjects-and-hours h1 {
   font-weight: 600;
@@ -75,85 +85,11 @@
   color: var(--blue-one);
 }
 
-.forms-grid-hours {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 2vw;
-  margin-bottom: 5%;
-}
-
-/* ===== Grid de Semestre e Tabelas de Matérias ===== */
-.select-semester-grid, 
-.grid-table {
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  text-align: start;
-}
-
-.select-semester-grid select,
-.matter-grid-table input {
-  width: 100%;
-  font-size: 1.2vw;
-  border: none;
-  border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
-}
-
-/* ===== Botões de Ação ===== */
-.add-table,
-.action-btn-course {
-  display: block;
-  padding: 1vh 2vw;
-  background-color: var(--blue-two);
-  border: 2px solid transparent;
-  border-radius: .5vw;
-  color: var(--white);
-  cursor: pointer;
-  transition: .3s ease;
-}
-
-.action-btn-course{
-  margin-left: 25%;
-}
-
-.add-table:hover, 
-.action-btn-course:hover {
-  background-color: transparent;
-  border: solid 2px var(--blue-two);
-  color: var(--blue-two);
-}
-
 /* ===== Tabelas de Informações ===== */
-.table-infos-grid {
-  width: 100%;
-  margin-bottom: 5%;
-}
 
-.table-infos-grid th {
-  font-size: 1.2vw;
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.table-infos-grid td {
-  background: #fff;
-}
-
-.table-infos-grid th,
-.table-infos-grid td {
-  text-align: center;
-  border: none;
-  border-bottom: 0.15vw rgba(0, 0, 0, 0.2) solid;
-}
-
-.table-infos-grid th:nth-child(1),
-.table-infos-grid td:nth-child(1) {
-  width: 40%;
-  text-align: left;
-}
 
 /* ===== Popup de Edição ===== */
-.popup-overlay, 
+.popup-overlay,
 .popup-overlay-delete {
   position: fixed;
   top: 0;
@@ -195,7 +131,6 @@
   gap: 2.5vw;
 }
 
-
 .popup-edit select {
   width: 100%;
   font-size: 1.2vw;
@@ -227,7 +162,7 @@
 }
 
 /* ===== Inputs e Campos de Seleção ===== */
-.inputs-edit{
+.inputs-edit {
   display: flex;
   flex-direction: column;
   gap: 2.5vw;
@@ -236,10 +171,10 @@
 .inputs-edit select {
   font-size: 1.2vw;
   border: none;
-  border-bottom: .2vw solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
 }
 
-.inputs-edit label{
+.inputs-edit label {
   float: left;
   font-size: 1.2vw;
   color: var(--gray-two);
@@ -266,27 +201,29 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
-/* PopUp delete */
-.message-delete-course{
+/* ===== PopUp Delete ===== */
+.message-delete-course {
   display: flex;
-  gap: .5vw;
+  gap: 0.5vw;
 }
-.message-delete-course h1{
+
+.message-delete-course h1 {
   color: var(--blue-one);
   font-size: 3vw;
 }
 
-.message-delete-course h2{
+.message-delete-course h2 {
   font-size: 1.6vw;
   margin-bottom: 3%;
 }
 
-.message-delete-course h3{
+.message-delete-course h3 {
   font-size: 1.5vw;
   font-weight: 400;
 }
 
-.button-view-class{
+/* ===== Botão para Visualizar Turma ===== */
+.button-view-class {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -294,11 +231,11 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 10vh;
   background-color: var(--blue-one);
   margin: 0 auto;
-  border-radius: .5vw;
+  border-radius: 0.5vw;
   margin-top: 3%;
   cursor: pointer;
 }
 
-.button-view-class a{
+.button-view-class a {
   color: var(--white);
 }
