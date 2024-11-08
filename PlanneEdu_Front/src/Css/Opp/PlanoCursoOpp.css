@@ -24,11 +24,5 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-  .introTeacher h2 {
-    font-size: 3vw;
-  }
 
-  .Arrow svg {
-    width: 10vw;
-}
 }

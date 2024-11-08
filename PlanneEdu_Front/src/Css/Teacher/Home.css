@@ -127,20 +127,30 @@ body {
   }
 
   .box-teacher {
-    width: 80vw;
+    width: 90vw;
   }
 
   .box-teacher h1 {
-    font-size: 3vw;
+    font-size: 4vw;
   }
 
   .dateBadge {
-    font-size: 1.8vw;
-    width: 25vw;
+    font-size: 3vw;
+    background-color: #07678d;
+    background-color: var(--blue-one);
+    width: max-content;
+    padding: 2vw 1.5vw;
+    color: #ffff;
+    font-weight: normal;
+    text-align: center;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
   }
 
   .semesterTeacher h1,
   .student h1 {
-    font-size: 1.8vw;
+    font-size: 3vw;
+    margin-top: 1.5vw;
+    margin-left: 0.5vw;
   }
 }
