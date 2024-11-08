@@ -3,6 +3,8 @@ import { BaseUrl } from "../../Config/config";
 import { toast } from "sonner";
 
 export function AddUser() {
+  //TODO : passar para o axios | código com erro
+
   /* Função Back-End */
 
   const [name, setName] = useState("");
@@ -17,10 +19,9 @@ export function AddUser() {
   // Recupera o token do localStorage
   const token = localStorage.getItem("Authorization");
 
-
-  console.log("#################")
-  console.log(token)
-  console.log("#################")
+  console.log("#################");
+  console.log(token);
+  console.log("#################");
 
   console.log({
     name,
@@ -33,7 +34,8 @@ export function AddUser() {
     telefone,
   });
 
-  const AddUser = async (event: React.FormEvent) => { //TODO: Iniciar Css
+  const AddUser = async (event: React.FormEvent) => {
+    //TODO: Iniciar Css
     event.preventDefault();
 
     await fetch(`${BaseUrl}/register`, {

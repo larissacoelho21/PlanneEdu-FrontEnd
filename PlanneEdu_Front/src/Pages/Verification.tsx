@@ -20,6 +20,8 @@ export function VerificationEmail() {
 
   const navigate = useNavigate();
 
+  //TODO : passar para o axios
+
   /* Função Back-End */
 
   const [code, setCode] = useState("");
@@ -130,7 +132,9 @@ export function VerificationEmail() {
                   onChange={(event) => setPassword(event.target.value)}
                   required
                 />
-                <button onClick={handlePassword} type="button" //TODO: Icone acionando junto com o input de confirme senha 
+                <button
+                  onClick={handlePassword}
+                  type="button" //TODO: Icone acionando junto com o input de confirme senha
                 >
                   {isShow && <Eye size={18} />}
                   {!isShow && <EyeOff size={18} />}
@@ -145,7 +149,9 @@ export function VerificationEmail() {
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
                 />
-                <button onClick={handlePassword2} type="button" //TODO: Icone acionando junto com o input de informe senha 
+                <button
+                  onClick={handlePassword2}
+                  type="button" //TODO: Icone acionando junto com o input de informe senha
                 >
                   {isShow2 && <Eye size={18} />}
                   {!isShow2 && <EyeOff size={18} />}
@@ -214,7 +220,6 @@ export function VerificationEmail() {
               Criar
             </button>
           </div>
-
         </div>
       </div>
     </section>

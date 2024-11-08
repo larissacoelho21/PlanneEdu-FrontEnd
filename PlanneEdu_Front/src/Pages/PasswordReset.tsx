@@ -16,6 +16,8 @@ export function PasswordReset() {
 
   const navigate = useNavigate();
 
+  //TODO : passar para o axios
+
   const postEmail = (event: React.FormEvent) => {
     event.preventDefault();
 
