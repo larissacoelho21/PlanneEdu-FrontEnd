@@ -2,7 +2,7 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddCourse.css";
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 import { useState } from "react";
-import { TableSubjects } from "../../Components/TableSubjects/TableSubjects";
+import { Link } from "react-router-dom";
 
 export function AddCourse() {
   // PopUp deletar curso
@@ -79,17 +79,159 @@ export function AddCourse() {
           </div>
           <div className="subjects-and-hours">
             <h1>Matérias e Horas</h1>
-            <TableSubjects
-              semesterTable={1}
-              subjectTable="PIpi"
-              workloadTable={75}
-              subjectTable2="d"
-              workloadTable2={34}
-            />
+            <div className="subjects-and-hourr">
+              <div className="table-grid-hours">
+                <div className="forms-grid-hours">
+                  <div className="semester-grid">
+                    <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
+                    <table className="table-infos-grid">
+                      <thead>
+                        <tr>
+                          <th>Matéria</th>
+                          <th>Carga Horária</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Fundamentos de Programação Orientada a Objeto</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Sistemas Operacionais</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Hardware e Redes</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Linguagem de Marcação</td>
+                          <td>75</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="semester-grid">
+                    <h2>2° Semestre</h2>
+                    <table className="table-infos-grid">
+                      <thead>
+                        <tr>
+                          <th>Matéria</th>
+                          <th>Carga Horária</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Fundamentos de Programação Orientada a Objeto</td>
+                          <td>100</td>
+                        </tr>
+                        <tr>
+                          <td>Programação Web Front-End</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Programação Web Back-End</td>
+                          <td>125</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="semester-grid">
+                    <h2>3° Semestre</h2>
+                    <table className="table-infos-grid">
+                      <thead>
+                        <tr>
+                          <th>Matéria</th>
+                          <th>Carga Horária</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Banco de Dados</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Programação Web Back-End</td>
+                          <td>50</td>
+                        </tr>
+                        <tr>
+                          <td>Interface para Dispositivos Móveis</td>
+                          <td>75</td>
+                        </tr>
+                        <tr>
+                          <td>Programação para Dispositivos Móveis</td>
+                          <td>100</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="semester-grid">
+                    <h2>4° Semestre</h2>
+                    <table className="table-infos-grid">
+                      <thead>
+                        <tr>
+                          <th>Matéria</th>
+                          <th>Carga Horária</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Requisitos e Modelagem de Software</td>
+                          <td>45</td>
+                        </tr>
+                        <tr>
+                          <td>Testes de Software</td>
+                          <td>30</td>
+                        </tr>
+                        <tr>
+                          <td>Projetos</td>
+                          <td>225</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
+          <div className="buttons-addcourse">
+            <Link to="/planocursoopp">
+              Ver plano de curso completo
+            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                togglePopUpDelete();
+              }}
+            >
+              Excluir curso
+            </button>
+          </div>
         </div>
       </form>
+
+      {showPopUpDelete && (
+        <div className="overlay" onClick={togglePopUpDelete}>
+          <div className="message-delete-course">
+            <h1>AVISO!</h1>
+            <h2>Não foi possível excluir o curso</h2>
+            <h3>
+              Existem <span style={{color: "var(--blue-one)", fontWeight: "bold"}}>5</span> turmas atribuídas a ele. Por favor, remova as turmas
+              associadas antes de tentar excluir o curso.
+            </h3>
+
+            <div className="button-view-class">
+              <Link to="/cursosopp">
+                Ver minhas turmas
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
