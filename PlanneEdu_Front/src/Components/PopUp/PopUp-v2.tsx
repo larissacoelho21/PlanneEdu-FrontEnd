@@ -6,7 +6,7 @@ interface PopUpProps {
   title: string;
   subtitle: string;
   /* 'children' representa o conteúdo passado entre as tags de abertura e fechamento do componente, ele pode ser qualquer conteúdo renderizável no React (JSX, strings, números, etc.). Já o 'React.ReactNode' é o tipo que abrange todos os tipos renderizáveis */
-  children: React.ReactNode; 
+  children?: React.ReactNode; 
   onClose: () => void;
 }
 
