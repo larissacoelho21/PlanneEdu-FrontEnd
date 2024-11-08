@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;  
   border: none;
-  border-bottom: 0.2vw solid #00000033;
+  border-bottom: 2px solid rgb(0,0,0, .2);
   display: flex;
   align-items: center;
   padding: 0.5vw;
@@ -11,31 +11,29 @@
 }
 
 .value {
-  /* O item vai crescer para ocupar o espaço disponível no contêiner flexível */
+  /* o item vai crescer para ocupar o espaço disponível no contêiner flexível */
   flex-grow: 1;
   display: flex;
   gap: .6vw;
   flex-wrap: wrap;
 }
 
-.clear-btn{
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #696969;
-}
-
-.clear-btn svg{
-  width: 1.5vw;
+.container:focus-within .clear-btn{
+  display: block;
 }
 
 .caret{
   cursor: pointer;
   color: #696969;
+  transition: transform 0.3s ease;
 }
 
 .caret:hover{
   color: #000;
+}
+
+.caret.open {
+  transform: rotate(180deg);
 }
 
 .options {
@@ -67,8 +65,8 @@
   gap: 1.5vw;
 }
 
-.option.selected {
-  background: rgb(7,73,115, .4);
+.selected {
+  background: rgba(7, 73, 115, 0.4) !important;
 }
 
 .option.highlighted {
@@ -82,7 +80,7 @@
   background: rgb(7,73,115, .35);
   padding: .1vw 1vw;
   cursor: pointer;
-  font-size: 1.2vw;
+  font-size: 1vw;
   font-weight: 400;
   display: flex;
   justify-content: center;
@@ -91,8 +89,8 @@
 }
 
 .option-badge svg{
-  width: 1.3vw;
-  height: 1.3vw;
+  width: 1.2vw;
+  height: 1.2vw;
   vertical-align: middle;
 }
 

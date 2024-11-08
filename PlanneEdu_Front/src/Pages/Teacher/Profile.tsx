@@ -2,7 +2,6 @@
 import { KeyRound, Mail, Phone } from "lucide-react";
 import Background from "../../assets/backgroundProfile.svg"
 
-import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 import "../../Css/Teacher/Profile.css"
 /* 'import { useState } from "react";' */
@@ -10,6 +9,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import React, { useState } from 'react';
+import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 
 /* Interface para o InputField */
 interface InputFieldProps {
@@ -45,10 +45,8 @@ export function ProfileTeacher() {
 
     return (
         <section className="profileTeacher">
-            <div className="navbar">
-                <NavBarProfessor />
-            </div>
-
+            <NavBarProfessor />
+            
             <div className="introProfile">
                 <h1>Perfil</h1>
                 <hr />

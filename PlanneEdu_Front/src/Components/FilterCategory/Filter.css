@@ -1,0 +1,31 @@
+.filterCheck{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemsCheck{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5%;
+  background-color: var(--white-one);
+  padding: 3rem 5rem;
+  gap: 2rem;
+  border-radius: .5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.categoriesCheck{
+  display: flex;
+  gap: 4rem;
+}
+
+.labelCheck{
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: 1.11rem;
+}

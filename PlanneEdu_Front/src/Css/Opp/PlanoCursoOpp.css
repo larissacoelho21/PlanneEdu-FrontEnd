@@ -26,6 +26,9 @@
 @media only screen and (max-width: 800px) {
   .introTeacher h2 {
     font-size: 3vw;
-    width: 60%;
   }
+
+  .Arrow svg {
+    width: 10vw;
+}
 }

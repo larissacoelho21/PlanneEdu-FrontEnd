@@ -2,6 +2,16 @@
   --blue1: #074973;
   --speed: 500ms;
 }
+.navbar-container {
+  display: none;
+}
+
+.hamburger-menu {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: none;
+}
 
 .navbarOne {
   height: 6vw;
@@ -23,10 +33,12 @@ a {
 link:active {
   color: #074973;
 }
-.left-side,
-.navbar-nav,
-.profile {
+
+.left-side {
   display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
 }
 /* estilizando imagem logo */
 
@@ -36,45 +48,64 @@ link:active {
   margin-left: 2vw;
 }
 
-/* estilizando lista */
-.navbar-link {
-  font-family: var(--font);
-  color: black;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  margin-left: 3vw;
-  margin-top: 2vw;
+/* estilizando logo do mobile  */
+.logoMobile img {
+  display: none;
 }
 
-.navbar-link:hover {
-  color: #074973;
+.menu-mobile {
+  display: none;
+}
+
+/* estilizando lista */
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+}
+
+.navbar-nav p {
+  font-family: var(--font);
+  color: black;
+  font-size: 1.3vw;
+}
+
+.navbar-link p:hover {
+  color: var(--blue1);
   font-weight: bold;
-  border-bottom: #074973 solid 2px;
+  border-bottom: var(--blue1) solid 2px;
   transition: 100ms ease-in-out;
   cursor: pointer;
 }
 
-.navbar-link.active {
-  color: #074973;
+.navbar-link.active p {
+  color: var(--blue1);
   font-weight: bold;
-  border-bottom: #074973 solid 2px;
+  border-bottom: var(--blue1) solid 2px;
   cursor: pointer;
 }
 
-.navbar-link.selected {
-  color: #074973;
+.navbar-link.selected p {
+  color: var(--blue1);
   font-weight: bold;
-  border-bottom: #074973 solid 2px;
+  border-bottom: var(--blue1) solid 2px;
   cursor: pointer;
 }
 
-/* estilizando o menu */
+.li-inicio .icon-dropdown,
+.li-inicio p {
+  display: flex;
+  align-items: center;
+}
+
+/* --------------------Menu Dropdown-------------------- */
 
 .dropdown-menu {
   position: absolute;
-  top: 5.5vw;
-  right: 26vw;
+  top: 6vw;
+  right: 23vw;
   background-color: #fff;
   padding: 1vw 1vw;
   width: 17vw;
@@ -117,17 +148,12 @@ link:active {
   padding: 0.2vw;
 }
 
-.dropdownItem .icon:hover,
-.dropdownItem .menu-a:hover {
-  color: #074973; /* cor quando o hover estiver ativo */
+
+.dropdownItem .menu-text:hover
+{
+  color: var(--blue1); /* cor quando o hover estiver ativo */
   cursor: pointer;
 }
-
-/* .dropdownItem  {
-    color: #074973;
-    transform: scale(1.05); /* aumenta o ícone um pouco ao passar o mouse 
-    transition: transform 0.3s ease-in-out, color 0.2s ease-in-out; /* efeito de transição suave 
-} */
 
 .dropdownItem .icon {
   max-width: 2vw;
@@ -138,7 +164,7 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownItem .menu-a {
+.dropdownItem .menu-text {
   font-size: 1.1vw;
   max-width: 15vw;
   color: #7f7f7f;
@@ -147,12 +173,12 @@ link:active {
   transition: var(--speed);
 }
 
-/* estilizando o segundo dropdwn */
+/* --------------------Dropdown Notificação-------------------- */
 
 .dropdown-notification {
   position: absolute;
   top: 5.5vw;
-  right: 6.4vw;
+  right: 3.5vw;
   background-color: #fff;
   padding: 1.2vw 1.2vw;
   width: 28vw;
@@ -207,12 +233,11 @@ link:active {
 }
 
 .link-bell .iconsBell,
-.profile .not-icons,
-.darkmodeIcon .not-icons {
+.profile .not-icons {
   width: 0 auto;
   height: 1.6vw;
-  margin-left: 1.5vw;
-  margin-right: 1.5vw;
+  margin-left: 0.8vw;
+  margin-right: 2.5vw;
   color: black;
 }
 
@@ -227,76 +252,213 @@ link:active {
 }
 
 .Icons {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-/* Dropdown Profile */
+/* --------------------Dropdown Perfil-------------------- */
+
 .dropdown-profile {
-    position: absolute;
-    top: 5.5vw;
-    right: 2vw;
-    background-color: #fff;
-    padding: 1.2vw 1.2vw;
-    width: 14vw;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px ;
+  position: absolute;
+  top: 5.5vw;
+  right: 1vw;
+  background-color: #fff;
+  padding: 1.2vw 1.2vw;
+  width: 13vw;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
-.dropdown-profile.activeOne{
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: var(--speed) ease;
+.dropdown-profile.activeOne {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
 }
 
-.dropdown-profile.inactiveOne{
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: var(--speed) ease;
+.dropdown-profile.inactiveOne {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
 }
 .dropdown-profile::before {
-    content: "";
-    position: absolute;
-    top: -2.5vw; /* Ajusta a seta acima do dropdown */
-    right: 3vw; /* Ajusta a posição horizontal da seta */
-    border-width: 1.5vw;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
-    z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
+  content: "";
+  position: absolute;
+  top: -2.5vw; /* Ajusta a seta acima do dropdown */
+  right: 0.7vw; /* Ajusta a posição horizontal da seta */
+  border-width: 1.5vw;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
+  z-index: 10; /* Certifica que a seta apareça sobre outros elementos */
 }
 
 .dropdown-profile .dropdownProfile:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
-    margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
 }
 
 .dropdownProfile {
-    display: flex;
-    align-items: center;  
-    padding: 0.2vw;  
+  display: flex;
+  align-items: center;
+  padding: 0.2vw;
 }
 
-.dropdownProfile .icon:hover, .dropdownProfile .menu-a:hover{
-    color: #074973; /* cor quando o hover estiver ativo */
-    cursor: pointer;
+.dropdownProfile .menu-text:hover {
+  color: #074973; /* cor quando o hover estiver ativo */
+  cursor: pointer;
 }
 
 .dropdownProfile .icon {
-    max-width: 2vw;
-    margin-right: 0.9vw;
-    margin-top: 0.6vw;
-    color: #7F7F7F;
-    align-self: center;
-    transition: var(--speed);
+  max-width: 2vw;
+  margin-right: 0.9vw;
+  margin-top: 0.6vw;
+  color: #7f7f7f;
+  align-self: center;
+  transition: var(--speed);
 }
 
-.dropdownProfile .menu-a {
-    font-size: 1.1vw;
-    max-width: 15vw;
-    color: #7F7F7F;
-    align-self: center;
+.dropdownProfile .menu-text {
+  font-size: 1vw;
+  max-width: 15vw;
+  color: #7f7f7f;
+  align-self: center;
+  margin: 0;
+  transition: var(--speed);
+}
+
+/* --------------------Versão Mobile-------------------- */
+@media only screen and (max-width: 800px) {
+  .navbarOne {
+    background-color: none;
+    box-shadow: none;
+    height: 10vw;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-mobile {
+    display: block;
+  }
+
+  .right-side {
+    display: block;
+  }
+
+  .nav-logo img {
+    display: none;
+  }
+
+  .right-side .logoMobile img {
+    display: block;
+    height: 8vw;
+    margin: 2vw 2vw 2vw 5vw;
+  }
+
+  .nav-list {
+    display: none;
+  }
+
+  .Icons {
+    display: flex;
+    align-items: center;
+    margin-top: 2vw;
+  }
+
+  .left-side {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 5vw;
+  }
+
+  .profile {
+    display: none;
+  }
+
+  .link-bell .iconsBell{
+    width: 0 auto;
+    height: 3.5vw;
+  }
+
+  .hamburger-menu .x-icon,
+  .hamburger-menu .hamburguer {
+    color: black;
+    margin-top: -0.5vw;
+  }
+
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+    margin-right: 5%;
+    width: 0 auto;
+    height: 2vw;
+  }
+
+  .menu {
+    position: absolute;
+    top: 10vw;
+    right: 0;
+    background-color: #f2f2f2; /* Fundo claro */
+    width: 100%;
+    padding: 2vw;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1;
+  }
+
+  .menu.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    transition: var(--speed);
+  }
+
+  .menu ul li {
+    margin: 2vw 0;
+  }
+
+  .dropdownMobile p:hover,
+  .dropdown-Mobile a:hover,
+  .dropdownProfileMob a:hover {
+    opacity: 80%;
+  }
+  .dropdownMobile p,
+  .menu li {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2rem; /* Tamanho do texto */
+  }
+
+  .dropdown-Mobile,
+  .dropdownProfileMob {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    transition: all 0.5s ease;
+  }
+
+  .dropdown-Mobile li a,
+  .dropdownProfileMob li a {
+    color: #333;
+    font-size: 1rem;
+    margin-left: 2vw;
+  }
+
+  .dropdown li {
+    margin: 5px 0;
+  }
+
+  .dropdownMobile p {
+    display: flex;
+    align-items: center;
+  }
 }

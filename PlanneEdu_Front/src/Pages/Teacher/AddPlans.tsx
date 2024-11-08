@@ -1,68 +1,376 @@
-/* importações dos icones, css e componentes */
+/* importações dos icones, bibliotecas, css e componentes */
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import { CodeXml } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { BookMarked } from "lucide-react";
-import { Plus } from "lucide-react";
-import { Check } from "lucide-react";
+import { PopUp } from "../../Components/PopUp/PopUp-v2";
+import {
+  CodeXml,
+  GraduationCap,
+  BookMarked,
+  Plus,
+  Check,
+  X,
+} from "lucide-react";
+import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
+import ReactInputMask from "react-input-mask";
+import { toast } from "sonner";
+import DatePicker from "react-multi-date-picker";
 import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
-import { useState } from "react";
 
-const options = [
-  { label: "First", value: 1 },
-  { label: "Second", value: 2 },
+/* definindo as opções que serão usadas no multiselect */
+const options: SelectOption[] = [
+  {
+    label:
+      "1. Identificar as características de programação backend em ambiente web",
+    value: 1,
+  },
+  {
+    label:
+      "1.1Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+    value: 2,
+  },
   { label: "Third", value: 3 },
   { label: "Fourth", value: 4 },
   { label: "Fifth", value: 5 },
 ];
 
-export function AddPlans() {
-  /* ======== configurações utilizadas no multiselect ======== */
-  const [value, setValue] = useState<SelectOption[]>([]);
-  const [value2, setValue2] = useState<SelectOption[]>([]);
-  const [value3, setValue3] = useState<SelectOption[]>([]);
-  const [value4, setValue4] = useState<SelectOption[]>([]);
-  const [value5, setValue5] = useState<SelectOption[]>([]);
-  const [value6, setValue6] = useState<SelectOption[]>([]);
+interface InputFieldProps {
+  id: string;
+  label: string;
+  type?: string;
+  value?: string | number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  maxValue?: number;
+}
 
-  /* ======== funções e configurações para a criação da tabela ======== */
+/* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
+function InputField({
+  id,
+  label,
+  type = "text",
+  value = "",
+  onChange,
+  onWheel,
+  maxLength,
+  maxValue,
+}: InputFieldProps) {
+  const [localValue, setLocalValue] = useState<string | number>(value);
+  /* verificando se o campo está preenchido para aplicar estilos ou animações (booleano) */
+  const [isFilled, setIsFilled] = useState(false);
+  useEffect(() => {
+    setIsFilled(localValue !== "");
+  }, [localValue]);
 
-  /* definindo a estrutura dos dados da tabela, todos os itens terão uma propriedade de texto (text) e seleção (selectedOption) */
-  type TableData = {
-    text: string;
-    selectedOption: string;
-  };
+  /* função para gerenciar a mudança de valor do input */
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue: string = event.target.value;
 
-  /* gerencia o valor inputado no input de texto */
-  const [textInput, setTextInput] = useState<string>("");
-  /* gerencia o valor inputado no select */
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  /* armazena os dados da tabela, é uma array de objetos*/
-  const [tableData, setTableData] = useState<TableData[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+    /* limita o comprimento do valor de entrada */
+    if (maxLength && inputValue.length > maxLength) {
+      /* corta o excedente */
+      inputValue = inputValue.slice(0, maxLength); 
+    }
 
-  /* array das opções presentes no select */
-  const selectOptions = ["C", "D"];
+    /* converte para número se o tipo do input for "number" */
+    if (type === "number") {
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
 
-  const addData = (event: React.FormEvent<HTMLButtonElement>) => {
-    if (textInput && selectedOption) {
-      const newData: TableData = {
-        text: textInput,
-        selectedOption: selectedOption,
-      };
-      setTableData([...tableData, newData]);
-      setTextInput("");
-      setSelectedOption("");
-      event.preventDefault();
+      /* verifica o valor máximo permitido */
+      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+        numericValue = maxValue;
+      }
+      
+      setLocalValue(numericValue);
+    } else {
+      setLocalValue(inputValue);
+    }
+
+    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
+    if (onChange) {
+      event.target.value = inputValue;
+      onChange(event);
     }
   };
 
-  /* ======== configurações para a criação do card referente ao planejamento de ensino ======== */
+  return (
+    <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
+      <label className="label-all" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        className="input-all"
+        id={id}
+        type={type}
+        value={localValue}
+        onChange={handleInputChange}
+        onWheel={onWheel}
+      />
+    </fieldset>
+  );
+}
+
+export function AddPlans() {
+  /* ======== declaração de estados dos popups ======== */
+  const [showPopUpPlan, setShowPopUpPlan] = useState(false);
+  const togglePopUpPlan = () => setShowPopUpPlan(!showPopUpPlan);
+
+  const [showPopUpClasses, setShowPopUpClasses] = useState(false);
+  const togglePopUpClasses = () => setShowPopUpClasses(!showPopUpClasses);
+
+  const [showPopUpStrategy, setShowPopUpStrategy] = useState(false);
+  const togglePopUpStrategy = () => setShowPopUpStrategy(!showPopUpStrategy);
+
+  const [strategyIdEdit, setStrategyIdEdit] = useState<number | null>(null);
+
+  const closePopup = () => {
+    setShowPopUpPlan(false);
+    setShowPopUpClasses(false);
+    setShowPopUpStrategy(false);
+    setEditingStrategyIndex(null);
+    setSelectedDates([]);
+    setCargaHoraria(null);
+    setValueConhecimentosStra([]);
+    setValueEstrategiasStra([]);
+    setValueRecursosStra([]);
+    setPerguntasMediadoras("");
+  };
+
+  /* ======== função para a remoção de itens com base em seu índice ======== */
+  /* "React.Dispatch<React.SetStateAction<any[]>>" => define o tipo de 'setData' como uma função que atualiza o estado de um array de qualquer tipo (any) */
+  const DeleteData = (
+    data: any[],
+    setData: React.Dispatch<React.SetStateAction<any[]>>,
+    index: number
+  ) => {
+    const updatedData = data.filter((_, i) => i !== index);
+    setData(updatedData);
+    toast.success("Deletado com sucesso!");
+  };
+
+  /* ======== funções e configurações referentes as estratégias ======== */
+  const [strategies, setStrategies] = useState<Strategy[]>([]);
+  /* armazena as datas escolhidas, é uma array/lista */
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  /* armazena a data inputada no momento */
+  const [dateInput, setDateInput] = useState("");
+  const [isDateSubmitted, setIsDateSubmitted] = useState(false);
+
+  const [cargaHoraria, setCargaHoraria] = useState<number | null>(null);
+  const [valueConhecimentosStra, setValueConhecimentosStra] = useState<
+    SelectOption[]
+  >([]);
+  const [valueEstrategiasStra, setValueEstrategiasStra] = useState<
+    SelectOption[]
+  >([]);
+  const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
+    []
+  );
+  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<SelectOption[]>(
+    []
+  );
+  const [valueCapSocioStra, setValueCapSocioStra] = useState<SelectOption[]>(
+    []
+  );
+  const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
+
+  /* definindo a estrutura do tipo dos dados */
+  type Strategy = {
+    dates: string[];
+    cargaHoraria: number | null;
+    conhecimentos: (string | number)[];
+    estrategias: (string | number)[];
+    recursos: (string | number)[];
+    perguntasMediadoras: string;
+  };
+
+  /* função para lidar com a mudança de dados no input de carga horária */
+  const handleCargaHorariaChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setCargaHoraria(value ? Number(value) : null);
+  };
+
+  const [editingStrategyIndex, setEditingStrategyIndex] = useState<
+    number | null
+  >(null);
+
+  /* função para iniciar a edição de uma estratégia */
+  const startEditingStra = (index: number, id: number) => {
+    const strategyToEdit = strategies[index];
+
+    console.log(id);
+
+    setStrategyIdEdit(id);
+
+    setEditingStrategyIndex(index);
+    setSelectedDates(strategyToEdit.dates);
+    setCargaHoraria(strategyToEdit.cargaHoraria);
+
+    /* preenche os selects de conhecimentos, estratégias e recursos com as opções anteriormente inputadas */
+    setValueConhecimentosStra(
+      strategyToEdit.conhecimentos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    setValueEstrategiasStra(
+      strategyToEdit.estrategias
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    setValueRecursosStra(
+      strategyToEdit.recursos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setPerguntasMediadoras(strategyToEdit.perguntasMediadoras);
+
+    togglePopUpStrategy();
+  };
+
+  /* função para salvar a edição da estratégia*/
+  const editStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
+
+    /* analisa se todos os campos necessários estão preenchidos */
+    if (
+      selectedDates.length === 0 ||
+      cargaHoraria === null ||
+      valueConhecimentosStra.length === 0 ||
+      valueEstrategiasStra.length === 0 ||
+      valueRecursosStra.length === 0 ||
+      !perguntasMediadoras.trim()
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
+    /* cria a estratégia atualizada com os dados do formulário */
+    const updatedStrategy = {
+      dates: selectedDates,
+      cargaHoraria: Number(cargaHoraria),
+      conhecimentos: valueConhecimentosStra.map((item) => item.value),
+      estrategias: valueEstrategiasStra.map((item) => item.value),
+      recursos: valueRecursosStra.map((item) => item.value),
+      perguntasMediadoras,
+    };
+
+    /* verifica se o índice de edição não é nulo */
+    if (editingStrategyIndex !== null) {
+      /* atualiza a estratégia no índice correspondente */
+      const updatedStrategies = [...strategies];
+      updatedStrategies[editingStrategyIndex] = updatedStrategy;
+
+      /* atualiza com os novos dados */
+      setStrategies(updatedStrategies);
+
+      /* reseta os valores dos campos */
+      setSelectedDates([]);
+      setCargaHoraria(null);
+      setValueConhecimentosStra([]);
+      setValueEstrategiasStra([]);
+      setValueRecursosStra([]);
+      setPerguntasMediadoras("");
+
+      toast.success("Estratégia editada com sucesso!");
+      setEditingStrategyIndex(null);
+      togglePopUpStrategy();
+    }
+  };
+
+  const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
+
+    /* verificando se todos os campos necessários estão preenchidos */
+    if (
+      selectedDates.length === 0 ||
+      cargaHoraria === null ||
+      valueConhecimentosStra.length === 0 ||
+      valueEstrategiasStra.length === 0 ||
+      valueRecursosStra.length === 0 ||
+      !perguntasMediadoras.trim()
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
+    const newStrategy: Strategy = {
+      dates: selectedDates,
+      cargaHoraria,
+      conhecimentos: valueConhecimentosStra.map(
+        (conhecimento) => conhecimento.value
+      ),
+      estrategias: valueEstrategiasStra.map((estrategia) => estrategia.value),
+      recursos: valueRecursosStra.map((recurso) => recurso.value),
+      perguntasMediadoras,
+    };
+
+    setStrategies([...strategies, newStrategy]);
+
+    setSelectedDates([]);
+    setCargaHoraria(null);
+    setValueConhecimentosStra([]);
+    setValueEstrategiasStra([]);
+    setValueRecursosStra([]);
+    setPerguntasMediadoras("");
+
+    toast.success("Estratégia criada com sucesso!");
+    togglePopUpStrategy();
+  };
+
+  type LabelMap = {
+    [key: string]: string;
+  };
+
+  const labelMap: LabelMap = options.reduce((acc: LabelMap, option) => {
+    acc[option.value] = option.label;
+    return acc;
+  }, {} as LabelMap);
+
+  /* ======== fuções e configurações do planejamento de aulas ======== */
+  /* definindo a estrutura genérica de itens complexos */
+  type itemComplex = {
+    label: string;
+    value: number;
+  };
+
+  /* tipificando cada categoria */
+  type conhecimentos = itemComplex;
+  type estrategias = itemComplex;
+  type recursos = itemComplex;
+
+  /* definindo a estrutura do card */
+  type cardPlan = {
+    dataInicial: string;
+    dataFinal: string;
+    conhecimentos: (string | number)[];
+    estrategias: (string | number)[];
+    recursos: (string | number)[];
+  };
+
+  /* configurações para a criação do card referente ao planejamento */
   interface Plans {
     dateInicial: string;
     dateFinal: string;
@@ -71,62 +379,187 @@ export function AddPlans() {
     recursos: (string | number)[];
   }
 
+  /* armazena os dados referente ao planejamento, é uma array */
   const [plans, setPlans] = useState<Plans[]>([]);
-  const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>([]);
+  /* gerencia os valores inputados para cada categoria */
+  const [valueConhecimentos, setValueConhecimentos] = useState<SelectOption[]>(
+    []
+  );
   const [valueEstrategias, setValueEstrategias] = useState<SelectOption[]>([]);
   const [valueRecursos, setValueRecursos] = useState<SelectOption[]>([]);
 
-  const createPlans = () => {
+  /* estado para armazenar datas */
+  const [dateInicial, setDateInicial] = useState<string>("");
+  const [dateFinal, setDateFinal] = useState<string>("");
+
+  /* funções referentes as datas utilizadas na aplicação */
+  /* ======== formatação e validação das datas ======== */
+  const convertToISO = (dateString: string) => {
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
+  const validateDates = (startISO: string, endISO: string) => {
+    const start = new Date(startISO);
+    const end = new Date(endISO);
+
+    if (end < start) {
+      toast.error(
+        "A data final não pode ser menor que a data inicial! Tente novamente com uma data válida."
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const createPlans = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    /* converte para o formato ISO */
+    const startDateISO = convertToISO(dateInicial);
+    const endDateISO = convertToISO(dateFinal);
+
+    /* verificando se as datas estão no formato adequado */
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
+    }
+
+    if (!validateDates(startDateISO, endDateISO)) {
+      return;
+    }
+
+    /* garantindo que todos os campos foram preenchidos */
+    if (
+      valueConhecimentos.length === 0 ||
+      valueEstrategias.length === 0 ||
+      valueRecursos.length === 0
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
     const newPlan: Plans = {
-      dateInicial: (document.getElementById("data-proposta") as HTMLInputElement).value,
-      dateFinal: (document.getElementById("data-final") as HTMLInputElement).value,
-      conhecimentos: valueConhecimentos.map((conhecimento) => conhecimento.value),
+      dateInicial: dateInicial,
+      dateFinal: dateFinal,
+      conhecimentos: valueConhecimentos.map(
+        (conhecimento) => conhecimento.value
+      ),
       estrategias: valueEstrategias.map((estrategia) => estrategia.value),
       recursos: valueRecursos.map((recurso) => recurso.value),
     };
 
     setPlans([...plans, newPlan]);
-    setShowPopUpPlan(false);
+    /* resetar as informações dos selects */
+    setValueConhecimentos([]);
+    setValueEstrategias([]);
+    setValueRecursos([]);
+    setDateInicial("");
+    setDateFinal("");
+
+    toast.success("Planejamento adicionado com sucesso!");
+    togglePopUpPlan();
   };
 
-  const SaveEdit = (event: React.FormEvent<HTMLButtonElement>) => {
-    if (editingIndex !== null) {
-      const updatedData = [...tableData];
-      updatedData[editingIndex] = {
-        text: textInput,
-        selectedOption: selectedOption,
-      };
-      setTableData(updatedData);
-      setIsEditing(false);
-      setTextInput("");
-      setSelectedOption("");
-      setEditingIndex(null);
-      setShowPopUpEdit(false);
-      event.preventDefault();
+  /* configurações e função para editar os dados referente ao planejamento de aulas */
+  /* estado para rastrear o índice do plano que está sendo editado */
+  const [editingPlanIndex, setEditingPlanIndex] = useState<number | null>(null);
+
+  /* início do processo de edição, preenchimento do formulário com os dados do plano existente e marcando o índice do plano que está sendo editado. */
+  const startEditingPlan = (index: number) => {
+    const planToEdit = plans[index];
+
+    setEditingPlanIndex(index);
+    setDateInicial(planToEdit.dateInicial);
+    setDateFinal(planToEdit.dateFinal);
+
+    /* preenche os selects com as opções anteriormente inputadas */
+    setValueConhecimentos(
+      planToEdit.conhecimentos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setValueEstrategias(
+      planToEdit.estrategias
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setValueRecursos(
+      planToEdit.recursos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    togglePopUpClasses();
+  };
+
+  /* conclusão do processo de edição, salvando as alterações feitas no plano e atualizando o estado com os novos dados */
+  const editPlans = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const startDateISO = convertToISO(dateInicial);
+    const endDateISO = convertToISO(dateFinal);
+
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
     }
-  };
 
-  const DeleteData = (index: number) => {
-    const updatedData = tableData.filter((_, i) => i !== index);
-    setTableData(updatedData);
-  };
+    if (!validateDates(startDateISO, endDateISO)) {
+      return;
+    }
 
-  const [showPopUpEdit, setShowPopUpEdit] = useState(false);
-  const togglePopUpEdit = () => {
-    setShowPopUpEdit(!showPopUpEdit);
-  };
+    /* verifique se todos os campos estão preenchidos */
+    if (
+      valueConhecimentos.length === 0 ||
+      valueEstrategias.length === 0 ||
+      valueRecursos.length === 0
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
 
-  const [showPopUpPlan, setShowPopUpPlan] = useState(false);
-  const togglePopUpPlan = () => {
-    setShowPopUpPlan(!showPopUpPlan);
+    /* cria um novo plano usando a lógica existente */
+    const updatedPlan: Plans = {
+      dateInicial: dateInicial,
+      dateFinal: dateFinal,
+      conhecimentos: valueConhecimentos.map(
+        (conhecimento) => conhecimento.value
+      ),
+      estrategias: valueEstrategias.map((estrategia) => estrategia.value),
+      recursos: valueRecursos.map((recurso) => recurso.value),
+    };
+
+    /* verifica se o índice de edição não é nulo */
+    if (editingPlanIndex !== null) {
+      /* atualiza o plano na posição correspondente */
+      const updatedPlans = [...plans];
+      updatedPlans[editingPlanIndex] = updatedPlan;
+
+      /* atualiza o estado com os novos planos */
+      setPlans(updatedPlans);
+    } else {
+      toast.error("Erro: índice de edição não encontrado.");
+      return;
+    }
+
+    /* reseta os valores dos selects e das datas */
+    setValueConhecimentos([]);
+    setValueEstrategias([]);
+    setValueRecursos([]);
+    setDateInicial("");
+    setDateFinal("");
+
+    toast.success("Planejamento editado com sucesso!");
+    togglePopUpClasses();
   };
 
   /* ======== layout e estrutura da página ======== */
-
   return (
     <main>
       <SubNavbar />
-      <div className="card-info-disc">
+      <div className="info-course">
         <h2>Programação WEB Front-End</h2>
 
         <div className="tag-course">
@@ -145,325 +578,475 @@ export function AddPlans() {
           </div>
         </div>
       </div>
-
       <form className="form">
-        <div className="inputt">
-          <label>Nome</label>
-          <input type="text" name="name" id="name" />
-        </div>
-        <div className="inputt">
-          <label>Unidade Curricular</label>
-          <input type="text" name="uc" id="uc" />
-        </div>
-        <div className="inputt">
-          <label>Docente</label>
-          <input type="text" name="docent" id="docent" />
-        </div>
-        <div className="row">
-          <div className="inputt">
-            <label>Carga Horária</label>
-            <input type="number" name="horas" id="horas" />
-          </div>
-          <div className="inputt">
-            <label>Quantidade de Aulas</label>
-            <input type="number" name="aulas" id="aulas" />
-          </div>
-          <div className="inputt">
-            <label>Semestre</label>
-            <input type="number" name="semestre" id="semestre" />
-          </div>
-          <div className="inputt">
-            <label>Ano</label>
-            <input type="number" name="ano" id="ano" />
-          </div>
-        </div>
-        <div className="inputt">
-          <label>Descrição da Unidade de Competência</label>
-          <input type="text" name="desc-uc" id="desc-uc" />
-        </div>
-        <div className="inputt">
-          <label>Objetivo da Unidade Curricular</label>
-          <input type="text" name="obj-uc" id="obj-uc" />
-        </div>
-        <div className="inputt">
-          <label>Turma</label>
-          <input type="text" name="turma" id="turma" />
+        <div className="input-field">
+          <InputField label="Curso" type="text" id="course" />
         </div>
 
-        <h3 className="title-section">
-          Estratégias para o desenvolvimento da situação de aprendizagem e
-          planejamento da intervenção mediadora
-        </h3>
+        <div className="input-field">
+          <InputField label="Unidade Curricular" type="text" id="uc" />
+        </div>
 
-        <div className="row">
-          <div className="inputt">
-            <label>Data</label>
-            <input type="date" name="horas" id="horas" />
-          </div>
-          <div className="inputt">
-            <label>Carga Horária</label>
-            <input type="number" name="hrs" id="hrs" />
-          </div>
+        <div className="input-field">
+          <label className="label">Docente</label>
+          <select name="docent">
+            <option value="" disabled selected></option>
+            <option value="Arthur">Arthur</option>
+            <option value="Giovani">Giovani</option>
+            <option value="Samuel">Samuel</option>
+          </select>
         </div>
 
         <div className="row">
-          <div className="captecsocio">
-            <label>Capacidades Técnicas e Socioemocionais</label>
-            <Multiselect
-              options={options}
-              value={value}
-              onChange={(o) => setValue(o)}
-              multiple={true}
+          <div className="input-field">
+            <InputField
+              label="Carga Horária"
+              type="number"
+              id="carg-h"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
             />
           </div>
-          <div className="caprelacionadas">
-            <label>Capacidades Relacionadas</label>
-            <Multiselect
-              options={options}
-              value={value2}
-              onChange={(o) => setValue2(o)}
-              multiple={true}
+
+          <div className="input-field">
+            <InputField
+              label="Quantidade de Aulas"
+              type="number"
+              id="qtd-aulas"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
+            />
+          </div>
+
+          <div className="input-field">
+            <InputField
+              label="Semestre"
+              type="number"
+              id="semestre"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={1}
+            />
+          </div>
+
+          <div className="input-field">
+            <InputField
+              label="Ano"
+              type="number"
+              id="ano"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={4}
             />
           </div>
         </div>
 
-        <div className="row">
-          <div className="estra-ensino">
-            <label>Estratégias de ensino</label>
-            <Multiselect
-              options={options}
-              value={value3}
-              onChange={(o) => setValue3(o)}
-              multiple={true}
-            />
-          </div>
-          <div className="recur-amb">
-            <label>Recursos e Ambientes Pedagógicos</label>
-            <Multiselect
-              options={options}
-              value={value4}
-              onChange={(o) => setValue4(o)}
-              multiple={true}
-            />
-          </div>
+        <div className="input-field">
+          <InputField
+            label="Descrição da Unidade de Competência"
+            type="text"
+            id="desc-uc"
+          />
         </div>
 
-        <div className="inputt">
-          <label>Perguntas Mediadoras</label>
-          <input type="text" name="pergmedia" id="pergmedia" />
+        <div className="input-field">
+          <InputField
+            label="Objetivo da Unidade Curricular"
+            type="text"
+            id="obj-uc"
+          />
         </div>
 
-        <h3 className="title-section">
-          Estratégias de avaliação de aprendizagem
-        </h3>
-
-        <div className="inputt">
-          <label>Instrumentos de Avaliação</label>
-          <input type="text" name="inst-avalia" id="inst-avalia" />
+        <div className="input-field">
+          <InputField label="Turma" type="text" id="turma" />
         </div>
 
-        <div className="criterios">
-          <div className="inputt">
-            <label>Critérios de avaliação</label>
-            <input
-              type="text"
-              name="crit-avalia"
-              id="crit-avalia"
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-            />
-          </div>
-          <div className="inputt">
-            <label>Crítico (C) ou Desejável (D)</label>
-            <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-            >
-              <option value="" disabled></option>
-              {selectOptions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+        <div className="estrategias">
+          <h3 className="title-section">
+            Estratégias para o desenvolvimento da situação de aprendizagem e
+            planejamento da intervenção mediadora
+          </h3>
+
+          <div className="capacidades">
+            <div className="tecnicas">
+              <label>Capacidades Técnicas</label>
+              <Multiselect
+                options={options}
+                value={valueCapTecnicasStra}
+                onChange={setValueCapTecnicasStra}
+                multiple
+              />
+            </div>
+            <div className="socioemocionais">
+              <label>Capacidades Socioemocionais</label>
+              <Multiselect
+                options={options}
+                value={valueCapSocioStra}
+                onChange={setValueCapSocioStra}
+                multiple
+              />
+            </div>
           </div>
 
-          <button className="add-btn" onClick={addData}>
-            Adicionar à Tabela
+          <label>Estratégias</label>
+          <button
+            className="add-card"
+            onClick={(event) => {
+              togglePopUpStrategy();
+              event.preventDefault();
+            }}
+          >
+            <Plus width={40} height={40} strokeWidth={1.5} />
           </button>
 
-          <table className="table-criterios">
-            <thead>
-              <tr>
-                <th>Critérios de avaliação</th>
-                <th>Crítico (C) e Desejável (D)</th>
-                <th>Editar</th>
-                <th>Deletar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.text}</td>
-                  <td>{data.selectedOption}</td>
-                  <td>
-                    <button
-                      className="action-btn"
-                      onClick={(event) => {
-                        setEditingIndex(index);
-                        setTextInput(data.text);
-                        setSelectedOption(data.selectedOption);
-                        setShowPopUpEdit(true);
-                        event.preventDefault();
+          {showPopUpStrategy && (
+            <PopUp
+              title="Criar estratégia"
+              subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
+              onClose={closePopup}
+            >
+              <div className="pop-body">
+                <div className="dates-add">
+                  <div className="input-field">
+                    <label className="label">Datas</label>
+                    <DatePicker
+                      multiple
+                      value={selectedDates}
+                      onChange={(dates) =>
+                        setSelectedDates(
+                          dates.map((date) => date.format("DD/MM/YYYY"))
+                        )
+                      }
+                      format="DD/MM/YYYY"
+                      id="datas-input"
+                      style={{
+                        borderRadius: "0px",
+                        width: "100%",
                       }}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="action-btn"
-                      onClick={() => DeleteData(index)}
-                    >
-                      Deletar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {showPopUpEdit && (
-            <div className="popup-overlay">
-              <div className="popup-edit">
-                <h2>Editar</h2>
-                <form action="">
-                  <div className="inputt">
-                    <label>Critérios de avaliação</label>
-                    <input
-                      type="text"
-                      value={textInput}
-                      onChange={(e) => setTextInput(e.target.value)}
                     />
                   </div>
-                  <div className="select-pop">
-                    <label>Crítico (C) ou Desejável (D)</label>
-                    <select
-                      value={selectedOption}
-                      onChange={(e) => setSelectedOption(e.target.value)}
-                    >
-                      <option value="C">Crítico (C)</option>
-                      <option value="D">Desejável (D)</option>
-                    </select>
+                </div>
+
+                <div className="input-field">
+                  <InputField
+                    type="number"
+                    label="Carga Horária"
+                    id="carga-h"
+                    value={cargaHoraria !== null ? cargaHoraria : ""}
+                    onChange={handleCargaHorariaChange}
+                    onWheel={(event) => event.currentTarget.blur()}
+                    maxLength={3}
+                  />
+                </div>
+
+                <div className="multiselects">
+                  <div className="multi-conherel">
+                    <label className="label">Conhecimentos Relacionados</label>
+                    <Multiselect
+                      options={options}
+                      value={valueConhecimentosStra}
+                      onChange={setValueConhecimentosStra}
+                      multiple
+                    />
                   </div>
-                  <div className="edit-btns">
-                    <button onClick={SaveEdit}>Salvar alterações</button>
-                    <button onClick={() => setShowPopUpEdit(false)}>
-                      Cancelar
-                    </button>
+
+                  <div className="multi-estra">
+                    <label className="label">Estratégias de Ensino</label>
+                    <Multiselect
+                      options={options}
+                      value={valueEstrategiasStra}
+                      onChange={setValueEstrategiasStra}
+                      multiple
+                    />
                   </div>
-                </form>
+
+                  <div className="multi-recNam">
+                    <label className="label">
+                      Recursos e Ambientes Pedagógicos
+                    </label>
+                    <Multiselect
+                      options={options}
+                      value={valueRecursosStra}
+                      onChange={setValueRecursosStra}
+                      multiple
+                    />
+                  </div>
+                </div>
+
+                <div className="input-field">
+                  <InputField
+                    type="text"
+                    label="Perguntas Mediadoras"
+                    id="perg-medi"
+                    value={perguntasMediadoras}
+                    onChange={(e) => setPerguntasMediadoras(e.target.value)}
+                  />
+                </div>
+
+                <div className="popup-btns">
+                  <button
+                    onClick={(event) => {
+                      if (editingStrategyIndex !== null) {
+                        editStrategy(event);
+                      } else {
+                        createStrategy(event);
+                      }
+                    }}
+                  >
+                    {editingStrategyIndex !== null ? "Salvar" : "Criar"}
+                  </button>
+
+                  <button onClick={closePopup}>Cancelar</button>
+                </div>
+              </div>
+            </PopUp>
+          )}
+
+          {strategies.map((strategy, index) => (
+            <div className="card-info">
+              <div className="title-card">
+                <h1>{strategy.perguntasMediadoras}</h1>
+              </div>
+              <div className="tag-card">
+                <p>Carga Horária: {strategy.cargaHoraria}</p>
+              </div>
+              <div className="selections">
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Datas:</span>{" "}
+                  {strategy.dates.join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {strategy.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {strategy.estrategias
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {strategy.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
+              </div>
+              <div className="card-btns">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    startEditingStra(index, index);
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    DeleteData(strategies, setStrategies, index);
+                  }}
+                >
+                  Deletar
+                </button>
               </div>
             </div>
-          )}
+          ))}
         </div>
 
         <div className="planneraulas">
           <h3 className="title-section">Planejamento de aulas</h3>
           <label>Datas e conhecimentos abordados</label>
           <button
-            className="add-plan"
+            className="add-card"
             onClick={(event) => {
-              setShowPopUpPlan(true);
+              togglePopUpPlan();
               event.preventDefault();
             }}
           >
-            <Plus width={25} height={25} strokeWidth={2} />
+            <Plus width={40} height={40} strokeWidth={1.5} />
           </button>
 
-          {plans.map((plans) => (
+          {plans.map((plan, index) => (
             <div className="card-info">
-            <div className="date-plan">
-              <h1>De {plans.dateInicial} até {plans.dateFinal}</h1>
+              <div className="title-card">
+                <h1>
+                  {plan.dateInicial} — {plan.dateFinal}
+                </h1>
+              </div>
+              <div className="selections">
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {plan.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {plan.estrategias.map((value) => labelMap[value]).join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {plan.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
+              </div>
+              <div className="card-btns">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    startEditingPlan(index);
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    DeleteData(plans, setPlans, index);
+                  }}
+                >
+                  Deletar
+                </button>
+              </div>
             </div>
-            <div className="selections">
-              <p>Conhecimentos: {plans.conhecimentos.join(", ")}</p>
-              <p>Estratégias: {plans.estrategias.join(", ")}</p>
-              <p>Recursos: {plans.recursos.join(", ")}</p>
-            </div>
-          </div>
-          ))
-          }
-          
+          ))}
 
           {showPopUpPlan && (
-            <div className="popup-overlay">
-              <div className="popup-plan">
-                <h2>Planejamento de aulas</h2>
-                <h3>
-                  Descreva o conteúdo das aulas e selecione os conhecimentos,
-                  recursos e estratégias a serem desenvolvidas.
-                </h3>
-                <div className="dates">
-                  <div className="proposta">
+            <PopUp
+              onClose={closePopup}
+              title="Planejamento de aulas"
+              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
+            >
+              <div className="pop-body">
+                <div className="datess">
+                  <div className="data-prop">
                     <label>Data proposta</label>
-                    <input type="date" name="" id="data-proposta" />
+                    <ReactInputMask
+                      className="input-all"
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateInicial}
+                      onChange={(e) => setDateInicial(e.target.value)}
+                    />
                   </div>
-                  <div className="final">
+                  <div className="data-fin">
                     <label>Data final</label>
-                    <input type="date" name="" id="data-final" />
+                    <ReactInputMask
+                      className="input-all"
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateFinal}
+                      onChange={(e) => setDateFinal(e.target.value)}
+                    />
                   </div>
                 </div>
-                <div className="conhecimentos">
+                <div className="multiselects">
+                  <div className="multi-conhe">
+                    <label>Conhecimentos</label>
+                    <Multiselect
+                      options={options}
+                      value={valueConhecimentos}
+                      onChange={setValueConhecimentos}
+                      multiple
+                    />
+                  </div>
+                  <div className="multi-estra">
+                    <label>Estratégias</label>
+                    <Multiselect
+                      options={options}
+                      value={valueEstrategias}
+                      onChange={setValueEstrategias}
+                      multiple
+                    />
+                  </div>
+                  <div className="multi-rec">
+                    <label>Recursos</label>
+                    <Multiselect
+                      options={options}
+                      value={valueRecursos}
+                      onChange={setValueRecursos}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="popup-btns">
+                  <button onClick={createPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpPlan()}>Cancelar</button>
+                </div>
+              </div>
+            </PopUp>
+          )}
+
+          {showPopUpClasses && (
+            <PopUp
+              onClose={closePopup}
+              title="Editar"
+              subtitle="Edite as informações referente ao planejamento de aula"
+            >
+              <div className="pop-body">
+                <div className="datess">
+                  <div className="data-prop">
+                    <label>Data proposta</label>
+                    <ReactInputMask
+                      className="input-all"
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateInicial}
+                      onChange={(e) => setDateInicial(e.target.value)}
+                    />
+                  </div>
+                  <div className="data-fin">
+                    <label>Data final</label>
+                    <ReactInputMask
+                      className="input-all"
+                      type="text"
+                      mask="99/99/9999"
+                      value={dateFinal}
+                      onChange={(e) => setDateFinal(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="multiselects">
                   <label>Conhecimentos</label>
                   <Multiselect
                     options={options}
                     value={valueConhecimentos}
-                    onChange={(o) => setValueConhecimentos(o)}
-                    multiple={true}
+                    onChange={setValueConhecimentos}
+                    multiple
                   />
-                </div>
 
-                <div className="estrategias">
                   <label>Estratégias</label>
                   <Multiselect
                     options={options}
                     value={valueEstrategias}
-                    onChange={(o) => setValueEstrategias(o)}
-                    multiple={true}
+                    onChange={setValueEstrategias}
+                    multiple
                   />
-                </div>
 
-                <div className="recursos">
                   <label>Recursos</label>
                   <Multiselect
                     options={options}
                     value={valueRecursos}
-                    onChange={(o) => setValueRecursos(o)}
-                    multiple={true}
+                    onChange={setValueRecursos}
+                    multiple
                   />
                 </div>
-                <div className="edit-btns">
-                  <button onClick={createPlans}>
-                    Salvar
-                  </button>
-                  <button onClick={() => setShowPopUpPlan(false)}>
-                    Cancelar
-                  </button>
+
+                <div className="popup-btns">
+                  <button onClick={editPlans}>Salvar</button>
+                  <button onClick={() => togglePopUpClasses()}>Cancelar</button>
                 </div>
               </div>
-            </div>
+            </PopUp>
           )}
         </div>
+        <div className="form-actions">
+          <button className="save">
+            <Check />
+            Salvar alterações
+          </button>
+          <button>Cancelar</button>
+        </div>
       </form>
-
-      <div className="form-actions">
-        <button className="save">
-          <Check />
-          Salvar alterações
-        </button>
-        <button>Cancelar</button>
-      </div>
     </main>
   );
 }

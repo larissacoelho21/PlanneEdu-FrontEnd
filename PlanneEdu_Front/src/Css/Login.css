@@ -6,8 +6,8 @@ body {
 
 .back {
   position: fixed;
-  width: 60%;
-  height: 100%;
+  width: auto;
+  height: 46vw;
   object-fit: cover; /* Ajusta a imagem para preencher o container */
 }
 
@@ -67,9 +67,9 @@ body {
   background-color: rgba(217, 217, 217, 0);
   margin-bottom: 3%;
   padding: 2vw;
-  width: 36vw;
+  width: 36.5vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  border: rgba(1, 18, 38, 50%) solid 0.11vw;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +80,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  border: rgba(1, 18, 38, 50%) solid 0.11vw;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
@@ -107,14 +107,14 @@ body {
 textarea:focus,
 input:focus,
 select:focus {
-  border: rgba(1, 18, 38, 80%) solid 1.3px;
+  border: rgba(1, 18, 38, 80%) solid 0.2vw;
   outline: none;
 }
 
 .password a {
   text-decoration: none;
   font-size: 1vw;
-  margin-left: 18vw;
+  margin-left: 19.2vw;
   color: #074973;
 }
 
@@ -148,4 +148,146 @@ select:focus {
 .verification::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.login-mobile {
+  display: none !important;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .text {
+    display: none !important;
+  }
+  .logo {
+    display: none !important;
+  }
+  .images {
+    display: none;
+  }
+
+  .right-side {
+    display: none;
+  }
+
+  .login-mobile {
+    display: block !important;
+  }
+
+  .login-img {
+    position: absolute;
+  }
+
+  #forma {
+    width: 99vw;
+  }
+
+  .login-logo {
+    position: absolute;
+  }
+
+  .login-logo > img {
+    width: 8vw;
+    margin-left: 85vw;
+    margin-top: 8vw;
+  }
+
+  .login-info {
+    position: absolute;
+    color: white;
+    margin-top: 28vw;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15vw;
+  }
+
+  .login-info h1 {
+    font-size: 5vw;
+  }
+
+  .login-info p {
+    font-size: 3.5vw;
+  }
+
+  .bottom {
+    position: absolute;
+    margin-top: 85vw;
+    margin-left: 8.5vw;
+  }
+
+  .input-login {
+    background-color: rgba(217, 217, 217, 0);
+    margin-bottom: 4vw;
+    padding: 4vw;
+    width: 80vw;
+    height: 12vw;
+    border: rgba(1, 18, 38, 50%) solid 0.2vw;
+    border-radius: 2vw;
+    font-size: 3.5vw;
+  }
+
+  .inputLogin {
+    display: flex;
+    width: 80vw;
+    height: 12vw;
+    justify-content: space-between;
+    border: rgba(1, 18, 38, 50%) solid 0.2vw;
+    padding: 2.15vw;
+    border-radius: 2vw;
+    font-size: 3.5vw;
+    color: #000;
+    margin-bottom: 1vw;
+  }
+
+  .inputLogin input {
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    font-size: 3.5vw;
+    margin-left: 1.7vw;
+    color: #000;
+  }
+
+  .inputLogin button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: #000;
+    opacity: 50%;
+  }
+
+  label .input-password::placeholder {
+    color: black; /* Define a cor preta para o placeholder */
+    opacity: 50%; /* Garante que o placeholder fique totalmente opaco */
+    font-size: 3.5vw;
+  }
+
+  .password a {
+    text-decoration: none;
+    font-size: 3vw;
+    margin-left: 30vw;
+    color: #074973;
+  }
+
+  .button-login button {
+    background-color: #074973;
+    border: none;
+    margin-top: 5vw;
+    border-radius: 2vw;
+    font-size: 4.5vw;
+    font-weight: 300;
+    width: 30vw;
+    height: 10vw;
+    font-family: "Poppins", system-ui;
+    color: #f2f2f2;
+    cursor: pointer;
+  }
+
+  .button-login {
+    text-align: center;
+    margin-bottom: 10vw;
+  }
 }

@@ -1,0 +1,176 @@
+.intro, .AddInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw 0;
+}
+
+.intro h1 {
+  font-weight: 700;
+  font-size: 2.2vw;
+  color: #074973;
+}
+
+.intro h2{
+  font-weight: 500;
+  font-size: 1.7vw;
+}
+
+.form-course {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+  gap: 1vw;
+  padding: 5vw 5vw;
+  margin: 3% auto;
+  width: 90vw;
+  border-radius: 1vw;
+  background: #fff;
+  box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
+}
+
+.form-course .input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.form-course label{
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.Fieldset {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 1.5vw 0;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.Fieldset.filled .label-course,
+.input-course:focus + .label-course {
+  transform: translateY(-1.5vw);
+  font-size: 1vw;
+  opacity: 1;
+}
+
+.label-course {
+  position: absolute;
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: right;
+  transition: all 0.2s ease;
+}
+
+.input-course{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2vw;
+  border: none;
+  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
+  margin-top: 0.5vw;
+  margin-bottom: 1vw;
+}
+
+.input-course:focus {
+  outline: none; 
+  box-shadow: none; 
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: var(--gray-one) solid 2px;
+}
+
+.input-row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-row .input-f{
+  width: 45%;
+}
+
+.grade-curricular h2{
+  text-align: center;
+  font-weight: 500;
+}
+
+.semestres{
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
+.semestre{
+  display: flex;
+  flex-direction: column;
+  gap: .5vw;
+}
+
+.semestres h3{
+  font-size: 1.35vw;
+  font-weight: 600;
+}
+
+.add-btn button{
+  width: 4vw;
+  height: 4vw;
+  background: #07678d;
+  border: 3px solid #07678d;
+  border-radius: .3vw;
+  color: #fff;
+  transition: ease-in-out .3s;
+}
+
+.add-btn button svg{
+  display: flex;
+  margin: 0 auto;
+}
+
+.add-btn button:hover{
+  width: 4vw;
+  height: 4vw;
+  background: #fff;
+  border: 3px solid #07678d;
+  border-radius: .3vw;
+  color: #07678d;
+}
+
+.actions-btns{
+  display: flex;
+  gap: 3vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions-btns button{
+  background: #07678d;
+  color: #fff;
+  font-size: 1vw;
+  padding: 1vw 4vw;
+  border: 3px solid #07678d;
+  border-radius: .3vw;
+  transition: ease-in-out .2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+}
+
+.actions-btns button:hover{
+  background: #fff;
+  color: #07678d;
+  font-size: 1vw;
+  padding: 1vw 4vw;
+  border: 3px solid #07678d;
+  border-radius: .3vw;
+}

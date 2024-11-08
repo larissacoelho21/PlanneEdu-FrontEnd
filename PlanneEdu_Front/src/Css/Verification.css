@@ -119,3 +119,112 @@ select:focus,
 .input-password:focus {
   border: none;
 }
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .verification-img {
+    margin-top: -1vw;
+    position: absolute;
+  }
+
+  .veri-logo > img {
+    width: 18vw;
+    margin-left: 80vw;
+    margin-top: 2vw;
+  }
+
+  .input-vali {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+    position: absolute;
+    margin-top: 40vw;
+    margin-left: 10%;
+  }
+
+  .inputVali {
+    display: flex;
+    justify-content: space-between;
+    border: rgb(255, 255, 255) solid 0.3vw;
+    padding: 1.2vw 2vw;
+    border-radius: 2vw;
+    width: 80vw;
+    height: 12vw;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 5vw;
+  }
+
+  .input-password1::placeholder {
+    font-size: 3.5vw;
+    color: white;
+    margin: 0 auto;
+  }
+
+  .input-password1::value {
+    font-size: 2vw;
+  }
+
+  label .input-password1::placeholder {
+    color: rgb(255, 255, 255); /* Define a cor preta para o placeholder */
+    opacity: 100%; /* Garante que o placeholder fique totalmente opaco */
+    font-size: 3.5vw;
+  }
+
+  .inputVali input {
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    width: 40vw;
+  }
+
+  textarea:focus,
+  input:focus,
+  select:focus {
+    border: rgb(255, 255, 255) solid 0.4vw;
+    outline: none;
+    font-size: 3vw;
+  }
+
+  .inputVali button {
+    color: white;
+  }
+
+  .inputVali input {
+    background-color: transparent;
+    outline: none;
+    border: 0;
+  }
+
+  .inputVali button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: #fff;
+    opacity: 50%;
+  }
+
+  .button-verification {
+    position: absolute;
+    margin-top: 80vw;
+    margin-left: 35%;
+  }
+
+  .button-verification button {
+    background-color: white;
+    border: none;
+    border-radius: 2vw;
+    font-size: 4.5vw;
+    font-weight: 300;
+    width: 30vw;
+    height: 10vw;
+    font-family: "Poppins", system-ui;
+    color: #074973;
+  }
+
+  .button-verification button:hover {
+    background-color: aliceblue;
+  }
+}

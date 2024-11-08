@@ -1,5 +1,6 @@
 /* Images */
 import LogoName from "../../../assets/logoname.svg";
+import LogoMobile from "../../../assets/logoMobile.svg";
 
 /* Icons do dropdown */
 import {
@@ -11,16 +12,18 @@ import {
   ChevronDown,
   LogOut,
   UserPen,
+  Menu,
+  X,
 } from "lucide-react";
 
 /* funções react */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 /* css */
 import "../NavBar-Professores/navBarProfessor.css";
-import { faBell, faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 
 /* Dropdown Planos ensinos */
 /* Criando interface para declarar as props do DropdownItem */
@@ -30,18 +33,12 @@ interface DropdownItemProps {
   to: string /* path para as páginas */;
 }
 
-/* props ciradas na Interface */
+/* props criadas na Interface */
 function DropdownItem({ icon, text, to }: DropdownItemProps) {
   return (
     <NavLink to={to} className="dropdownItem">
-      {" "}
-      {/* usado para navegar as páginas de forma renderizada */}
       <i className="icon">{icon}</i> {/* imagem */}
-      <Link className="menu-a" to="#">
-        {" "}
-        {text}{" "}
-      </Link>{" "}
-      {/* Link */}
+      <span className="menu-text">{text}</span> {/* texto */}
     </NavLink>
   );
 }
@@ -60,10 +57,12 @@ function DropdownNotification({
   to,
 }: DropdownNotificationProps) {
   return (
-    <NavLink to={to} className="dropdownNotification">
+    <div className="dropdownNotification">
       <p className="paragrafo">{text}</p>
-      <p className="sub-paragrafo">{secondtext}</p>
-    </NavLink>
+      <NavLink to={to} className="sub-paragrafo-link">
+        <p className="sub-paragrafo">{secondtext}</p>
+      </NavLink>
+    </div>
   );
 }
 
@@ -72,17 +71,14 @@ interface DropdownProfileProps {
   icon: ReactNode /* React Node utilizado para aceitar icone(svg) ou string */;
   text: string;
   to: string;
+  onClick?: () => void; // Adicione o onClick como prop opcional
 }
 
-function DropdownProfile({ icon, text, to }: DropdownProfileProps) {
+function DropdownProfile({ icon, text, to, onClick }: DropdownProfileProps) {
   return (
-    <NavLink to={to} className="dropdownProfile">
+    <NavLink to={to} className="dropdownProfile" onClick={onClick}>
       <i className="icon">{icon}</i> {/* imagem */}
-      <Link className="menu-a" to="#">
-        {" "}
-        {text}{" "}
-      </Link>{" "}
-      {/* Link */}
+      <span className="menu-text">{text}</span> {/* texto */}
     </NavLink>
   );
 }
@@ -93,9 +89,24 @@ export function NavBarProfessor() {
   const [openTwo, setOpenTwo] = useState(false);
   const [opentThree, setOpenThree] = useState(false);
 
+  /* Mobile */
+  const [MenuOpen, setMenuOpen] = useState(false);
+  const [ProfileDropdownOpen, SetProfileDropdownOpen] = useState(false);
+  const [DropdownMobileOpen, SetIsDropdownMobileOpen] = useState(false);
+  const toggleDropdwonMobile = () => {
+    SetIsDropdownMobileOpen(!DropdownMobileOpen);
+  };
+
+  const toggleDropdwonMobileProfile = () => {
+    SetProfileDropdownOpen(!ProfileDropdownOpen);
+  };
+
+  /* Fim mobile */
+
   let menuRef = useRef<HTMLDivElement>(null);
   let notRef = useRef<HTMLDivElement>(null);
   let notRefP = useRef<HTMLDivElement>(null);
+  let menuOpenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -108,6 +119,12 @@ export function NavBarProfessor() {
       if (notRefP.current && !notRefP.current.contains(e.target as Node)) {
         setOpenThree(false);
       }
+      if (
+        menuOpenRef.current &&
+        !menuOpenRef.current.contains(e.target as Node)
+      ) {
+        setMenuOpen(false); // Fecha o menu ao clicar fora dele
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -116,6 +133,15 @@ export function NavBarProfessor() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear(); //para limpar tudo
+
+    // Redireciona o usuário para a página de login
+    navigate("/");
+  };
 
   return (
     <section className="navbar-prof">
@@ -129,6 +155,14 @@ export function NavBarProfessor() {
                 <img src={LogoName} alt="" />
               </Link>
             </div>
+
+            <div className="logoMobile">
+              {" "}
+              {/* logo versão mobile */}
+              <Link to="/homeprofessor">
+                <img src={LogoMobile} alt="" />
+              </Link>
+            </div>
           </div>
 
           <div className="left-side">
@@ -140,13 +174,8 @@ export function NavBarProfessor() {
                   }
                   to="/homeprofessor"
                 >
-                  {" "}
-                  Início
+                  <p>Início</p>
                 </NavLink>
-
-                {/* < li >
-                                        <Link className="navbar-link" to="/homeprofessor">Ínicio</Link>
-                                    </li> */}
 
                 <li className="nav-dropdown">
                   <div
@@ -158,7 +187,10 @@ export function NavBarProfessor() {
                     <div className={`navbar-link ${openOne ? "selected" : ""}`}>
                       {" "}
                       {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                      Planos de ensino <ChevronDown />
+                      <p>
+                        Planos de ensinos{" "}
+                        <ChevronDown className="icon-dropdown" />{" "}
+                      </p>
                     </div>
                   </div>
 
@@ -167,6 +199,7 @@ export function NavBarProfessor() {
                       className={`dropdown-menu ${
                         openOne ? "active" : "inactive"
                       }`}
+                      //TODO: Transformar textos responsivos
                     >
                       {" "}
                       {/* menu */}
@@ -176,17 +209,17 @@ export function NavBarProfessor() {
                         text={"Desenvolvimento de sistemas"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<Settings size={20} />}
                         text={"Eletromecânica"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<ChartLine size={20} />}
                         text={"Logística"}
                       />
                       <DropdownItem
-                        to="/"
+                        to="#"
                         icon={<Folder size={20} />}
                         text={"Administração"}
                       />
@@ -203,9 +236,9 @@ export function NavBarProfessor() {
                   className={({ isActive }) =>
                     isActive ? "navbar-link active last" : "navbar-link"
                   }
-                  to="/"
+                  to="/planscourse"
                 >
-                  Planos de curso
+                  <p> Planos de curso</p>
                 </NavLink>
                 {/* <li><Link className="navbar-link" to="/">Planos de curso</Link></li> */}
               </ul>
@@ -234,7 +267,7 @@ export function NavBarProfessor() {
                         }`}
                       >
                         <DropdownNotification
-                          to="#"
+                          to="/homeopp"
                           text={
                             "O professor Giovani respondeu ao seu comentário."
                           }
@@ -258,36 +291,116 @@ export function NavBarProfessor() {
                         <FontAwesomeIcon icon={faUser} className="not-icons" />
                       </div>
                     </div>
-                    <li>
-                      <div
-                        className={`dropdown-profile ${
-                          opentThree ? "activeOne" : "inactiveOne"
-                        }`}
-                      >
-                        <DropdownProfile
-                          to="/profile"
-                          icon={<UserPen size={20} />}
-                          text={"Visualizar Perfil"}
-                        />
-                        <DropdownProfile
-                          to="#"
-                          icon={<LogOut  size={20} />}
-                          text={"Sair"}
-                        />
-                      </div>
-                    </li>
-                  </li>
-                  <li className="li-notification">
-                    <div className="secondPart">
-                      <div className="darkmode">
-                        <NavLink to="#" className="darkmodeIcon">
-                          <FontAwesomeIcon
-                            icon={faMoon}
-                            className="not-icons"
+                    <ul>
+                      <li>
+                        <div
+                          className={`dropdown-profile ${
+                            opentThree ? "activeOne" : "inactiveOne"
+                          }`}
+                        >
+                          <DropdownProfile
+                            to="/profile"
+                            icon={<UserPen size={20} />}
+                            text={"Visualizar Perfil"}
                           />
-                        </NavLink>
-                      </div>
+                          <DropdownProfile
+                            to="/"
+                            icon={<LogOut size={20} />}
+                            text={"Sair"}
+                            onClick={logout} // Chama a função de logout ao clicar
+                          />
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="menu-mobile">
+              {/* Ícone de hambúrguer para mobile */}
+              <NavLink
+                to={"#"}
+                className="hamburger-menu"
+                onClick={() => setMenuOpen(!MenuOpen)}
+              >
+                <p>
+                  {MenuOpen ? (
+                    <X className="x-icon" size={35} />
+                  ) : (
+                    <Menu className="hamburguer" size={35}/>
+                  )}
+                </p>
+              </NavLink>
+
+              <div
+                /* className="menulist" */ className={`menu ${
+                  MenuOpen ? "open" : ""
+                }`}
+              >
+                <ul>
+                  <li
+                    className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
+                  >
+                    <div
+                      className="dropdownMobile"
+                      onClick={toggleDropdwonMobile}
+                    >
+                      <p>
+                        Planos de ensinos{" "}
+                        <ChevronDown className="icon-dropdownMobile" />{" "}
+                      </p>
                     </div>
+
+                    {DropdownMobileOpen && (
+                      <ul className="dropdown-Mobile">
+                        <li>
+                          <a href="#">Administração</a>
+                        </li>
+                        <li>
+                          <a href="#">Desenvolvimento de Sistemas</a>
+                        </li>
+                        <li>
+                          <a href="#">Eletromecânica</a>
+                        </li>
+                        <li>
+                          <a href="#">Logística</a>
+                        </li>
+                        <li>
+                          <a href="#">Geral</a>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="#"
+                    >
+                      <p>Plano de curso</p>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <div
+                      className="dropdownMobile"
+                      onClick={toggleDropdwonMobileProfile}
+                    >
+                      <p>
+                        Perfil <ChevronDown className="icon-dropdownMobile" />{" "}
+                      </p>
+                    </div>
+
+                    {ProfileDropdownOpen && (
+                      <ul className="dropdownProfileMob">
+                        <li>
+                          <a href="#">Visualizar perfil</a>
+                        </li>
+                        <li>
+                          <a href="#">Sair</a>
+                        </li>
+                      </ul>
+                    )}
                   </li>
                 </ul>
               </div>

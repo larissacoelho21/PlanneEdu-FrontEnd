@@ -22,10 +22,10 @@ export function AddMateria() {
   // Estado para armazenar as matérias separadas por semestre
   const [materiasPorSemestre, setMateriasPorSemestre] =
     useState<MateriasPorSemestre>({
-      "1º Semestre": [],
-      "2º Semestre": [],
-      "3º Semestre": [],
-      "4º Semestre": [],
+      "1º Semestre": [{ nome: "", cargaHoraria: "" }],
+      "2º Semestre": [{ nome: "", cargaHoraria: "" }],
+      "3º Semestre": [{ nome: "", cargaHoraria: "" }],
+      "4º Semestre": [{ nome: "", cargaHoraria: "" }],
     });
 
   // Função chamada quando o botão "Adicionar matéria" é clicado

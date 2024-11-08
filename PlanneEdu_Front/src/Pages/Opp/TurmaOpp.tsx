@@ -1,16 +1,18 @@
+import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/TurmaOpp.css";
-import { BookMarked, Clock3, Users } from "lucide-react";
+import { Clock3, Users } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 
 export function TurmaOpp() {
   return (
     <section className="turmaOpp">
       <NavBarOpp />
-      <div className="introTurma">
-        <h1>Gerencie suas turmas</h1>
-        <h2>de Desenvolvimento de sistemas</h2>
-        <hr />
+      <div className="title-classopp" style={{margin: "5% 0 5% 0"}}>
+        <IntroText
+          titleText="Gerencie suas turmas"
+          subtitleText="de Desenvolvimento de sistemas"
+        />
       </div>
 
       <div className="classOpp">

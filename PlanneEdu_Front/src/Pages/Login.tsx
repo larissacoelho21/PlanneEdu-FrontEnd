@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import BackgroundLogin from "../assets/background-login.svg";
+/* import BackgroundLogin from "../assets/background-login.svg";*/
+import BackgroundLogin from "../assets/reca.png";
 import Computer from "../assets/computer.svg";
 import Logo from "../assets/logo.svg";
+import Forma from "../assets/forma-azul.svg";
+import LogoWhite from "../assets/logoWhite.svg";
 
 import "../Css/Login.css";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { BaseUrl } from "../Config/config";
+import { login } from "../Services/Axios";
 import { toast } from "sonner";
 
 /* Página de Login */
@@ -24,58 +27,38 @@ export function Login() {
 
   const navigate = useNavigate();
 
-  /* const BaseUrl = "http://192.168.137.1/" */
-
   // Função para lidar com o envio do formulário
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault(); // Evita o reload da página
 
-    fetch(`${BaseUrl}/auth/login`, {
-      //conectando com o computador que está rodando o back-end
-      method: "POST", //method post de envio
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        //transformando os valores de nif e senha em string
-        nif: nifValue,
-        password: passwordValue,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((err) => {
-            throw new Error(err.error || "valores não encontrados");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Armazenar o nome do usuário no localStorage
-        localStorage.setItem("userName", data.user.name);
-        if (data.user.defaultUser === true) {
-          //identifcando se o usuário é padrão
-          navigate("/profile"); // Redireciona para a página de perfil
-          toast.info("Por favor, atualize suas informações.");
-        }
-        // 2. Verificar o nível de acesso
-        else if (data.user.nivelAcesso === "opp") {
-          navigate("/homeopp"); // Redireciona para a página do OPP
-          toast.success("Bem-vindo, OPP!");
-        } else if (data.user.nivelAcesso === "docente") {
-          navigate("/homeprofessor"); // Redireciona para a página do professor
-          toast.success("Bem-vindo, Docente!");
-        } else {
-          // Caso a role não seja reconhecida
-          toast.error("Nível de acesso desconhecido."); //alert
-        }
-      })
-      .catch((error) => {
-        toast.error("NIF ou senha incorretos, tente novamente"); //alert
-        console.error("Erro ao carregar dados dos usuários: ", error);
-      });
+    try {
+      // Chama a função de login do axios
+      const data = await login(nifValue, passwordValue);
+      // Armazenar o nome do usuário no localStorage
+      localStorage.setItem("userName", data.user.nome);
+      localStorage.setItem("Authorization", data.token);
+      console.log(localStorage);
+      if (data.user.defaultUser === true) {
+        //identifcando se o usuário é padrão
+        navigate("/profile"); // Redireciona para a página de perfil
+        toast.info("Por favor, atualize suas informações.");
+      }
+      // 2. Verificar o nível de acesso
+      else if (data.user.nivelAcesso === "opp") {
+        navigate("/homeopp"); // Redireciona para a página do OPP
+        toast.success("Bem-vindo, OPP!");
+      } else if (data.user.nivelAcesso === "docente") {
+        navigate("/homeprofessor"); // Redireciona para a página do professor
+        toast.success("Bem-vindo, Docente!");
+      } else {
+        // Caso a role não seja reconhecida
+        toast.error("Nível de acesso desconhecido."); //alert
+      }
+    } catch (error: any) {
+      toast.error(error.message || "NIF ou senha incorretos, tente novamente");
+      console.error("Erro ao carregar dados dos usuários: ", error);
+    }
   };
-
   return (
     <section className="login">
       {/* Background - forma + ilustração */}
@@ -153,6 +136,69 @@ export function Login() {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <div className="login-mobile">
+        
+        <div className="top">
+          <div className="login-img">
+            <img id="forma" src={Forma} alt="" />
+          </div>
+          <div className="login-logo">
+            <img src={LogoWhite} alt="" />
+          </div>
+          <div className="login-info">
+            <h1>Sua ferramenta para um ensino mais eficiente</h1>
+            <p>Faça login para continuar</p>
+          </div>
+        </div>
+
+        <div className="bottom">
+          <div className="inputs">
+            {" "}
+            {/* Input */}
+            <input
+              className="input-login"
+              type="text"
+              placeholder="Insira seu NIF"
+              value={nifValue}
+              max={10}
+              onChange={(event) => {
+                const value = event.target.value;
+                if (value.toString().length <= 10) {
+                  setNifValue(value);
+                }
+              }}
+              required
+            />
+            <label className="inputLogin">
+              <input //TODO: Adicionar lidação maximo de caracteres
+                className="input-password"
+                type={isShow ? "text" : "password"}
+                placeholder="Insira sua senha"
+                value={passwordValue}
+                onChange={(event) => setPasswordValue(event.target.value)} // Captura a senha
+                required
+              />  
+              <button onClick={handlePassword} type="button">
+                {isShow && <Eye size={22} />}
+                {!isShow && <EyeOff size={22} />}
+              </button>
+            </label>
+          </div>
+
+          <div className="password">
+            {" "}
+            {/* Link caso esqueça senha */}
+            <Link to="/redefinicaosenha">Esqueceu sua senha? Clique aqui.</Link>
+          </div>
+
+          <div className="button-login">
+            <button type="submit" style={{ cursor: "pointer" }}>
+              Entrar
+            </button>
+          </div>
         </div>
       </div>
     </section>

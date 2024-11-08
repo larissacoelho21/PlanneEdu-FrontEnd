@@ -5,38 +5,6 @@
   --black: #000;
 }
 
-.Intro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 8vw 0 4vw 0;
-  margin: 6vw 0 4vw 0;
-  gap: 0.5vw;
-}
-
-.Title {
-  font-size: 2.2vw;
-  color: var(--blue-one);
-}
-
-.Description {
-  font-size: 1.5vw;
-  font-weight: 500;
-}
-
-.Line {
-  width: 25vw;
-  height: 0.23vw;
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(8, 73, 115, 1) 0%,
-    rgba(38, 133, 191, 1) 100%
-  );
-  border-radius: 2vw;
-  margin: 1vw 0;
-}
-
 .Add-Plano button {
   display: flex;
   justify-content: center;
@@ -150,4 +118,44 @@
 .Class p {
   font-weight: 400;
   font-size: 1.3vw;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .Title {
+    font-size: 4.5vw;
+  }
+
+  .Description {
+    font-size: 3vw;
+  }
+
+  .Add-Plano {
+    display: none;
+  }
+
+  .Planos h2 {
+    display: none;
+  }
+
+  .Cards {
+    padding: 0 4vw;
+    width: 100%;
+    display: flex;
+    grid-template-columns: none;
+    gap: 2vw;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 3vw;
+  }
+
+  .tag-course {
+    font-size: 1.8vw;
+  }
+
+  .Teacher p,
+  .Class p {
+    font-size: 1.8vw;
+  }
 }
