@@ -86,140 +86,81 @@
 }
 
 /* ===== Tabelas de Informações ===== */
-
-
-/* ===== Popup de Edição ===== */
-.popup-overlay,
-.popup-overlay-delete {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.popup-edit,
-.message-delete-course {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2vw;
-  width: 40vw;
-  height: 70vh;
-  padding: 2vw 5vw;
-  background: #fff;
-  border-radius: 0.5vw;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-  overflow: auto;
-}
-
-.popup-edit h2 {
-  margin: 0 auto;
-  color: var(--blue-one);
-}
-
-.popup-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5vw;
-}
-
-.popup-edit select {
+.table-infos-grid {
   width: 100%;
+  margin-bottom: 5%;
+}
+
+.table-infos-grid th {
   font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.table-infos-grid td {
+  background: #fff;
+}
+
+.table-infos-grid th,
+.table-infos-grid td {
+  text-align: center;
   border: none;
-  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
 }
 
-/* ===== Botões de Edição ===== */
-.edit-btns {
-  display: flex;
-  gap: 2vw;
-  justify-content: center;
-  margin-top: 1.5vw;
+.table-infos-grid td {
+  border-bottom: 0.15vw rgba(0, 0, 0, 0.2) solid;
 }
 
-.edit-btns button {
-  border: 2px solid var(--blue-two);
-  padding: 0.6vw 1vw;
-  border-radius: 0.5vh;
-  background: var(--blue-two);
-  color: var(--white);
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
+.table-infos-grid th:nth-child(1),
+.table-infos-grid td:nth-child(1) {
+  width: 40%;
+  text-align: left;
 }
 
-.edit-btns button:hover {
-  background: none;
-  color: var(--blue-two);
+.table-infos-grid th:nth-child(2),
+.table-infos-grid td:nth-child(2) {
+  text-align: center;
+  padding-right: 1vw;
+  padding-left: 47.7%;
 }
 
 /* ===== Inputs e Campos de Seleção ===== */
-.inputs-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5vw;
-}
-
-.inputs-edit select {
-  font-size: 1.2vw;
-  border: none;
-  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
-}
-
-.inputs-edit label {
-  float: left;
-  font-size: 1.2vw;
-  color: var(--gray-two);
-}
-
-.inputs-edit option:hover {
-  background: rgba(7, 73, 115, 0.2);
-}
-
-.grid-table select {
-  border: transparent;
-  border-bottom: solid 2px var(--gray-one);
-}
-
 .semester-grid h2 {
   text-align: start;
   font-size: 1.2vw;
   color: var(--gray-two);
 }
 
-/* ===== Estilos para Inputs de Número ===== */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
 
 /* ===== PopUp Delete ===== */
 .message-delete-course {
   display: flex;
-  gap: 0.5vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 55%;
+  background: #fff;
+  border-radius: 0.5vw;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  overflow: auto;
+  text-align: center;
 }
 
 .message-delete-course h1 {
   color: var(--blue-one);
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 
 .message-delete-course h2 {
   font-size: 1.6vw;
-  margin-bottom: 3%;
+  margin-bottom: 2%;
 }
 
 .message-delete-course h3 {
   font-size: 1.5vw;
   font-weight: 400;
+  width: 75%;
 }
 
 /* ===== Botão para Visualizar Turma ===== */
@@ -227,8 +168,8 @@ input[type="number"]::-webkit-outer-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20vw;
-  height: 10vh;
+  width: 30%;
+  height: 15%;
   background-color: var(--blue-one);
   margin: 0 auto;
   border-radius: 0.5vw;
@@ -238,4 +179,24 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .button-view-class a {
   color: var(--white);
+}
+
+
+.buttons-addcourse{
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-addcourse button,
+.buttons-addcourse a{
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  width: 20rem;
+  height: 4rem;
+  border: transparent;
+  background-color: var(--blue-two);
+  color: var(--white);
+  border-radius: .3vw;
+  font-size: 1rem;
 }
