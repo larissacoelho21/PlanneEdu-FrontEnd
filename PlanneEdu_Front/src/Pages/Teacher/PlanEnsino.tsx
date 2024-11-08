@@ -16,6 +16,15 @@ export function PlanEnsino() {
       <div className="header">
         <NavBarProfessor />
       </div>
+      <div className="Intro">
+        <h1 className="Title">Planos de Ensino</h1>
+        <h2 className="Description">
+          Gerencie e compartilhe seus planos de ensino
+        </h2>
+        <h2 className="Description1">
+          Visualize todos os planos de ensino da unidade
+        </h2>
+        <div className="Line"></div>
       <div className="title-planensino" style={{margin: "5% 0 5% 0"}}>
         <IntroText
           titleText="Gerencie os planos de ensino"
@@ -39,16 +48,16 @@ export function PlanEnsino() {
             <div className="Data">
               <h3 className="Subject">Automação Industrial</h3>
               <div className="tag-course">
-                <Settings size={20} color="white" />
+                <Settings size={18} color="white" />
                 <p>Eletromecânica</p>
               </div>
               <div className="Info">
                 <div className="Teacher">
-                  <GraduationCap size={25} color="black" strokeWidth={1.5} />
+                  <GraduationCap size={23} color="black" strokeWidth={1.5} />
                   <p>André Souza</p>
                 </div>
                 <div className="Class">
-                  <BookMarked size={21} color="black" strokeWidth={1.5} />
+                  <BookMarked size={18} color="black" strokeWidth={1.5} />
                   <p>Noite 2023</p>
                 </div>
               </div>
@@ -62,16 +71,16 @@ export function PlanEnsino() {
             <div className="Data">
               <h3 className="Subject">Programação e Controle de Suprimentos</h3>
               <div className="tag-course">
-                <ChartLine size={20} color="white" />
+                <ChartLine size={18} color="white" />
                 <p>Logística</p>
               </div>
               <div className="Info">
                 <div className="Teacher">
-                  <GraduationCap size={25} color="black" strokeWidth={1.5} />
+                  <GraduationCap size={23} color="black" strokeWidth={1.5} />
                   <p>Samanta Neves</p>
                 </div>
                 <div className="Class">
-                  <BookMarked size={21} color="black" strokeWidth={1.5} />
+                  <BookMarked size={18} color="black" strokeWidth={1.5} />
                   <p>Manhã 2023</p>
                 </div>
               </div>

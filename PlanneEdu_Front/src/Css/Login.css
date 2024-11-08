@@ -197,23 +197,23 @@ select:focus {
     position: absolute;
     color: white;
     margin-top: 28vw;
-    width: 65vw;
+    width: 85vw;
     display: flex;
     flex-direction: column;
-    margin-left: 15vw;
+    margin-left: 12vw;
   }
 
   .login-info h1 {
-    font-size: 5vw;
+    font-size: 6vw;
   }
 
   .login-info p {
-    font-size: 3.5vw;
+    font-size: 4vw;
   }
 
   .bottom {
     position: absolute;
-    margin-top: 85vw;
+    margin-top: 100vw;
     margin-left: 8.5vw;
   }
 

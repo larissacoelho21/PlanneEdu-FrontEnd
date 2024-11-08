@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundPassword";
-import FormaBottom from "../assets/formaBottom.svg";
+import FormaBottom from "../assets/forma_certa.svg";
 import Logo from "../assets/logo.svg";
 
 /* Página de verificação de email, solicitação do código */

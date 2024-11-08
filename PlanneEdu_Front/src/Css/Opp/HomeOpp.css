@@ -118,20 +118,22 @@ th {
 
 @media only screen and (max-width: 800px) {
   .introTeacher h1 {
-    font-size: 4.5vw;
+    font-size: 6vw;
   }
 
   .introTeacher h2 {
-    font-size: 3vw;
+    margin-top: 1vw;
+    font-size: 4.5vw;
   }
 
   .introTeacher hr {
-    width: 25vw;
-    height: 0.5vw;
+    width: 40vw;
+    height: 0.8vw;
     margin-top: 1vw;
   }
 
   .table-container {
+    margin-top: 5vw;
     width: 90%;
   }
 
@@ -140,19 +142,28 @@ th {
   }
 
   .turmas-homeopp {
-    font-size: 2.5vw;
+    padding: 2vw;
+    font-size: 3.5vw;
   }
 
   .turmas-homeopp1 {
-    font-size: 2.5vw;
+    padding: 2vw;
+    font-size: 3.5vw;
   }
 
   #subtitle {
-    font-size: 2.8vw;
+    padding: 2vw;
+    font-size: 3.5vw;
   }
 
   .button {
-    font-size: 2.4vw;
+    font-size: 3.5vw;
     border-radius: 2vw;
+    padding: 2vw;
+  }
+
+  #title-homeopp {
+    padding: 3vw;
+    font-size: 4vw;
   }
 }

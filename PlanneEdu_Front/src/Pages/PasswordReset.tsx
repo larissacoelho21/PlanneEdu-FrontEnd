@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundPassword";
-import FormaBottom from "../assets/formaBottom.svg";
+import FormaBottom from "../assets/forma_certa.svg";
 import Logo from "../assets/logo.svg";
 
 import "../Css/PasswordReset.css";
@@ -148,23 +148,6 @@ export function PasswordReset() {
                 />
               </div>
             </form>
-
-            <div className="input-verification">
-              {" "}
-              {/* Input para a verificação do código */}
-              {/* verificação de quantidade de caracteres */}
-              <input
-                type="number"
-                className="verification1"
-                value={code}
-                onChange={(event) => setCode(event.target.value)}
-                required
-              />
-            </div>
-
-            <div className="info-redefinicao">
-              <p>Não recebeu o e-mail? Reenviar o código</p>
-            </div>
 
             <div className="button-password">
               <button type="submit" style={{ cursor: "pointer" }}>
