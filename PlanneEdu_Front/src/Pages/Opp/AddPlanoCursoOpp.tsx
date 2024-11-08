@@ -1,9 +1,15 @@
+import "../../Css/Opp/AddPlanoCurso.css";
 import { useState } from "react";
 import { AddMateria } from "../../Components/PlanoDeCurso/AddMateria";
 import { Competencias } from "../../Components/PlanoDeCurso/Competencias";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import "../../Css/Opp/AddPlanoCurso.css";
 import { Check, Plus } from "lucide-react";
+import { PopUp } from "../../Components/PopUp/PopUp-v2";
+import { toast } from "sonner";
+import {
+  Multiselect,
+  SelectOption,
+} from "../../Components/Multiselect/Multiselect";
 
 export function AddPlanoCurso() {
   interface InputFieldProps {
@@ -46,6 +52,40 @@ export function AddPlanoCurso() {
       </fieldset>
     );
   }
+
+  /* definindo as opções que serão usadas no multiselect */
+  const options: SelectOption[] = [
+    {
+      label:
+        "1. Identificar as características de programação backend em ambiente web",
+      value: 1,
+    },
+    {
+      label:
+        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      value: 2,
+    },
+    { label: "Third", value: 3 },
+    { label: "Fourth", value: 4 },
+    { label: "Fifth", value: 5 },
+  ];
+
+  /* ======== declaração de estados ======== */
+  const [showPopUpGrade, setShowPopUpGrade] = useState(false);
+  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  const togglePopUpGrade = () => {
+    setShowPopUpGrade(!showPopUpGrade);
+  };
+
+  /* estado para armazenar disciplinas separadas por semestre */
+  const [semesterData, setSemesterData] = useState<{ [key: number]: string[] }>(
+    {
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+    }
+  );
 
   return (
     <section className="AddPlanCourses">
@@ -92,39 +132,145 @@ export function AddPlanoCurso() {
             <h2>Grade Horária</h2>
             <div className="semestres">
               <div className="semestre">
-                <h3>1° Semestre</h3>
+                <h3>1° semestre</h3>
                 <div className="add-btn">
-                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                  <button
+                    onClick={(event) => {
+                      togglePopUpGrade();
+                      event.preventDefault();
+                    }}
+                  >
+                    <Plus />
+                  </button>
                 </div>
               </div>
               <div className="semestre">
-                <h3>2° Semestre</h3>
+                <h3>2° semestre</h3>
                 <div className="add-btn">
-                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                  <button
+                    onClick={(event) => {
+                      togglePopUpGrade();
+                      event.preventDefault();
+                    }}
+                  >
+                    <Plus />
+                  </button>
                 </div>
               </div>
               <div className="semestre">
-                <h3>3° Semestre</h3>
+                <h3>3° semestre</h3>
                 <div className="add-btn">
-                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                  <button
+                    onClick={(event) => {
+                      togglePopUpGrade();
+                      event.preventDefault();
+                    }}
+                  >
+                    <Plus />
+                  </button>
                 </div>
               </div>
               <div className="semestre">
-                <h3>4° Semestre</h3>
+                <h3>4° semestre</h3>
                 <div className="add-btn">
-                  <button><Plus width={40} height={40} strokeWidth={2} /></button>
+                  <button
+                    onClick={(event) => {
+                      togglePopUpGrade();
+                      event.preventDefault();
+                    }}
+                  >
+                    <Plus />
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="actions-btns">
-            <div className="save">
-              <button formAction="submit"><Check width={25} height={25} strokeWidth={1.5} textAnchor="middle" /> Salvar Informações</button>
-            </div>
-            <div className="cancel">
-              <button>Cancelar</button>
-            </div>
+            {showPopUpGrade && (
+              <PopUp
+                title="Criar Disciplina"
+                subtitle="Defina a disciplina e selecione as competências e habilidades que deseja desenvolver ao longo do curso."
+                onClose={() => setShowPopUpGrade(false)}
+              >
+                <div className="pop-body">
+                  <div className="input-field">
+                    <InputField
+                      id="uc"
+                      label="Unidade Curricular"
+                      type="text"
+                    />
+                  </div>
+                  <div className="input-field">
+                    <InputField id="obj" label="Objetivo" type="text" />
+                  </div>
+                  <div className="input-field">
+                    <InputField
+                      id="carga-h"
+                      label="Carga Horária"
+                      type="number"
+                    />
+                  </div>
+                  <div className="input-field">
+                    <InputField id="semestre" label="Semestre" type="number" />
+                  </div>
+                  <h3>Competências Específicas e Socioemocionais</h3>
+                  {/* <div className="multiselects">
+                    <label>Conhecimentos</label>
+                    <Multiselect
+                      options={options}
+                      value={[]}
+                      onChange={}
+                      multiple
+                    />
+
+                    <label>Estratégias</label>
+                    <Multiselect
+                      options={options}
+                      value={[]}
+                      onChange={}
+                      multiple
+                    />
+
+                    <label>Recursos</label>
+                    <Multiselect
+                      options={options}
+                      value={[]}
+                      onChange={}
+                      multiple
+                    />
+                  </div> */}
+                  <h3>Conhecimentos</h3>
+                  <div className="input-field">
+                    <InputField id="topic" label="Tópico" type="text" />
+                  </div>
+                  <div className="subtopic">
+                    <InputField id="subtopic" label="Subtópico" type="text" />
+                    <button className="add-subbtn">
+                      <Plus />
+                    </button>
+                  </div>
+                  <div className="detail">
+                    <InputField id="detail" label="Detalhe" type="text" />
+                    <div className="select-det">
+                      <label>Atribuído a:</label>
+                      <select name="" id="">
+                      <option value="" disabled selected></option>
+                      <option value="subtópico 1">SUBTÓPICO 1</option>
+                      <option value="subtópico 2">SUBTÓPICO 2</option>
+                      <option value="subtópico 3">SUBTÓPICO 1</option>
+                      <option value="subtópico 4">SUBTÓPICO 2</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="input-field">
+                    <InputField id="ambiente" label="Ambiente Pedagógico" type="text"></InputField>
+                  </div>
+                  <div className="conhecimento-btn">
+                    <button>Adicionar Conhecimento</button>
+                  </div>
+                  
+                </div>
+              </PopUp>
+            )}
           </div>
         </form>
       </div>

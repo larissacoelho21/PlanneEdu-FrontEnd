@@ -20,7 +20,6 @@
 .form-course {
   display: flex;
   flex-direction: column;
-  gap: 2vw;
   gap: 1vw;
   padding: 5vw 5vw;
   margin: 3% auto;
@@ -102,6 +101,7 @@
 .grade-curricular h2{
   text-align: center;
   font-weight: 500;
+  font-size: 1.7vw;
 }
 
 .semestres{
@@ -126,7 +126,7 @@
   height: 4vw;
   background: #07678d;
   border: 3px solid #07678d;
-  border-radius: .3vw;
+  border-radius: .4vw;
   color: #fff;
   transition: ease-in-out .3s;
 }
@@ -141,7 +141,7 @@
   height: 4vw;
   background: #fff;
   border: 3px solid #07678d;
-  border-radius: .3vw;
+  border-radius: .4vw;
   color: #07678d;
 }
 

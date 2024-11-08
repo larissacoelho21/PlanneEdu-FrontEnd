@@ -26,7 +26,6 @@ button{
 
 .form {
   padding: 5vw 5vw;
-  gap: 2vw;
 }
 
 .form .input-field {
@@ -36,6 +35,18 @@ button{
   gap: 1vw;
 }
 
+.form label{
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.form input[type="number"]::-webkit-inner-spin-button,
+.form input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+
 .label-all {
   position: absolute;
   font-size: 1.2vw;
@@ -43,12 +54,6 @@ button{
   color: rgba(0, 0, 0, 0.4);
   text-align: right;
   transition: all 0.2s ease;
-}
-
-.form label{
-  font-size: 1.2vw;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.2);
 }
 
 .input-all{
@@ -87,11 +92,6 @@ button{
   border-left: transparent;
   border-right: transparent;
   border-bottom: var(--gray-one) solid 2px;
-}
-
-.form input[type="number"]::-webkit-inner-spin-button,
-.form input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
 }
 
 .row {
