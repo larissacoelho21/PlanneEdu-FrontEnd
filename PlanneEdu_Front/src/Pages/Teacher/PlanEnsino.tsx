@@ -16,15 +16,6 @@ export function PlanEnsino() {
       <div className="header">
         <NavBarProfessor />
       </div>
-      <div className="Intro">
-        <h1 className="Title">Planos de Ensino</h1>
-        <h2 className="Description">
-          Gerencie e compartilhe seus planos de ensino
-        </h2>
-        <h2 className="Description1">
-          Visualize todos os planos de ensino da unidade
-        </h2>
-        <div className="Line"></div>
       <div className="title-planensino" style={{margin: "5% 0 5% 0"}}>
         <IntroText
           titleText="Gerencie os planos de ensino"

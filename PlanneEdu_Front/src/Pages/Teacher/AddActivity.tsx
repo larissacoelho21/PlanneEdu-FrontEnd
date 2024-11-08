@@ -54,7 +54,7 @@ function InputField({
   );
 }
 
-/* Interface conexão com  Back-End */ /* 
+/*  ce conexão com  Back-End */ /* 
 interface Desafio {
   descricao: string;
   capacidadesBT: string[];
