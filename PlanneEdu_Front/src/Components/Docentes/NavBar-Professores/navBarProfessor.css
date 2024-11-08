@@ -3,8 +3,9 @@
   --speed: 500ms;
 }
 .navbar-container {
-  display: none ;
+  display: none;
 }
+
 .hamburger-menu {
   border: none;
   background: none;
@@ -47,11 +48,20 @@ link:active {
   margin-left: 2vw;
 }
 
+/* estilizando logo do mobile  */
+.logoMobile img {
+  display: none;
+}
+
+.menu-mobile {
+  display: none;
+}
+
 /* estilizando lista */
 .navbar-nav {
   display: flex;
   flex-direction: row;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   gap: 2vw;
 }
@@ -60,7 +70,6 @@ link:active {
   font-family: var(--font);
   color: black;
   font-size: 1.3vw;
-
 }
 
 .navbar-link p:hover {
@@ -85,17 +94,18 @@ link:active {
   cursor: pointer;
 }
 
-.li-inicio .icon-dropdown, .li-inicio p {
+.li-inicio .icon-dropdown,
+.li-inicio p {
   display: flex;
   align-items: center;
 }
 
-/* estilizando o menu */
+/* --------------------Menu Dropdown-------------------- */
 
 .dropdown-menu {
   position: absolute;
-  top: 5.5vw;
-  right: 26vw;
+  top: 6vw;
+  right: 23vw;
   background-color: #fff;
   padding: 1vw 1vw;
   width: 17vw;
@@ -138,8 +148,9 @@ link:active {
   padding: 0.2vw;
 }
 
-.dropdownItem .icon:hover,
-.dropdownItem .menu-text:hover, .menu-a:hover{
+
+.dropdownItem .menu-text:hover
+{
   color: var(--blue1); /* cor quando o hover estiver ativo */
   cursor: pointer;
 }
@@ -153,8 +164,8 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownItem .menu-text{
-  font-size: 0.8rem;
+.dropdownItem .menu-text {
+  font-size: 1.1vw;
   max-width: 15vw;
   color: #7f7f7f;
   align-self: center;
@@ -162,12 +173,12 @@ link:active {
   transition: var(--speed);
 }
 
-/* estilizando o segundo dropdwn */
+/* --------------------Dropdown Notificação-------------------- */
 
 .dropdown-notification {
   position: absolute;
   top: 5.5vw;
-  right: 6.4vw;
+  right: 3.5vw;
   background-color: #fff;
   padding: 1.2vw 1.2vw;
   width: 28vw;
@@ -222,12 +233,11 @@ link:active {
 }
 
 .link-bell .iconsBell,
-.profile .not-icons,
-.darkmodeIcon .not-icons {
+.profile .not-icons {
   width: 0 auto;
   height: 1.6vw;
-  margin-left: 1.5vw;
-  margin-right: 1.5vw;
+  margin-left: 0.8vw;
+  margin-right: 2.5vw;
   color: black;
 }
 
@@ -247,14 +257,15 @@ link:active {
   cursor: pointer;
 }
 
-/* Dropdown Profile */
+/* --------------------Dropdown Perfil-------------------- */
+
 .dropdown-profile {
   position: absolute;
   top: 5.5vw;
-  right: 2vw;
+  right: 1vw;
   background-color: #fff;
   padding: 1.2vw 1.2vw;
-  width: 14vw;
+  width: 13vw;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
@@ -275,7 +286,7 @@ link:active {
   content: "";
   position: absolute;
   top: -2.5vw; /* Ajusta a seta acima do dropdown */
-  right: 3vw; /* Ajusta a posição horizontal da seta */
+  right: 0.7vw; /* Ajusta a posição horizontal da seta */
   border-width: 1.5vw;
   border-style: solid;
   border-color: transparent transparent #fff transparent; /* Seta com cor de fundo do dropdown */
@@ -293,7 +304,6 @@ link:active {
   padding: 0.2vw;
 }
 
-.dropdownProfile .icon:hover,
 .dropdownProfile .menu-text:hover {
   color: #074973; /* cor quando o hover estiver ativo */
   cursor: pointer;
@@ -308,8 +318,8 @@ link:active {
   transition: var(--speed);
 }
 
-.dropdownProfile .menu-text{
-  font-size: 0.8rem;
+.dropdownProfile .menu-text {
+  font-size: 1vw;
   max-width: 15vw;
   color: #7f7f7f;
   align-self: center;
@@ -317,66 +327,138 @@ link:active {
   transition: var(--speed);
 }
 
-
 /* --------------------Versão Mobile-------------------- */
-@media only screen and (max-width: 800px) { 
-
+@media only screen and (max-width: 800px) {
   .navbarOne {
     background-color: none;
     box-shadow: none;
+    height: 10vw;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-mobile {
+    display: block;
   }
 
   .right-side {
     display: block;
+  }
 
+  .nav-logo img {
+    display: none;
+  }
+
+  .right-side .logoMobile img {
+    display: block;
+    height: 8vw;
+    margin: 2vw 2vw 2vw 5vw;
   }
 
   .nav-list {
     display: none;
   }
 
+  .Icons {
+    display: flex;
+    align-items: center;
+    margin-top: 2vw;
+  }
+
+  .left-side {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 5vw;
+  }
+
+  .profile {
+    display: none;
+  }
+
+  .link-bell .iconsBell{
+    width: 0 auto;
+    height: 3.5vw;
+  }
+
+  .hamburger-menu .x-icon,
+  .hamburger-menu .hamburguer {
+    color: black;
+    margin-top: -0.5vw;
+  }
 
   .hamburger-menu {
     display: block;
-    justify-content: flex-end;
     cursor: pointer;
     margin-right: 5%;
     width: 0 auto;
     height: 2vw;
   }
 
-  /* Esconde o menu de navegação por padrão */
-  .nav-menu {
-    display: none;
-    flex-direction: column;
+  .menu {
     position: absolute;
-    top: 60px;
-    left: 0;
+    top: 10vw;
     right: 0;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2; /* Fundo claro */
+    width: 100%;
+    padding: 2vw;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1;
   }
 
-  /* Mostra o menu quando o estado 'menuOpen' for true */
-  .nav-menu.active {
+  .menu.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu ul li {
+    margin: 2vw 0;
+  }
+
+  .dropdownMobile p:hover,
+  .dropdown-Mobile a:hover,
+  .dropdownProfileMob a:hover {
+    opacity: 80%;
+  }
+  .dropdownMobile p,
+  .menu li {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2rem; /* Tamanho do texto */
+  }
+
+  .dropdown-Mobile,
+  .dropdownProfileMob {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 10px;
+    transition: all 0.5s ease;
+  }
+
+  .dropdown-Mobile li a,
+  .dropdownProfileMob li a {
+    color: #333;
+    font-size: 1rem;
+    margin-left: 2vw;
+  }
+
+  .dropdown li {
+    margin: 5px 0;
+  }
+
+  .dropdownMobile p {
     display: flex;
+    align-items: center;
   }
-
-  /* Estilos para os links no menu em dispositivos móveis */
-  .nav-link {
-    padding: 1rem;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  /* Centraliza o logo */
-  .nav-logo img {
-    height: 30px;
-  }
-
-  /* Ícones de notificações e perfil ajustados */
-  .nav-icons {
-    display: none; /* Opcional, esconder ícones em telas pequenas */
-  }
-  
 }

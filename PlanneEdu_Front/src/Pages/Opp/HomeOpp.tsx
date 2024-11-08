@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/HomeOpp.css";
 import { Link } from "react-router-dom";
+import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
 
 export function HomeOpp() {
   const [userName, setUserName] = useState<string | null>("");
@@ -17,11 +18,11 @@ export function HomeOpp() {
   return (
     <section className="homeTeacher">
       <NavBarOpp />
-      <div className="introTeacher">
-        <h1>Seja bem-vindo, {userName || "Usuário"} </h1>
-        <h2>Visualize os planos de ensino disponíveis</h2>
-        <hr />
-      </div>
+      <TextsIntroName
+        userName={userName || "Usuário"}
+        titleText="Seja bem vindo"
+        subtitleText="Visualize os planos de ensino disponíveis"
+      />
 
       <div className="table-container">
         <table className="table-homeopp">

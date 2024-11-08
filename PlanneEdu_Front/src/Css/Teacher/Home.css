@@ -1,4 +1,5 @@
 body {
+  height: 100%;
   background-color: #f2f2f2;
   font-family: "Poppins", system-ui;
   font-style: normal;
@@ -17,33 +18,6 @@ body {
   gap: 6vw;
 }
 
-.introTeacher {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-}
-
-.introTeacher h1 {
-  font-size: 2.2vw;
-  color: var(--blue-one);
-}
-
-.introTeacher h2 {
-  font-size: 1.5vw;
-  font-weight: normal;
-  margin-bottom: 1%;
-}
-
-.introTeacher hr {
-  display: block;
-  width: 15vw;
-  height: 3px;
-  border: none;
-  border-radius: 5px;
-  background-image: linear-gradient(to right, #084973, #2685bf);
-}
-
 /* Parte dos cards */
 .cardsTeacher {
   display: flex;
@@ -57,13 +31,12 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   background-color: var(--white);
+  max-width: 100%;
   width: 42vw;
   border-radius: 0.5vw;
   padding: 2.4vw;
   gap: 1vw;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: var(--black);
   border: 2px solid transparent;
@@ -99,12 +72,8 @@ body {
 .semesterTeacher,
 .student {
   display: flex;
+  align-items: center;
   gap: 0.5vw;
-}
-
-.semesterTeacher img,
-.student img {
-  width: 1.6vw;
 }
 
 .semesterTeacher h1,
@@ -127,11 +96,17 @@ body {
   }
 
   .box-teacher {
+
     width: 90vw;
   }
 
   .box-teacher h1 {
-    font-size: 4vw;
+    max-width: fit-content;
+    width: 100%;
+  }
+
+  .box-teacher h1 {
+    font-size: 0.8rem;
   }
 
   .dateBadge {

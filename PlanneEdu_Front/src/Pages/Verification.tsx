@@ -13,8 +13,10 @@ import { toast } from "sonner";
 export function VerificationEmail() {
   /* Funçao para aparecer a senha */
   const [isShow, setisShow] = useState(false);
+  const [isShow2, setisShow2] = useState(false);
 
   const handlePassword = () => setisShow(!isShow);
+  const handlePassword2 = () => setisShow2(!isShow2);
 
   const navigate = useNavigate();
 
@@ -137,16 +139,16 @@ export function VerificationEmail() {
               <label className="inputReset">
                 <input //TODO: Adicionar max de caracteres
                   className="input-password"
-                  type={isShow ? "text" : "password"}
+                  type={isShow2 ? "text" : "password"}
                   placeholder="Confirme sua senha"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
                 />
-                <button onClick={handlePassword} type="button" //TODO: Icone acionando junto com o input de informe senha 
+                <button onClick={handlePassword2} type="button" //TODO: Icone acionando junto com o input de informe senha 
                 >
-                  {isShow && <Eye size={18} />}
-                  {!isShow && <EyeOff size={18} />}
+                  {isShow2 && <Eye size={18} />}
+                  {!isShow2 && <EyeOff size={18} />}
                 </button>
               </label>
             </div>

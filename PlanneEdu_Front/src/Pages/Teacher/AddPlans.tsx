@@ -10,9 +10,10 @@ import {
   Check,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
+import DatePicker from "react-multi-date-picker";
 import {
   Multiselect,
   SelectOption,
@@ -20,8 +21,16 @@ import {
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
-  { label: "First", value: 1 },
-  { label: "Second", value: 2 },
+  {
+    label:
+      "1. Identificar as características de programação backend em ambiente web",
+    value: 1,
+  },
+  {
+    label:
+      "1.1Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+    value: 2,
+  },
   { label: "Third", value: 3 },
   { label: "Fourth", value: 4 },
   { label: "Fifth", value: 5 },
@@ -31,32 +40,60 @@ interface InputFieldProps {
   id: string;
   label: string;
   type?: string;
-  mask?: string;
   value?: string | number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  maxValue?: number;
 }
 
+/* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
 function InputField({
   id,
   label,
   type = "text",
-  mask,
+  value = "",
   onChange,
+  onWheel,
+  maxLength,
+  maxValue,
 }: InputFieldProps) {
+  const [localValue, setLocalValue] = useState<string | number>(value);
+  /* verificando se o campo está preenchido para aplicar estilos ou animações (booleano) */
   const [isFilled, setIsFilled] = useState(false);
-  const [value, setValue] = useState<string | number>("");
+  useEffect(() => {
+    setIsFilled(localValue !== "");
+  }, [localValue]);
 
+  /* função para gerenciar a mudança de valor do input */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
+    let inputValue: string = event.target.value;
 
-    // Se o type for number, converte o valor para number
-    if (type === "number") {
-      setValue(inputValue !== "" ? parseFloat(inputValue) : ""); // Armazena como número ou string vazia
-    } else {
-      setValue(inputValue); // Armazena como string
+    /* limita o comprimento do valor de entrada */
+    if (maxLength && inputValue.length > maxLength) {
+      /* corta o excedente */
+      inputValue = inputValue.slice(0, maxLength); 
     }
 
-    setIsFilled(inputValue !== "");
+    /* converte para número se o tipo do input for "number" */
+    if (type === "number") {
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
+
+      /* verifica o valor máximo permitido */
+      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+        numericValue = maxValue;
+      }
+      
+      setLocalValue(numericValue);
+    } else {
+      setLocalValue(inputValue);
+    }
+
+    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
+    if (onChange) {
+      event.target.value = inputValue;
+      onChange(event);
+    }
   };
 
   return (
@@ -64,22 +101,14 @@ function InputField({
       <label className="label-all" htmlFor={id}>
         {label}
       </label>
-      {mask ? (
-        <ReactInputMask
-          mask={mask}
-          className="input-all"
-          id={id}
-          onChange={handleInputChange}
-        />
-      ) : (
-        /* operador ternário, declaração de uma condição. traduz para: condição (máscara) ? expresão_se_verdadeiro : (':' é como o 'ou') expressão_se_falso */
-        <input
-          className="input-all"
-          id={id}
-          type={type}
-          onChange={handleInputChange}
-        />
-      )}
+      <input
+        className="input-all"
+        id={id}
+        type={type}
+        value={localValue}
+        onChange={handleInputChange}
+        onWheel={onWheel}
+      />
     </fieldset>
   );
 }
@@ -87,17 +116,27 @@ function InputField({
 export function AddPlans() {
   /* ======== declaração de estados dos popups ======== */
   const [showPopUpPlan, setShowPopUpPlan] = useState(false);
-  const togglePopUpPlan = () => {
-    setShowPopUpPlan(!showPopUpPlan);
-  };
+  const togglePopUpPlan = () => setShowPopUpPlan(!showPopUpPlan);
+
   const [showPopUpClasses, setShowPopUpClasses] = useState(false);
-  const togglePopUpClasses = () => {
-    setShowPopUpClasses(!showPopUpClasses);
-  };
+  const togglePopUpClasses = () => setShowPopUpClasses(!showPopUpClasses);
 
   const [showPopUpStrategy, setShowPopUpStrategy] = useState(false);
-  const togglePopUpStrategy = () => {
-    setShowPopUpStrategy(!showPopUpStrategy);
+  const togglePopUpStrategy = () => setShowPopUpStrategy(!showPopUpStrategy);
+
+  const [strategyIdEdit, setStrategyIdEdit] = useState<number | null>(null);
+
+  const closePopup = () => {
+    setShowPopUpPlan(false);
+    setShowPopUpClasses(false);
+    setShowPopUpStrategy(false);
+    setEditingStrategyIndex(null);
+    setSelectedDates([]);
+    setCargaHoraria(null);
+    setValueConhecimentosStra([]);
+    setValueEstrategiasStra([]);
+    setValueRecursosStra([]);
+    setPerguntasMediadoras("");
   };
 
   /* ======== função para a remoção de itens com base em seu índice ======== */
@@ -118,6 +157,8 @@ export function AddPlans() {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   /* armazena a data inputada no momento */
   const [dateInput, setDateInput] = useState("");
+  const [isDateSubmitted, setIsDateSubmitted] = useState(false);
+
   const [cargaHoraria, setCargaHoraria] = useState<number | null>(null);
   const [valueConhecimentosStra, setValueConhecimentosStra] = useState<
     SelectOption[]
@@ -126,6 +167,12 @@ export function AddPlans() {
     SelectOption[]
   >([]);
   const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
+    []
+  );
+  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<SelectOption[]>(
+    []
+  );
+  const [valueCapSocioStra, setValueCapSocioStra] = useState<SelectOption[]>(
     []
   );
   const [perguntasMediadoras, setPerguntasMediadoras] = useState<string>("");
@@ -140,38 +187,136 @@ export function AddPlans() {
     perguntasMediadoras: string;
   };
 
-  const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
+  /* função para lidar com a mudança de dados no input de carga horária */
+  const handleCargaHorariaChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setCargaHoraria(value ? Number(value) : null);
+  };
+
+  const [editingStrategyIndex, setEditingStrategyIndex] = useState<
+    number | null
+  >(null);
+
+  /* função para iniciar a edição de uma estratégia */
+  const startEditingStra = (index: number, id: number) => {
+    const strategyToEdit = strategies[index];
+
+    console.log(id);
+
+    setStrategyIdEdit(id);
+
+    setEditingStrategyIndex(index);
+    setSelectedDates(strategyToEdit.dates);
+    setCargaHoraria(strategyToEdit.cargaHoraria);
+
+    /* preenche os selects de conhecimentos, estratégias e recursos com as opções anteriormente inputadas */
+    setValueConhecimentosStra(
+      strategyToEdit.conhecimentos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    setValueEstrategiasStra(
+      strategyToEdit.estrategias
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+
+    setValueRecursosStra(
+      strategyToEdit.recursos
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option?.label !== undefined)
+    );
+    setPerguntasMediadoras(strategyToEdit.perguntasMediadoras);
+
+    togglePopUpStrategy();
+  };
+
+  /* função para salvar a edição da estratégia*/
+  const editStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    console.log("Conhecimentos Relacionados:", valueConhecimentosStra);
-    console.log("Estratégias de Ensino:", valueEstrategiasStra);
-    console.log("Recursos e Ambientes Pedagógicos:", valueRecursosStra);
-    console.log("Datas:", selectedDates);
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
 
-    // verificando se todos os campos necessários estão preenchidos
+    /* analisa se todos os campos necessários estão preenchidos */
     if (
       selectedDates.length === 0 ||
-      !cargaHoraria ||
+      cargaHoraria === null ||
       valueConhecimentosStra.length === 0 ||
       valueEstrategiasStra.length === 0 ||
       valueRecursosStra.length === 0 ||
-      !perguntasMediadoras
+      !perguntasMediadoras.trim()
     ) {
-      console.log(selectedDates, cargaHoraria, perguntasMediadoras);
       toast.error("Preencha todos os campos necessários!");
       return;
     }
 
-    console.log(
-      dateInput,
-      cargaHoraria,
+    /* cria a estratégia atualizada com os dados do formulário */
+    const updatedStrategy = {
+      dates: selectedDates,
+      cargaHoraria: Number(cargaHoraria),
+      conhecimentos: valueConhecimentosStra.map((item) => item.value),
+      estrategias: valueEstrategiasStra.map((item) => item.value),
+      recursos: valueRecursosStra.map((item) => item.value),
       perguntasMediadoras,
-      valueConhecimentosStra,
-      valueEstrategiasStra,
-      valueRecursosStra
-    );
+    };
 
-    const newStrategy = {
+    /* verifica se o índice de edição não é nulo */
+    if (editingStrategyIndex !== null) {
+      /* atualiza a estratégia no índice correspondente */
+      const updatedStrategies = [...strategies];
+      updatedStrategies[editingStrategyIndex] = updatedStrategy;
+
+      /* atualiza com os novos dados */
+      setStrategies(updatedStrategies);
+
+      /* reseta os valores dos campos */
+      setSelectedDates([]);
+      setCargaHoraria(null);
+      setValueConhecimentosStra([]);
+      setValueEstrategiasStra([]);
+      setValueRecursosStra([]);
+      setPerguntasMediadoras("");
+
+      toast.success("Estratégia editada com sucesso!");
+      setEditingStrategyIndex(null);
+      togglePopUpStrategy();
+    }
+  };
+
+  const createStrategy = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    /* validando se a carga horária recebe valores válidos */
+    if (cargaHoraria === null || parseFloat(cargaHoraria.toString()) <= 0) {
+      toast.error(
+        "A carga horária deve ser maior que 0! Tente novamente com um valor válido."
+      );
+      return;
+    }
+
+    /* verificando se todos os campos necessários estão preenchidos */
+    if (
+      selectedDates.length === 0 ||
+      cargaHoraria === null ||
+      valueConhecimentosStra.length === 0 ||
+      valueEstrategiasStra.length === 0 ||
+      valueRecursosStra.length === 0 ||
+      !perguntasMediadoras.trim()
+    ) {
+      toast.error("Preencha todos os campos necessários!");
+      return;
+    }
+
+    const newStrategy: Strategy = {
       dates: selectedDates,
       cargaHoraria,
       conhecimentos: valueConhecimentosStra.map(
@@ -185,55 +330,25 @@ export function AddPlans() {
     setStrategies([...strategies, newStrategy]);
 
     setSelectedDates([]);
-    setCargaHoraria(0);
+    setCargaHoraria(null);
     setValueConhecimentosStra([]);
     setValueEstrategiasStra([]);
     setValueRecursosStra([]);
     setPerguntasMediadoras("");
 
-    toast.success("Estratégia adicionada com sucesso!");
+    toast.success("Estratégia criada com sucesso!");
     togglePopUpStrategy();
   };
 
-  /* função para lidar com a mudança de dados no input de carga horária */
-  const handleCargaHorariaChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-
-    if (value === "") {
-      setCargaHoraria(null);
-    } else {
-      setCargaHoraria(Number(value));
-    }
+  type LabelMap = {
+    [key: string]: string;
   };
 
-  function validateDate(dateString: string) {
-    /* variável chamada regex é definida, contendo uma expressão regular. tal expressão é utilizada para validar se a data inputada está ou não no formato correto */
-    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([0-9]{4})$/;
-  
-    /* o método '.test()' é usado para trabalhar com as expressões regulares, ele verifica se a string corresponde a um padrão definido*/
-    if (!regex.test(dateString)) {
-      return false; // Não corresponde ao formato
-    }
+  const labelMap: LabelMap = options.reduce((acc: LabelMap, option) => {
+    acc[option.value] = option.label;
+    return acc;
+  }, {} as LabelMap);
 
-    const [day, month, year] = dateString.split("/").map(Number);
-
-    /* como o mês começa em 0, somamos 1 */
-    const date = new Date(year, month - 1, day);
-
-    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-}
-
-  const addDate = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-     if (validateDate(dateInput)) {
-      setSelectedDates([...selectedDates, dateInput]);
-      setDateInput('');
-      toast.success("Data adicionada com sucesso!");
-    }
-  }
   /* ======== fuções e configurações do planejamento de aulas ======== */
   /* definindo a estrutura genérica de itens complexos */
   type itemComplex = {
@@ -277,10 +392,11 @@ export function AddPlans() {
   const [dateInicial, setDateInicial] = useState<string>("");
   const [dateFinal, setDateFinal] = useState<string>("");
 
+  /* funções referentes as datas utilizadas na aplicação */
   /* ======== formatação e validação das datas ======== */
   const convertToISO = (dateString: string) => {
     const [day, month, year] = dateString.split("/");
-    return `${year}-${month}-${day}`; // Formato ISO (YYYY-MM-DD)
+    return `${year}-${month}-${day}`;
   };
 
   const validateDates = (startISO: string, endISO: string) => {
@@ -304,11 +420,17 @@ export function AddPlans() {
     const startDateISO = convertToISO(dateInicial);
     const endDateISO = convertToISO(dateFinal);
 
+    /* verificando se as datas estão no formato adequado */
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
+    }
+
     if (!validateDates(startDateISO, endDateISO)) {
       return;
     }
 
-    // garantindo que todos os campos foram preenchidos
+    /* garantindo que todos os campos foram preenchidos */
     if (
       valueConhecimentos.length === 0 ||
       valueEstrategias.length === 0 ||
@@ -349,9 +471,10 @@ export function AddPlans() {
     const planToEdit = plans[index];
 
     setEditingPlanIndex(index);
-    console.log("Index being edited:", editingPlanIndex);
     setDateInicial(planToEdit.dateInicial);
     setDateFinal(planToEdit.dateFinal);
+
+    /* preenche os selects com as opções anteriormente inputadas */
     setValueConhecimentos(
       planToEdit.conhecimentos
         .map((value) => options.find((option) => option.value === value))
@@ -377,6 +500,11 @@ export function AddPlans() {
 
     const startDateISO = convertToISO(dateInicial);
     const endDateISO = convertToISO(dateFinal);
+
+    if (!startDateISO || !endDateISO) {
+      toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+      return;
+    }
 
     if (!validateDates(startDateISO, endDateISO)) {
       return;
@@ -428,7 +556,7 @@ export function AddPlans() {
   };
 
   /* ======== layout e estrutura da página ======== */
-  return ( //TODO: Adicionar max de caracteres em inputs de numeros
+  return (
     <main>
       <SubNavbar />
       <div className="info-course">
@@ -471,7 +599,13 @@ export function AddPlans() {
 
         <div className="row">
           <div className="input-field">
-            <InputField label="Carga Horária" type="number" id="carg-h" />
+            <InputField
+              label="Carga Horária"
+              type="number"
+              id="carg-h"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
+            />
           </div>
 
           <div className="input-field">
@@ -479,15 +613,29 @@ export function AddPlans() {
               label="Quantidade de Aulas"
               type="number"
               id="qtd-aulas"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={3}
             />
           </div>
 
           <div className="input-field">
-            <InputField label="Semestre" type="number" id="semestre" />
+            <InputField
+              label="Semestre"
+              type="number"
+              id="semestre"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={1}
+            />
           </div>
 
           <div className="input-field">
-            <InputField label="Ano" type="number" id="ano" />
+            <InputField
+              label="Ano"
+              type="number"
+              id="ano"
+              onWheel={(event) => event.currentTarget.blur()}
+              maxLength={4}
+            />
           </div>
         </div>
 
@@ -516,6 +664,28 @@ export function AddPlans() {
             Estratégias para o desenvolvimento da situação de aprendizagem e
             planejamento da intervenção mediadora
           </h3>
+
+          <div className="capacidades">
+            <div className="tecnicas">
+              <label>Capacidades Técnicas</label>
+              <Multiselect
+                options={options}
+                value={valueCapTecnicasStra}
+                onChange={setValueCapTecnicasStra}
+                multiple
+              />
+            </div>
+            <div className="socioemocionais">
+              <label>Capacidades Socioemocionais</label>
+              <Multiselect
+                options={options}
+                value={valueCapSocioStra}
+                onChange={setValueCapSocioStra}
+                multiple
+              />
+            </div>
+          </div>
+
           <label>Estratégias</label>
           <button
             className="add-card"
@@ -531,36 +701,28 @@ export function AddPlans() {
             <PopUp
               title="Criar estratégia"
               subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
+              onClose={closePopup}
             >
               <div className="pop-body">
                 <div className="dates-add">
                   <div className="input-field">
-                    <InputField
-                      label="Datas"
-                      type="text"
-                      id="dates"
-                      mask="99/99/9999"
-                      value={dateInput}
-                      onChange={(event) => setDateInput(event.target.value)}
+                    <label className="label">Datas</label>
+                    <DatePicker
+                      multiple
+                      value={selectedDates}
+                      onChange={(dates) =>
+                        setSelectedDates(
+                          dates.map((date) => date.format("DD/MM/YYYY"))
+                        )
+                      }
+                      format="DD/MM/YYYY"
+                      id="datas-input"
+                      style={{
+                        borderRadius: "0px",
+                        width: "100%",
+                      }}
                     />
-
-                    {selectedDates.length > 0 ? (
-                      selectedDates.map((date, index) => (
-                        <div key={date} className="date-card">
-                          <p>{date}</p>
-                          <button>
-                            &times;
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Nenhuma data selecionada</p>
-                    )}
                   </div>
-
-                  <button className="add-btn" onClick={addDate}>
-                    <X />
-                  </button>
                 </div>
 
                 <div className="input-field">
@@ -568,15 +730,16 @@ export function AddPlans() {
                     type="number"
                     label="Carga Horária"
                     id="carga-h"
+                    value={cargaHoraria !== null ? cargaHoraria : ""}
                     onChange={handleCargaHorariaChange}
+                    onWheel={(event) => event.currentTarget.blur()}
+                    maxLength={3}
                   />
                 </div>
 
                 <div className="multiselects">
                   <div className="multi-conherel">
-                    <label className="label">
-                      Conhecimentos Relacionados
-                    </label>
+                    <label className="label">Conhecimentos Relacionados</label>
                     <Multiselect
                       options={options}
                       value={valueConhecimentosStra}
@@ -596,7 +759,9 @@ export function AddPlans() {
                   </div>
 
                   <div className="multi-recNam">
-                    <label className="label">Recursos e Ambientes Pedagógicos</label>
+                    <label className="label">
+                      Recursos e Ambientes Pedagógicos
+                    </label>
                     <Multiselect
                       options={options}
                       value={valueRecursosStra}
@@ -617,10 +782,19 @@ export function AddPlans() {
                 </div>
 
                 <div className="popup-btns">
-                  <button onClick={createStrategy}>Salvar</button>
-                  <button onClick={() => togglePopUpStrategy()}>
-                    Cancelar
+                  <button
+                    onClick={(event) => {
+                      if (editingStrategyIndex !== null) {
+                        editStrategy(event);
+                      } else {
+                        createStrategy(event);
+                      }
+                    }}
+                  >
+                    {editingStrategyIndex !== null ? "Salvar" : "Criar"}
                   </button>
+
+                  <button onClick={closePopup}>Cancelar</button>
                 </div>
               </div>
             </PopUp>
@@ -628,20 +802,39 @@ export function AddPlans() {
 
           {strategies.map((strategy, index) => (
             <div className="card-info">
-              <div className="pergunta-estra">
+              <div className="title-card">
                 <h1>{strategy.perguntasMediadoras}</h1>
               </div>
+              <div className="tag-card">
+                <p>Carga Horária: {strategy.cargaHoraria}</p>
+              </div>
               <div className="selections">
-                <p>Datas : {strategy.dates.join(", ")}</p>
-                <p>Conhecimentos: {strategy.conhecimentos.join(", ")}</p>
-                <p>Estratégias: {strategy.estrategias.join(", ")}</p>
-                <p>Recursos: {strategy.recursos.join(", ")}</p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Datas:</span>{" "}
+                  {strategy.dates.join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {strategy.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {strategy.estrategias
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {strategy.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
               </div>
               <div className="card-btns">
                 <button
                   onClick={(event) => {
                     event.preventDefault();
-                    startEditingPlan(index);
+                    startEditingStra(index, index);
                   }}
                 >
                   Editar
@@ -674,15 +867,26 @@ export function AddPlans() {
 
           {plans.map((plan, index) => (
             <div className="card-info">
-              <div className="date-plan">
+              <div className="title-card">
                 <h1>
                   {plan.dateInicial} — {plan.dateFinal}
                 </h1>
               </div>
               <div className="selections">
-                <p>Conhecimentos: {plan.conhecimentos.join(", ")}</p>
-                <p>Estratégias: {plan.estrategias.join(", ")}</p>
-                <p>Recursos: {plan.recursos.join(", ")}</p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Conhecimentos:</span>{" "}
+                  {plan.conhecimentos
+                    .map((value) => labelMap[value])
+                    .join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Estratégias:</span>{" "}
+                  {plan.estrategias.map((value) => labelMap[value]).join(", ")}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Recursos:</span>{" "}
+                  {plan.recursos.map((value) => labelMap[value]).join(", ")}
+                </p>
               </div>
               <div className="card-btns">
                 <button
@@ -707,11 +911,12 @@ export function AddPlans() {
 
           {showPopUpPlan && (
             <PopUp
+              onClose={closePopup}
               title="Planejamento de aulas"
               subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
               <div className="pop-body">
-                <div className="dates">
+                <div className="datess">
                   <div className="data-prop">
                     <label>Data proposta</label>
                     <ReactInputMask
@@ -772,11 +977,12 @@ export function AddPlans() {
 
           {showPopUpClasses && (
             <PopUp
+              onClose={closePopup}
               title="Editar"
               subtitle="Edite as informações referente ao planejamento de aula"
             >
-              <div className="popup-body">
-                <div className="dates">
+              <div className="pop-body">
+                <div className="datess">
                   <div className="data-prop">
                     <label>Data proposta</label>
                     <ReactInputMask

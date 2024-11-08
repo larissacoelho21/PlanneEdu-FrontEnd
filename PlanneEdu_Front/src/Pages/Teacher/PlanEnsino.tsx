@@ -8,6 +8,7 @@ import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { Plus } from "lucide-react";
+import { IntroText } from "../../Components/IntroTexts/IntroText";
 
 export function PlanEnsino() {
   return (
@@ -24,6 +25,11 @@ export function PlanEnsino() {
           Visualize todos os planos de ensino da unidade
         </h2>
         <div className="Line"></div>
+      <div className="title-planensino" style={{margin: "5% 0 5% 0"}}>
+        <IntroText
+          titleText="Gerencie os planos de ensino"
+          subtitleText="Gerencie e compartilhe seus planos de ensino"
+        />
       </div>
 
       <div className="Add-Plano">

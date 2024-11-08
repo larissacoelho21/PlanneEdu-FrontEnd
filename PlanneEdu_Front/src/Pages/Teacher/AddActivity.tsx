@@ -1,28 +1,40 @@
-import { Clock3, Users } from "lucide-react";
+ import { Clock3, Users } from "lucide-react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Css/Teacher/AddActivity.css";
-import {
-  Multiselect,
-  SelectOption,
-} from "../../Components/Multiselect/Multiselect";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { BaseUrl } from "../../Config/config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import {
+  Multiselect,
+  SelectOption,
+} from "../../Components/Multiselect/Multiselect";
 
 interface InputFieldProps {
   id: string;
   label: string;
   type?: string;
+  value?: string;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
-function InputField({ id, label, type = "text" }: InputFieldProps) {
-  const [isFilled, setIsFilled] = useState(false);
+function InputField({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+}: InputFieldProps) {
+  const [isFilled, setIsFilled] = useState(!!value);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
+    if (onChange) onChange(event); // Para encaminhar a mudança do valor
   };
 
   return (
@@ -34,28 +46,22 @@ function InputField({ id, label, type = "text" }: InputFieldProps) {
         className="input-add"
         id={id}
         type={type}
+        value={value}
         onChange={handleInputChange}
+        autoComplete="off"
       />
     </fieldset>
   );
 }
 
-const options = [
-  { label: "First", value: 1 },
-  { label: "Second", value: 2 },
-  { label: "Third", value: 3 },
-  { label: "Fourth", value: 4 },
-  { label: "Fifth", value: 5 },
-];
-
-/* Interface conexão com  Back-End */
+/* Interface conexão com  Back-End */ /* 
 interface Desafio {
   descricao: string;
   capacidadesBT: string[];
   capaSocio: string[];
-}
+} */
 
-interface SA {
+/* interface SA {
   dataProposta: string; // Usar string para datas, pois a conversão pode ser feita antes de enviar para o back-end
   dataEntrega: string;
   estrategiaApre:
@@ -71,46 +77,163 @@ interface SA {
   resultados: string;
   user: string; // Supondo que seja o ID do usuário
   materia: string; // Supondo que seja o ID da matéria
-}
+} */
+
+// fim larissa
 
 export function AddActivity() {
-  const navigate = useNavigate();
-
-  const [value, setValue] = useState<SelectOption[]>([options[0]]);
-  const [value2, setValue2] = useState<SelectOption[]>([options[0]]);
-
-  const [showPopUpAdd, setShowPopUpAdd] = useState(false);
-  const togglePopUpAdd = () => {
-    setShowPopUpAdd(!showPopUpAdd);
-  };
-
-  interface Challenge {
-    id: number;
-    description: string;
-    capTecBas: (string | number)[];
-    capSoc: (string | number)[];
-  }
+  // multiselect
+  const options: SelectOption[] = [
+    { label: "First", value: 1 },
+    { label: "Second", value: 2 },
+    { label: "Third", value: 3 },
+    { label: "Fourth", value: 4 },
+    { label: "Fifth", value: 5 },
+  ];
 
   const [challenges, setChallenges] = useState<Challenge[]>([]);
 
-  const createChallenge = () => {
-    const newChallenge: Challenge = {
-      id: challenges.length + 1,
-      description: (document.getElementById("description") as HTMLInputElement)
-        .value,
-      capTecBas: value.map((cap) => cap.value),
-      capSoc: value.map((cap) => cap.value),
-    };
+  const [valueCapTecB, setValueCapTecB] = useState<SelectOption[]>([]);
+  const [valueCapSoc, setValueCapSoc] = useState<SelectOption[]>([]);
 
-    setChallenges([...challenges, newChallenge]);
-    togglePopUpAdd();
+  const [valueCapTecPop, setValueCapTecPop] = useState<SelectOption[]>([]);
+  const [valueCapSocPop, setValueCapSocPop] = useState<SelectOption[]>([]);
 
-    setValue([options[0]]);
-    setValue2([options[0]]);
+  const [descricao, setDescricao] = useState<string>("");
+
+  type Challenge = {
+    descricao: string;
+    capsTecBasP: (string | number)[];
+    capsSocP: (string | number)[];
   };
 
+  const createChallenge = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // verificando se todos os campos estão preenchidos
+    if (
+      valueCapTecPop.length === 0 ||
+      valueCapSocPop.length === 0 ||
+      !descricao
+    ) {
+      toast.error("Preencha todos os campos para continuar!");
+      return;
+    }
+
+    const newChallenge = {
+      descricao,
+      capsTecBasP: valueCapTecPop.map((capTec) => capTec.value),
+      capsSocP: valueCapSocPop.map((capSoc) => capSoc.value),
+    };
+    setChallenges([...challenges, newChallenge]);
+
+    setDescricao("");
+    setValueCapTecPop([]);
+    setValueCapSocPop([]);
+
+    toast.success("Desafio criado com sucesso!");
+
+    togglePopUpChallenge();
+  };
+
+
+
+  // /multiselect
+
+  // editando card de desafio
+  const [editCardC, setEditCardC] = useState<number | null>(null);
+
+  const startEditCard = (index: number) => {
+    const cardToEdit = challenges[index];
+
+    setEditCardC(index);
+    setDescricao(cardToEdit.descricao);
+    setValueCapTecPop(
+        cardToEdit.capsTecBasP
+            .map((value) => options.find((option) => option.value === value))
+            .filter((option): option is SelectOption => option !== undefined)
+    );
+    setValueCapSocPop(
+        cardToEdit.capsSocP
+            .map((value) => options.find((option) => option.value === value))
+            .filter((option): option is SelectOption => option !== undefined)
+    );
+};
+
+useEffect(() => {
+  if (editCardC !== null) {
+      setShowPopUpChallenge(true);  // Abre o pop-up apenas após `editCardC` ser configurado
+  }
+}, [editCardC]);
+
+
+  const editChallenge = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // validar se todos os campos estão preenchidos
+    if (
+      !descricao ||
+      valueCapTecPop.length === 0 ||
+      valueCapSocPop.length === 0
+    ) {
+      toast.error("Preencha todos os campos para continuar!");
+      return;
+    }
+
+    // configuração do objeto de desafio atualizado
+    const updatedChallenge: Challenge = {
+      descricao: descricao,
+      capsTecBasP: valueCapTecPop.map((capTec) => capTec.value),
+      capsSocP: valueCapSocPop.map((capSoc) => capSoc.value),
+    };
+
+    // garantir que estamos no modo de edição
+    if (editCardC !== null) {
+      // atualizar o desafio existente na lista de desafios
+      const updatedChallenges = [...challenges];
+      updatedChallenges[editCardC] = updatedChallenge;
+      setChallenges(updatedChallenges);
+
+      toast.success("Desafio editado com sucesso!");
+
+      // resetar os valores de edição
+      setDescricao("");
+      setValueCapTecPop([]);
+      setValueCapSocPop([]);
+      setEditCardC(null);
+      togglePopUpChallenge();
+    }
+  };
+  // /edit
+
+  // deletar
+  const deleteChallenge = (
+    data: any[],
+    setData: React.Dispatch<React.SetStateAction<any[]>>,
+    index: number
+  ) => {
+    const updateData = data.filter((_, i) => i !== index);
+    setData(updateData);
+    toast.success("Desafio deletado com sucesso!");
+  };
+
+  const navigate = useNavigate();
+
+  const [showPopUpChallenge, setShowPopUpChallenge] = useState(false);
+  const togglePopUpChallenge = () => {
+    setShowPopUpChallenge(!showPopUpChallenge);
+    if (showPopUpChallenge) {
+        setDescricao("");
+        setValueCapTecPop([]);
+        setValueCapSocPop([]);
+        setEditCardC(null);
+    }
+};
+
+  //lairssa
+
   /* Conectando com o Back */
-  const [formData, setFormData] = useState<SA>({
+  /*  const [formData, setFormData] = useState<SA>({
     dataProposta: "",
     dataEntrega: "",
     estrategiaApre: "situacao problema",
@@ -121,15 +244,15 @@ export function AddActivity() {
     resultados: "",
     user: "",
     materia: "",
-  });
+  }); */
 
-  const handleAct = (event: React.FormEvent) => {
-    event.preventDefault(); // Evita o reload da página
+  /* const handleAct = (event: React.FormEvent) => {
+    event.preventDefault(); */ // Evita o reload da página
 
-    fetch(`${BaseUrl}/sa/create`, {
-      //conectando com o computador que está rodando o back-end
-      method: "POST", //method post de envio
-      headers: {
+  /* fetch(`${BaseUrl}/sa/create`, { */
+  //conectando com o computador que está rodando o back-end
+  /* method: "POST", */ //method post de envio
+  /*  headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
@@ -143,27 +266,27 @@ export function AddActivity() {
         return response.json();
       })
       .then((data) => {
-        console.log("sucesso", data);
-        // Após o cadastro bem-sucedido, redireciona e notifica o usuário
-        toast.success("Atividade cadastrada com sucesso!");
-        navigate("/visualizaratvd"); // Exemplo de redirecionamento após sucesso
-      })
+        console.log("sucesso", data); */
+  // Após o cadastro bem-sucedido, redireciona e notifica o usuário
+  /*  toast.success("Atividade cadastrada com sucesso!");
+        navigate("/visualizaratvd"); */ // Exemplo de redirecionamento após sucesso
+  /* })
       .catch((error) => {
         toast.error("Erro ao cadastrar Atividade, tente novamente.");
         console.error("Erro ao cadastrar SA: ", error);
       });
-  };
+  }; */
 
   // Função para lidar com mudanças nos inputs
-  const handleChange = (
+  /* const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
+  }; */
 
   // Função para adicionar um novo desafio
-  const adicionarDesafio = () => {
+  /*  const adicionarDesafio = () => {
     setFormData({
       ...formData,
       desafios: [
@@ -171,7 +294,9 @@ export function AddActivity() {
         { descricao: "", capacidadesBT: [], capaSocio: [] },
       ],
     });
-  };
+  }; */
+
+  // / larissa
 
   return (
     <section className="add-activity">
@@ -199,7 +324,7 @@ export function AddActivity() {
         </div>
       </div>
 
-      <form onSubmit={handleAct}>
+      <form>
         <div className="form-addactivity">
           <div className="dates-add">
             <div className="proposed-date">
@@ -209,8 +334,8 @@ export function AddActivity() {
               <input
                 type="date"
                 name="dataProposta"
-                value={formData.dataProposta}
-                onChange={handleChange}
+                /*  value={formData.dataProposta}
+                onChange={handleChange} */
               />
             </div>
             <div className="delivery-date">
@@ -220,8 +345,8 @@ export function AddActivity() {
               <input
                 type="date"
                 name="dataEntrega"
-                value={formData.dataEntrega}
-                onChange={handleChange}
+                /* value={formData.dataEntrega}
+                onChange={handleChange} */
               />
             </div>
           </div>
@@ -233,50 +358,50 @@ export function AddActivity() {
             <div className="buttons-add">
               <button
                 value="situacao problema"
-                onClick={() =>
+                /* onClick={() =>
                   setFormData({
                     ...formData,
                     estrategiaApre: "situacao problema",
                   })
-                }
+                } */
               >
                 Situação Problema
               </button>
               <button
                 value="estudos de caso"
-                onClick={() =>
+                /* onClick={() =>
                   setFormData({
                     ...formData,
                     estrategiaApre: "estudos de caso",
                   })
-                }
+                } */
               >
                 Estudo de Caso
               </button>
               <button
                 value="projeto"
-                onClick={() =>
+                /* onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "projeto" })
-                }
+                } */
               >
                 Projeto
               </button>
               <button
                 value="projeto integrador"
-                onClick={() =>
+                /* onClick={() =>
                   setFormData({
                     ...formData,
                     estrategiaApre: "projeto integrador",
                   })
-                }
+                } */
               >
                 Projeto Integrador
               </button>
               <button
                 value="pesquisa"
-                onClick={() =>
+                /*  onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "pesquisa" })
-                }
+                } */
               >
                 Pesquisa
               </button>
@@ -291,10 +416,10 @@ export function AddActivity() {
               </label>
               <Multiselect
                 options={options}
-                value={value}
-                onChange={(o) => setValue(o)}
-                multiple={true}
-              />
+                value={valueCapTecB}
+                onChange={setValueCapTecB}
+                multiple
+              />  
             </div>
             <div className="capsocio">
               <label className="label-capsocio">
@@ -302,9 +427,9 @@ export function AddActivity() {
               </label>
               <Multiselect
                 options={options}
-                value={value2}
-                onChange={(o) => setValue2(o)}
-                multiple={true}
+                value={valueCapSoc}
+                onChange={setValueCapSoc}
+                multiple
               />
             </div>
           </div>
@@ -314,9 +439,8 @@ export function AddActivity() {
               id="contextualization"
               label="Contextualização"
               type="text"
-              name="contextualizacao"
-              value={formData.contextualizacao}
-              onChange={handleChange}
+              /* value={formData.contextualizacao}
+              onChange={handleChange} */
             />
           </div>
 
@@ -328,58 +452,65 @@ export function AddActivity() {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  togglePopUpAdd();
+                  togglePopUpChallenge();
                 }}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
-
-            {challenges.map((challenge) => (
-              <div className="card-challenge">
-                <div className="number-challenge">
-                  <h1>Desafio {challenge.id}</h1>
-                </div>
-                <div className="view-description">
-                  <h1>{challenge.description}</h1>
-                </div>
-                <div className="view-caps">
-                  <div className="view-capbastec">
-                    <h1>
-                      Capacidades técnicas: {challenge.capTecBas.join(", ")}
-                    </h1>
-                  </div>
-                  <div className="view-capsoc">
-                    <h1>
-                      Capacidades socioemocionais: {challenge.capSoc.join(", ")}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
+
+          {challenges.map((challenge, index) => (
+            <div key={index} className="challenge-card">
+              <div className="items-card-challenge">
+                <h3>Desafio {index + 1}</h3>
+                <p>Descrição: {challenge.descricao}</p>
+                <p>Técnicas: {challenge.capsTecBasP.join(", ")}</p>
+                <p>Socioemocionais: {challenge.capsSocP.join(", ")}</p>
+              </div>
+              <div className="buttons-card-challenge">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    startEditCard(index);
+                  }}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    deleteChallenge(challenges, setChallenges, index);
+                  }}
+                >
+                  Deletar
+                </button>
+              </div>
+            </div>
+          ))}
 
           <div className="results-add">
             <InputField
               id="contextualization"
               label="Resultados Esperados"
               type="text"
-              name="resultados"
-              value={formData.resultados}
-              onChange={handleChange}
+              /* value={formData.resultados}
+              onChange={handleChange} */
             />
           </div>
 
           <div className="buttons-save-atvd">
             <button type="submit">Salvar Alterações</button>
-            <button type="button" onClick={() => navigate("/voltar")}>Voltar</button>
+            <button type="button" onClick={() => navigate("/voltar")}>
+              Voltar
+            </button>
           </div>
         </div>
       </form>
 
       {/* PopUp */}
-      {showPopUpAdd && (
-        <div className="overlay" onClick={togglePopUpAdd}>
+      {showPopUpChallenge && (
+        <div className="overlay" onClick={togglePopUpChallenge}>
           <div className="popup-challenge" onClick={(e) => e.stopPropagation()}>
             <div className="popup-content-challenge">
               <div className="texts-challenge">
@@ -391,10 +522,14 @@ export function AddActivity() {
               </div>
 
               <div className="forms-add-challenge">
-                <div className="description">
-                  <InputField id="description" label="Descrição" type="text" 
-                    value={formData.contextualizacao}
-                    onChange={handleChange}/>
+                <div className="description" style={{ cursor: "pointer" }}>
+                  <InputField
+                    id="description"
+                    label="Descrição"
+                    type="text"
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                  />
                 </div>
                 <div className="captecbasic-ch">
                   <label className="label-captecbasic">
@@ -402,12 +537,9 @@ export function AddActivity() {
                   </label>
                   <Multiselect
                     options={options}
-                    value={value}
-                    onChange={(o) => setValue(o)}
-                    multiple={true}
-                    onSelect={(selectedList) => setValue(selectedList)}
-                    onRemove={(selectedList) => setValue(selectedList)}
-                    displayValue="name"
+                    value={valueCapTecPop}
+                    onChange={setValueCapTecPop}
+                    multiple
                   />
                 </div>
                 <div className="capsocio-ch">
@@ -416,18 +548,23 @@ export function AddActivity() {
                   </label>
                   <Multiselect
                     options={options}
-                    value={value2}
-                    onChange={(o) => setValue2(o)}
-                    multiple={true}
-                    onSelect={(selectedList) => setValue2(selectedList)}
-                    onRemove={(selectedList) => setValue2(selectedList)}
-                    displayValue="name"
+                    value={valueCapSocPop}
+                    onChange={setValueCapSocPop}
+                    multiple
                   />
                 </div>
 
                 <div className="buttons-popup-challenge">
-                  <button onClick={createChallenge}>Criar Desafio</button>{" "}
-                  <button onClick={togglePopUpAdd}>Cancelar</button>
+                  <button
+                    onClick={(event) =>
+                      editCardC === null
+                        ? createChallenge(event)
+                        : editChallenge(event)
+                    }
+                  >
+                    {editCardC === null ? "Salvar" : "Salvar Edição"}
+                  </button>
+                  <button onClick={togglePopUpChallenge}>Cancelar</button>
                 </div>
               </div>
             </div>

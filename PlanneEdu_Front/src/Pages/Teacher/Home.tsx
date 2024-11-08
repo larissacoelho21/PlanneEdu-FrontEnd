@@ -3,6 +3,7 @@ import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/na
 import "../../Css/Teacher/Home.css"
 import { Clock3, Users } from "lucide-react";
 import { useEffect, useState } from "react";
+import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
 
 export function Home() {
   const [userName, setUserName] = useState<string | null>("");
@@ -17,12 +18,12 @@ export function Home() {
   return (
     <section className="homeTeacher">
       <NavBarProfessor />
-      <div className="introTeacher">
-        <h1>Seja bem-vindo, {userName || "Usuário"}</h1>
-        <h2>Visualize suas turmas ativas</h2>
-        <hr />
-      </div>
-
+      <TextsIntroName
+        userName={userName || "Usuário"}
+        titleText="Seja bem vindo"
+        subtitleText="Visualize suas turmas ativas"
+      />
+      
       <div className="cardsTeacher">
         <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
           {" "}
