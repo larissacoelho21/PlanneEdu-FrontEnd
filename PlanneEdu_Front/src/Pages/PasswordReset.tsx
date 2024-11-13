@@ -5,74 +5,22 @@ import Logo from "../assets/logo.svg";
 
 import "../Css/PasswordReset.css";
 import { useNavigate } from "react-router-dom";
-import { BaseUrl } from "../Config/config";
 import { toast } from "sonner";
+import { postEmail } from "../Services/Axios";
 
 /* Redefinição de senha */
 export function PasswordReset() {
-  const [code, setCode] = useState("");
-  const [emailValue, setemailValue] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const navigate = useNavigate();
-
-  //TODO : passar para o axios
-
-  const postEmail = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    setIsLoading(true); // Inicia o estado de carregamento
-
-    console.log("E-mail enviado:", emailValue);
-
-    console.log(isLoading);
-
-    /* const toastId = toast.loading("Enviando e-mail..."); */
-    const promise = () =>
-      new Promise((resolve) => setTimeout(() => resolve, 1000));
-
-    const toastId = toast.promise(promise, {
-      loading: "Aguarde, estamos enviando seu e-mail...",
-    });
-
-    fetch(`${BaseUrl}/auth/forgot_password`, {
-      //conectando com o computador que está rodando o back-end
-      method: "POST", //method post de envio
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        //transformando os valores de email em string
-        email: emailValue,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((err) => {
-            throw new Error(err.error || "Erro ao enviar o e-mail");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("email enviado:", data);
-        // Armazena o e-mail no localStorage
-        localStorage.setItem("emailValue", emailValue);
-
-        toast.dismiss(toastId);
-        toast.success(
-          "E-mail enviado com sucesso! Verifique sua caixa de entrada."
-        );
-        setIsLoading(false); // Finaliza o estado de carregamento
-        navigate("/verificacaoemail"); // Navega para a próxima página
-      })
-      .catch((error) => {
-        setIsLoading(false); // Finaliza o estado de carregamento em caso de erro
-        toast.dismiss(toastId); // Remove o toast de carregamento
-        toast.error("Não foi possível enviar o email, tente novamente"); //alert
-        console.error("Erro ao enviar email: ", error);
-      });
-  };
+ 
+    const [emailValue, setEmailValue] = useState('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
+  
+    const handleEmailSubmit = (event: React.FormEvent) => {
+      event.preventDefault();
+  
+      const toastId = toast.loading("Aguarde, estamos enviando seu e-mail...");
+      postEmail(emailValue, setIsLoading, navigate, toastId);
+    };
 
   return (
     <section className="PasswordReset">
@@ -92,7 +40,7 @@ export function PasswordReset() {
               necessárias para que você possa redefinir sua senha.
             </p>
           </div>
-          <form onSubmit={postEmail}>
+          <form onSubmit={handleEmailSubmit}>
             <div className="input-reset">
               {" "}
               {/* Inputs - colocando novo css pela posição do objeto */}
@@ -101,7 +49,7 @@ export function PasswordReset() {
                 className="reset"
                 placeholder="Insira seu email"
                 value={emailValue}
-                onChange={(event) => setemailValue(event.target.value)}
+                onChange={(event) => setEmailValue(event.target.value)}
                 required
               />
             </div>
@@ -136,7 +84,7 @@ export function PasswordReset() {
 
           <div className="login-redefinicao">
             
-            <form onSubmit={postEmail}>
+            <form onSubmit={handleEmailSubmit}>
               <div className="input-reset">
                 {" "}
                 {/* Inputs - colocando novo css pela posição do objeto */}
@@ -145,7 +93,7 @@ export function PasswordReset() {
                   className="reset"
                   placeholder="Insira seu email"
                   value={emailValue}
-                  onChange={(event) => setemailValue(event.target.value)}
+                  onChange={(event) => setEmailValue(event.target.value)}
                   required
                 />
               </div>
