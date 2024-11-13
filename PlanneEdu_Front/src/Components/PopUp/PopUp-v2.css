@@ -84,5 +84,5 @@
 .popup-body form {
   display: flex;
   flex-direction: column;
-  gap: 3vw;
+  gap: 2vw;
 }
