@@ -1,0 +1,46 @@
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --gray-one: #bbbb;
+  --gray-two: #848484bb;
+  --white: #ffff;
+}
+
+.form-addclass {
+  display: flex;
+  flex-direction: column;
+  gap: 3vw;
+  width: 90vw;
+  margin: 0 auto;
+  margin-bottom: 4vw;
+  padding: 5vw;
+  background-color: var(--white-one);
+  border-radius: 0.5vw;
+  box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.select-addclass{
+  display: flex;
+  flex-direction: column;
+}
+
+.select-addclass select{
+  border-bottom: solid 2px var(--gray-one);
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+.input-addclass{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-addclass input{
+  border-bottom: solid 2px var(--gray-one);
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+}
