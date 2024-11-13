@@ -217,7 +217,7 @@ button{
 .pop-body, .multiselects {
   display: flex;
   flex-direction: column;
-  gap: 2vw;
+  gap: 1.6vw;
 }
 
 .datess{

@@ -174,3 +174,46 @@
   border: 3px solid #07678d;
   border-radius: .3vw;
 }
+
+.subtopic{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subtopic .Fieldset{
+  width: 85%;
+}
+
+.subtopic .add-subbtn{
+  background: #fff;
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #07678d;
+  border-radius: .3vw;
+  border: 2px solid #07678d;
+  margin-bottom: 1vw;
+}
+
+.subtopic .add-subbtn:hover{
+  background: #07678d;
+  border: 2px solid #07678d;
+  color: #fff;
+  transition: 0.35s ease-in-out;
+}
+
+.conhecimento-btn button{
+  background: #07678d;
+  padding: .8vw 2vw;
+  color: #fff;
+  border: none;
+  border-radius: .3vw;
+}
+
+.conhecimento-btn{
+  display: flex;
+  justify-content: center;
+}
