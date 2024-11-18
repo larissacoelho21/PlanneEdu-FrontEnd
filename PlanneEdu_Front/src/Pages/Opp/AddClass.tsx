@@ -49,6 +49,8 @@ function InputField({
 export function AddClass() {
   const [showPopUpStudent, setShowPopUpStudent] = useState(false);
 
+  const togglePopUpStudent = () => setShowPopUpStudent(!showPopUpStudent);
+
   return (
     <section className="add-new-class">
       <SubNavbar />
@@ -113,6 +115,7 @@ export function AddClass() {
               <button
                 onClick={(e) => {
                   e.preventDefault();
+                  togglePopUpStudent();
                 }}
               >
                 <FontAwesomeIcon icon={faPlus} />
@@ -120,33 +123,51 @@ export function AddClass() {
             </div>
           </div>
 
+          {showPopUpStudent && (
+            <div className="overlay" onClick={togglePopUpStudent}>
+              <div className="popup-add-student" onClick={(e) => e.stopPropagation()}>
+                <div className="popup-content-student">
+                  <div className="texts-student">
+                    <h1>Adicione um aluno a esta turma</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="timetable-class">
             <div className="title-add-class">
               <h1>Grade horária</h1>
             </div>
             <div className="add-timetable">
-              <table className="table-infos-grid">
+            <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
+              <table className="table-timetable">
                 <thead>
                   <tr>
                     <th>Matéria</th>
-                    <th>Carga Horária</th>
+                    <th>Professor</th>
+                    <th>Carga Horária</th>  
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Fundamentos de Programação Orientada a Objeto</td>
+                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
                     <td>75</td>
                   </tr>
                   <tr>
                     <td>Sistemas Operacionais</td>
+                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
                     <td>75</td>
                   </tr>
                   <tr>
                     <td>Hardware e Redes</td>
+                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
                     <td>75</td>
                   </tr>
                   <tr>
                     <td>Linguagem de Marcação</td>
+                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
                     <td>75</td>
                   </tr>
                 </tbody>

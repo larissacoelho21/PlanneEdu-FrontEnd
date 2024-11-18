@@ -25,9 +25,7 @@ export function PlanEnsino() {
 
       <div className="Add-Plano">
         <button>
-          <i>
             <Plus size={32} color="white" strokeWidth={1.5} />
-          </i>{" "}
           Adicionar plano de ensino
         </button>
       </div>

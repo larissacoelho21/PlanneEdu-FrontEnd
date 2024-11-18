@@ -8,10 +8,10 @@
 .Add-Plano button {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center !important; 
   gap: 1vw;
   width: 35vw;
-  padding: 0.8vw 1.8vw;
+  padding: 1vw 1.2vw;
   margin-bottom: 4vw;
   border-radius: 1vw;
   border: none;
