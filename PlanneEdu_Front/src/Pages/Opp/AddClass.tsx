@@ -4,6 +4,7 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddClass.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface InputFieldProps {
   id: string;
@@ -26,7 +27,7 @@ function InputField({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event); // Para encaminhar a mudança do valor
+    if (onChange) onChange(event); 
   };
 
   return (
@@ -47,9 +48,54 @@ function InputField({
 }
 
 export function AddClass() {
-  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
 
-  const togglePopUpStudent = () => setShowPopUpStudent(!showPopUpStudent);
+  // TODO criando função de criar estudante e add ele na tabela
+
+  // add estudante
+  interface Student {
+    name: string;
+    surname: string;
+    registration: string;
+  }
+
+  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [nameStudent, setNameStudent] = useState("");
+  const [surnameStudent, setSurnameStudent] = useState("");
+  const [registrationStudent, setRegistrationStudent] = useState("");
+
+  const togglePopUpStudent = () => {
+    setShowPopUpStudent(!showPopUpStudent);
+
+    if (showPopUpStudent) {
+      setNameStudent("");
+      setSurnameStudent("");
+      setRegistrationStudent("");
+    }
+  };
+
+  const addStudent = () => {
+    if (!nameStudent || !surnameStudent || !registrationStudent) {
+      toast.error("Preencha todos os campos para continuar!");
+      return;
+    }
+
+    const newStudent: Student = {
+      name: nameStudent,
+      surname: surnameStudent,
+      registration: registrationStudent,
+    };
+
+    const updatedStudents = [...students, newStudent].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    setStudents(updatedStudents);
+
+    togglePopUpStudent();
+    toast.success("Estudante adicionado com sucesso!");
+  };
+
+    // add estudante
 
   return (
     <section className="add-new-class">
@@ -73,11 +119,7 @@ export function AddClass() {
             </select>
           </div>
           <div className="input-addclass">
-            <InputField
-              id="nameclass"
-              label="Nome da turma"
-              type="text"
-            />
+            <InputField id="nameclass" label="Nome da turma" type="text" />
           </div>
           <div className="select-addclass">
             <label htmlFor="" className="label-select">
@@ -124,58 +166,79 @@ export function AddClass() {
           </div>
 
           {showPopUpStudent && (
-            <div className="overlay" onClick={togglePopUpStudent}>
-              <div className="popup-add-student" onClick={(e) => e.stopPropagation()}>
+            <div className="overlay-add-student" onClick={togglePopUpStudent}>
+              <div
+                className="popup-add-student"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <div className="popup-content-student">
                   <div className="texts-student">
                     <h1>Adicione um aluno a esta turma</h1>
+                  </div>
+                </div>
+
+                <div className="forms-add-student">
+                  <div className="name-student">
+                    <InputField
+                      id="nameStudent"
+                      label="Nome do aluno"
+                      type="text"
+                      value={nameStudent}
+                      onChange={(e) => setNameStudent(e.target.value)}
+                    />
+                  </div>
+                  <div className="surname-student">
+                    <InputField
+                      id="surnameStudent"
+                      label="Sobrenomes"
+                      type="text"
+                      value={surnameStudent}
+                      onChange={(e) => setSurnameStudent(e.target.value)}
+                    />
+                  </div>
+                  <div className="registration-student">
+                    <InputField
+                      id="rmStudent"
+                      label="RM"
+                      type="text"
+                      value={registrationStudent}
+                      onChange={(e) => setRegistrationStudent(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="button-student">
+                    <button onClick={addStudent}>Adicionar</button>
+                    <button onClick={togglePopUpStudent}>Cancelar</button>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="timetable-class">
-            <div className="title-add-class">
-              <h1>Grade horária</h1>
-            </div>
-            <div className="add-timetable">
-            <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
-              <table className="table-timetable">
-                <thead>
-                  <tr>
-                    <th>Matéria</th>
-                    <th>Professor</th>
-                    <th>Carga Horária</th>  
+          {students.length > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Matrícula</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{`${student.name} ${student.surname}`}</td>
+                    <td>{student.registration}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Fundamentos de Programação Orientada a Objeto</td>
-                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
-                    <td>75</td>
-                  </tr>
-                  <tr>
-                    <td>Sistemas Operacionais</td>
-                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
-                    <td>75</td>
-                  </tr>
-                  <tr>
-                    <td>Hardware e Redes</td>
-                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
-                    <td>75</td>
-                  </tr>
-                  <tr>
-                    <td>Linguagem de Marcação</td>
-                    <td><button><FontAwesomeIcon icon={faPlus} /></button></td>
-                    <td>75</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </form>
+
+      
     </section>
   );
 }
