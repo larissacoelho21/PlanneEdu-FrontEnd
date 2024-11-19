@@ -79,3 +79,48 @@
   color: var(--blue-two);
   border-radius: .5vw;
 }
+
+/* PopUp add estudante */
+.overlay-add-student{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-add-student {
+  max-width: 40rem;
+  padding: 4vw 5vw;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-add-student input{
+  width: 29vw;
+}
+
+.texts-student h1{
+  color: var(--blue-one);
+  margin-bottom: 8%;
+}
+
+.button-add-student button{
+  width: 15vw;
+  height: 3vw;
+  background-color: var(--blue-two);
+  color: var(--white-one);
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  transition: 0.3s ease;
+}

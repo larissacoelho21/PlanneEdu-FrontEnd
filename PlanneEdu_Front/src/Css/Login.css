@@ -69,7 +69,7 @@ body {
   padding: 2vw;
   width: 36.5vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 0.11vw;
+  border: rgba(1, 18, 38, 50%) solid 1px;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +80,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 0.11vw;
+  border: rgba(1, 18, 38, 50%) solid 1px;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
