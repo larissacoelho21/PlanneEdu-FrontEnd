@@ -7,20 +7,21 @@ import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { Plus } from "lucide-react";
 import { CodeXml } from "lucide-react";
+import { IntroForms } from "../../Components/IntroForms/IntroForms";
+import { IntroText } from "../../Components/IntroTexts/IntroText";
 
 export function PlanEnsinoEspc() {
   return (
     <main>
-      <div className="header">
+      <div className="header" style={{marginBottom: "5%"}}>
         <NavBarProfessor />
       </div>
-      <div className="Intro">
-        <h1 className="Title">Gerencie os planos de ensino</h1>
-        <h2 className="Description">De Desenvolvimento de Sistemas</h2>
-        <div className="Line"></div>
-      </div>
+      <IntroText
+        titleText="Gerencie os planos de ensino"
+        subtitleText="De Desenvolvimento de Sistemas"
+      />
 
-      <div className="Add-Plano">
+      <div className="Add-Plano" style={{marginTop: "5%"}}>
         <button>
           <i>
             <Plus size={32} color="white" strokeWidth={1.5} />

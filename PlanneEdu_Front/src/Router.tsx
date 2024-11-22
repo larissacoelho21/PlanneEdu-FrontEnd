@@ -25,6 +25,7 @@ import { AddUser } from "./Pages/Opp/AddUser";
 import { PlanCourse } from "./Pages/Teacher/PlanCourse";
 import { ManageTeachers } from "./Pages/Opp/ManageTeachers";
 import { LandingPage } from "./Pages/LandingPage";
+import { AddClass } from "./Pages/Opp/AddClass";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -56,6 +57,7 @@ const Router: React.FC = () => {
         <Route path="/managetechers" element={<ManageTeachers />} />
         <Route path="/landingpage" element={<LandingPage />} />
         {/* Lading Page */}
+        <Route path="/addclass" element={<AddClass/>} />
       </Routes>
     </BrowserRouter>
   );

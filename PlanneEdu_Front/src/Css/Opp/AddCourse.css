@@ -22,8 +22,11 @@
 .label-select,
 .select-add-course input {
   align-self: flex-start;
-  font-weight: 600;
-  color: var(--gray-two);
+  font-size: 1.1vw;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.2);
+  text-align: right;
+  transition: all 0.2s ease;
 }
 
 .select-planne-course h2 {
