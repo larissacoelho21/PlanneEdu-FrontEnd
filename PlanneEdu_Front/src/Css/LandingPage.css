@@ -1,0 +1,99 @@
+:root {
+    --white-one: #ffffff;
+    --white-two: #f2f2f2;
+    --gray-one: #bcbbbb;
+    --blue-one: #074973;
+    --blue-two: #07678d;
+    --black: #000;
+}
+
+.landing-page {
+    width: 100%;
+    height: auto;
+}
+
+.first-section {
+    background-image: url('../assets/landingPage-img.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+
+.bemVindo img {
+    width: 8vw;
+    margin-top: 3vw;
+    margin-left: 3vw;
+}
+
+.bemVindo h2 {
+    margin-top: 5vw;
+    margin-left: 5vw;
+    font-size: 2vw;
+    font-weight: 600;
+}
+
+.bemVindo h1 {
+    margin-left: 5vw;
+    font-size: 3vw;
+    color: var(--blue-one);
+}
+
+.bemVindo p {
+    font-size: 1vw;
+    margin-left: 5vw;
+    color: var(--blue-two);
+}
+
+.buttons-conheca button {
+    width: 20vw;
+    height: 11vh;
+    background-color: var(--blue-two);
+    border: none;
+    color: var(--white);
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+    transition: 0.3s ease;
+    margin-left: 5vw;
+    margin-top: 2vw;
+    font-weight: 300;
+}
+
+.buttons-conheca button:hover,
+.buttons-conheca button:focus {
+    background-color: transparent;
+    border: solid 2px #07678d;
+    color: var(--blue-two);
+}
+
+.buttons-conheca button:active {
+    background-color: transparent;
+    border: solid 2px #07678d;
+    color: var(--blue-two);
+}
+
+.second-section {
+    background-color: var(--white-two);
+    width: 100%;
+    height: auto;   
+}
+
+.second-section h1 {
+    margin-top: 15vw;
+    font-size: 2vw;
+    margin-left: 5vw;
+    width: 25vw;
+}
+
+.conheca {
+    color: #074973;
+}
+
+.second-section p {
+    font-size: 1vw;
+    margin-left: 5vw;
+    width: 25vw;
+    color: var(--blue-two);
+}
