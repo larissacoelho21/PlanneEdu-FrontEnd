@@ -76,7 +76,7 @@
 
 .input-course {
   width: 100%;
-  padding: 0.5rem 0;
+  padding: .5vw 0;
   border: none;
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
   font-size: 1vw;
@@ -93,11 +93,11 @@
   border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
 }
 
-.input-row {
+.row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 3vw; 
+  gap: 3vw;
 }
 
 .input-row .input-fieldd {
@@ -152,6 +152,11 @@
   color: #07678d;
 }
 
+.input-row{
+  display: flex;
+  justify-content: space-between;
+}
+
 .actions-btns {
   display: flex;
   gap: 3vw;
@@ -185,6 +190,23 @@
 .section-title{
   font-weight: 500 !important;
   text-align: center;
+}
+
+.pop-title{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  margin-bottom: 1vw;
+}
+
+.pop-title h2{
+  font-size: 2vw;
+}
+
+.pop-title h3{
+  font-size: 1.2vw;
+  text-align: center;
+
 }
 
 .subtopic {
@@ -232,15 +254,35 @@
 
 .detail {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 3vw; 
+  gap: 3vw;
 }
 
-.input-detail {
-  flex: 2;
+.detail .input-detail, .select-det{
+  width: 36vw;
 }
 
-.select-course {
-  flex: 1;
+.add-detail{
+  padding: .8vw 3.5vw;
+  border: none;
+  border-radius: .3vw;
+  background: #07678d;
+  color: #fff;
 }
+
+.knowledge-table{
+  width: 100%;
+}
+
+.knowledge-table th{
+  font-size: 1vw;
+  font-weight: 500;
+}
+
+.knowledge-table th, .knowledge-table td{
+  border: none;
+  border-bottom: solid .15vw rgba(0, 0, 0, 0.2);
+}
+

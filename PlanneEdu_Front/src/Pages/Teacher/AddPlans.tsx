@@ -8,7 +8,6 @@ import {
   BookMarked,
   Plus,
   Check,
-  X,
 } from "lucide-react";
 import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
@@ -77,7 +76,7 @@ function InputField({
 
     /* converte para número se o tipo do input for "number" */
     if (type === "number") {
-      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
 
       /* verifica o valor máximo permitido */
       if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
@@ -89,7 +88,7 @@ function InputField({
       setLocalValue(inputValue);
     }
 
-    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
+    /* propaga o valor atualizado para o pai, se `onChange` estiver definido */
     if (onChange) {
       event.target.value = inputValue;
       onChange(event);
