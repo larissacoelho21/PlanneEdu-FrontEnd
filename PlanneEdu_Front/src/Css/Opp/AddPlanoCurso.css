@@ -1,4 +1,5 @@
-.intro, .AddInfo {
+.intro,
+.AddInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +13,7 @@
   color: #074973;
 }
 
-.intro h2{
+.intro h2 {
   font-weight: 500;
   font-size: 1.7vw;
 }
@@ -29,14 +30,14 @@
   box-shadow: 0 0.3vw 2vw rgba(0, 0, 0, 0.1);
 }
 
-.form-course .input-field {
+.form-course .input-fieldd {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1vw;
+  gap: 1.5vw;
 }
 
-.form-course label{
+.form-course label {
   font-size: 1.2vw;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.2);
@@ -53,75 +54,81 @@
   cursor: pointer;
 }
 
+.label-course {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.2rem;
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
 .Fieldset.filled .label-course,
-.input-course:focus + .label-course {
+.input-course:focus+.label-course,
+.input-course:not(:placeholder-shown)+.label-course,
+.Fieldset select:focus + .label-course,
+.Fieldset select:not(:empty) + .label-course {
   transform: translateY(-1.5vw);
   font-size: 1vw;
   opacity: 1;
 }
 
-.label-course {
-  position: absolute;
-  font-size: 1.2vw;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.4);
-  text-align: right;
-  transition: all 0.2s ease;
-}
-
-.input-course{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2vw;
+.input-course {
+  width: 100%;
+  padding: 0.5rem 0;
   border: none;
-  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
-  margin-top: 0.5vw;
-  margin-bottom: 1vw;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  font-size: 1vw;
+  margin-top: 1vw;
+  background: transparent;
 }
 
 .input-course:focus {
-  outline: none; 
-  box-shadow: none; 
+  outline: none;
+  box-shadow: none;
   border-top: transparent;
   border-left: transparent;
   border-right: transparent;
-  border-bottom: var(--gray-one) solid 2px;
+  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
 }
 
-.input-row{
+.input-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 3vw; 
 }
 
-.input-row .input-f{
-  width: 45%;
+.input-row .input-fieldd {
+  width: 25%;
 }
 
-.grade-curricular h2{
+.grade-curricular h2 {
   text-align: center;
-  font-weight: 500;
+  font-weight: 650;
   font-size: 1.7vw;
+  margin-top: 1.5vw;
 }
 
-.semestres{
+.semestres {
   display: flex;
   flex-direction: column;
   gap: 2vw;
 }
 
-.semestre{
+.semestre {
   display: flex;
   flex-direction: column;
   gap: .5vw;
 }
 
-.semestres h3{
+.semestres h3 {
   font-size: 1.35vw;
   font-weight: 600;
 }
 
-.add-btn button{
+.add-btn button {
   width: 4vw;
   height: 4vw;
   background: #07678d;
@@ -131,12 +138,12 @@
   transition: ease-in-out .3s;
 }
 
-.add-btn button svg{
+.add-btn button svg {
   display: flex;
   margin: 0 auto;
 }
 
-.add-btn button:hover{
+.add-btn button:hover {
   width: 4vw;
   height: 4vw;
   background: #fff;
@@ -145,14 +152,14 @@
   color: #07678d;
 }
 
-.actions-btns{
+.actions-btns {
   display: flex;
   gap: 3vw;
   justify-content: center;
   align-items: center;
 }
 
-.actions-btns button{
+.actions-btns button {
   background: #07678d;
   color: #fff;
   font-size: 1vw;
@@ -166,7 +173,7 @@
   gap: 1vw;
 }
 
-.actions-btns button:hover{
+.actions-btns button:hover {
   background: #fff;
   color: #07678d;
   font-size: 1vw;
@@ -175,17 +182,22 @@
   border-radius: .3vw;
 }
 
-.subtopic{
+.section-title{
+  font-weight: 500 !important;
+  text-align: center;
+}
+
+.subtopic {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.subtopic .Fieldset{
+.subtopic .Fieldset {
   width: 85%;
 }
 
-.subtopic .add-subbtn{
+.subtopic .add-subbtn {
   background: #fff;
   width: 3vw;
   height: 3vw;
@@ -198,14 +210,14 @@
   margin-bottom: 1vw;
 }
 
-.subtopic .add-subbtn:hover{
+.subtopic .add-subbtn:hover {
   background: #07678d;
   border: 2px solid #07678d;
   color: #fff;
   transition: 0.35s ease-in-out;
 }
 
-.conhecimento-btn button{
+.conhecimento-btn button {
   background: #07678d;
   padding: .8vw 2vw;
   color: #fff;
@@ -213,7 +225,22 @@
   border-radius: .3vw;
 }
 
-.conhecimento-btn{
+.conhecimento-btn {
   display: flex;
   justify-content: center;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3vw; 
+}
+
+.input-detail {
+  flex: 2;
+}
+
+.select-course {
+  flex: 1;
 }

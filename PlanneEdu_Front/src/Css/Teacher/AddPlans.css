@@ -91,7 +91,7 @@ button{
   border-top: transparent;
   border-left: transparent;
   border-right: transparent;
-  border-bottom: var(--gray-one) solid 2px;
+  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
 }
 
 .row {
