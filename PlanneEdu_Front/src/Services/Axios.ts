@@ -3,21 +3,70 @@ import { toast } from "sonner";
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
-
 /* Login principal */
-export const login = async (nif: string, password: string) => {
+export const login = async (
+  nif: string,
+  password: string,
+  setIsLoading: (loading: boolean) => void,
+  navigate: (path: string) => void,
+  toastId: any
+) => {
+  setIsLoading(true);
+
+  const timeout = 10000; // Tempo máximo para a requisição em milissegundos (5 segundos)
+  let timeoutReached = false;
+
+  const timeoutToastId = setTimeout(() => {
+    timeoutReached = true;
+    toast.dismiss(toastId); // Remove o toast de carregamento
+    toast.warning("O tempo de espera excedeu! Tente novamente.");
+    setIsLoading(false); // Finaliza o estado de carregamento
+  }, timeout);
+
   try {
     const response = await axios.post(`${BaseUrl}/auth/login`, {
       nif: nif,
       password: password,
     });
 
+    clearTimeout(timeoutToastId);
+
+    if (!timeoutReached) {
+      const { data } = response;
+      
+      toast.dismiss(toastId);
+
+      // Armazenar informações no localStorage
+      localStorage.setItem("userName", data.user.nome);
+      localStorage.setItem("Authorization", data.token);
+
+      // Verificar se é usuário padrão
+      if (data.user.defaultUser) {
+        navigate("/profile");
+        toast.info("Por favor, atualize suas informações.");
+      }
+      // Verificar nível de acesso
+      else if (data.user.nivelAcesso === "opp") {
+        navigate("/homeopp");
+        toast.success("Bem-vindo, OPP!");
+      } else if (data.user.nivelAcesso === "docente") {
+        navigate("/homeprofessor");
+        toast.success("Bem-vindo, Docente!");
+      } else {
+        toast.error("Nível de acesso desconhecido.");
+      }
+    }
+
+    setIsLoading(false); 
     return response.data; // Retorna os dados da resposta se tudo ocorrer bem
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "valores não encontrados");
-    }
-    throw new Error("Erro ao tentar realizar login");
+    clearTimeout(timeoutToastId);
+    const errorMessage =
+      error.response?.data?.error || "NIF ou senha incorretos, tente novamente";
+    toast.dismiss(toastId);
+    toast.error(errorMessage);
+
+    setIsLoading(false);
   }
 };
 
@@ -30,7 +79,8 @@ export const postEmail = async (
 ) => {
   setIsLoading(true);
 
-  const promise = () => new Promise((resolve) => setTimeout(() => resolve, 1000));
+  const promise = () =>
+    new Promise((resolve) => setTimeout(() => resolve, 1000));
 
   const timeout = 5000; // Tempo máximo para a requisição em milissegundos (5 segundos)
   let timeoutReached = false;
@@ -39,20 +89,22 @@ export const postEmail = async (
   const timeoutToastId = setTimeout(() => {
     timeoutReached = true;
     toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.warning('O tempo de espera excedeu! Tente novamente.');
+    toast.warning("O tempo de espera excedeu! Tente novamente.");
     setIsLoading(false); // Finaliza o estado de carregamento
   }, timeout);
 
   // Função para lidar com o sucesso da requisição
   const handleSuccess = (response: any) => {
     clearTimeout(timeoutToastId);
-    console.log('E-mail enviado:', response.data);
-    localStorage.setItem('emailValue', emailValue); // Armazena o e-mail no localStorage
+    console.log("E-mail enviado:", response.data);
+    localStorage.setItem("emailValue", emailValue); // Armazena o e-mail no localStorage
 
     toast.dismiss(toastId);
-    toast.success('E-mail enviado com sucesso! Verifique sua caixa de entrada.');
+    toast.success(
+      "E-mail enviado com sucesso! Verifique sua caixa de entrada."
+    );
     setIsLoading(false); // Finaliza o estado de carregamento
-    navigate('/verificacaoemail');
+    navigate("/verificacaoemail");
   };
 
   // Função para lidar com o erro da requisição
@@ -60,8 +112,8 @@ export const postEmail = async (
     clearTimeout(timeoutToastId);
     setIsLoading(false);
     toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.error('Não foi possível enviar o e-mail, tente novamente'); // Exibe a mensagem de erro
-    console.error('Erro ao enviar e-mail: ', error);
+    toast.error("Não foi possível enviar o e-mail, tente novamente"); // Exibe a mensagem de erro
+    console.error("Erro ao enviar e-mail: ", error);
   };
 
   try {
@@ -87,8 +139,6 @@ export const postEmail = async (
     !timeoutReached && handleError(error);
   }
 };
-
-
 
 /* ======================= Docente ============================= */
 
@@ -137,47 +187,41 @@ export const updatePassword = async (
   }
 };
 
-
 /* ======================= Opp ============================= */
 
-
 /* Função adicionando usuário */
-export const RegisterUser = async (
-  userData: {
-    name: string;
-    sobrenome: string;
-    area: string;
-    nif: string;
-    password: string;
-    nivelAcesso: string;
-    email: string;
-    telefone: string;
-  }
-) => { 
+export const RegisterUser = async (userData: {
+  name: string;
+  sobrenome: string;
+  area: string;
+  nif: string;
+  password: string;
+  nivelAcesso: string;
+  email: string;
+  telefone: string;
+}) => {
   // Recuperando o token do localStorage
   const token = localStorage.getItem("Authorization");
   try {
     // Faz a chamada para o back-end
-    const response = await axios.post(
-      `${BaseUrl}/register`,
-      userData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${BaseUrl}/register`, userData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     // Sucesso: Exibe o toast e retorna a resposta
     toast.success("Novo usuário criado com sucesso!");
     return response.data;
   } catch (error: any) {
     // Erro: Exibe o toast e lança o erro para ser tratado
     if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "Não foi possível cadastrar o usuário");
+      throw new Error(
+        error.response.data.error || "Não foi possível cadastrar o usuário"
+      );
     } else {
       toast.error("Erro desconhecido na conexão com o servidor");
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
   }
-}
+};
