@@ -23,6 +23,8 @@ import { AddCourse } from "./Pages/Opp/AddCourse";
 import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { AddUser } from "./Pages/Opp/AddUser";
 import { PlanCourse } from "./Pages/Teacher/PlanCourse";
+import { ManageTeachers } from "./Pages/Opp/ManageTeachers";
+import { LandingPage } from "./Pages/LandingPage";
 import { AddClass } from "./Pages/Opp/AddClass";
 
 //criando rotas e caminhos
@@ -52,6 +54,9 @@ const Router: React.FC = () => {
         <Route path="/addcurso" element={<AddCourse />} />
         <Route path="/addplancurso" element={<AddPlanoCurso />} />
         <Route path="/addUser" element={<AddUser />} />
+        <Route path="/managetechers" element={<ManageTeachers />} />
+        <Route path="/landingpage" element={<LandingPage />} />
+        {/* Lading Page */}
         <Route path="/addclass" element={<AddClass/>} />
       </Routes>
     </BrowserRouter>
