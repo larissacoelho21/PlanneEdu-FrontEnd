@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
-import { BaseUrl } from "../../Config/config";
-import { toast } from "sonner";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 
 import "../../Css/Opp/AddUser.css"
 import { Check } from "lucide-react";
 import { RegisterUser } from "../../Services/Axios";
-/* interface InputFieldProps {
-  id: string;
-  label: string;
-  type?: string;
-  value: string | number;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  onBackendChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
-  maxLength?: number;
-  maxValue?: number;
-} */
 
 interface InputFieldProps {
   id: string;
@@ -113,51 +98,6 @@ export function AddUser() {
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
 
-  // Recupera o token do localStorage
-  const token = localStorage.getItem("Authorization");
-
-  
-
-  /* const BackAddUser = async (event: React.FormEvent) => {
-    //TODO: Iniciar Css
-    event.preventDefault();
-
-    await fetch(`${BaseUrl}/register`, {
-      //conectando com o computador que está rodando o back-end
-      method: "POST", //method post de envio
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho
-      },
-      body: JSON.stringify({
-        name: name,
-        sobrenome: sobrenome,
-        area: area,
-        nif: nif,
-        password: password,
-        nivelAcesso: nivelAcesso,
-        email: email,
-        telefone: telefone,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((json) => {
-            throw new Error(json.message || "Erro desconhecido");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("sucesso", data);
-        toast.success("Novo Usuário criado com sucesso!");
-      })
-      .catch((error) => {
-        toast.error(`Erro: ${error.message}`); //alert
-        console.error(error.message);
-      });
-  }; */
-
   const BackAddUser = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -209,7 +149,10 @@ export function AddUser() {
           </div>
           <div className="input-field">
             <label className="label">Nível de acesso</label>
-            <select name="nivel-acesso">
+            <select name="nivel-acesso"
+            value={nivelAcesso}
+            onChange={(event) => setNivelAcesso(event.target.value)}
+            >
               <option value="" disabled selected></option>
               <option value="docente">Docente</option>
               <option value="Opp">Opp</option>

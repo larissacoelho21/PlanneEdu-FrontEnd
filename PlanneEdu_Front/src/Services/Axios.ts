@@ -33,7 +33,7 @@ export const login = async (
 
     if (!timeoutReached) {
       const { data } = response;
-      
+
       toast.dismiss(toastId);
 
       // Armazenar informações no localStorage
@@ -57,7 +57,7 @@ export const login = async (
       }
     }
 
-    setIsLoading(false); 
+    setIsLoading(false);
     return response.data; // Retorna os dados da resposta se tudo ocorrer bem
   } catch (error: any) {
     clearTimeout(timeoutToastId);
@@ -120,22 +120,8 @@ export const postEmail = async (
     const response = await axios.post(`${BaseUrl}/auth/forgot_password`, {
       email: emailValue,
     });
-    /* 
-        console.log("E-mail enviado:", response.data);
-        localStorage.setItem("emailValue", emailValue); // Armazena o e-mail no localStorage
-    
-        toast.dismiss(toastId);
-        toast.success(
-          "E-mail enviado com sucesso! Verifique sua caixa de entrada."
-        );
-        setIsLoading(false); // Finaliza o estado de carregamento
-        navigate("/verificacaoemail"); // Navega para a próxima página */
     !timeoutReached && handleSuccess(response);
   } catch (error: any) {
-    /* setIsLoading(false); // Finaliza o estado de carregamento em caso de erro
-    toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.error("Não foi possível enviar o e-mail, tente novamente"); // Exibe a mensagem de erro
-    console.error("Erro ao enviar e-mail: ", error); */
     !timeoutReached && handleError(error);
   }
 };
@@ -202,6 +188,10 @@ export const RegisterUser = async (userData: {
 }) => {
   // Recuperando o token do localStorage
   const token = localStorage.getItem("Authorization");
+  if (!token) {
+    toast.error("Usuário não autenticado. Faça login novamente.");
+    throw new Error("Token de autenticação ausente.");
+  }
   try {
     // Faz a chamada para o back-end
     const response = await axios.post(`${BaseUrl}/register`, userData, {
@@ -213,7 +203,13 @@ export const RegisterUser = async (userData: {
     // Sucesso: Exibe o toast e retorna a resposta
     toast.success("Novo usuário criado com sucesso!");
     return response.data;
-  } catch (error: any) {
+  }
+  catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro desconhecido na conexão com o servidor";
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
+  }/*  catch (error: any) {
     // Erro: Exibe o toast e lança o erro para ser tratado
     if (error.response && error.response.data) {
       throw new Error(
@@ -223,5 +219,5 @@ export const RegisterUser = async (userData: {
       toast.error("Erro desconhecido na conexão com o servidor");
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
-  }
+  } */
 };
