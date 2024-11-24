@@ -12,8 +12,6 @@ export const login = async (
   toastId: any
 ) => {
   setIsLoading(true);
-  const promise = () =>
-    new Promise((resolve) => setTimeout(() => resolve, 1000));
 
   const timeout = 10000; // Tempo máximo para a requisição em milissegundos (5 segundos)
   let timeoutReached = false;
@@ -30,11 +28,13 @@ export const login = async (
       nif: nif,
       password: password,
     });
+
     clearTimeout(timeoutToastId);
 
     if (!timeoutReached) {
       const { data } = response;
-      setIsLoading(true); 
+      
+      toast.dismiss(toastId);
 
       // Armazenar informações no localStorage
       localStorage.setItem("userName", data.user.nome);
@@ -42,17 +42,14 @@ export const login = async (
 
       // Verificar se é usuário padrão
       if (data.user.defaultUser) {
-        setIsLoading(false);
         navigate("/profile");
         toast.info("Por favor, atualize suas informações.");
       }
       // Verificar nível de acesso
       else if (data.user.nivelAcesso === "opp") {
-        setIsLoading(false);
         navigate("/homeopp");
         toast.success("Bem-vindo, OPP!");
       } else if (data.user.nivelAcesso === "docente") {
-        setIsLoading(false);
         navigate("/homeprofessor");
         toast.success("Bem-vindo, Docente!");
       } else {
@@ -60,6 +57,7 @@ export const login = async (
       }
     }
 
+    setIsLoading(false); 
     return response.data; // Retorna os dados da resposta se tudo ocorrer bem
   } catch (error: any) {
     clearTimeout(timeoutToastId);
@@ -67,6 +65,8 @@ export const login = async (
       error.response?.data?.error || "NIF ou senha incorretos, tente novamente";
     toast.dismiss(toastId);
     toast.error(errorMessage);
+
+    setIsLoading(false);
   }
 };
 
