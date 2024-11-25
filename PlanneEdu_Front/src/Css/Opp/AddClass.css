@@ -64,12 +64,12 @@
   margin-top: 3%;
 }
 
-.add-student h1{
+.add-student h1 {
   font-size: 1.1vw;
   color: rgba(0, 0, 0, 0.3);
 }
 
-.add-student button{
+.add-student button {
   margin-top: 1%;
   width: 2.5rem;
   height: 2.5rem;
@@ -77,11 +77,11 @@
   background-color: transparent;
   border: 2.2px solid var(--blue-two);
   color: var(--blue-two);
-  border-radius: .5vw;
+  border-radius: 0.5vw;
 }
 
 /* PopUp add estudante */
-.overlay-add-student{
+.overlay-add-student {
   position: fixed;
   top: 0;
   left: 0;
@@ -103,24 +103,41 @@
   align-items: center;
   border-radius: 0.5vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--blue-one);
 }
 
-.popup-add-student input{
+.popup-add-student input {
   width: 29vw;
 }
 
-.texts-student h1{
+.popup-add-student input,
+.popup-add-student label {
+  cursor: pointer;
+}
+
+.texts-student h1 {
   color: var(--blue-one);
   margin-bottom: 8%;
 }
 
-.button-add-student button{
-  width: 15vw;
+.button-student {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-student button {
+  width: 10vw;
   height: 3vw;
   background-color: var(--blue-two);
   color: var(--white-one);
-  border: none;
+  border: 2px solid transparent;
   border-radius: 0.5vw;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: .3s ease;
+}
+
+.button-student button:hover{
+  background-color: var(--white);
+  border: 2px solid var(--blue-two);
+  color: var(--blue-two);
 }

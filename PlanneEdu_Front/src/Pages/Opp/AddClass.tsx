@@ -5,6 +5,7 @@ import "../../Css/Opp/AddClass.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Pencil, UserMinus } from "lucide-react";
 
 interface InputFieldProps {
   id: string;
@@ -27,7 +28,7 @@ function InputField({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event); 
+    if (onChange) onChange(event);
   };
 
   return (
@@ -48,54 +49,90 @@ function InputField({
 }
 
 export function AddClass() {
-
   // TODO criando função de criar estudante e add ele na tabela
 
   // add estudante
-  interface Student {
-    name: string;
-    surname: string;
-    registration: string;
-  }
+    interface Student {
+      name: string;
+      surname: string;
+      registration: string;
+    }
+  
+    const [showPopUpStudent, setShowPopUpStudent] = useState(false);
+    const [students, setStudents] = useState<Student[]>([]);
+    const [nameStudent, setNameStudent] = useState("");
+    const [surnameStudent, setSurnameStudent] = useState("");
+    const [registrationStudent, setRegistrationStudent] = useState("");
+    const [editStudentIndex, setEditStudentIndex] = useState<number | null>(null); 
 
-  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
-  const [students, setStudents] = useState<Student[]>([]);
-  const [nameStudent, setNameStudent] = useState("");
-  const [surnameStudent, setSurnameStudent] = useState("");
-  const [registrationStudent, setRegistrationStudent] = useState("");
-
-  const togglePopUpStudent = () => {
-    setShowPopUpStudent(!showPopUpStudent);
-
-    if (showPopUpStudent) {
+    const togglePopUpStudent = () => {
+      setShowPopUpStudent(!showPopUpStudent);
       setNameStudent("");
       setSurnameStudent("");
       setRegistrationStudent("");
-    }
-  };
-
-  const addStudent = () => {
-    if (!nameStudent || !surnameStudent || !registrationStudent) {
-      toast.error("Preencha todos os campos para continuar!");
-      return;
-    }
-
-    const newStudent: Student = {
-      name: nameStudent,
-      surname: surnameStudent,
-      registration: registrationStudent,
+      setEditStudentIndex(null);
     };
 
-    const updatedStudents = [...students, newStudent].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    setStudents(updatedStudents);
+    const addStudent = () => {
+      if (!nameStudent || !surnameStudent || !registrationStudent) {
+        toast.error("Preencha todos os campos para continuar!");
+        return;
+      }
+  
+      const newStudent = {
+        name: nameStudent,
+        surname: surnameStudent,
+        registration: registrationStudent,
+      };
 
-    togglePopUpStudent();
-    toast.success("Estudante adicionado com sucesso!");
-  };
+      const updatedStudents = [...students, newStudent].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+  
+      setStudents(updatedStudents);
+      toast.success("Estudante adicionado com sucesso!");
+      togglePopUpStudent(); 
+    };
+  
+    // / add estudante
 
-    // add estudante
+    // editar estudante
+    const editStudentHandler = () => {
+      if (editStudentIndex === null) return;
+  
+      if (!nameStudent || !surnameStudent || !registrationStudent) {
+        toast.error("Preencha todos os campos para continuar!");
+        return;
+      }
+  
+      const updatedStudents = [...students];
+      updatedStudents[editStudentIndex] = {
+        name: nameStudent,
+        surname: surnameStudent,
+        registration: registrationStudent,
+      };
+  
+      setStudents(updatedStudents.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      ));
+      toast.success("Estudante editado com sucesso!");
+      togglePopUpStudent(); 
+    };
+  
+    const deleteStudent = (index: number) => {
+      const updatedStudents = students.filter((_, i) => i !== index);
+      setStudents(updatedStudents);
+      toast.success("Estudante removido com sucesso!");
+    };
+  
+    const startEditStudent = (index: number) => {
+      const studentToEdit = students[index];
+      setEditStudentIndex(index);
+      setNameStudent(studentToEdit.name);
+      setSurnameStudent(studentToEdit.surname);
+      setRegistrationStudent(studentToEdit.registration);
+      togglePopUpStudent(); 
+    };
 
   return (
     <section className="add-new-class">
@@ -219,9 +256,10 @@ export function AddClass() {
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th></th>
                   <th>Nome</th>
                   <th>Matrícula</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -230,6 +268,14 @@ export function AddClass() {
                     <td>{index + 1}</td>
                     <td>{`${student.name} ${student.surname}`}</td>
                     <td>{student.registration}</td>
+                    <td>
+                      <button onClick={() => startEditStudent(index)}>
+                        <Pencil />
+                      </button>
+                      <button onClick={() => deleteStudent(index)}>
+                        <UserMinus />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -237,8 +283,6 @@ export function AddClass() {
           )}
         </div>
       </form>
-
-      
     </section>
   );
 }
