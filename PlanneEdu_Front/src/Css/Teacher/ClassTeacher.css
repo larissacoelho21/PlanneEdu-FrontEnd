@@ -205,7 +205,6 @@ body {
   margin-top: 5vw;
   border-radius: 0.5vw;
   overflow: hidden;
-  /* Para garantir que a borda externa fique arredondada */
   box-shadow: 0 0.3125vw 0.625vw rgba(0, 0, 0, 0.1);
   margin-bottom: 5vw;
 }

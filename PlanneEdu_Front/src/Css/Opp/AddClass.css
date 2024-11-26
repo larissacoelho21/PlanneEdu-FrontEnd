@@ -141,3 +141,17 @@
   border: 2px solid var(--blue-two);
   color: var(--blue-two);
 }
+
+.registrationStudent table{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buttons-action{
+  display: flex;
+  
+}
+
+.buttons-action button{
+  border: transparent;
+  background-color: transparent;
+}
