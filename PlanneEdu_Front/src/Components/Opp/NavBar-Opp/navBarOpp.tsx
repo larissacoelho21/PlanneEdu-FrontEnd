@@ -258,7 +258,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbarLink active last" : "navbarLink"
                   }
-                  to="/addUser"
+                  to="/managetechers"
                 >
                   <p>Gerenciar docentes</p>
                 </NavLink>

@@ -32,11 +32,6 @@ export function Login() {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
-
-    } catch {
-      
-    }
     const toastId = toast.loading("Carregando..."); // Toast de carregamento
     login(nifValue, passwordValue, setIsLoading, navigate, toastId);
   };
