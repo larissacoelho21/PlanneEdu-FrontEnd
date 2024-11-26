@@ -49,90 +49,103 @@ function InputField({
 }
 
 export function AddClass() {
-  // TODO criando função de criar estudante e add ele na tabela
-
   // add estudante
-    interface Student {
-      name: string;
-      surname: string;
-      registration: string;
-    }
-  
-    const [showPopUpStudent, setShowPopUpStudent] = useState(false);
-    const [students, setStudents] = useState<Student[]>([]);
-    const [nameStudent, setNameStudent] = useState("");
-    const [surnameStudent, setSurnameStudent] = useState("");
-    const [registrationStudent, setRegistrationStudent] = useState("");
-    const [editStudentIndex, setEditStudentIndex] = useState<number | null>(null); 
+  interface Student {
+    name: string;
+    surname: string;
+    registration: string;
+  }
 
-    const togglePopUpStudent = () => {
-      setShowPopUpStudent(!showPopUpStudent);
+  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [nameStudent, setNameStudent] = useState("");
+  const [surnameStudent, setSurnameStudent] = useState("");
+  const [registrationStudent, setRegistrationStudent] = useState("");
+  const [editStudentIndex, setEditStudentIndex] = useState<number | null>(null);
+
+  const togglePopUpStudent = () => {
+    setShowPopUpStudent(!showPopUpStudent);
+    if (!showPopUpStudent) {
       setNameStudent("");
       setSurnameStudent("");
       setRegistrationStudent("");
       setEditStudentIndex(null);
+    }
+  };
+
+  const addStudent = () => {
+    if (!nameStudent || !surnameStudent || !registrationStudent) {
+      toast.error("Preencha todos os campos para continuar!");
+      return;
+    }
+
+    const newStudent = {
+      name: nameStudent,
+      surname: surnameStudent,
+      registration: registrationStudent,
     };
 
-    const addStudent = () => {
-      if (!nameStudent || !surnameStudent || !registrationStudent) {
-        toast.error("Preencha todos os campos para continuar!");
-        return;
-      }
-  
-      const newStudent = {
-        name: nameStudent,
-        surname: surnameStudent,
-        registration: registrationStudent,
-      };
+    const updatedStudents = [...students, newStudent].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
 
-      const updatedStudents = [...students, newStudent].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-  
-      setStudents(updatedStudents);
-      toast.success("Estudante adicionado com sucesso!");
-      togglePopUpStudent(); 
-    };
-  
-    // / add estudante
+    setStudents(updatedStudents);
+    toast.success("Estudante adicionado com sucesso!");
+    togglePopUpStudent();
+  };
 
-    // editar estudante
-    const editStudentHandler = () => {
-      if (editStudentIndex === null) return;
-  
-      if (!nameStudent || !surnameStudent || !registrationStudent) {
-        toast.error("Preencha todos os campos para continuar!");
-        return;
-      }
-  
-      const updatedStudents = [...students];
-      updatedStudents[editStudentIndex] = {
-        name: nameStudent,
-        surname: surnameStudent,
-        registration: registrationStudent,
-      };
-  
-      setStudents(updatedStudents.sort((a, b) =>
-        a.name.localeCompare(b.name)
-      ));
-      toast.success("Estudante editado com sucesso!");
-      togglePopUpStudent(); 
+  // / add estudante
+
+  // editar estudante
+
+  const handleSaveStudent = () => {
+    if (editStudentIndex === null) {
+      addStudent();
+    } else {
+      editStudentHandler();
+    }
+  };
+
+  const editStudentHandler = () => {
+    if (editStudentIndex === null) return;
+
+    if (!nameStudent || !surnameStudent || !registrationStudent) {
+      toast.error("Preencha todos os campos para continuar!");
+      return;
+    }
+
+    const updatedStudents = [...students];
+    updatedStudents[editStudentIndex] = {
+      name: nameStudent,
+      surname: surnameStudent,
+      registration: registrationStudent,
     };
-  
-    const deleteStudent = (index: number) => {
-      const updatedStudents = students.filter((_, i) => i !== index);
-      setStudents(updatedStudents);
-      toast.success("Estudante removido com sucesso!");
-    };
-  
-    const startEditStudent = (index: number) => {
-      const studentToEdit = students[index];
-      setEditStudentIndex(index);
-      setNameStudent(studentToEdit.name);
-      setSurnameStudent(studentToEdit.surname);
-      setRegistrationStudent(studentToEdit.registration);
-      togglePopUpStudent(); 
-    };
+
+    setStudents(updatedStudents.sort((a, b) => a.name.localeCompare(b.name)));
+    toast.success("Estudante editado com sucesso!");
+    togglePopUpStudent();
+  };
+
+  const startEditStudent = (index: number) => {
+    const studentToEdit = students[index];
+    setEditStudentIndex(index);
+    setNameStudent(studentToEdit.name);
+    setSurnameStudent(studentToEdit.surname);
+    setRegistrationStudent(studentToEdit.registration);
+    setShowPopUpStudent(true);
+  };
+
+  // / editar
+
+  // deletar
+
+  const deleteStudent = (index: number) => {
+    const updatedStudents = students.filter((_, i) => i !== index);
+    setStudents(updatedStudents);
+    toast.success("Estudante removido com sucesso!");
+  };
+
+  // / deletar
 
   return (
     <section className="add-new-class">
@@ -145,7 +158,7 @@ export function AddClass() {
         />
       </div>
 
-      <form action="">
+      <form action="" onSubmit={(e) => e.preventDefault()}>
         <div className="form-addclass">
           <div className="select-addclass">
             <label htmlFor="" className="label-select">
@@ -244,7 +257,16 @@ export function AddClass() {
                   </div>
 
                   <div className="button-student">
-                    <button onClick={addStudent}>Adicionar</button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSaveStudent();
+                      }}
+                    >
+                      {editStudentIndex === null
+                        ? "Adicionar"
+                        : "Salvar Alterações"}
+                    </button>
                     <button onClick={togglePopUpStudent}>Cancelar</button>
                   </div>
                 </div>
@@ -253,34 +275,47 @@ export function AddClass() {
           )}
 
           {students.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Nome</th>
-                  <th>Matrícula</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map((student, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{`${student.name} ${student.surname}`}</td>
-                    <td>{student.registration}</td>
-                    <td>
-                      <button onClick={() => startEditStudent(index)}>
-                        <Pencil />
-                      </button>
-                      <button onClick={() => deleteStudent(index)}>
-                        <UserMinus />
-                      </button>
-                    </td>
+            <div className="registrationStudent">
+              <table className="table">
+                <thead>
+                  <tr className="title-info">
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {students.map((student, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{`${student.name} ${student.surname}`}</td>
+                      <td>{student.registration}</td>
+                      <div className="buttons-action">
+                        <td>
+                          <button
+                            onClick={() => startEditStudent(index)}
+                            style={{ margin: "0 20% 0 28%" }}
+                          >
+                            <Pencil />
+                          </button>
+                          <button onClick={() => deleteStudent(index)}>
+                            <UserMinus />
+                          </button>
+                        </td>
+                      </div>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
+
+          <div className="timetableTeachers">
+            <div className="title">
+              <h1>Aulas, professores e cargas horárias</h1>
+            </div>
+          </div>
         </div>
       </form>
     </section>
