@@ -6,6 +6,7 @@ import "../../Css/Opp/AddUser.css"
 import { Check } from "lucide-react";
 import { RegisterUser } from "../../Services/Axios";
 
+// TODO: Erro .500 no cadastro de usuário (back)
 interface InputFieldProps {
   id: string;
   label: string;
@@ -89,7 +90,7 @@ function InputField({
 export function AddUser() {
   /* Função Back-End */
 
-  const [name, setName] = useState("");
+  const [nome, setName] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [area, setArea] = useState("");
   const [nif, setNif] = useState("");
@@ -103,7 +104,7 @@ export function AddUser() {
 
     // Chama diretamente a função `registerUser`
     await RegisterUser({
-      name,
+      nome,
       sobrenome,
       area,
       nif,
@@ -132,7 +133,7 @@ export function AddUser() {
               label="Nome"
               type="text"
               id="nome-user"
-              value={name}
+              value={nome}
               onBackendChange={(event) => setName(event.target.value)}
               onWheel={(event) => event.currentTarget.blur()}
             />

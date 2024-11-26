@@ -132,18 +132,20 @@ export const postEmail = async (
 export const profile = async () => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
     const response = await axios.get(`${BaseUrl}/my_user`, {
       headers: {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
       },
     });
 
-    return response.data;
+    return response.data; // Retorna os dados da API
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "Valores não encontrados");
-    }
-    throw new Error("Erro ao encontrar seus dados");
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 };
 
@@ -154,8 +156,11 @@ export const updatePassword = async (
 ) => {
   try {
     const token = localStorage.getItem("authToken"); // Supondo que o token esteja no localStorage
+    if (!token) {
+      throw new Error("Token de autenticação não encontrado. Por favor, faça login novamente.");
+    }
     const response = await axios.put(
-      `${BaseUrl}/update`,
+      `${BaseUrl}/update_password`,
       { currentPassword, newPassword },
       {
         headers: {
@@ -163,11 +168,12 @@ export const updatePassword = async (
         },
       }
     );
+    console.log("Resposta da API:", response);
 
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "valores não encontrados");
+      throw new Error(error.response.data.error || "Erro ao tentar atualizar a senha");
     }
     throw new Error("Erro ao tentar cadastrar senha");
   }
@@ -177,7 +183,7 @@ export const updatePassword = async (
 
 /* Função adicionando usuário */
 export const RegisterUser = async (userData: {
-  name: string;
+  nome: string;
   sobrenome: string;
   area: string;
   nif: string;
@@ -220,4 +226,44 @@ export const RegisterUser = async (userData: {
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
   } */
+}
+
+export const allUsers = async (accessLevel: string) => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/get_users/${accessLevel}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    return response.data.users; // Retorna os dados da API
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
+  }
 };
+
+
+export const deleteUser = async (id: string): Promise<void> => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.delete(`${BaseUrl}/delete_user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    console.log(response.data.msg)
+  } catch (error: any) {
+    console.error("Erro ao deletar usuário: ", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || "Erro ao deletar o usuário.");
+  }
+}

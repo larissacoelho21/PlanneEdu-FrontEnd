@@ -17,10 +17,11 @@ interface InputFieldProps {
   id: string;
   label: string;
   type?: string;
+  value: string, 
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputField({ id, label, type = "text" }: InputFieldProps) {
+function InputField({ id, label, type = "text", value}: InputFieldProps) {
   const [isFilled, setIsFilled] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,15 +52,15 @@ interface ProfileData {
   nif: string;
   telefone: string;
   email: string;
-  /*   turmasAtribuidas: string[];
-  cursosAtribuidos: string[]; */
+  turmasAtribuidas: string[];
+  cursosAtribuidos: string[];
 }
 
 export function ProfileTeacher() {
-/*   const [Profile, setProfile] = useState<ProfileData | null>(null);
- */  const [currentPassword, setCurrentPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
 
   const [user, setUser] = useState<ProfileData | null>(null);
 
@@ -88,7 +89,7 @@ export function ProfileTeacher() {
     } catch (error: any) {
       toast.error(
         error.message ||
-          "Não foi possível cadastrar a nova senha, tente novamente"
+        "Não foi possível cadastrar a nova senha, tente novamente"
       );
       console.error("Erro ao cadastrar senha: ", error);
     }
@@ -135,26 +136,27 @@ export function ProfileTeacher() {
                   <p className="textProfile">{user.telefone}</p>
                 </div>
 
-                {/* <div className="courses-profile">
+                <div className="courses-profile">
                   <h3>Cursos atribuídos</h3>
-                  {Profile.cursosAtribuidos.map((curso, index) => (
-                    <p key={index}>{curso}</p>
-                  ))}
-
-                  {/* <p>Logística</p>
-                  <p>Administração</p> 
+                  {user?.cursosAtribuidos?.length ? (
+                    user.cursosAtribuidos.map((curso, index) => (
+                      <p key={index}>{curso}</p>
+                    ))
+                  ) : (
+                    <p>Nenhum curso atribuído.</p>
+                  )}
                 </div>
 
                 <div className="classes-profile">
                   <h3>Turmas atribuídas</h3>
-                  {Profile.turmasAtribuidas.map((turma, index) => (
-                    <p key={index}>{turma}</p>
-                  ))}
-                                     
-                  <p>Manhã 2024</p>
-                  <p>Tarde 2024</p>
-                  <p>Tarde 2023</p> 
-                </div> */}
+                  {user?.turmasAtribuidas?.length ? (
+                    user.turmasAtribuidas.map((turma, index) => (
+                      <p key={index}>{turma}</p>
+                    ))
+                  ) : (
+                    <p>Nenhuma turma atribuída.</p>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -162,10 +164,6 @@ export function ProfileTeacher() {
       </div>
 
       <div className="buttonsProfile">
-        <div className="change-button">
-          <button>Editar Informações</button>
-        </div>
-
         <Dialog.Root>
           <Dialog.Trigger asChild>
             <div className="password-button">
@@ -173,7 +171,7 @@ export function ProfileTeacher() {
             </div>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay className="DialogOverlay"  aria-labelledby="dialog-title"/>
+            <Dialog.Overlay className="DialogOverlay" aria-labelledby="dialog-title" />
             <Dialog.Content className="DialogContent">
               <Dialog.Title
                 className="DialogTitle"
@@ -191,18 +189,21 @@ export function ProfileTeacher() {
                   id="currentPassword"
                   label="Senha atual"
                   type="password"
+                  value = {currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                 />
                 <InputField
                   id="newPassword"
                   label="Nova senha"
                   type="password"
+                  value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
                 <InputField
                   id="confirmPassword"
                   label="Confirmar nova senha"
                   type="password"
+                  value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
