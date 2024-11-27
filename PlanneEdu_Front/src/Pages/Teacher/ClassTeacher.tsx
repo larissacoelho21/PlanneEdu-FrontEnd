@@ -3,6 +3,7 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
 import { Clock3, Users } from "lucide-react";
 import { Popup } from "../../Components/PopUpClass/PopUp";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
 
 export function ClassTeacher() {
   const [showPopUp1, setShowPopUp1] = useState(false);
@@ -39,8 +40,14 @@ export function ClassTeacher() {
       </div>
 
       <div className="buttons-class">
-        <button onClick={togglePopUp1}>Plano de Ensino</button>
-        <button id="buttonSA" onClick={togglePopUp2}>Situação de Aprendizagem</button>
+        <LargeButton
+          text="Plano de Ensino"
+          onClick={togglePopUp1}
+        />
+        <LargeButton
+          text="Situação de Aprendizagem"
+          onClick={togglePopUp2}
+        />
         <button id="buttonSA1" onClick={togglePopUp2}>S.A</button>
       </div>
 

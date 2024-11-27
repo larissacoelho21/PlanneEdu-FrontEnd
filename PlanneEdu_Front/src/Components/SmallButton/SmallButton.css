@@ -1,0 +1,24 @@
+.button-small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.button-small button{
+  background-color: var(--blue-two);
+  padding: .5rem 2rem;
+  color: var(--white);
+  border: transparent solid 2px;
+  border-radius: .3vw;
+  transition: .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-small button:hover{
+  background-color: transparent;
+  color: var(--blue-two);
+  border: solid var(--blue-two);
+}
