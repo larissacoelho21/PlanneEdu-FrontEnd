@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 
-import "../../Css/Opp/AddUser.css"
+import "../../Css/Opp/AddUser.css";
 import { Check } from "lucide-react";
 import { RegisterUser } from "../../Services/Axios";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 // TODO: Erro .500 no cadastro de usuário (back)
 interface InputFieldProps {
@@ -53,7 +55,11 @@ function InputField({
       let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
 
       /* verifica o valor máximo permitido */
-      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+      if (
+        maxValue !== undefined &&
+        typeof numericValue === "number" &&
+        numericValue > maxValue
+      ) {
         numericValue = maxValue;
       }
 
@@ -89,7 +95,6 @@ function InputField({
 
 export function AddUser() {
   /* Função Back-End */
-
   const [nome, setName] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [area, setArea] = useState("");
@@ -99,22 +104,35 @@ export function AddUser() {
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
 
+  const navigate = useNavigate();
+
   const BackAddUser = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Chama diretamente a função `registerUser`
-    await RegisterUser({
-      nome,
-      sobrenome,
-      area,
-      nif,
-      password,
-      nivelAcesso,
-      email,
-      telefone,
-    });
-  };
+    if (!nome || !sobrenome || !email || !password || !nivelAcesso) {
+      toast.error("Preencha todos os campos obrigatórios!");
+      return;
+    }
 
+    // Chama diretamente a função `registerUser`
+    try {
+      const response = await RegisterUser({
+        nome,
+        sobrenome,
+        area,
+        nif,
+        password,
+        nivelAcesso,
+        email,
+        telefone,
+      });
+    
+      navigate("/manageteachers");
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+    }
+  };
 
   return (
     <section className="AddUsuario">
@@ -150,9 +168,10 @@ export function AddUser() {
           </div>
           <div className="input-field">
             <label className="label">Nível de acesso</label>
-            <select name="nivel-acesso"
-            value={nivelAcesso}
-            onChange={(event) => setNivelAcesso(event.target.value)}
+            <select
+              name="nivel-acesso"
+              value={nivelAcesso}
+              onChange={(event) => setNivelAcesso(event.target.value)}
             >
               <option value="" disabled selected></option>
               <option value="docente">Docente</option>
@@ -191,13 +210,10 @@ export function AddUser() {
                 onWheel={(event) => event.currentTarget.blur()}
               />
             </div>
-
           </div>
           <div className="add-contact">
             <div className="title-adduser">
-              <p>
-                Opções de contato
-              </p>
+              <p>Opções de contato</p>
             </div>
 
             <div className="input-field">

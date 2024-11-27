@@ -1,8 +1,51 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
+/* ======================= Toast de carregamento  ============================= */
+export const axiosWithToast = async <T>(
+  config: AxiosRequestConfig,
+  loadingMessage = "Carregando...",
+  successMessage?: string,
+  timeoutMessage = "O tempo de espera excedeu! Tente novamente.",
+  timeout = 10000
+): Promise<T> => {
+  let timeoutReached = false;
+
+  // Exibe o toast de carregamento
+  const toastId = toast.loading(loadingMessage, { duration: timeout });
+
+  // Promise de timeout que dispara caso a requisição demore muito
+  const timeoutPromise = new Promise<null>((_, reject) => {
+    setTimeout(() => {
+      timeoutReached = true;
+      toast.error(timeoutMessage); // Exibe mensagem de erro caso o timeout aconteça
+      reject(new Error("Timeout reached"));
+    }, timeout);
+  });
+
+  try {
+    // Faz a requisição com timeout usando Promise.race
+    const response = await Promise.race([axios(config), timeoutPromise]);
+
+    if (!timeoutReached) {
+      toast.success(successMessage || "Requisição realizada com sucesso!"); // Mensagem de sucesso
+    }
+
+    // Aqui, vamos acessar a propriedade "data" da resposta e retorná-la
+    return (response as any).data; // Retorna os dados da requisição
+  } catch (error) {
+    if (!timeoutReached) {
+      toast.error("Erro na requisição."); // Exibe erro genérico
+    }
+    throw error; // Propaga o erro
+  } finally {
+    toast.dismiss(toastId); // Sempre limpa o toast de carregamento quando a operação termina
+  }
+};
+
+/* ======================= Verificação  ============================= */
 /* Login principal */
 export const login = async (
   nif: string,
@@ -152,16 +195,19 @@ export const profile = async () => {
 /* function post - atualizando senha */
 export const updatePassword = async (
   currentPassword: string,
-  newPassword: string
+  password: string,
+  confirmPassword: string,
 ) => {
   try {
     const token = localStorage.getItem("authToken"); // Supondo que o token esteja no localStorage
     if (!token) {
-      throw new Error("Token de autenticação não encontrado. Por favor, faça login novamente.");
+      throw new Error(
+        "Token de autenticação não encontrado. Por favor, faça login novamente."
+      );
     }
     const response = await axios.put(
       `${BaseUrl}/update_password`,
-      { currentPassword, newPassword },
+      { currentPassword, passwordassword, confirmPassword},
       {
         headers: {
           Authorization: `Bearer ${token}`, // Incluindo o token no cabeçalho
@@ -173,7 +219,9 @@ export const updatePassword = async (
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "Erro ao tentar atualizar a senha");
+      throw new Error(
+        error.response.data.error || "Erro ao tentar atualizar a senha"
+      );
     }
     throw new Error("Erro ao tentar cadastrar senha");
   }
@@ -200,22 +248,31 @@ export const RegisterUser = async (userData: {
   }
   try {
     // Faz a chamada para o back-end
-    const response = await axios.post(`${BaseUrl}/register`, userData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // Sucesso: Exibe o toast e retorna a resposta
-    toast.success("Novo usuário criado com sucesso!");
-    return response.data;
-  }
-  catch (error: any) {
-    const errorMessage =
-      error.response?.data?.error || "Erro desconhecido na conexão com o servidor";
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
-  }/*  catch (error: any) {
+    const response = await axiosWithToast(
+      {
+        method: "POST",
+        url: `${BaseUrl}/register`,
+        data: userData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      } /* ,
+      `${BaseUrl}/register`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }, */,
+      "Cadastrando usuário...",
+      "Novo usuário criado com sucesso!"
+    );
+     console.log("Resposta da API:", response);
+     // Sucesso: Exibe o toast e retorna a resposta
+    return response;
+  } catch (error: any) {
     // Erro: Exibe o toast e lança o erro para ser tratado
     if (error.response && error.response.data) {
       throw new Error(
@@ -225,8 +282,8 @@ export const RegisterUser = async (userData: {
       toast.error("Erro desconhecido na conexão com o servidor");
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
-  } */
-}
+  }
+};
 
 export const allUsers = async (accessLevel: string) => {
   try {
@@ -248,7 +305,6 @@ export const allUsers = async (accessLevel: string) => {
   }
 };
 
-
 export const deleteUser = async (id: string): Promise<void> => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -261,11 +317,33 @@ export const deleteUser = async (id: string): Promise<void> => {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
       },
     });
-    console.log(response.data.msg)
+    console.log(response.data.msg);
   } catch (error: any) {
-    console.error("Erro ao deletar usuário: ", error.response?.data?.error || error.message);
-    throw new Error(error.response?.data?.error || "Erro ao deletar o usuário.");
+    console.error(
+      "Erro ao deletar usuário: ",
+      error.response?.data?.error || error.message
+    );
+    throw new Error(
+      error.response?.data?.error || "Erro ao deletar o usuário."
+    );
+  }
+};
+
+export const profileOpp = async() => {
+  try{
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/my_user`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    return response.data; // Retorna os dados da API
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 }
-
-

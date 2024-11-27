@@ -299,7 +299,7 @@ export function NavBarProfessor() {
                           }`}
                         >
                           <DropdownProfile
-                            to="/profile"
+                            to="/profileteacher"
                             icon={<UserPen size={20} />}
                             text={"Visualizar Perfil"}
                           />
