@@ -10,106 +10,113 @@ import {
 import { toast } from "sonner";
 import { Plus, X } from "lucide-react";
 
+/* definindo as opções que serão usadas no multiselect */
+const options: SelectOption[] = [
+  {
+    label:
+      "1. Identificar as características de programação backend em ambiente web",
+    value: 1,
+  },
+  {
+    label:
+      "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+    value: 2,
+  },
+  { label: "Third", value: 3 },
+  { label: "Fourth", value: 4 },
+  { label: "Fifth", value: 5 },
+];
+
+/* ======== configurações e funções referentes aos inputs (texto/número/select) ======== */
+interface InputFieldProps {
+  id: string;
+  name?: string;
+  label: string;
+  type?: string;
+  value?: string | number | null;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  maxValue?: number;
+  options?: { value: string | number; label: string }[];
+}
+
+/* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
+function InputField({
+  id,
+  name,
+  label,
+  type = "text",
+  value = "",
+  onChange,
+  onWheel,
+  maxValue,
+  options = [],
+}: InputFieldProps) {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    let inputValue = event.target.value;
+
+    // Validação para inputs numéricos
+    if (type === "number") {
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
+
+      if (
+        maxValue !== undefined &&
+        typeof numericValue === "number" && // Garante que numericValue seja um número
+        numericValue > maxValue
+      ) {
+        numericValue = maxValue;
+      }
+
+      inputValue = numericValue.toString();
+    }
+
+    if (onChange) {
+      onChange(event);
+    }
+  };
+
+  return (
+    <fieldset className={`Fieldset ${value ? "filled" : ""}`}>
+      <label htmlFor={id} className="label-course">
+        {label}
+      </label>
+      {type === "select" ? (
+        <select
+          id={id}
+          name={name}
+          value={value}
+          onChange={handleInputChange}
+          className="input-course"
+        >
+          <option value="" disabled></option>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          id={id}
+          name={name}
+          type={type}
+          value={value}
+          onChange={handleInputChange}
+          onWheel={type === "number" ? onWheel : undefined}
+          autoComplete="off"
+          className="input-course"
+        />
+      )}
+    </fieldset>
+  );
+}
+
 export function AddPlanoCurso() {
-  /* ======== configurações e funções referentes aos inputs (texto/número/select) ======== */
-  interface InputFieldProps {
-    id: string;
-    label: string;
-    type?: string;
-    value?: string | number;
-    onChange?: (
-      event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => void;
-    onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
-    maxLength?: number;
-    maxValue?: number;
-    options?: { value: string | number; label: string }[];
-  }
-
-  /* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
-  function InputField({
-    id,
-    label,
-    type = "text",
-    value = "",
-    onChange,
-    onWheel,
-    maxValue,
-    options = [],
-  }: InputFieldProps) {
-    const [localValue, setLocalValue] = useState<string | number>(value);
-    const [isFilled, setIsFilled] = useState(false);
-
-    useEffect(() => {
-      setIsFilled(localValue !== "");
-    }, [localValue]);
-
-    /* gerenciador de mudanças para input ou select */
-    const handleInputChange = (
-      event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-      let inputValue = event.target.value;
-    
-      /* para inputs de tipo 'number', lida com as validações */
-      if (type === "number") {
-        let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
-    
-        /* respeita o valor máximo permitido */
-        if (
-          maxValue !== undefined &&
-          typeof numericValue === "number" &&
-          numericValue > maxValue
-        ) {
-          numericValue = maxValue;
-        }
-        setLocalValue(numericValue);
-        inputValue = numericValue.toString();
-      } else {
-        /* para textos e selects */
-        setLocalValue(inputValue);
-      }
-    
-      /* propaga o valor atualizado para o pai */
-      if (onChange) {
-        event.target.value = inputValue;
-        onChange(event);
-      }
-    };
-
-    return (
-      <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
-        <label htmlFor={id} className="label-course">
-          {label}
-        </label>
-        {type === "select" ? (
-          <select
-            id={id}
-            value={localValue}
-            onChange={handleInputChange}
-            className="input-course"
-          >
-            <option value="" disabled></option>
-            {options.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <input
-            id={id}
-            className="input-course"
-            type={type}
-            value={localValue}
-            onChange={handleInputChange}
-            onWheel={type === "number" ? onWheel : undefined}
-            autoComplete="off"
-          />
-        )}
-      </fieldset>
-    );
-  }
-
   /* ======== construção das funcionalidades ======== */
 
   /* tipificação */
@@ -127,19 +134,7 @@ export function AddPlanoCurso() {
 
   /* declaração de estados */
   const [showPopUpGrade, setShowPopUpGrade] = useState(false);
-  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
-  const togglePopUpGrade = () => {
-    if (showPopUpGrade) {
-      setShowPopUpGrade(false);
-    } else {
-      setShowPopUpGrade(true);
-    }
-  };
-
-  /* estado para armazenar disciplinas separadas por semestre */
-  const [semesterData, setSemesterData] = useState<{ [key: number]: string[] }>(
-    { 1: [], 2: [], 3: [], 4: [] }
-  );
+  const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
 
   type FormValues = {
     nameCourse: string;
@@ -148,6 +143,10 @@ export function AddPlanoCurso() {
     skillsCourse: string;
     cargaHoraria: number | null;
     quantSemestres: number | null;
+    curriculum: string;
+    objectiveCurriculum: string;
+    cargaHCurriculum: number | null;
+    semestreCurriculum: number | null;
     topicCourse: string;
     subtopicCourse: string;
     detailCourse: string;
@@ -164,6 +163,10 @@ export function AddPlanoCurso() {
     skillsCourse: "",
     cargaHoraria: null,
     quantSemestres: null,
+    curriculum: "",
+    objectiveCurriculum: "",
+    cargaHCurriculum: null,
+    semestreCurriculum: null,
     topicCourse: "",
     subtopicCourse: "",
     detailCourse: "",
@@ -176,32 +179,21 @@ export function AddPlanoCurso() {
   const [knowledgeTableData, setKnowledgeTableData] = useState<KnowledgeData[]>(
     []
   );
+  const [conhecimentos, setConhecimentos] = useState<SelectOption[]>([]);
+  const [estrategias, setEstrategias] = useState<SelectOption[]>([]);
+  const [recursos, setRecursos] = useState<SelectOption[]>([]);
 
-  /* definindo as opções que serão usadas no multiselect */
-  const options: SelectOption[] = [
-    {
-      label:
-        "1. Identificar as características de programação backend em ambiente web",
-      value: 1,
-    },
-    {
-      label:
-        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
-      value: 2,
-    },
-    { label: "Third", value: 3 },
-    { label: "Fourth", value: 4 },
-    { label: "Fifth", value: 5 },
-  ];
+  /* inicializando o estado `selectedOptions` como um array vazio */
+  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]);
 
   /* função para atualizar estados de forma dinâmica */
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = event.target;
-
     setFormValues((prevValues) => ({
       ...prevValues,
-      /* Converte strings para número se o tipo for number */
-      [name]: type === "number" ? +value : value,
+      [name]: type === "number" && !isNaN(+value) ? +value : value,
     }));
   };
 
@@ -258,6 +250,56 @@ export function AddPlanoCurso() {
     toast.success("Subtópico deletado com sucesso!");
   };
 
+  /* função para a adição de detalhes */
+  const addDetail = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (formValues.detailCourse.trim() && formValues.detailAssigned) {
+      setSubtopics((prevSubtopics) =>
+        prevSubtopics.map((subtopic) =>
+          subtopic.name === formValues.detailAssigned
+            ? {
+                ...subtopic,
+                details: [...subtopic.details, formValues.detailCourse],
+              }
+            : subtopic
+        )
+      );
+      setFormValues((prev) => ({
+        ...prev,
+        detailCourse: "",
+      }));
+      toast.success("Detalhe adicionado com sucesso!");
+    }
+  };
+
+  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  /* estado para armazenar as disciplinas separadas por semestre */
+  const [semesterData, setSemesterData] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+  });
+
+  /* ao clicar no botão "Salvar informações" do popup, função para salvar a disciplina */
+  const handleSaveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    const newDiscipline = formValues.nameCourse;
+
+    /* adicionando a disciplina ao semestre selecionado */
+    if (selectedSemester !== null) {
+      setSemesterData((prevState) => {
+        const updatedSemesterData = { ...prevState };
+        updatedSemesterData[selectedSemester].push(newDiscipline);
+        return updatedSemesterData;
+      });
+
+      setShowPopUpGrade(false);
+    }
+  };
+
+
   return (
     <section className="AddPlanCourses">
       <SubNavbar />
@@ -270,30 +312,36 @@ export function AddPlanoCurso() {
         <form className="form-course">
           <div className="inputs-opp">
             <div className="input-fieldd">
-              <InputField label="Nome do Curso" type="text" id="name-course" />
+              <InputField label="Nome do Curso" name="nameCourse" type="text" id="name-course" value={formValues.nameCourse} onChange={handleInputChange} />
             </div>
             <div className="input-fieldd">
-              <InputField label="Categoria" type="text" id="category-course" />
+              <InputField label="Categoria" name="categoryCourse" type="text" id="category-course" value={formValues.categoryCourse} onChange={handleInputChange} />
             </div>
             <div className="input-fieldd">
-              <InputField label="Objetivo" type="text" id="obj-course" />
+              <InputField label="Objetivo" name="objectiveCourse" type="text" id="obj-course" value={formValues.objectiveCourse} onChange={handleInputChange} />
             </div>
             <div className="input-fieldd">
-              <InputField label="Competências" type="text" id="compt-course" />
+              <InputField label="Competências" name="skillsCourse" type="text" id="compt-course" value={formValues.skillsCourse} onChange={handleInputChange} />
             </div>
             <div className="input-row">
               <div className="input-fieldd">
                 <InputField
                   label="Carga Horária"
+                  name="cargaHoraria"
                   type="number"
                   id="cargah-course"
+                  value={formValues.cargaHoraria}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="input-fieldd">
                 <InputField
                   label="Quantidade de semestres"
+                  name="quantSemestres"
                   type="number"
                   id="semestres-course"
+                  value={formValues.quantSemestres}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -302,125 +350,123 @@ export function AddPlanoCurso() {
           <div className="grade-curricular">
             <h2>Grade Horária</h2>
             <div className="semestres">
-              <div className="semestre">
-                <h3>1° semestre</h3>
-                <div className="add-btn">
-                  <button
-                    onClick={(event) => {
-                      togglePopUpGrade();
-                      event.preventDefault();
-                    }}
-                  >
-                    <Plus />
-                  </button>
+              {[1, 2, 3, 4].map((semester) => (
+                <div key={semester} className="semestre">
+                  <h3>{`${semester}° semestre`}</h3>
+                  <div className="add-btn">
+                    <button
+                      onClick={(event) => {
+                        setSelectedSemester(semester); // Atualiza o semestre selecionado
+                        togglePopUpGrade();
+                        event.preventDefault();
+                      }}
+                    >
+                      <Plus />
+                    </button>
+                  </div>
+                  {/* Exibir os cards de disciplinas abaixo de cada semestre */}
+                  <div className="discipline-cards">
+                    {semesterData[semester].map((discipline, index) => (
+                      <div key={index} className="discipline-card">
+                        <h4>{discipline}</h4>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="semestre">
-                <h3>2° semestre</h3>
-                <div className="add-btn">
-                  <button
-                    onClick={(event) => {
-                      togglePopUpGrade();
-                      event.preventDefault();
-                    }}
-                  >
-                    <Plus />
-                  </button>
-                </div>
-              </div>
-              <div className="semestre">
-                <h3>3° semestre</h3>
-                <div className="add-btn">
-                  <button
-                    onClick={(event) => {
-                      togglePopUpGrade();
-                      event.preventDefault();
-                    }}
-                  >
-                    <Plus />
-                  </button>
-                </div>
-              </div>
-              <div className="semestre">
-                <h3>4° semestre</h3>
-                <div className="add-btn">
-                  <button
-                    onClick={(event) => {
-                      togglePopUpGrade();
-                      event.preventDefault();
-                    }}
-                  >
-                    <Plus />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
 
             {showPopUpGrade && (
-              <PopUp
-                onClose={() => setShowPopUpGrade(false)}
-              >
+              <PopUp onClose={() => setShowPopUpGrade(false)}>
                 <div className="pop-title">
                   <h2>Criar Disciplina</h2>
-                  <h3>Defina a disciplina e selecione as competências e habilidades que deseja desenvolver ao longo do curso.</h3>
+                  <h3>
+                    Defina a disciplina e selecione as competências e
+                    habilidades que deseja desenvolver ao longo do curso.
+                  </h3>
                 </div>
                 <div className="pop-body">
                   <div className="input-fieldd">
                     <InputField
                       id="uc"
+                      name="curriculum"
                       label="Unidade Curricular"
                       type="text"
+                      value={formValues.curriculum}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="input-fieldd">
-                    <InputField id="obj" label="Objetivo" type="text" />
+                    <InputField id="obj" label="Objetivo" name="objectiveCurriculum" type="text"  value={formValues.objectiveCurriculum} onChange={handleInputChange} />
                   </div>
                   <div className="input-fieldd">
                     <InputField
                       id="carga-h"
+                      name="cargaHCurriculum"
                       label="Carga Horária"
-                      type="number"
+                      type="number | null"
+                      value={formValues.cargaHCurriculum}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="input-fieldd">
-                    <InputField id="semestre" label="Semestre" type="number" />
+                    <InputField id="semestre" name="semestreCurriculum" label="Semestre" type="number" value={formValues.semestreCurriculum} onChange={handleInputChange} />
                   </div>
                   <h3 className="section-title">
                     Competências Específicas e Socioemocionais
                   </h3>
-                  {/* <div className="multiselects">
-                  <label>Conhecimentos</label>
-                  <Multiselect
-                    options={options}
-                    value={[]}
-                    onChange={}
-                    multiple
-                  />
 
+                  <div className="multiselects">
+                    <div className="multi-conhe">
+                      <label>Conhecimentos</label>
+                      <Multiselect
+                        options={options}
+                        value={conhecimentos}
+                        onChange={setConhecimentos}
+                        multiple
+                      />
+                    </div>
 
-                  <label>Estratégias</label>
-                  <Multiselect
-                    options={options}
-                    value={[]}
-                    onChange={}
-                    multiple
-                  />
+                    <div className="multi-estra">
+                      <label>Estratégias</label>
+                      <Multiselect
+                        options={options}
+                        value={estrategias}
+                        onChange={setEstrategias}
+                        multiple
+                      />
+                    </div>
 
-
-                  <label>Recursos</label>
-                  <Multiselect
-                    options={options}
-                    value={[]}
-                    onChange={}
-                    multiple
-                  />
-                </div> */}
+                    <div className="multi-rec">
+                      <label>Recursos</label>
+                      <Multiselect
+                        options={options}
+                        value={recursos}
+                        onChange={setRecursos}
+                        multiple
+                      />
+                    </div>
+                  </div>
                   <h3 className="section-title">Conhecimentos</h3>
                   <div className="input-fieldd">
-                    <InputField id="topic" label="Tópico" type="text" value={formValues.subtopicCourse} onChange={handleInputChange} />
+                    <InputField
+                      id="topic"
+                      name="topicCourse"
+                      label="Tópico"
+                      type="text"
+                      value={formValues.topicCourse}
+                      onChange={handleInputChange}
+                    />
                   </div>
                   <div className="subtopic">
-                    <InputField id="subtopic" label="Subtópico" type="text" />
+                    <InputField
+                      id="subtopic"
+                      name="subtopicCourse"
+                      label="Subtópico"
+                      type="text"
+                      value={formValues.subtopicCourse}
+                      onChange={handleInputChange}
+                    />
                     <button className="add-subbtn" onClick={addSubtopic}>
                       <Plus />
                     </button>
@@ -435,33 +481,69 @@ export function AddPlanoCurso() {
                         </div>
                       ))}
                     </div>
-
                   </div>
 
                   <div className="detail">
                     <div className="input-detail">
-                      <InputField id="detail" label="Detalhe" type="text" />
+                      <InputField
+                        id="detail"
+                        name="detailCourse"
+                        label="Detalhe"
+                        type="text"
+                        value={formValues.detailCourse}
+                        onChange={handleInputChange}
+                      />
                     </div>
                     <div className="select-course">
                       <div className="select-det">
                         <InputField
                           id="select-field"
+                          name="detailAssigned"
                           label="Atribuído a:"
                           type="select"
+                          options={subtopics.map((subtopic) => ({
+                            value: subtopic.name,
+                            label: subtopic.name,
+                          }))}
+                          value={formValues.detailAssigned}
+                          onChange={handleInputChange}
                         />
                       </div>
                     </div>
-                    <button className="add-detail">Adicionar detalhes</button>
+                    <button className="add-detail" onClick={addDetail}>
+                      Adicionar detalhes
+                    </button>
+
+                    <div className="details-list">
+                      {subtopics
+                        .find(
+                          (subtopic) =>
+                            subtopic.name === formValues.detailAssigned
+                        )
+                        ?.details.map((detail, index) => (
+                          <div key={index} className="detail-tag">
+                            <span>{detail}</span>
+                            <button>
+                              <X />
+                            </button>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                   <div className="input-fieldd">
                     <InputField
                       id="ambiente"
+                      name="ambienteCourse"
                       label="Ambiente Pedagógico"
                       type="text"
+                      value={formValues.ambienteCourse}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="conhecimento-btn">
-                    <button>Adicionar Conhecimento</button>
+                    <button onClick={addKnowledge}>
+                      Adicionar Conhecimento
+                    </button>
                   </div>
 
                   {/* tabela referente aos conhecimentos */}
@@ -501,6 +583,11 @@ export function AddPlanoCurso() {
                       ))}
                     </tbody>
                   </table>
+
+                  <div className="actions-btns">
+                    <button onClick={handleSaveDiscipline}>Salvar informações</button>
+                    <button>Cancelar</button>
+                  </div>
                 </div>
               </PopUp>
             )}
