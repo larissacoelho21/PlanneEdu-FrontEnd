@@ -119,6 +119,7 @@ function InputField({
 
 export function AddPlanoCurso() {
   /* ======== construção das funcionalidades ======== */
+  type SelectOption = { label: string; value: number | string };
 
   /* tipificação */
   type SubtopicData = {
@@ -178,12 +179,25 @@ export function AddPlanoCurso() {
   const [knowledgeTableData, setKnowledgeTableData] = useState<KnowledgeData[]>(
     []
   );
-  const [conhecimentos, setConhecimentos] = useState<SelectOption[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]);
+  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  const [semesterData, setSemesterData] = useState<{
+    [key: number]: {
+      curriculum: string;
+      objective: string;
+      cargaHoraria: number | null;
+      conhecimentos: SelectOption[];
+      estrategias: SelectOption[];
+      recursos: SelectOption[];
+    }[];
+  }>({ 1: [], 2: [], 3: [], 4: [] });
+
+ /*  const [conhecimentos, setConhecimentos] = useState<SelectOption[]>([]);
   const [estrategias, setEstrategias] = useState<SelectOption[]>([]);
   const [recursos, setRecursos] = useState<SelectOption[]>([]);
 
-  /* inicializando o estado `selectedOptions` como um array vazio */
-  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]);
+  /* inicializando o estado `selectedOptions` como um array vazio 
+  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]); */
 
   /* função para atualizar estados de forma dinâmica */
   const handleInputChange = (
@@ -242,12 +256,12 @@ export function AddPlanoCurso() {
   };
 
   /* função para deletar os subtópicos já adicionados */
-  const deleteSubtopic = (subtopicName: string) => {
+  /* const deleteSubtopic = (subtopicName: string) => {
     setSubtopics((prevSubtopics) =>
       prevSubtopics.filter((subtopic) => subtopic.name !== subtopicName)
     );
     toast.success("Subtópico deletado com sucesso!");
-  };
+  }; */
 
   /* função para a adição de detalhes */
   const addDetail = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -284,6 +298,7 @@ export function AddPlanoCurso() {
   const [dropdownState, setDropdownState] = useState<Record<string, boolean>>(
     {}
   );
+  
   const toggleDropdown = (
     event: React.MouseEvent<HTMLButtonElement>,
     subtopicName: string
@@ -296,8 +311,8 @@ export function AddPlanoCurso() {
     }));
   };
 
-  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
-  /* estado para armazenar as disciplinas separadas por semestre */
+   /* const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  // estado para armazenar as disciplinas separadas por semestre 
   const [semesterData, setSemesterData] = useState<{
     [key: number]: {
       curriculum: string;
@@ -312,7 +327,7 @@ export function AddPlanoCurso() {
     2: [],
     3: [],
     4: [],
-  });
+  });  */
 
   /* ao clicar no botão "Salvar informações" do popup, função para salvar a disciplina */
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -326,9 +341,9 @@ export function AddPlanoCurso() {
         curriculum: formValues.curriculum,
         objective: formValues.objectiveCurriculum,
         cargaHoraria: formValues.cargaHCurriculum,
-        conhecimentos: conhecimentos,
-        estrategias: estrategias,
-        recursos: recursos,
+        conhecimentos: selectedOptions,
+        estrategias: selectedOptions,
+        recursos: selectedOptions,
       };
 
       setSemesterData((prevState) => ({
@@ -357,10 +372,10 @@ export function AddPlanoCurso() {
         ambienteCourse: "",
         selectedOptDetail: "",
       });
-      setConhecimentos([]);
+      /* setConhecimentos([]);
       setEstrategias([]);
       setRecursos([]);
-
+ */
       /* fechando o popup */
       setShowPopUpGrade(false);
 

@@ -207,7 +207,7 @@ export const updatePassword = async (
     }
     const response = await axios.put(
       `${BaseUrl}/update_password`,
-      { currentPassword, passwordassword, confirmPassword},
+      { currentPassword, password, confirmPassword},
       {
         headers: {
           Authorization: `Bearer ${token}`, // Incluindo o token no cabeçalho
@@ -346,4 +346,9 @@ export const profileOpp = async() => {
     const errorMessage =
       error.response?.data?.error || "Erro ao encontrar seus dados";
   }
+}
+
+
+export const planoCurso = async() => {
+   
 }
