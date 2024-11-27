@@ -8,14 +8,18 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface ActivityCardProps {
   name: string;
+  matter: string;
   dateI: string;
   dateE: string;
 }
 
-export function ActivityCard({ name, dateI, dateE }: ActivityCardProps) {
+export function ActivityCard({ name, matter, dateI, dateE }: ActivityCardProps) {
   return (
     <div className="activity-card">
       <h2>{name}</h2>
+      <div className="matter-card">
+        <h2><span style={{color: "var(--blue-one)"}}>Matéria:</span> {matter}</h2>
+      </div>
       <div className="dates-card">
         <div className="items-card-atvd">
           <p>{dateI}</p>
@@ -35,6 +39,7 @@ export function ViewActivity() {
       id: 1,
       category: "Situação-Problema",
       name: "Situação Problema",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -42,6 +47,7 @@ export function ViewActivity() {
       id: 2,
       category: "Estudo-Caso",
       name: "Estudo de Caso",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -49,6 +55,7 @@ export function ViewActivity() {
       id: 3,
       category: "Projeto",
       name: "Projeto",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -56,6 +63,7 @@ export function ViewActivity() {
       id: 4,
       category: "Pesquisa",
       name: "Pesquisa",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -63,6 +71,7 @@ export function ViewActivity() {
       id: 5,
       category: "Pesquisa",
       name: "Pesquisa",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -70,6 +79,7 @@ export function ViewActivity() {
       id: 6,
       category: "Projeto-Integrador",
       name: "Projeto Integrador",
+      matter: "BackEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -118,7 +128,7 @@ export function ViewActivity() {
         </div>
 
         <div className="button-addActivity">
-          <Link to="">
+          <Link to="/addatividade">
             <FontAwesomeIcon icon={faPlus} />
             <h1>Adicionar nova atividade</h1>
           </Link>
@@ -196,6 +206,7 @@ export function ViewActivity() {
               <ActivityCard
                 key={item.id}
                 name={item.name}
+                matter={item.matter}
                 dateI={item.dateI}
                 dateE={item.dateE}
               />

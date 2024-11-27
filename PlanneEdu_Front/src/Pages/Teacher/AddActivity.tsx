@@ -12,6 +12,7 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
 
 interface InputFieldProps {
   id: string;
@@ -358,6 +359,7 @@ useEffect(() => {
             <div className="buttons-add">
               <button
                 value="situacao problema"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -369,6 +371,7 @@ useEffect(() => {
               </button>
               <button
                 value="estudos de caso"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -380,6 +383,7 @@ useEffect(() => {
               </button>
               <button
                 value="projeto"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "projeto" })
                 } */
@@ -388,6 +392,7 @@ useEffect(() => {
               </button>
               <button
                 value="projeto integrador"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -399,13 +404,13 @@ useEffect(() => {
               </button>
               <button
                 value="pesquisa"
+                onClick={(e) => e.preventDefault()}
                 /*  onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "pesquisa" })
                 } */
               >
                 Pesquisa
               </button>
-              <button>Mostrar todos</button>
             </div>
           </div>
 
@@ -500,10 +505,12 @@ useEffect(() => {
           </div>
 
           <div className="buttons-save-atvd">
-            <button type="submit">Salvar Alterações</button>
-            <button type="button" onClick={() => navigate("/voltar")}>
-              Voltar
-            </button>
+           <LargeButton
+            text="Salvar informações"
+           />
+           <LargeButton
+            text="Cancelar"
+           />
           </div>
         </div>
       </form>

@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Pencil, UserMinus } from "lucide-react";
+import { toast } from "sonner";
+
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddClass.css";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { toast } from "sonner";
-import { Pencil, UserMinus } from "lucide-react";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
 
+// Componente de Input
 interface InputFieldProps {
   id: string;
   label: string;
@@ -48,29 +51,52 @@ function InputField({
   );
 }
 
+// Componente principal
 export function AddClass() {
-  // add estudante
+  // Tipos de dados
   interface Student {
     name: string;
     surname: string;
     registration: string;
   }
 
-  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
+  interface Subject {
+    name: string;
+    teacher: string | null;
+    workload: number;
+  }
+
+  // Estados
   const [students, setStudents] = useState<Student[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([
+    {
+      name: "Fundamentos de Programação Orientada a Objeto",
+      teacher: null,
+      workload: 75,
+    },
+    { name: "Sistemas Operacionais", teacher: null, workload: 75 },
+    { name: "Hardware e Redes", teacher: null, workload: 75 },
+    { name: "Linguagem de Marcação", teacher: null, workload: 75 },
+  ]);
+
+  const [showPopUpStudent, setShowPopUpStudent] = useState(false);
+  const [showPopUpTeacher, setShowPopUpTeacher] = useState(false);
   const [nameStudent, setNameStudent] = useState("");
   const [surnameStudent, setSurnameStudent] = useState("");
   const [registrationStudent, setRegistrationStudent] = useState("");
   const [editStudentIndex, setEditStudentIndex] = useState<number | null>(null);
+  const [selectedSubjectIndex, setSelectedSubjectIndex] = useState<
+    number | null
+  >(null);
+  const [selectedTeacher, setSelectedTeacher] = useState<string | null>(null);
 
+  // Funções de manipulação de estudante
   const togglePopUpStudent = () => {
-    setShowPopUpStudent(!showPopUpStudent);
-    if (!showPopUpStudent) {
-      setNameStudent("");
-      setSurnameStudent("");
-      setRegistrationStudent("");
-      setEditStudentIndex(null);
-    }
+    setShowPopUpStudent((prev) => !prev);
+    setNameStudent("");
+    setSurnameStudent("");
+    setRegistrationStudent("");
+    setEditStudentIndex(null);
   };
 
   const addStudent = () => {
@@ -79,12 +105,11 @@ export function AddClass() {
       return;
     }
 
-    const newStudent = {
+    const newStudent: Student = {
       name: nameStudent,
       surname: surnameStudent,
       registration: registrationStudent,
     };
-
     const updatedStudents = [...students, newStudent].sort((a, b) =>
       a.name.localeCompare(b.name)
     );
@@ -93,10 +118,6 @@ export function AddClass() {
     toast.success("Estudante adicionado com sucesso!");
     togglePopUpStudent();
   };
-
-  // / add estudante
-
-  // editar estudante
 
   const handleSaveStudent = () => {
     if (editStudentIndex === null) {
@@ -108,11 +129,6 @@ export function AddClass() {
 
   const editStudentHandler = () => {
     if (editStudentIndex === null) return;
-
-    if (!nameStudent || !surnameStudent || !registrationStudent) {
-      toast.error("Preencha todos os campos para continuar!");
-      return;
-    }
 
     const updatedStudents = [...students];
     updatedStudents[editStudentIndex] = {
@@ -135,17 +151,30 @@ export function AddClass() {
     setShowPopUpStudent(true);
   };
 
-  // / editar
-
-  // deletar
-
   const deleteStudent = (index: number) => {
-    const updatedStudents = students.filter((_, i) => i !== index);
-    setStudents(updatedStudents);
+    setStudents((prev) => prev.filter((_, i) => i !== index));
     toast.success("Estudante removido com sucesso!");
   };
 
-  // / deletar
+  // Funções de manipulação de professor
+  const togglePopUpTeacher = (index: number | null = null) => {
+    setSelectedSubjectIndex(index);
+    setSelectedTeacher(index !== null ? subjects[index].teacher : null);
+    setShowPopUpTeacher((prev) => !prev);
+  };
+
+  const assignTeacher = () => {
+    if (selectedSubjectIndex === null || !selectedTeacher) {
+      toast.error("Selecione um professor para continuar!");
+      return;
+    }
+
+    const updatedSubjects = [...subjects];
+    updatedSubjects[selectedSubjectIndex].teacher = selectedTeacher;
+    setSubjects(updatedSubjects);
+    toast.success("Professor atribuído com sucesso!");
+    togglePopUpTeacher();
+  };
 
   return (
     <section className="add-new-class">
@@ -312,10 +341,90 @@ export function AddClass() {
           )}
 
           <div className="timetableTeachers">
-            <div className="title">
+            <div className="title-timetable">
               <h1>Aulas, professores e cargas horárias</h1>
             </div>
+
+            <div className="semester-grid">
+              <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
+              <table className="table-add-teacher">
+                <thead>
+                  <tr>
+                    <th>Matéria</th>
+                    <th>Professor</th>
+                    <th>Carga Horária</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {subjects.map((subject, index) => (
+                    <tr key={index}>
+                      <td>{subject.name}</td>
+                      <td>
+                        <button
+                          onClick={() => togglePopUpTeacher(index)}
+                          className="button-teacher"
+                        >
+                          {subject.teacher || "Adicionar"}
+                        </button>
+                      </td>
+                      <td>{subject.workload}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+
+          {showPopUpTeacher && (
+            <div
+              className="overlay-add-student"
+              onClick={() => togglePopUpTeacher(null)}
+            >
+              <div
+                className="popup-add-student"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="popup-content-student">
+                  <div className="texts-add-teacher">
+                    <h1>Atribua um professor a essa matéria</h1>
+                  </div>
+
+                  <div className="select-teacher">
+                    <label htmlFor="" className="label-select">
+                      Selecione um professor
+                    </label>
+                    <select
+                      value={selectedTeacher || ""}
+                      onChange={(e) => setSelectedTeacher(e.target.value)}
+                    >
+                      <option value=""></option>
+                      <option value="Giovani">Giovani</option>
+                      <option value="Arthur Rosa">Arthur Rosa</option>
+                      <option value="Samuel">Samuel</option>
+                    </select>
+                  </div>
+
+                  <div className="button-confirm">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        assignTeacher();
+                      }}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="save-class">
+            <LargeButton
+              text="Salvar informações"
+            />
+          </div>
+
         </div>
       </form>
     </section>

@@ -145,7 +145,7 @@ body {
 }
 
 .activity-card h2 {
-  font-size: 1.8vw;
+  font-size: 1.5vw;
   margin-bottom: 1vw;
 }
 
@@ -160,12 +160,20 @@ body {
   border-radius: 0.5vw;
 }
 
+.matter-card h2{
+  font-weight: 500;
+}
+
 .items-card-atvd {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5vw;
-  padding: 0.7vw;
+  padding: 0.5vw;
+}
+
+.items-card-atvd p{
+  font-size: 1.3vw;
 }
 
 .view-mobile {
