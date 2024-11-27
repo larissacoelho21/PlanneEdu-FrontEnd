@@ -17,11 +17,11 @@ interface InputFieldProps {
   id: string;
   label: string;
   type?: string;
-  value: string, 
+  value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputField({ id, label, type = "text", value}: InputFieldProps) {
+function InputField({ id, label, type = "text", value }: InputFieldProps) {
   const [isFilled, setIsFilled] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +58,8 @@ interface ProfileData {
 
 export function ProfileTeacher() {
   const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
 
   const [user, setUser] = useState<ProfileData | null>(null);
 
@@ -79,17 +78,15 @@ export function ProfileTeacher() {
     getUserProfile();
   }, []);
 
-
-
   //Função para atualizar senha
   const handlePassword = async () => {
     try {
-      await updatePassword(currentPassword, newPassword);
+      await updatePassword(currentPassword, password, confirmPassword);
       toast.success("Senha cadastrada com sucesso");
     } catch (error: any) {
       toast.error(
         error.message ||
-        "Não foi possível cadastrar a nova senha, tente novamente"
+          "Não foi possível cadastrar a nova senha, tente novamente"
       );
       console.error("Erro ao cadastrar senha: ", error);
     }
@@ -171,7 +168,10 @@ export function ProfileTeacher() {
             </div>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay className="DialogOverlay" aria-labelledby="dialog-title" />
+            <Dialog.Overlay
+              className="DialogOverlay"
+              aria-labelledby="dialog-title"
+            />
             <Dialog.Content className="DialogContent">
               <Dialog.Title
                 className="DialogTitle"
@@ -184,42 +184,48 @@ export function ProfileTeacher() {
               >
                 Trocar senha
               </Dialog.Title>
-              <div className="Fieldset">
-                <InputField
-                  id="currentPassword"
-                  label="Senha atual"
-                  type="password"
-                  value = {currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                />
-                <InputField
-                  id="newPassword"
-                  label="Nova senha"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <InputField
-                  id="confirmPassword"
-                  label="Confirmar nova senha"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  marginTop: 25,
-                  justifyContent: "center",
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault(); // Evita o reload da página
+                  await handlePassword(); // Chama sua lógica de atualizar a senha
                 }}
               >
-                <Dialog.Close asChild>
-                  <button className="Button save" onClick={handlePassword}>
+                <div className="Fieldset">
+                  <InputField
+                    id="currentPassword"
+                    label="Senha atual"
+                    type="password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                  <InputField
+                    id="newPassword"
+                    label="Nova senha"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <InputField
+                    id="confirmPassword"
+                    label="Confirmar nova senha"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: 25,
+                    justifyContent: "center",
+                  }}
+                >
+                  <button type="submit" className="Button save">
                     Salvar
                   </button>
-                </Dialog.Close>
-              </div>
+                </div>
+              </form>
               <Dialog.Close asChild>
                 <div aria-label="Close">
                   <Cross2Icon className="IconButton" />

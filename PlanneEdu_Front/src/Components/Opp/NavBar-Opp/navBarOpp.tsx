@@ -258,7 +258,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbarLink active last" : "navbarLink"
                   }
-                  to="/managetechers"
+                  to="/manageteachers"
                 >
                   <p>Gerenciar docentes</p>
                 </NavLink>
@@ -319,7 +319,7 @@ export function NavBarOpp() {
                           }`}
                         >
                           <DropdownProfile
-                            to="#"
+                            to="/profileopp"
                             icon={<UserPen size={20} />}
                             text={"Visualizar Perfil"}
                           />
