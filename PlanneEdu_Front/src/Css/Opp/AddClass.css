@@ -131,23 +131,6 @@
   justify-content: space-between;
 }
 
-.button-student button {
-  width: 10vw;
-  height: 3vw;
-  background-color: var(--blue-two);
-  color: var(--white-one);
-  border: 2px solid transparent;
-  border-radius: 0.5vw;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.button-student button:hover {
-  background-color: var(--white);
-  border: 2px solid var(--blue-two);
-  color: var(--blue-two);
-}
-
 .registrationStudent table {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -191,28 +174,20 @@
 .table-add-teacher th:nth-child(2),
 .table-add-teacher td:nth-child(2) {
   text-align: center;
-  padding-left: 15%;
+  padding-left: 5%;
 }
 
 .table-add-teacher th:nth-child(3),
 .table-add-teacher td:nth-child(3) {
   text-align: center;
-  padding-left: 15%;
-}
-
-.button-teacher{
-  background-color: var(--blue-two);
-  color: var(--white);
-  padding: .3rem 1rem;
-  border: transparent;
-  margin: 5% 0 5% 0;
-  border-radius: .3vw;
+  padding-left: 10%;
 }
 
 .select-teacher select{
   display: flex;
   border: none;
   width: 100%;
+  cursor: pointer;
 }
 
 .select-teacher label{
@@ -226,14 +201,10 @@
   font-size: 1rem;
 }
 
-.button-confirm{
-  margin-top: 10%;
+.select-teacher option{
+  cursor: pointer;
 }
 
-.button-confirm button{
-  background-color: var(--blue-two);
-  padding: .7rem 3rem;
-  color: var(--white);
-  border: transparent;
-  border-radius: .3vw;
+.button-confirm{
+  margin-top: 10%;
 }

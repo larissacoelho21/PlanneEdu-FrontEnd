@@ -182,24 +182,6 @@ input[type="date"]:focus {
   justify-content: space-between;
 }
 
-.buttons-save-atvd button {
-  font-size: 1.3vw;
-  width: 30vw;
-  height: 4vw;
-  background-color: var(--blue-two);
-  border: none;
-  border-radius: 0.5vw;
-  color: var(--white-one);
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.buttons-save-atvd button:hover {
-  background-color: var(--white-one);
-  color: var(--blue-two);
-  border: solid var(--blue-two);
-}
-
 .buttons-popup-challenge button:hover {
   background-color: #f2f2f2;
   color: var(--blue-two);

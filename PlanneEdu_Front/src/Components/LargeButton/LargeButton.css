@@ -1,12 +1,26 @@
-.button-save button{
-    background-color: var(--blue-two);
-    padding: 1.8rem 3rem;
-    font-size: 1rem;
-    color: var(--white-one);
-    border: transparent;
-    border-radius: .3vw;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.button-large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-large button {
+  background-color: var(--blue-two);
+  width: 30vw;
+  height: 5vw;
+  font-size: 1rem;
+  color: var(--white-one);
+  border: transparent 2px solid;
+  border-radius: 0.3vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+.button-large button:hover {
+  background-color: transparent;
+  color: var(--blue-two);
+  border: solid var(--blue-two);
 }

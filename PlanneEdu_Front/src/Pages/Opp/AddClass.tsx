@@ -8,6 +8,7 @@ import { IntroForms } from "../../Components/IntroForms/IntroForms";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddClass.css";
 import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { SmallButton } from "../../Components/SmallButton/SmallButton";
 
 // Componente de Input
 interface InputFieldProps {
@@ -286,17 +287,20 @@ export function AddClass() {
                   </div>
 
                   <div className="button-student">
-                    <button
+                    <SmallButton
+                      text={editStudentIndex === null
+                        ? "Adicionar"
+                        : "Salvar alterações"
+                      }
                       onClick={(e) => {
                         e.preventDefault();
                         handleSaveStudent();
                       }}
-                    >
-                      {editStudentIndex === null
-                        ? "Adicionar"
-                        : "Salvar Alterações"}
-                    </button>
-                    <button onClick={togglePopUpStudent}>Cancelar</button>
+                    />
+                    <SmallButton
+                      text="Cancelar"
+                      onClick={togglePopUpStudent}
+                    />
                   </div>
                 </div>
               </div>
@@ -347,7 +351,7 @@ export function AddClass() {
 
             <div className="semester-grid">
               <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
-              <table className="table-add-teacher">
+              <table className="table-add-teacher" style={{marginBottom: "5%"}}>
                 <thead>
                   <tr>
                     <th>Matéria</th>
@@ -360,12 +364,11 @@ export function AddClass() {
                     <tr key={index}>
                       <td>{subject.name}</td>
                       <td>
-                        <button
+                        <SmallButton
+                          text={subject.teacher || "Adicionar"}
                           onClick={() => togglePopUpTeacher(index)}
                           className="button-teacher"
-                        >
-                          {subject.teacher || "Adicionar"}
-                        </button>
+                        />
                       </td>
                       <td>{subject.workload}</td>
                     </tr>
@@ -405,14 +408,13 @@ export function AddClass() {
                   </div>
 
                   <div className="button-confirm">
-                    <button
+                    <SmallButton
+                      text="Confirmar"
                       onClick={(e) => {
                         e.preventDefault();
                         assignTeacher();
                       }}
-                    >
-                      Confirmar
-                    </button>
+                    />
                   </div>
                 </div>
               </div>
