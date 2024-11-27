@@ -43,6 +43,7 @@ export function VerificationEmail() {
     }
   }, [navigate]); */
 
+
   const Verification = (event: React.FormEvent) => {
     event.preventDefault();
 

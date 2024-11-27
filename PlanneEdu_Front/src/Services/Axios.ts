@@ -82,7 +82,7 @@ export const postEmail = async (
   const promise = () =>
     new Promise((resolve) => setTimeout(() => resolve, 1000));
 
-  const timeout = 5000; // Tempo máximo para a requisição em milissegundos (5 segundos)
+  const timeout = 10000; // Tempo máximo para a requisição em milissegundos (5 segundos)
   let timeoutReached = false;
 
   // Definindo o tempo de expiração para o toast
@@ -267,3 +267,5 @@ export const deleteUser = async (id: string): Promise<void> => {
     throw new Error(error.response?.data?.error || "Erro ao deletar o usuário.");
   }
 }
+
+
