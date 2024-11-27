@@ -79,9 +79,10 @@ input[type="date"]:focus {
 }
 
 .buttons-add {
+  width: 100%;
   display: flex;
-  gap: 3.6vw;
-  margin-bottom: 3%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .buttons-add button {
@@ -207,7 +208,7 @@ input[type="date"]:focus {
 
 /* PopUp */
 .popup-challenge {
-  max: 35rem;
+  max-width: 35rem;
   padding: 3vw 3vw;
   background-color: #f2f2f2;
   display: flex;

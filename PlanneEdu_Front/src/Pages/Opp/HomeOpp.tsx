@@ -43,7 +43,7 @@ export function HomeOpp() {
             <tr>
               <td className="turmas-homeopp">Dev. SESI 2023</td>
               <td className="td">
-                <Link to="/addcurso" className="button">
+                <Link to="" className="button">
                   Prog. Back
                 </Link>
               </td>

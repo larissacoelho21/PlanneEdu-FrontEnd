@@ -1,0 +1,12 @@
+.button-save button{
+    background-color: var(--blue-two);
+    padding: 1.8rem 3rem;
+    font-size: 1rem;
+    color: var(--white-one);
+    border: transparent;
+    border-radius: .3vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

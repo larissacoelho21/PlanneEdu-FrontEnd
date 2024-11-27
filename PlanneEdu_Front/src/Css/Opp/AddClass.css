@@ -53,8 +53,13 @@
 }
 
 .title-add-student h1,
-.title-add-class h1 {
+.title-add-class h1,
+.title-timetable h1 {
   font-weight: 400;
+}
+
+.title-timetable h1{
+  font-size: 1.4rem;
 }
 
 .add-student {
@@ -115,7 +120,8 @@
   cursor: pointer;
 }
 
-.texts-student h1 {
+.texts-student h1,
+.texts-add-teacher h1 {
   color: var(--blue-one);
   margin-bottom: 8%;
 }
@@ -133,25 +139,101 @@
   border: 2px solid transparent;
   border-radius: 0.5vw;
   cursor: pointer;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-.button-student button:hover{
+.button-student button:hover {
   background-color: var(--white);
   border: 2px solid var(--blue-two);
   color: var(--blue-two);
 }
 
-.registrationStudent table{
+.registrationStudent table {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.buttons-action{
+.buttons-action {
   display: flex;
-  
 }
 
-.buttons-action button{
+.buttons-action button {
   border: transparent;
   background-color: transparent;
+}
+
+/* tabela de matérias e professores */
+.table-add-teacher{
+  width: 100%;
+}
+
+.table-add-teacher th{
+  font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.table-add-teacher th,
+.table-add-teacher td{
+  border: none;
+  text-align: center;
+}
+
+.table-add-teacher td{
+  background-color: var(--white);
+  border-bottom: 0.15vw rgba(0, 0, 0, 0.2) solid;
+}
+
+.table-add-teacher th:nth-child(1),
+.table-add-teacher td:nth-child(1) {
+  width: 40%;
+  text-align: left;
+}
+
+.table-add-teacher th:nth-child(2),
+.table-add-teacher td:nth-child(2) {
+  text-align: center;
+  padding-left: 15%;
+}
+
+.table-add-teacher th:nth-child(3),
+.table-add-teacher td:nth-child(3) {
+  text-align: center;
+  padding-left: 15%;
+}
+
+.button-teacher{
+  background-color: var(--blue-two);
+  color: var(--white);
+  padding: .3rem 1rem;
+  border: transparent;
+  margin: 5% 0 5% 0;
+  border-radius: .3vw;
+}
+
+.select-teacher select{
+  display: flex;
+  border: none;
+  width: 100%;
+}
+
+.select-teacher label{
+  display: flex;
+  align-items: self-start;
+  text-align: left;
+}
+
+.select-teacher select{
+  border-bottom: var(--gray-two) solid 2px;
+  font-size: 1rem;
+}
+
+.button-confirm{
+  margin-top: 10%;
+}
+
+.button-confirm button{
+  background-color: var(--blue-two);
+  padding: .7rem 3rem;
+  color: var(--white);
+  border: transparent;
+  border-radius: .3vw;
 }
