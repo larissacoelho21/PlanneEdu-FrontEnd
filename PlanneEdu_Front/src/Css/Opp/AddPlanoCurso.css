@@ -131,10 +131,10 @@
 .add-btn button {
   width: 4vw;
   height: 4vw;
-  background: #07678d;
-  border: 3px solid #07678d;
+  background: transparent;
+  border: 2px solid #07678d;
   border-radius: .4vw;
-  color: #fff;
+  color: #07678d;
   transition: ease-in-out .3s;
 }
 
@@ -146,10 +146,10 @@
 .add-btn button:hover {
   width: 4vw;
   height: 4vw;
-  background: #fff;
-  border: 3px solid #07678d;
+  background: #07678d;
+  border: 2px solid #07678d;
   border-radius: .4vw;
-  color: #07678d;
+  color: #fff;
 }
 
 .input-row{
@@ -209,7 +209,7 @@
 
 }
 
-.subtopic {
+.subtopic-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -239,6 +239,29 @@
   transition: 0.35s ease-in-out;
 }
 
+.subtopic-tags{
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtopic-tag{
+  display: flex;
+  gap: .5vw;
+  align-items: center;
+}
+
+.subtopic-tag button{
+  background: transparent;
+  color: #07678d;
+  border: none;
+  display: flex;
+  align-items: center;
+  width: 1.5vw;
+  height: 1.5vw;
+}
+
 .multiselects{
   display: flex;
   flex-direction: column;
@@ -256,6 +279,11 @@
 .conhecimento-btn {
   display: flex;
   justify-content: center;
+}
+
+.drop-btn{
+  background: #074973;
+
 }
 
 .detail {
@@ -276,6 +304,40 @@
   border-radius: .3vw;
   background: #07678d;
   color: #fff;
+}
+
+.details-list{
+  display: flex;
+  gap: 3vw;
+}
+
+.details-card{
+  border: .2vw solid #07678d;
+  border-radius: .3vw;
+  padding: .7vw 1.5vw;
+}
+
+.details-card li{
+  display: flex;
+  flex-direction: row;
+  gap: .7vw;
+  align-items: center;
+}
+
+.drop-header{
+  display: flex;
+  align-items: center;
+  gap: .7vw;
+}
+
+.drop-header button{
+  width: 1vw;
+  height: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
 }
 
 .knowledge-table{

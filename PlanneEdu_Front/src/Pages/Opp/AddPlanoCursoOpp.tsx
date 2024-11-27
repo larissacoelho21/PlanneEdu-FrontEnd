@@ -1,6 +1,6 @@
 /* importações de bibliotecas, dependências e arquivos*/
 import "../../Css/Opp/AddPlanoCurso.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
 import {
@@ -8,7 +8,7 @@ import {
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { toast } from "sonner";
-import { Plus, X } from "lucide-react";
+import { ChevronDown, Plus, X } from "lucide-react";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -60,13 +60,13 @@ function InputField({
   ) => {
     let inputValue = event.target.value;
 
-    // Validação para inputs numéricos
+    /* validação para inputs numéricos */
     if (type === "number") {
       let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
 
       if (
         maxValue !== undefined &&
-        typeof numericValue === "number" && // Garante que numericValue seja um número
+        typeof numericValue === "number" &&
         numericValue > maxValue
       ) {
         numericValue = maxValue;
@@ -89,7 +89,8 @@ function InputField({
         <select
           id={id}
           name={name}
-          value={value}
+          /* garantindo a compatibilidade com o tipo esperado */
+          value={value ?? ""}
           onChange={handleInputChange}
           className="input-course"
         >
@@ -105,7 +106,7 @@ function InputField({
           id={id}
           name={name}
           type={type}
-          value={value}
+          value={value ?? ""}
           onChange={handleInputChange}
           onWheel={type === "number" ? onWheel : undefined}
           autoComplete="off"
@@ -146,7 +147,6 @@ export function AddPlanoCurso() {
     curriculum: string;
     objectiveCurriculum: string;
     cargaHCurriculum: number | null;
-    semestreCurriculum: number | null;
     topicCourse: string;
     subtopicCourse: string;
     detailCourse: string;
@@ -166,7 +166,6 @@ export function AddPlanoCurso() {
     curriculum: "",
     objectiveCurriculum: "",
     cargaHCurriculum: null,
-    semestreCurriculum: null,
     topicCourse: "",
     subtopicCourse: "",
     detailCourse: "",
@@ -255,6 +254,7 @@ export function AddPlanoCurso() {
     event.preventDefault();
 
     if (formValues.detailCourse.trim() && formValues.detailAssigned) {
+      /* atualizando os subtópicos com os novos detalhes */
       setSubtopics((prevSubtopics) =>
         prevSubtopics.map((subtopic) =>
           subtopic.name === formValues.detailAssigned
@@ -265,17 +265,49 @@ export function AddPlanoCurso() {
             : subtopic
         )
       );
+
+      /* resentando os campos de entrada */
       setFormValues((prev) => ({
         ...prev,
         detailCourse: "",
+        detailAssigned: "",
       }));
+
       toast.success("Detalhe adicionado com sucesso!");
+    } else {
+      toast.error(
+        "Preencha todos os campos antes de adicionar um detalhe. Tente novamente!"
+      );
     }
+  };
+
+  const [dropdownState, setDropdownState] = useState<Record<string, boolean>>(
+    {}
+  );
+  const toggleDropdown = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    subtopicName: string
+  ) => {
+    event.preventDefault();
+
+    setDropdownState((prevState) => ({
+      ...prevState,
+      [subtopicName]: !prevState[subtopicName],
+    }));
   };
 
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   /* estado para armazenar as disciplinas separadas por semestre */
-  const [semesterData, setSemesterData] = useState<{ [key: number]: string[] }>({
+  const [semesterData, setSemesterData] = useState<{
+    [key: number]: {
+      curriculum: string;
+      objective: string;
+      cargaHoraria: number | null;
+      conhecimentos: SelectOption[];
+      estrategias: SelectOption[];
+      recursos: SelectOption[];
+    }[];
+  }>({
     1: [],
     2: [],
     3: [],
@@ -283,22 +315,58 @@ export function AddPlanoCurso() {
   });
 
   /* ao clicar no botão "Salvar informações" do popup, função para salvar a disciplina */
-  const handleSaveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    const newDiscipline = formValues.nameCourse;
+  const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    console.log("clicouuuuuu");
 
     /* adicionando a disciplina ao semestre selecionado */
-    if (selectedSemester !== null) {
-      setSemesterData((prevState) => {
-        const updatedSemesterData = { ...prevState };
-        updatedSemesterData[selectedSemester].push(newDiscipline);
-        return updatedSemesterData;
-      });
+    if (selectedSemester !== null && formValues.curriculum.trim() !== "") {
+      const newDiscipline = {
+        curriculum: formValues.curriculum,
+        objective: formValues.objectiveCurriculum,
+        cargaHoraria: formValues.cargaHCurriculum,
+        conhecimentos: conhecimentos,
+        estrategias: estrategias,
+        recursos: recursos,
+      };
 
+      setSemesterData((prevState) => ({
+        ...prevState,
+        [selectedSemester]: [
+          ...(prevState[selectedSemester] || []),
+          newDiscipline,
+        ],
+      }));
+
+      /* resetando o formulário */
+      setFormValues({
+        nameCourse: "",
+        categoryCourse: "",
+        objectiveCourse: "",
+        skillsCourse: "",
+        cargaHoraria: null,
+        quantSemestres: null,
+        curriculum: "",
+        objectiveCurriculum: "",
+        cargaHCurriculum: null,
+        topicCourse: "",
+        subtopicCourse: "",
+        detailCourse: "",
+        detailAssigned: "",
+        ambienteCourse: "",
+        selectedOptDetail: "",
+      });
+      setConhecimentos([]);
+      setEstrategias([]);
+      setRecursos([]);
+
+      /* fechando o popup */
       setShowPopUpGrade(false);
+
+      toast.success("Disciplina adicionada com sucesso!");
     }
   };
-
 
   return (
     <section className="AddPlanCourses">
@@ -312,16 +380,44 @@ export function AddPlanoCurso() {
         <form className="form-course">
           <div className="inputs-opp">
             <div className="input-fieldd">
-              <InputField label="Nome do Curso" name="nameCourse" type="text" id="name-course" value={formValues.nameCourse} onChange={handleInputChange} />
+              <InputField
+                label="Nome do Curso"
+                name="nameCourse"
+                type="text"
+                id="name-course"
+                value={formValues.nameCourse}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="input-fieldd">
-              <InputField label="Categoria" name="categoryCourse" type="text" id="category-course" value={formValues.categoryCourse} onChange={handleInputChange} />
+              <InputField
+                label="Categoria"
+                name="categoryCourse"
+                type="text"
+                id="category-course"
+                value={formValues.categoryCourse}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="input-fieldd">
-              <InputField label="Objetivo" name="objectiveCourse" type="text" id="obj-course" value={formValues.objectiveCourse} onChange={handleInputChange} />
+              <InputField
+                label="Objetivo"
+                name="objectiveCourse"
+                type="text"
+                id="obj-course"
+                value={formValues.objectiveCourse}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="input-fieldd">
-              <InputField label="Competências" name="skillsCourse" type="text" id="compt-course" value={formValues.skillsCourse} onChange={handleInputChange} />
+              <InputField
+                label="Competências"
+                name="skillsCourse"
+                type="text"
+                id="compt-course"
+                value={formValues.skillsCourse}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="input-row">
               <div className="input-fieldd">
@@ -352,11 +448,11 @@ export function AddPlanoCurso() {
             <div className="semestres">
               {[1, 2, 3, 4].map((semester) => (
                 <div key={semester} className="semestre">
-                  <h3>{`${semester}° semestre`}</h3>
+                  <h3>{semester}° semestre</h3>
                   <div className="add-btn">
                     <button
                       onClick={(event) => {
-                        setSelectedSemester(semester); // Atualiza o semestre selecionado
+                        setSelectedSemester(semester);
                         togglePopUpGrade();
                         event.preventDefault();
                       }}
@@ -364,11 +460,33 @@ export function AddPlanoCurso() {
                       <Plus />
                     </button>
                   </div>
-                  {/* Exibir os cards de disciplinas abaixo de cada semestre */}
                   <div className="discipline-cards">
-                    {semesterData[semester].map((discipline, index) => (
+                    {semesterData[semester]?.map((discipline, index) => (
                       <div key={index} className="discipline-card">
-                        <h4>{discipline}</h4>
+                        <h4>{discipline.curriculum}</h4>
+                        <p>
+                          <strong>Objetivo:</strong> {discipline.objective}
+                        </p>
+                        <p>
+                          <strong>Carga Horária:</strong>{" "}
+                          {discipline.cargaHoraria}
+                        </p>
+                        <p>
+                          <strong>Conhecimentos:</strong>{" "}
+                          {discipline.conhecimentos
+                            .map((c) => c.label)
+                            .join(", ")}
+                        </p>
+                        <p>
+                          <strong>Estratégias:</strong>{" "}
+                          {discipline.estrategias
+                            .map((e) => e.label)
+                            .join(", ")}
+                        </p>
+                        <p>
+                          <strong>Recursos:</strong>{" "}
+                          {discipline.recursos.map((r) => r.label).join(", ")}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -397,7 +515,14 @@ export function AddPlanoCurso() {
                     />
                   </div>
                   <div className="input-fieldd">
-                    <InputField id="obj" label="Objetivo" name="objectiveCurriculum" type="text"  value={formValues.objectiveCurriculum} onChange={handleInputChange} />
+                    <InputField
+                      id="obj"
+                      label="Objetivo"
+                      name="objectiveCurriculum"
+                      type="text"
+                      value={formValues.objectiveCurriculum}
+                      onChange={handleInputChange}
+                    />
                   </div>
                   <div className="input-fieldd">
                     <InputField
@@ -408,9 +533,6 @@ export function AddPlanoCurso() {
                       value={formValues.cargaHCurriculum}
                       onChange={handleInputChange}
                     />
-                  </div>
-                  <div className="input-fieldd">
-                    <InputField id="semestre" name="semestreCurriculum" label="Semestre" type="number" value={formValues.semestreCurriculum} onChange={handleInputChange} />
                   </div>
                   <h3 className="section-title">
                     Competências Específicas e Socioemocionais
@@ -459,27 +581,18 @@ export function AddPlanoCurso() {
                     />
                   </div>
                   <div className="subtopic">
-                    <InputField
-                      id="subtopic"
-                      name="subtopicCourse"
-                      label="Subtópico"
-                      type="text"
-                      value={formValues.subtopicCourse}
-                      onChange={handleInputChange}
-                    />
-                    <button className="add-subbtn" onClick={addSubtopic}>
-                      <Plus />
-                    </button>
-
-                    <div className="subtopic-tags">
-                      {subtopics.map((subtopic) => (
-                        <div key={subtopic.name} className="subtopic-tag">
-                          <span>{subtopic.name}</span>
-                          <button>
-                            <X />
-                          </button>
-                        </div>
-                      ))}
+                    <div className="subtopic-input">
+                      <InputField
+                        id="subtopic"
+                        name="subtopicCourse"
+                        label="Subtópico"
+                        type="text"
+                        value={formValues.subtopicCourse}
+                        onChange={handleInputChange}
+                      />
+                      <button className="add-subbtn" onClick={addSubtopic}>
+                        <Plus />
+                      </button>
                     </div>
                   </div>
 
@@ -513,23 +626,35 @@ export function AddPlanoCurso() {
                     <button className="add-detail" onClick={addDetail}>
                       Adicionar detalhes
                     </button>
-
-                    <div className="details-list">
-                      {subtopics
-                        .find(
-                          (subtopic) =>
-                            subtopic.name === formValues.detailAssigned
-                        )
-                        ?.details.map((detail, index) => (
-                          <div key={index} className="detail-tag">
-                            <span>{detail}</span>
-                            <button>
-                              <X />
-                            </button>
-                          </div>
-                        ))}
-                    </div>
                   </div>
+                  <div className="details-list">
+                    {subtopics.map((subtopic) => (
+                      <div key={subtopic.name} className="details-card">
+                        <div className="drop-header">
+                          <h4>{subtopic.name}</h4>
+                          <button
+                            className="drop-btn"
+                            onClick={(event) =>
+                              toggleDropdown(event, subtopic.name)
+                            }
+                          ><ChevronDown /></button>
+                        </div>
+                        {dropdownState[subtopic.name] && (
+                          <ul>
+                            {subtopic.details.map((detail, index) => (
+                              <li key={index}>
+                                {detail}{" "}
+                                <button>
+                                  <X />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="input-fieldd">
                     <InputField
                       id="ambiente"
@@ -585,7 +710,7 @@ export function AddPlanoCurso() {
                   </table>
 
                   <div className="actions-btns">
-                    <button onClick={handleSaveDiscipline}>Salvar informações</button>
+                    <button onClick={saveDiscipline}>Salvar informações</button>
                     <button>Cancelar</button>
                   </div>
                 </div>
