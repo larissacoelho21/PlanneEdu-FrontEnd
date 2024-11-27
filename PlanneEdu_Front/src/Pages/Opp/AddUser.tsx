@@ -7,68 +7,89 @@ import { Check } from "lucide-react";
 import { RegisterUser } from "../../Services/Axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import ReactInputMask from "react-input-mask";
 
 // TODO: Erro .500 no cadastro de usuário (back)
+
 interface InputFieldProps {
   id: string;
+  name?: string;
   label: string;
   type?: string;
-  value?: string | number;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number | null;
+  options?: { value: string | number; label: string }[];
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
-  onBackendChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBackendChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   maxLength?: number;
+  minLength?: number;
   maxValue?: number;
 }
 
-/* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
 function InputField({
   id,
+  name,
   label,
   type = "text",
   value = "",
+  options = [],
   onChange,
   onWheel,
   onBackendChange,
   maxLength,
+  minLength,
   maxValue,
-}: InputFieldProps) {
-  const [localValue, setLocalValue] = useState<string | number>(value);
-  /* verificando se o campo está preenchido para aplicar estilos ou animações (booleano) */
+  mask,
+}: InputFieldProps & { mask?: string }) {
+  const [localValue, setLocalValue] = useState<string | number | null>(value); // Estado local
   const [isFilled, setIsFilled] = useState(false);
+
   useEffect(() => {
-    setIsFilled(localValue !== "");
+    setIsFilled(localValue !== "" && localValue !== null);
   }, [localValue]);
 
-  /* função para gerenciar a mudança de valor do input */
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let inputValue: string = event.target.value;
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    let inputValue = event.target.value;
 
-    /* limita o comprimento do valor de entrada */
+    /* limitando o máximo de caracteres */
     if (maxLength && inputValue.length > maxLength) {
-      /* corta o excedente */
       inputValue = inputValue.slice(0, maxLength);
     }
 
-    /* converte para número se o tipo do input for "number" */
-    if (type === "number") {
-      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
+    /* validação para inputs numéricos */
+  if (type === "number") {
+    const numericValue = inputValue !== "" ? parseFloat(inputValue) : NaN;
 
-      /* verifica o valor máximo permitido */
-      if (
-        maxValue !== undefined &&
-        typeof numericValue === "number" &&
-        numericValue > maxValue
-      ) {
-        numericValue = maxValue;
-      }
-
-      setLocalValue(numericValue);
-    } else {
-      setLocalValue(inputValue);
+    /* validando se é um número válido antes da comparação */
+    if (maxValue !== undefined && !isNaN(numericValue) && numericValue > maxValue) {
+      toast.error(`O valor máximo permitido é composto por ${maxLength} caracteres. Tente novamente com um valor válido!`);
+      return;
     }
 
-    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
+    /* tranformando em número */
+    setLocalValue(numericValue);
+  } else {
+    /* validação dos textos, com base em seu comprimento */
+    if (maxLength && inputValue.length > maxLength) {
+      toast.error(`Campo com máximo de ${maxLength} caracteres. Tente novamente com um valor válido!`);
+      return;
+    }
+
+    /* if (minLength && inputValue.length < minLength) {
+      toast.error(`Campo com mínimo de ${minLength} caracteres. Tente novamente com um valor válido!`);
+    } */
+
+    /* transformando em string */
+    setLocalValue(inputValue);
+  }
+
+    /* propagação do valor atualizado para o pai */
     if (onChange) {
       event.target.value = inputValue;
       onChange(event);
@@ -78,17 +99,45 @@ function InputField({
 
   return (
     <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
-      <label className="label-add-user" htmlFor={id}>
+      <label htmlFor={id} className="label-add-user">
         {label}
       </label>
-      <input
-        className="input-add-user"
-        id={id}
-        type={type}
-        value={localValue}
-        onChange={handleInputChange}
-        onWheel={onWheel}
-      />
+      {type === "select" ? (
+        <select
+          id={id}
+          name={name}
+          value={localValue ?? ""}
+          onChange={handleInputChange}
+          className="input-add-user"
+        >
+          <option value="" disabled></option>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : mask ? (
+        <ReactInputMask
+          id={id}
+          name={name}
+          mask={mask}
+          value={localValue ?? ""}
+          onChange={handleInputChange}
+          className="input-add-user"
+        />
+      ) : (
+        <input
+          id={id}
+          name={name}
+          type={type}
+          value={localValue ?? ""}
+          onChange={handleInputChange}
+          onWheel={type === "number" ? onWheel : undefined}
+          autoComplete="off"
+          className="input-add-user"
+        />
+      )}
     </fieldset>
   );
 }
@@ -126,13 +175,24 @@ export function AddUser() {
         email,
         telefone,
       });
-    
+
       navigate("/manageteachers");
-      console.log(response.data)
+      console.log(response);
     } catch (error) {
       console.error("Erro no cadastro:", error);
     }
   };
+
+  const nivelAcessoOptions = [
+    { value: "docente", label: "Docente" },
+    { value: "opp", label: "OPP" },
+  ];
+
+  const areasAtuacao = [
+    { value: "infoNcomu", label: "Informação e comunicação" },
+    { value: "controNprocessos", label: "Controle e Processos Industriais" },
+    { value: "gestNnego", label: "Gestão e Negócios" },
+  ];
 
   return (
     <section className="AddUsuario">
@@ -167,16 +227,17 @@ export function AddUser() {
             />
           </div>
           <div className="input-field">
-            <label className="label">Nível de acesso</label>
-            <select
-              name="nivel-acesso"
-              value={nivelAcesso}
-              onChange={(event) => setNivelAcesso(event.target.value)}
-            >
-              <option value="" disabled selected></option>
-              <option value="docente">Docente</option>
-              <option value="Opp">Opp</option>
-            </select>
+            <div className="select-field">
+              <InputField
+                id="select-field"
+                name="detailAssigned"
+                label="Atribuído a:"
+                type="select"
+                options={nivelAcessoOptions}
+                value={nivelAcesso}
+                onChange={(event) => setNivelAcesso(event.target.value)}
+              />
+            </div>
           </div>
 
           <div className="adduser-row">
@@ -188,11 +249,13 @@ export function AddUser() {
                 value={nif}
                 onBackendChange={(event) => setNif(event.target.value)}
                 onWheel={(event) => event.currentTarget.blur()}
+                maxLength={10}
+                maxValue={999999999}
               />
             </div>
             <div className="input-r">
               <InputField
-                label="Senha - 8 digitos "
+                label="Senha"
                 type="password"
                 id="senha-user"
                 value={password}
@@ -201,14 +264,17 @@ export function AddUser() {
               />
             </div>
             <div className="input-r">
-              <InputField
-                label="Área de atuação"
-                type="text"
-                id="area-user"
-                value={area}
-                onBackendChange={(event) => setArea(event.target.value)}
-                onWheel={(event) => event.currentTarget.blur()}
-              />
+              <div className="select-field">
+                <InputField
+                  id="select-field"
+                  name="detailAssigned"
+                  label="Área de atuação:"
+                  type="select"
+                  options={areasAtuacao}
+                  value={area}
+                  onChange={(event) => setArea(event.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div className="add-contact">
@@ -229,11 +295,11 @@ export function AddUser() {
             <div className="input-field">
               <InputField
                 label="Telefone"
-                type="number"
+                type="text"
                 id="telefone-user"
                 value={telefone}
+                mask="(99) 99999-9999"
                 onBackendChange={(event) => setTelefone(event.target.value)}
-                onWheel={(event) => event.currentTarget.blur()}
               />
             </div>
           </div>
