@@ -57,9 +57,9 @@ const Router: React.FC = () => {
         <Route path="/addUser" element={<AddUser />} />
         <Route path="/manageteachers" element={<ManageTeachers />} />
         <Route path="/profileopp" element={<ProfileOpp />} />
-        <Route path="/landingpage" element={<LandingPage />} />
-        {/* Lading Page */}
         <Route path="/addclass" element={<AddClass/>} />
+        {/* Lading Page */}
+        <Route path="/landingpage" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,16 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+}
+
 body {
-  background-color: #f2f2f2;
+  background-color: var(--white-two);
   font-family: "Poppins", system-ui;
   font-style: normal;
 }
@@ -8,7 +19,7 @@ body {
   position: fixed;
   width: auto;
   height: 46vw;
-  object-fit: cover; /* Ajusta a imagem para preencher o container */
+  object-fit: cover;
 }
 
 .computer {
@@ -48,7 +59,7 @@ body {
 
 .forms h2 {
   font-weight: 800;
-  color: #074973;
+  color: var(--blue-one);
   font-size: 2.8vw;
   text-align: left;
 }
@@ -64,12 +75,12 @@ body {
 }
 
 .input {
-  background-color: rgba(217, 217, 217, 0);
+  background-color: var(--white-two);
   margin-bottom: 3%;
   padding: 2vw;
   width: 36.5vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 1px;
+  border: var(--black-two) solid 1px;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +91,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 1px;
+  border: var(--black-two) solid 1px;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
@@ -96,7 +107,7 @@ body {
   border: 0;
   outline: 0;
   cursor: pointer;
-  color: #000;
+  color: var(--black);
   opacity: 50%;
 }
 
@@ -107,7 +118,7 @@ body {
 textarea:focus,
 input:focus,
 select:focus {
-  border: rgba(1, 18, 38, 80%) solid 0.2vw;
+  border: var(--black-two) solid 0.2vw;
   outline: none;
 }
 
@@ -115,20 +126,20 @@ select:focus {
   text-decoration: none;
   font-size: 1vw;
   margin-left: 19.2vw;
-  color: #074973;
+  color: var(--blue-one);
 }
 
 .password a:hover {
-  color: black;
+  color: var(--black);
 }
 
 .password a:active {
-  color: #074973;
+  color: var(--blue-one);
 }
 
 .button-login button {
-  background-color: #074973;
-  border: none;
+  background-color: var(--blue-two);
+  border: transparent 2px solid;
   margin-top: 2vw;
   border-radius: 0.5vw;
   font-size: 1.3vw;
@@ -136,12 +147,15 @@ select:focus {
   width: 12vw;
   height: 3.5vw;
   font-family: "Poppins", system-ui;
-  color: #f2f2f2;
+  color: var(--white-two);
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .button-login button:hover {
-  background-color: #07678d;
+  background-color: transparent;
+  color: var(--blue-two);
+  border: solid var(--blue-two);
 }
 
 .input::-webkit-inner-spin-button,
@@ -195,7 +209,7 @@ select:focus {
 
   .login-info {
     position: absolute;
-    color: white;
+    color: var(--white-one);
     margin-top: 28vw;
     width: 85vw;
     display: flex;
@@ -218,12 +232,12 @@ select:focus {
   }
 
   .input-login {
-    background-color: rgba(217, 217, 217, 0);
+    background-color: var(--black-two);
     margin-bottom: 4vw;
     padding: 4vw;
     width: 80vw;
     height: 12vw;
-    border: rgba(1, 18, 38, 50%) solid 0.2vw;
+    border: var(--black-two) solid 0.2vw;
     border-radius: 2vw;
     font-size: 3.5vw;
   }
@@ -233,11 +247,11 @@ select:focus {
     width: 80vw;
     height: 12vw;
     justify-content: space-between;
-    border: rgba(1, 18, 38, 50%) solid 0.2vw;
+    border: var(--black-two) solid 0.2vw;
     padding: 2.15vw;
     border-radius: 2vw;
     font-size: 3.5vw;
-    color: #000;
+    color: var(--black);
     margin-bottom: 1vw;
   }
 
@@ -247,7 +261,7 @@ select:focus {
     border: 0;
     font-size: 3.5vw;
     margin-left: 1.7vw;
-    color: #000;
+    color: var(--black);
   }
 
   .inputLogin button {
@@ -255,13 +269,13 @@ select:focus {
     border: 0;
     outline: 0;
     cursor: pointer;
-    color: #000;
+    color: var(--black);
     opacity: 50%;
   }
 
   label .input-password::placeholder {
-    color: black; /* Define a cor preta para o placeholder */
-    opacity: 50%; /* Garante que o placeholder fique totalmente opaco */
+    color: var(--black); 
+    opacity: 50%; 
     font-size: 3.5vw;
   }
 
@@ -269,11 +283,11 @@ select:focus {
     text-decoration: none;
     font-size: 3vw;
     margin-left: 30vw;
-    color: #074973;
+    color: var(--blue-one);
   }
 
   .button-login button {
-    background-color: #074973;
+    background-color: var(--blue-two);
     border: none;
     margin-top: 5vw;
     border-radius: 2vw;
@@ -282,7 +296,7 @@ select:focus {
     width: 30vw;
     height: 10vw;
     font-family: "Poppins", system-ui;
-    color: #f2f2f2;
+    color: var(--white-two);
     cursor: pointer;
   }
 
