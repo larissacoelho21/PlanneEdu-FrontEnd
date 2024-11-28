@@ -2,13 +2,7 @@
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
-import {
-  CodeXml,
-  GraduationCap,
-  BookMarked,
-  Plus,
-  Check,
-} from "lucide-react";
+import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
 import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
@@ -71,7 +65,7 @@ function InputField({
     /* limita o comprimento do valor de entrada */
     if (maxLength && inputValue.length > maxLength) {
       /* corta o excedente */
-      inputValue = inputValue.slice(0, maxLength); 
+      inputValue = inputValue.slice(0, maxLength);
     }
 
     /* converte para número se o tipo do input for "number" */
@@ -79,10 +73,14 @@ function InputField({
       let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
 
       /* verifica o valor máximo permitido */
-      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+      if (
+        maxValue !== undefined &&
+        typeof numericValue === "number" &&
+        numericValue > maxValue
+      ) {
         numericValue = maxValue;
       }
-      
+
       setLocalValue(numericValue);
     } else {
       setLocalValue(inputValue);
@@ -168,9 +166,9 @@ export function AddPlans() {
   const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
     []
   );
-  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<SelectOption[]>(
-    []
-  );
+  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<
+    SelectOption[]
+  >([]);
   const [valueCapSocioStra, setValueCapSocioStra] = useState<SelectOption[]>(
     []
   );
@@ -577,13 +575,20 @@ export function AddPlans() {
           </div>
         </div>
       </div>
+
+      <div className="select-planne-course">
+        <label htmlFor="" className="label-select">
+          Selecione a matéria referente a esse plano de ensino
+        </label>
+        <select name="" id="">
+          <option value=""></option>
+        </select>
+        <h2>* Obs: Para criar um plano de ensino você deve selecionar uma matéria</h2>
+      </div>
+
       <form className="form">
         <div className="input-field">
           <InputField label="Curso" type="text" id="course" />
-        </div>
-
-        <div className="input-field">
-          <InputField label="Unidade Curricular" type="text" id="uc" />
         </div>
 
         <div className="input-field">

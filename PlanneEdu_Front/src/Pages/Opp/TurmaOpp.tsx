@@ -1,4 +1,5 @@
 import { IntroText } from "../../Components/IntroTexts/IntroText";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/TurmaOpp.css";
 import { Clock3, Users } from "lucide-react";
@@ -8,14 +9,20 @@ export function TurmaOpp() {
   return (
     <section className="turmaOpp">
       <NavBarOpp />
-      <div className="title-classopp" style={{margin: "5% 0 5% 0"}}>
+      <div className="title-classopp" style={{margin: "5% 0 3% 0"}}>
         <IntroText
           titleText="Gerencie suas turmas"
           subtitleText="de Desenvolvimento de sistemas"
         />
       </div>
 
-      <div className="classOpp">
+      <div className="buttons-class">
+        <a href="/addcurso">
+          <button>+ Adicionar uma nova turma</button>
+        </a>
+      </div>
+
+      <div className="classOpp" style={{margin: "5% 0 0 0"}}>
         <div className="open-class">
           <p>
             <span className="highlight">Turmas abertas em:</span> 2023

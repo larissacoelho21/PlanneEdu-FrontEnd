@@ -318,11 +318,19 @@ useEffect(() => {
               <h1>35 alunos</h1>
             </div>
           </div>
-          <div className="discipline">
-            <h1>Disciplina:</h1>
-            <h2>Desenvolvimento mobile</h2>
-          </div>
         </div>
+      </div>
+
+      <div className="select-planne-course">
+        <label htmlFor="" className="label-select">
+          Selecione a matéria referente a essa situação de aprendizagem
+        </label>
+        <select name="" id="">
+          <option value=""></option>
+        </select>
+        <h2>
+          * Obs: Para criar uma S.A você precisa selecionar uma matéria
+        </h2>
       </div>
 
       <form>

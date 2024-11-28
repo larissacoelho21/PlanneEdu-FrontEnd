@@ -27,7 +27,7 @@ export function PasswordReset() {
       <div className="background">
         <BackgroundPassword /> {/* Componente do fundo forma + saída + logo */}
       </div>
-      <div className="Reset-Info">
+      <div className="reset-info">
         {" "}
         {/* Div maior - não possue css */}
         <div className="title-text">
