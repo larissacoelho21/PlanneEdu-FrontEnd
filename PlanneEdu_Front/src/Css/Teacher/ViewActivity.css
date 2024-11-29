@@ -348,4 +348,8 @@ body {
     color: #f2f2f2;
   }
 
+  .buttons-view-mobile {
+    margin-left: 10vw;
+  }
+
 }

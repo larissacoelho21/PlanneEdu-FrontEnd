@@ -10,7 +10,7 @@
   align-items: center;
   margin: 0.5vw 0;
   gap: 1vw;
-  margin-right: vw;
+  margin-right: 1vw;
 }
 
 .Class-curso p {
@@ -83,4 +83,6 @@
   .Data-curso > p {
     font-size: 1.5vw;
   }
+
+  
 }
