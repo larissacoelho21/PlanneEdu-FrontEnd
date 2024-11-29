@@ -3,6 +3,7 @@ import "../../Css/Opp/AddCourse.css";
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
 
 export function AddCourse() {
   // PopUp deletar curso
@@ -20,17 +21,10 @@ export function AddCourse() {
           subtitleText="Todos os campos são obrigatórios"
         />
       </div>
-      <div className="select-planne-course">
-        <label htmlFor="" className="label-select">
-          Selecione um plano de curso
-        </label>
-        <select name="" id="">
-          <option value=""></option>
-        </select>
-        <h2>
-          * Obs: Para criar um curso você deve selecionar um plano de curso
-        </h2>
-      </div>
+      <SelectMandatory
+        label="Selecione um plano de curso"
+        obs="um plano de curso" 
+      />
       <form action="">
         <div className="form-addcourse">
           <div className="select-add-course" id="objective-select">

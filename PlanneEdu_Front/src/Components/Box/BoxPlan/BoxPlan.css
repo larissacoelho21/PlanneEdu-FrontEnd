@@ -1,0 +1,25 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-course {
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  width: max-content;
+  padding: .4rem 2rem;
+  background-color: var(--blue-one);
+  color: var(--white-one);
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  font-size: 1vw;
+  float: inline-end;
+}

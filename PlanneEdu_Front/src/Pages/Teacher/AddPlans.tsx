@@ -11,6 +11,7 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
+import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -564,27 +565,22 @@ export function AddPlans() {
           <p>Desenvolvimento de Sistemas</p>
         </div>
 
-        <div className="Info">
-          <div className="Teacher">
+        <div className="infos-teacher">
+          <div className="semester-teacher">
             <GraduationCap strokeWidth={1.5} />
             <p>Arthur Rosa</p>
           </div>
-          <div className="Class">
+          <div className="students">
             <BookMarked strokeWidth={1.5} />
             <p>Manhã 2023</p>
           </div>
         </div>
       </div>
 
-      <div className="select-planne-course">
-        <label htmlFor="" className="label-select">
-          Selecione a matéria referente a esse plano de ensino
-        </label>
-        <select name="" id="">
-          <option value=""></option>
-        </select>
-        <h2>* Obs: Para criar um plano de ensino você deve selecionar uma matéria</h2>
-      </div>
+      <SelectMandatory
+        label="Selecione a matéria referente a esse plano de ensino"
+        obs="uma matéria"
+      />
 
       <form className="form">
         <div className="input-field">

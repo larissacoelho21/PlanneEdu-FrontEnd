@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --white-one: #ffffff;
   --white-two: #f2f2f2;
   --gray-one: #bcbbbb;
@@ -7,6 +8,8 @@
   --blue-three: #00a3ff;
   --black: #000;
   --black-two: rgba(1, 18, 38, 50%);
+  
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -24,14 +27,14 @@ body {
 
 .computer {
   position: absolute;
-  width: 0 auto;
+  width: auto;
   height: 35vw;
   top: 8vw;
   left: 8vw;
 }
 
 .logo img {
-  width: 0 auto;
+  width: auto;
   height: 6vw;
 }
 
@@ -58,9 +61,9 @@ body {
 }
 
 .forms h2 {
+  font-size: 2.8vw;
   font-weight: 800;
   color: var(--blue-one);
-  font-size: 2.8vw;
   text-align: left;
 }
 
@@ -75,12 +78,12 @@ body {
 }
 
 .input {
-  background-color: var(--white-two);
-  margin-bottom: 3%;
-  padding: 2vw;
   width: 36.5vw;
   height: 4vw;
-  border: var(--black-two) solid 1px;
+  padding: 2vw;
+  margin-bottom: 3%;
+  background-color: var(--white-two);
+  border: 1px solid var(--black-two);
   border-radius: 0.5vw;
 }
 
@@ -91,42 +94,37 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: var(--black-two) solid 1px;
   padding: 1.2vw 2vw;
+  border: 1px solid var(--black-two);
   border-radius: 0.5vw;
 }
 
 .inputPassword input {
   background-color: transparent;
   outline: none;
-  border: 0;
+  border: none;
 }
 
 .inputPassword button {
   background-color: transparent;
-  border: 0;
-  outline: 0;
+  border: none;
   cursor: pointer;
   color: var(--black);
   opacity: 50%;
 }
 
-.input-password:focus {
-  border: none;
-}
-
 textarea:focus,
 input:focus,
 select:focus {
-  border: var(--black-two) solid 0.2vw;
+  border: 0.2vw solid var(--black-two);
   outline: none;
 }
 
 .password a {
-  text-decoration: none;
   font-size: 1vw;
   margin-left: 19.2vw;
   color: var(--blue-one);
+  text-decoration: none;
 }
 
 .password a:hover {
@@ -138,15 +136,16 @@ select:focus {
 }
 
 .button-login button {
-  background-color: var(--blue-two);
-  border: transparent 2px solid;
+  width: 12vw;
+  height: 3.5vw;
   margin-top: 2vw;
+  padding: 0;
+  border: 2px solid transparent;
   border-radius: 0.5vw;
   font-size: 1.3vw;
   font-weight: 300;
-  width: 12vw;
-  height: 3.5vw;
   font-family: "Poppins", system-ui;
+  background-color: var(--blue-two);
   color: var(--white-two);
   cursor: pointer;
   transition: 0.3s ease;
@@ -155,7 +154,7 @@ select:focus {
 .button-login button:hover {
   background-color: transparent;
   color: var(--blue-two);
-  border: solid var(--blue-two);
+  border: 2px solid var(--blue-two);
 }
 
 .input::-webkit-inner-spin-button,
@@ -232,7 +231,7 @@ select:focus {
   }
 
   .input-login {
-    background-color: var(--black-two);
+    background-color: var(--white-two);
     margin-bottom: 4vw;
     padding: 4vw;
     width: 80vw;
@@ -274,8 +273,8 @@ select:focus {
   }
 
   label .input-password::placeholder {
-    color: var(--black); 
-    opacity: 50%; 
+    color: var(--black);
+    opacity: 50%;
     font-size: 3.5vw;
   }
 
