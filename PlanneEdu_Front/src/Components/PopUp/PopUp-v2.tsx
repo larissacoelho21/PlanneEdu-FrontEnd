@@ -8,7 +8,7 @@ interface PopUpProps {
   onClose: () => void;
 }
 
-export const PopUp: React.FC<PopUpProps> = ({ title, subtitle, children, onClose }) => {
+export const PopUp: React.FC<PopUpProps> = ({ children, onClose }) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
