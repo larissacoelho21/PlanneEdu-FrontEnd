@@ -1,0 +1,40 @@
+.select-planne-course {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.label-select,
+.select-add-course input {
+  align-self: flex-start;
+  font-size: 1.1vw;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.2);
+  text-align: right;
+  transition: all 0.2s ease;
+  margin-top: 3%;
+}
+
+.select-planne-course h2 {
+  align-self: flex-start;
+  margin-top: 0.5vw;
+  margin-bottom: 3%;
+  font-size: 0.8vw;
+  font-weight: 500;
+  color: var(--blue-three);
+}
+
+.select-planne-course select {
+  width: 100%;
+  font-size: 1.2vw;
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.2vw solid rgba(0, 0, 0, 0.2);
+}
+
+.select-planne-course option:focus {
+  background-color: transparent;
+}

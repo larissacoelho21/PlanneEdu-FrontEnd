@@ -13,6 +13,8 @@ import {
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
+import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 
 interface InputFieldProps {
   id: string;
@@ -35,7 +37,7 @@ function InputField({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event); // Para encaminhar a mudança do valor
+    if (onChange) onChange(event);
   };
 
   return (
@@ -163,7 +165,7 @@ export function AddActivity() {
 
 useEffect(() => {
   if (editCardC !== null) {
-      setShowPopUpChallenge(true);  // Abre o pop-up apenas após `editCardC` ser configurado
+      setShowPopUpChallenge(true);  
   }
 }, [editCardC]);
 
@@ -303,35 +305,21 @@ useEffect(() => {
     <section className="add-activity">
       <div className="start-add">
         <SubNavbar />
-        <div className="box-info-class">
-          <h1>Desenvolvimento de Sistemas | SESI 2023</h1>
-          <div className="date-badge">
-            <span>23/02/2023 — 18/12/2024</span>
-          </div>
-          <div className="infos-teacher">
-            <div className="semester-teacher">
-              <Clock3 size={18} />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="students">
-              <Users size={18} />
-              <h1>35 alunos</h1>
-            </div>
-          </div>
-        </div>
+        <InfoClass
+          course="Desenvolvimento de Sistemas"
+          classCard="SESI"
+          yearClass="2023"
+          dateI="23/02/2023"
+          dateT="18/12/2024"
+          semester={4}
+          students="35"
+        />
       </div>
 
-      <div className="select-planne-course">
-        <label htmlFor="" className="label-select">
-          Selecione a matéria referente a essa situação de aprendizagem
-        </label>
-        <select name="" id="">
-          <option value=""></option>
-        </select>
-        <h2>
-          * Obs: Para criar uma S.A você precisa selecionar uma matéria
-        </h2>
-      </div>
+      <SelectMandatory
+        label="Selecione a matéria referente a essa situação de aprendizagem"
+        obs="uma matéria"
+      />
 
       <form>
         <div className="form-addactivity">
@@ -449,11 +437,10 @@ useEffect(() => {
 
           <div className="contextualization">
             <InputField
-              id="contextualization"
-              label="Contextualização"
+              id="contextualizacao"
+              label="Contextualição"
               type="text"
-              /* value={formData.contextualizacao}
-              onChange={handleChange} */
+              
             />
           </div>
 
@@ -515,9 +502,6 @@ useEffect(() => {
           <div className="buttons-save-atvd">
            <LargeButton
             text="Salvar informações"
-           />
-           <LargeButton
-            text="Cancelar"
            />
           </div>
         </div>

@@ -24,9 +24,11 @@ import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { AddUser } from "./Pages/Opp/AddUser";
 import { PlanCourse } from "./Pages/Teacher/PlanCourse";
 import { ManageTeachers } from "./Pages/Opp/ManageTeachers";
-import { LandingPage } from "./Pages/LandingPage";
 import { AddClass } from "./Pages/Opp/AddClass";
 import { ProfileOpp } from "./Pages/Opp/ProfileOpp";
+
+/* Landing Page */
+import { LandingPage } from "./Pages/LandingPage";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -60,6 +62,7 @@ const Router: React.FC = () => {
         <Route path="/addclass" element={<AddClass/>} />
         {/* Lading Page */}
         <Route path="/landingpage" element={<LandingPage />} />
+
       </Routes>
     </BrowserRouter>
   );

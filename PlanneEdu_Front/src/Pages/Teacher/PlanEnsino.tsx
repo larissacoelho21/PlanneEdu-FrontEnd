@@ -7,8 +7,8 @@ import { Settings } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
-import { Plus } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
+import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
 
 export function PlanEnsino() {
   return (
@@ -16,69 +16,41 @@ export function PlanEnsino() {
       <div className="header">
         <NavBarProfessor />
       </div>
-      <div className="title-planensino" style={{margin: "5% 0 5% 0"}}>
+      <div className="title-planensino" style={{ margin: "5% 0 5% 0" }}>
         <IntroText
           titleText="Gerencie os planos de ensino"
           subtitleText="Gerencie e compartilhe seus planos de ensino"
         />
       </div>
 
-      <div className="Add-Plano">
-        <button>
-            <Plus size={32} color="white" strokeWidth={1.5} />
-          Adicionar plano de ensino
-        </button>
+      <div className="title-plans-available">
+        <h2>Planos de ensino disponíveis</h2>
       </div>
 
-      <div className="Planos">
-        <h2>Planos de ensino disponíveis</h2>
-        <div className="Cards">
-          <div className="Card">
-            <div className="Data">
-              <h3 className="Subject">Automação Industrial</h3>
-              <div className="tag-course">
-                <Settings size={18} color="white" />
-                <p>Eletromecânica</p>
-              </div>
-              <div className="Info">
-                <div className="Teacher">
-                  <GraduationCap size={23} color="black" strokeWidth={1.5} />
-                  <p>André Souza</p>
-                </div>
-                <div className="Class">
-                  <BookMarked size={18} color="black" strokeWidth={1.5} />
-                  <p>Noite 2023</p>
-                </div>
-              </div>
-            </div>
-            <div className="Arrow">
-              <ChevronRight size={50} color="black" strokeWidth={1} />
-            </div>
-          </div>
+      <div className="cards-plans">
+        <CardPlan
+          matter="Programação e Controle de Suprimentos"
+          course="Logística"
+          iconTeacher={
+            <GraduationCap size={23} color="black" strokeWidth={1.5} />
+          }
+          teacher="Samanta Neves"
+          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+          shiftCourse="Manhã"
+          yearCourse="2023"
+        />
 
-          <div className="Card">
-            <div className="Data">
-              <h3 className="Subject">Programação e Controle de Suprimentos</h3>
-              <div className="tag-course">
-                <ChartLine size={18} color="white" />
-                <p>Logística</p>
-              </div>
-              <div className="Info">
-                <div className="Teacher">
-                  <GraduationCap size={23} color="black" strokeWidth={1.5} />
-                  <p>Samanta Neves</p>
-                </div>
-                <div className="Class">
-                  <BookMarked size={18} color="black" strokeWidth={1.5} />
-                  <p>Manhã 2023</p>
-                </div>
-              </div>
-            </div>
-            <div className="Arrow">
-              <ChevronRight size={50} color="black" strokeWidth={1} />
-            </div>
-          </div>
-        </div>
+        <CardPlan
+          matter="Automação Industrial"
+          course="Eletromecânica"
+          iconTeacher={
+            <GraduationCap size={23} color="black" strokeWidth={1.5} />
+          }
+          teacher="André Pereira"
+          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+          shiftCourse="Manhã"
+          yearCourse="2023"
+        />
       </div>
     </main>
   );

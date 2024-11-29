@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Eye } from "lucide-react";
+import "../PopUpClass/PopUp.css"
 
 interface PopupProps {
   title: string;
@@ -39,10 +40,11 @@ export function Popup({
               <h1>{addText}</h1>
             </Link>
           </div>
-          <div className="button-close">
+          </div>
+          <div className="close-popup">
             <button onClick={onClose}>Fechar</button>
           </div>
-        </div>
+        
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ button{
   display: flex;
   flex-direction: column;
   gap: 1vw;
-  margin: 3% auto;
+  margin:2% auto;
   width: 90vw;
   border-radius: 1vw;
   background: #fff;
