@@ -18,7 +18,7 @@ body {
 .back {
   position: fixed;
   width: auto;
-  height: 46vw;
+  height: 100%;
   object-fit: cover;
 }
 

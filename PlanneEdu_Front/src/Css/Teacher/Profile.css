@@ -273,9 +273,263 @@
   }
 }
 
-
 /* ============== Opp ================= */
 
 .leftSideOpp {
   margin-top: 10vw;
+}
+
+.nameProfile {
+  display: none;
+}
+
+.infoProfile {
+  display: none;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  #buttonsProfile {
+    display: none;
+  }
+
+  .cardProfile {
+    display: none;
+  }
+
+  .introProfile h1 {
+    color: #074973;
+    font-size: 5vw;
+  }
+
+  .nameProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vw;
+  }
+
+  .nameProfile img {
+    margin-bottom: 2vw;
+    width: 10vw;
+  }
+
+  .nameProfile p {
+    font-size: 6vw;
+    font-weight: 700;
+  }
+
+  .infoProfile {
+    position: relative; /* Contexto de posicionamento */
+    width: 100%;
+    display: block;
+  }
+
+  .infoProfile-img {
+    position: relative; /* Mantém a imagem no nível base */
+    z-index: 1; /* Define a camada inferior */
+  }
+
+  .infoProfile-img img {
+    margin-top: 10vw;
+    width: 100%;
+  }
+
+  .infosProfile {
+    width: 100%;
+    position: absolute; /* Para sobreposição */
+    top: 0; /* Alinhamento superior */
+    left: 0; /* Alinhamento lateral */
+    z-index: 2; /* Garante que esteja acima da imagem */
+    margin-top: 10vw;
+    padding: 1vw; /* Espaçamento interno */
+  }
+
+  .nif {
+    margin-left: 35%;
+    margin-top: 5vw;
+  }
+
+  .nifIcon,
+  .mailIcon,
+  .phoneIcon {
+    width: 6vw;
+    height: 6vw;
+    color: white;
+    margin-top: 1vw;
+  }
+
+  .nif p {
+    color: white;
+    font-size: 4vw;
+  }
+
+  .contatoProfile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contatoProfile h1 {
+    margin-top: 6vw;
+    color: white;
+    font-size: 5vw;
+  }
+
+  .emailPersonal p,
+  .phone p {
+    color: white;
+    font-size: 4vw;
+  }
+
+  .emailPersonal,
+  .phone {
+    text-align: center;
+    margin: auto;
+    margin-top: 2vw;
+  }
+
+  .phoneIcon {
+    margin-top: 2vw;
+  }
+
+  .courses-profile h3,
+  .classes-profile h3 {
+    font-size: 5vw;
+    color: white;
+    opacity: 100%;
+  }
+
+  .courses-profile,
+  .classes-profile {
+    margin-top: 6vw;
+  }
+
+  .courses-profile p,
+  .classes-profile p {
+    display: inline-block;
+    background-color: #074973;
+    border-radius: 1vw;
+    padding: 0.2vw;
+    width: 48vw;
+    font-size: 4vw;
+    text-align: center;
+    color: #ffffffe0;
+    margin-top: 2vw;
+    margin-left: 2vw;
+  }
+
+  .change-button button,
+  .password-button button {
+    background-color: white;
+    text-align: center;
+    border: none;
+    margin-top: 10vw;
+    border-radius: 2vw;
+    font-size: 4vw;
+    font-weight: 300;
+    width: 40vw;
+    height: 10vw;
+    font-family: "Poppins", system-ui;
+    color: #074973;
+    margin-bottom: 2vw;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  }
+
+  .DialogContent {
+    background-color: white;
+    border-radius: 2vw;
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+      hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 100%;
+    max-height: 90vh;
+    padding: 25px;
+    animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+  }
+
+  .DialogTitle {
+    margin: 0;
+    font-weight: bold;
+    font-size: 5vw;
+    color: #074973;
+    margin-bottom: 10vw;
+  }
+
+  .IconButton {
+    font-family: inherit;
+    border-radius: 100%;
+    height: 5vw;
+    width: 6vw;
+    background-color: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    cursor: pointer;
+    top: 2vw;
+    right: 2vw;
+  }
+
+  .Fieldset .Input {
+    width: 60vw;
+    height: 2.2vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vw;
+    border: none;
+    border-bottom: rgba(0, 0, 0, 0.3) solid 1px;
+    margin-bottom: 5vw;
+  }
+
+  .Label {
+    position: absolute;
+    font-size: 3vw;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.3);
+    text-align: right;
+    transition: all 0.2s ease;
+    margin-top: -3.5vw;
+  }
+
+  .Fieldset.filled .Label,
+  .Input:focus + .Label {
+    transform: translateY(-1.5vw);
+    font-size: 3vw;
+    opacity: 1;
+  }
+
+  .Button.save {
+    display: flex;
+    justify-content: center;
+    background-color: #074973;
+    text-align: center;
+    border: 0;
+    border-radius: 2vw;
+    font-size: 4vw;
+    font-weight: 300;
+    width: 22vw;
+    height: 8vw;
+    font-family: "Poppins", system-ui;
+    color: #f2f2f2;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  }
+
+  element.style {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+  }
 }
