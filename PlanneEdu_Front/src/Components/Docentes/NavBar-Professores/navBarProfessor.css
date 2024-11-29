@@ -329,6 +329,9 @@ link:active {
 
 /* --------------------Versão Mobile-------------------- */
 @media only screen and (max-width: 800px) {
+  .link-bell {
+    display: none;
+  }
   .navbarOne {
     background-color: none;
     box-shadow: none;
@@ -410,6 +413,7 @@ link:active {
   }
 
   .menu.open {
+    margin-top: 2vw;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s ease, visibility 0.3s ease;
