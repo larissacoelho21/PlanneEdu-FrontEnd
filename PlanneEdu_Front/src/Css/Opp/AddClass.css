@@ -1,0 +1,126 @@
+:root {
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --gray-one: #bbbb;
+  --gray-two: #848484bb;
+  --white: #ffff;
+}
+
+.form-addclass {
+  display: flex;
+  flex-direction: column;
+  gap: 3vw;
+  width: 90vw;
+  margin: 0 auto;
+  margin-bottom: 4vw;
+  padding: 5vw;
+  background-color: var(--white-one);
+  border-radius: 0.5vw;
+  box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.select-addclass {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-addclass select {
+  border-bottom: solid 2px var(--gray-one);
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+.input-addclass {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-addclass input {
+  border-bottom: solid 2px var(--gray-one);
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+.list-students {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.title-add-student h1,
+.title-add-class h1 {
+  font-weight: 400;
+}
+
+.add-student {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 3%;
+}
+
+.add-student h1{
+  font-size: 1.1vw;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.add-student button{
+  margin-top: 1%;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1vw;
+  background-color: transparent;
+  border: 2.2px solid var(--blue-two);
+  color: var(--blue-two);
+  border-radius: .5vw;
+}
+
+/* PopUp add estudante */
+.overlay-add-student{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-add-student {
+  max-width: 40rem;
+  padding: 4vw 5vw;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-add-student input{
+  width: 29vw;
+}
+
+.texts-student h1{
+  color: var(--blue-one);
+  margin-bottom: 8%;
+}
+
+.button-add-student button{
+  width: 15vw;
+  height: 3vw;
+  background-color: var(--blue-two);
+  color: var(--white-one);
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  transition: 0.3s ease;
+}

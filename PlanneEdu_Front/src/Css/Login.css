@@ -69,7 +69,7 @@ body {
   padding: 2vw;
   width: 36.5vw;
   height: 4vw;
-  border: rgba(1, 18, 38, 50%) solid 0.11vw;
+  border: rgba(1, 18, 38, 50%) solid 1px;
   border-radius: 0.5vw;
 }
 
@@ -80,7 +80,7 @@ body {
 .inputPassword {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 0.11vw;
+  border: rgba(1, 18, 38, 50%) solid 1px;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
 }
@@ -197,23 +197,23 @@ select:focus {
     position: absolute;
     color: white;
     margin-top: 28vw;
-    width: 65vw;
+    width: 85vw;
     display: flex;
     flex-direction: column;
-    margin-left: 15vw;
+    margin-left: 12vw;
   }
 
   .login-info h1 {
-    font-size: 5vw;
+    font-size: 6vw;
   }
 
   .login-info p {
-    font-size: 3.5vw;
+    font-size: 4vw;
   }
 
   .bottom {
     position: absolute;
-    margin-top: 85vw;
+    margin-top: 100vw;
     margin-left: 8.5vw;
   }
 

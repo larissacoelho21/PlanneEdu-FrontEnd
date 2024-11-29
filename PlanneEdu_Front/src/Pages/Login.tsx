@@ -34,8 +34,10 @@ export function Login() {
     try {
       // Chama a função de login do axios
       const data = await login(nifValue, passwordValue);
+      /* const userId = data.userId; */
       // Armazenar o nome do usuário no localStorage
-      localStorage.setItem("userName", data.user.nome);
+/*       localStorage.setItem("userId", userId);
+ */      localStorage.setItem("userName", data.user.nome);
       localStorage.setItem("Authorization", data.token);
       console.log(localStorage);
       if (data.user.defaultUser === true) {

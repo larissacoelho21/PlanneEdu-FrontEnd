@@ -98,6 +98,19 @@ export function ViewActivity() {
               <h1>35 alunos</h1>
             </div>
           </div>
+
+          <div className="view-mobile">
+            <div className="infos-teacher-mobile">
+              <div className="semester-teacher">
+                <Clock3 size={20} />
+                <h1>4 semestres</h1>
+              </div>
+              <div className="students">
+                <Users size={20} />
+                <h1>35 alunos</h1>
+              </div>
+            </div>
+          </div>
           <div className="discipline">
             <h1>Disciplina:</h1>
             <h2>Desenvolvimento mobile</h2>
@@ -120,8 +133,9 @@ export function ViewActivity() {
             <div className="title-filter">
               <h1>Filtre por categoria:</h1>
             </div>
-            <div className="buttons-filter" //TODO: Adicionar hover nos botões
-            > 
+            <div
+              className="buttons-filter" //TODO: Adicionar hover nos botões
+            >
               <button onClick={() => setFilterActivities("Situação-Problema")}>
                 Situação Problema
               </button>
@@ -140,6 +154,41 @@ export function ViewActivity() {
               <button onClick={() => setFilterActivities("")}>
                 Mostrar todos
               </button>
+            </div>
+
+            <div
+              className="buttons-filter-mobile" //TODO: Adicionar hover nos botões
+            >
+              <div className="buttons-view-mobile">
+                <div>
+                  <button
+                    onClick={() => setFilterActivities("Situação-Problema")}
+                  >
+                    Situação Problema
+                  </button>
+                  <button onClick={() => setFilterActivities("Estudo-Caso")}>
+                    Estudo de Caso
+                  </button>
+                </div>
+                <div>
+                  <button onClick={() => setFilterActivities("Projeto")}>
+                    Projeto
+                  </button>
+                  <button id="projeto"
+                    onClick={() => setFilterActivities("Projeto-Integrador")}
+                  >
+                    Projeto Integrador
+                  </button>
+                </div>
+                <div>
+                  <button onClick={() => setFilterActivities("Pesquisa")}>
+                    Pesquisa
+                  </button>
+                  <button onClick={() => setFilterActivities("")}>
+                    Mostrar todos
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="filtered-items">

@@ -139,7 +139,7 @@ select:focus,
     flex-direction: column;
     gap: 2vw;
     position: absolute;
-    margin-top: 40vw;
+    margin-top: 50vw;
     margin-left: 10%;
   }
 
@@ -157,7 +157,7 @@ select:focus,
   }
 
   .input-password1::placeholder {
-    font-size: 3.5vw;
+    font-size: 4vw;
     color: white;
     margin: 0 auto;
   }
@@ -176,7 +176,9 @@ select:focus,
     background-color: transparent;
     outline: none;
     border: 0;
-    width: 40vw;
+    width: 95%;
+    font-size: 4vw;
+    color: white;
   }
 
   textarea:focus,
@@ -222,6 +224,7 @@ select:focus,
     height: 10vw;
     font-family: "Poppins", system-ui;
     color: #074973;
+    margin-top: 10vw;
   }
 
   .button-verification button:hover {

@@ -6,7 +6,7 @@ body {
 
 :root {
   --blue-one: #074973;
-  --blue-two: #07678D;
+  --blue-two: #07678d;
   --white: #fff;
   --black: #000;
 }
@@ -123,7 +123,7 @@ body {
   padding: 1vw;
   color: #ffffff;
   background-color: var(--blue-one);
-  padding: 1vw; 
+  padding: 1vw;
   color: var(--white);
   text-align: center;
   align-items: center;
@@ -161,7 +161,7 @@ body {
   color: #ffffff;
 }
 
-.button-close button:hover{
+.button-close button:hover {
   background-color: var(--blue-two);
   color: var(--white);
 }
@@ -230,7 +230,8 @@ th {
   /* Borda interna das células */
 }
 
-td, th {
+td,
+th {
   border: 0.078125vw solid #9ab9cd;
   padding: 1vw;
   text-align: left;
@@ -252,4 +253,145 @@ tr:nth-child(odd) {
 
 #number {
   text-align: center;
+}
+
+.selecioneClass {
+  display: none !important;
+}
+
+#buttonSA1 {
+  display: none !important;
+}
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .buttons-class {
+    display: flex !important;
+    width: 90vw;
+    text-align: center;
+    margin: auto;
+  }
+
+  .button-add{
+    display: none !important;
+  }
+  #buttonSA1 {
+    display: block !important;
+  }
+
+  #buttonSA {
+    display: none !important;
+  }
+
+  .selecioneClass {
+    display: block !important;
+  }
+
+  .selecioneClass p {
+    font-size: 4.5vw;
+    font-weight: 500;
+    margin-left: 5vw;
+    margin-bottom: 4vw;
+  }
+
+  .buttons-class button {
+    width: 50vw;
+    height: 12vw;
+    background-color: var(--blue-two);
+    border: none;
+    color: var(--white);
+    border-radius: 2vw;
+    cursor: pointer;
+    font-size: 4vw;
+    transition: 0.3s ease;
+  }
+
+  #title-name {
+    width: 58vw;
+    text-align: center;
+    padding-left: 3vw;
+    font-size: 4vw;
+  }
+
+  .title-info > th {
+    background-color: var(--blue-one);
+    color: var(--white);
+    font-size: 4vw;
+    text-align: center;
+    padding: 1vw;
+  }
+
+  #number {
+    text-align: center;
+    font-size: 3.5vw;
+  }
+
+  td,
+  th {
+    border: 0.078125vw solid #9ab9cd;
+    padding: 2vw;
+    text-align: left;
+    font-size: 3.5vw;
+  }
+
+  .popup-content {
+    width: 100%;
+    font-size: 3.5vw;
+    height: 14vw;
+    background-color: #084973;
+    color: #ffffff;
+    background-color: var(--blue-one);
+    padding: 1vw;
+    color: var(--white);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 5%;
+    border-radius: 0.5vw 0.5vw 5vw 5vw;
+  }
+
+  .popup-planne {
+    width: 80vw;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2vw;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .button-add,
+  .button-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-two);
+    border-radius: 2vw;
+    width: 50vw;
+    height: 12vw;
+  }
+
+  .button-add h1,
+  .button-view h1 {
+    font-weight: normal;
+    font-size: 3.5vw;
+    margin-left: 1vw;
+  }
+
+  .button-close button {
+    cursor: pointer;
+    background-color: transparent;
+    border: solid 0.1171875vw #07678d;
+    padding: 1vw 3.5vw;
+    color: var(--blue-two);
+    border-radius: 1vw;
+    margin-bottom: 5%;
+    transition: 0.3s ease;
+    font-size: 4.5vw;
+    margin-top: 3vw;
+  }
 }

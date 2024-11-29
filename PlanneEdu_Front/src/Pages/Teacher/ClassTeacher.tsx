@@ -34,9 +34,14 @@ export function ClassTeacher() {
         </div>
       </div>
 
+      <div className="selecioneClass">
+        <p>Selecione o que deseja visualizar:</p>
+      </div>
+
       <div className="buttons-class">
         <button onClick={togglePopUp1}>Plano de Ensino</button>
-        <button onClick={togglePopUp2}>Situação de Aprendizagem</button>
+        <button id="buttonSA" onClick={togglePopUp2}>Situação de Aprendizagem</button>
+        <button id="buttonSA1" onClick={togglePopUp2}>S.A</button>
       </div>
 
       {/* Popup para Plano de Ensino */}

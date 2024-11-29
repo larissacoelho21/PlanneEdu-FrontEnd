@@ -28,7 +28,7 @@ const options: SelectOption[] = [
   },
   {
     label:
-      "1.1Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
     value: 2,
   },
   { label: "Third", value: 3 },

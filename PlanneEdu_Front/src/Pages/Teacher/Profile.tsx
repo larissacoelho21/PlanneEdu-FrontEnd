@@ -1,155 +1,233 @@
 /* Images */
 import { KeyRound, Mail, Phone } from "lucide-react";
-import Background from "../../assets/backgroundProfile.svg"
+import Background from "../../assets/backgroundProfile.svg";
 
-
-import "../../Css/Teacher/Profile.css"
+import "../../Css/Teacher/Profile.css";
 /* 'import { useState } from "react";' */
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
+import { profile, updatePassword } from "../../Services/Axios";
+import { toast } from "sonner";
 
 /* Interface para o InputField */
 interface InputFieldProps {
-    id: string;
-    label: string;
-    type?: string;
+  id: string;
+  label: string;
+  type?: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function InputField({ id, label, type = "text" }: InputFieldProps) {
-    const [isFilled, setIsFilled] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIsFilled(event.target.value !== "");
-    };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsFilled(event.target.value !== "");
+  };
 
-    return (
-        <fieldset className={`Fieldset ${isFilled ? 'filled' : ''}`}>
-            <label className="Label" htmlFor={id}>
-                {label}
-            </label>
-            <input
-                className="Input"
-                id={id}
-                type={type}
-                onChange={handleInputChange}
-            />
-        </fieldset>
-    );
+  return (
+    <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
+      <label className="Label" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        className="Input"
+        id={id}
+        type={type}
+        onChange={handleInputChange}
+      />
+    </fieldset>
+  );
 }
 
+/* Conexão Back-End */
+
+/* Definindo propriedades para chamar da api */
+interface ProfileData {
+  nome: string;
+  sobrenome: string;
+  nif: string;
+  telefone: string;
+  email: string;
+  /*   turmasAtribuidas: string[];
+  cursosAtribuidos: string[]; */
+}
 
 export function ProfileTeacher() {
+/*   const [Profile, setProfile] = useState<ProfileData | null>(null);
+ */  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    return (
-        <section className="profileTeacher">
-            <NavBarProfessor />
-            
-            <div className="introProfile">
-                <h1>Perfil</h1>
-                <hr />
+  const [user, setUser] = useState<ProfileData | null>(null);
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      try {
+        const response = await profile();
+        setUser(response.user); // Acessando o campo `user` diretamente
+        console.log("Perfil do Usuário:", response.user);
+      } catch (error: any) {
+        console.error("Erro ao carregar o perfil:", error.message);
+        toast.error(error.message || "Não foi possível encontrar seus dados");
+      }
+    };
+
+    getUserProfile();
+  }, []);
+
+
+
+  //Função para atualizar senha
+  const handlePassword = async () => {
+    try {
+      await updatePassword(currentPassword, newPassword);
+      toast.success("Senha cadastrada com sucesso");
+    } catch (error: any) {
+      toast.error(
+        error.message ||
+          "Não foi possível cadastrar a nova senha, tente novamente"
+      );
+      console.error("Erro ao cadastrar senha: ", error);
+    }
+  };
+
+  return (
+    <section className="profileTeacher">
+      <NavBarProfessor />
+
+      <div className="introProfile">
+        <h1>Perfil</h1>
+        <hr />
+      </div>
+
+      <div className="cardProfile">
+        <div className="container-profile">
+          <div className="rightSide">
+            <div className="img">
+              <img src={Background} alt="" />
             </div>
+          </div>
 
-            <div className="cardProfile">
-                <div className="container-profile">
-                    <div className="rightSide">
-                        <div className="img">
-                            <img src={Background} alt="" />
-                        </div>
-
-                    </div>
-
-                    <div className="leftSide">
-                        <div className="info-profile">
-                            <div className="name">
-                                <h3>
-                                    Eduardo Ferreira Dias
-                                </h3>
-                            </div>
-
-                            <div className="nif">
-                                <KeyRound className="nifIcon" />
-                                <p className="textProfile">15639479</p>
-                            </div>
-
-                            <div className="emailPersonal">
-                                <Mail className="mailIcon" />
-                                <p className="textProfile">eduardo.fdias@gmail.com</p>
-                            </div>
-
-                            <div className="phone">
-                                <Phone className="phoneIcon" />
-                                <p className="textProfile">11 9785-5975</p>
-                            </div>
-
-                            <div className="courses-profile">
-                                <h3>Cursos atribuídos</h3>
-                                <p>Logística</p>
-                                <p>Administração</p>
-                            </div>
-
-                            <div className="classes-profile">
-                                <h3>Turmas atribuídas</h3>
-                                <p>Manhã 2024</p>
-                                <p>Tarde 2024</p>
-                                <p>Tarde 2023</p>
-                            </div>
-
-                        </div>
-
-                    </div>
+          <div className="leftSide">
+            {user && (
+              <div className="info-profile">
+                <div className="name">
+                  <h3>
+                    {user.nome} {user.sobrenome}
+                  </h3>
                 </div>
 
-            </div>
-
-            <div className="buttonsProfile">
-                <div className="change-button">
-                    <button>
-                        Editar Informações
-                    </button>
+                <div className="nif">
+                  <KeyRound className="nifIcon" />
+                  <p className="textProfile">{user.nif}</p>
                 </div>
 
-                <Dialog.Root>
-                    <Dialog.Trigger asChild>
-                        <div className="password-button">
-                            <button>
-                                Trocar de senha
-                            </button>
-                        </div>
-                    </Dialog.Trigger>
-                    <Dialog.Portal>
-                        <Dialog.Overlay className="DialogOverlay" />
-                        <Dialog.Content className="DialogContent">
-                            <Dialog.Title
-                                className="DialogTitle"
-                                style={{ display: "flex", marginTop: 10, justifyContent: "center" }}
-                            >
-                                Trocar senha
-                            </Dialog.Title>
-                            <div className="Fieldset">
-                                <InputField id="actualpassword" label="Senha atual" type="password" />
-                                <InputField id="newpassword" label="Nova senha" type="password" />
-                                <InputField id="confirm" label="Confirmar nova senha" type="password" />
-                            </div>
-                            <div
-                                style={{ display: "flex", marginTop: 25, justifyContent: "center" }}
-                            >
-                                <Dialog.Close asChild>
-                                    <button className="Button save">Salvar</button>
-                                </Dialog.Close>
-                            </div>
-                            <Dialog.Close asChild>
-                                <div aria-label="Close">
-                                    <Cross2Icon className="IconButton"/>
-                                </div>
-                            </Dialog.Close>
-                        </Dialog.Content>
-                    </Dialog.Portal>
-                </Dialog.Root>
+                <div className="emailPersonal">
+                  <Mail className="mailIcon" />
+                  <p className="textProfile">{user.email}</p>
+                </div>
 
+                <div className="phone">
+                  <Phone className="phoneIcon" />
+                  <p className="textProfile">{user.telefone}</p>
+                </div>
+
+                {/* <div className="courses-profile">
+                  <h3>Cursos atribuídos</h3>
+                  {Profile.cursosAtribuidos.map((curso, index) => (
+                    <p key={index}>{curso}</p>
+                  ))}
+
+                  {/* <p>Logística</p>
+                  <p>Administração</p> 
+                </div>
+
+                <div className="classes-profile">
+                  <h3>Turmas atribuídas</h3>
+                  {Profile.turmasAtribuidas.map((turma, index) => (
+                    <p key={index}>{turma}</p>
+                  ))}
+                                     
+                  <p>Manhã 2024</p>
+                  <p>Tarde 2024</p>
+                  <p>Tarde 2023</p> 
+                </div> */}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="buttonsProfile">
+        <div className="change-button">
+          <button>Editar Informações</button>
+        </div>
+
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <div className="password-button">
+              <button>Trocar de senha</button>
             </div>
-        </section>
-    )
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay className="DialogOverlay"  aria-labelledby="dialog-title"/>
+            <Dialog.Content className="DialogContent">
+              <Dialog.Title
+                className="DialogTitle"
+                id="dialog-title"
+                style={{
+                  display: "flex",
+                  marginTop: 10,
+                  justifyContent: "center",
+                }}
+              >
+                Trocar senha
+              </Dialog.Title>
+              <div className="Fieldset">
+                <InputField
+                  id="currentPassword"
+                  label="Senha atual"
+                  type="password"
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+                <InputField
+                  id="newPassword"
+                  label="Nova senha"
+                  type="password"
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <InputField
+                  id="confirmPassword"
+                  label="Confirmar nova senha"
+                  type="password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: 25,
+                  justifyContent: "center",
+                }}
+              >
+                <Dialog.Close asChild>
+                  <button className="Button save" onClick={handlePassword}>
+                    Salvar
+                  </button>
+                </Dialog.Close>
+              </div>
+              <Dialog.Close asChild>
+                <div aria-label="Close">
+                  <Cross2Icon className="IconButton" />
+                </div>
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      </div>
+    </section>
+  );
 }
