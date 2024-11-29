@@ -268,7 +268,8 @@ tr:nth-child(odd) {
   .buttons-class {
     display: flex !important;
     width: 90vw;
-    text-align: center;
+    flex-direction: row;
+    justify-content: space-around;
     margin: auto;
   }
 

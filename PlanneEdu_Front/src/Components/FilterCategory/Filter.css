@@ -6,11 +6,12 @@
 }
 
 .itemsCheck{
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 5%;
+  margin-top: 2%;
   background-color: var(--white-one);
   padding: 3rem 5rem;
   gap: 2rem;
@@ -20,12 +21,16 @@
 
 .categoriesCheck{
   display: flex;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .labelCheck{
   display: flex;
   align-items: center;
   gap: .3rem;
-  font-size: 1.11rem;
+  font-size: 1.2vw;
+}
+
+.tittleCheck h2 {
+  font-size: 2vw;
 }

@@ -24,5 +24,8 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-
+  .semester-curso h1, .Class-curso p {
+    font-size: 3vw;
+    width: 23vw;
+}
 }
