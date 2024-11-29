@@ -110,7 +110,7 @@ body {
   }
 
   .dateBadge {
-    font-size: 3vw;
+    font-size: 2.5vw;
     background-color: #07678d;
     background-color: var(--blue-one);
     width: max-content;

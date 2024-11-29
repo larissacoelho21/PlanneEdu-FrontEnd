@@ -1,6 +1,8 @@
 /* Images */
 import { KeyRound, Mail, Phone } from "lucide-react";
 import Background from "../../assets/backgroundProfile.svg";
+import User from "../../../public/user-profile.svg";
+import ProfileForma from "../../../public/profile-forma.svg";
 
 import "../../Css/Teacher/Profile.css";
 
@@ -137,7 +139,7 @@ export function ProfileOpp() {
         </div>
       </div>
 
-      <div className="buttonsProfile">
+      <div className="buttonsProfile" id="buttonsProfile">
         <Dialog.Root>
           <Dialog.Trigger asChild>
             <div className="password-button">
@@ -211,6 +213,115 @@ export function ProfileOpp() {
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
+      </div>
+
+      <div className="nameProfile">
+        <img src={User} alt="" />
+        <p>Marina Fonseca Neves</p>
+      </div>
+
+      <div className="infoProfile">
+        <div className="infoProfile-img">
+          <img src={ProfileForma} alt="" />
+        </div>
+
+        <div className="infosProfile">
+          <div className="nif">
+            <KeyRound className="nifIcon" />
+            <p className="textProfile">15639479</p>
+          </div>
+
+          <div className="contatoProfile">
+            <h1>Informações de contato:</h1>
+
+            <div className="emailPersonal">
+              <Mail className="mailIcon" />
+              <p className="textProfile">mar.fonsves@gmail.com</p>
+            </div>
+
+            <div className="phone">
+              <Phone className="phoneIcon" />
+              <p className="textProfile">(11) 9785-5975</p>
+            </div>
+
+            <div className="buttonsProfile">
+              <Dialog.Root>
+                <Dialog.Trigger asChild>
+                  <div className="password-button">
+                    <button>Trocar de senha</button>
+                  </div>
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Overlay
+                    className="DialogOverlay"
+                    aria-labelledby="dialog-title"
+                  />
+                  <Dialog.Content className="DialogContent">
+                    <Dialog.Title
+                      className="DialogTitle"
+                      id="dialog-title"
+                      style={{
+                        display: "flex",
+                        marginTop: 10,
+                        justifyContent: "center",
+                      }}
+                    >
+                      Trocar senha
+                    </Dialog.Title>
+
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault(); // Evita o reload da página
+                        await handlePassword(); // Chama sua lógica de atualizar a senha
+                      }}
+                    >
+                      <div className="Fieldset">
+                        <InputField
+                          id="currentPassword"
+                          label="Senha atual"
+                          type="password"
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                        />
+                        <InputField
+                          id="newPassword"
+                          label="Nova senha"
+                          type="password"
+                          value={password}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <InputField
+                          id="confirmPassword"
+                          label="Confirmar nova senha"
+                          type="password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          marginTop: 25,
+                          justifyContent: "center",
+                        }}
+                      >
+                        <button type="submit" className="Button save">
+                          Salvar
+                        </button>
+                      </div>
+                    </form>
+                    <Dialog.Close asChild>
+                      <div aria-label="Close">
+                        <Cross2Icon className="IconButton" />
+                      </div>
+                    </Dialog.Close>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              </Dialog.Root>
+
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
