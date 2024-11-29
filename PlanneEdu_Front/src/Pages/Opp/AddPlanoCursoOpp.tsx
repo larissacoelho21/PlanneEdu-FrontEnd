@@ -8,7 +8,7 @@ import {
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { toast } from "sonner";
-import { ChevronDown, Plus, X } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Plus, Trash, X } from "lucide-react";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -108,7 +108,7 @@ function InputField({
           type={type}
           value={value ?? ""}
           onChange={handleInputChange}
-          onWheel={type === "number" ? onWheel : undefined}
+          onWheel={onWheel}
           autoComplete="off"
           className="input-course"
         />
@@ -131,6 +131,16 @@ export function AddPlanoCurso() {
     subtopics: SubtopicData[];
     detail: string;
     ambiente: string;
+  };
+
+  type DisciplineData = {
+    curriculum: string;
+    objective: string;
+    cargaHoraria: number | null;
+    conhecimentos: SelectOption[];
+    estrategias: SelectOption[];
+    recursos: SelectOption[];
+    knowledgeTableData: KnowledgeData[];
   };
 
   /* declaração de estados */
@@ -207,17 +217,38 @@ export function AddPlanoCurso() {
     ) {
       const newData: KnowledgeData = {
         topic: formValues.topicCourse,
-        subtopics: subtopics,
+        subtopics: subtopics.map((subtopic) => ({
+          name: subtopic.name,
+          details: subtopic.details, // Aqui, subtopic.details deve ser um array de detalhes
+        })),
         detail: formValues.detailCourse,
         ambiente: formValues.ambienteCourse,
       };
-      setKnowledgeTableData([...knowledgeTableData, newData]);
+
+      setKnowledgeTableData((prevData) => [...prevData, newData]);
+
+      setFormValues((prev) => ({
+        ...prev,
+        topicCourse: "",
+        subtopicCourse: "",
+        detailCourse: "",
+        detailAssigned: "",
+        ambienteCourse: "",
+      }));
+
       toast.success("Conhecimento adicionado com sucesso!");
+    } else {
+      toast.error("Preencha todos os campos para adicionar conhecimento.");
     }
   };
 
   /* função usada para deletar conhecimentos */
-  const deleteKnowledge = (index: number) => {
+  const deleteKnowledge = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+
     const updatedData = knowledgeTableData.filter((_, i) => i !== index);
     setKnowledgeTableData(updatedData);
     toast.success("Conhecimento deletado com sucesso!");
@@ -246,7 +277,7 @@ export function AddPlanoCurso() {
     setSubtopics((prevSubtopics) =>
       prevSubtopics.filter((subtopic) => subtopic.name !== subtopicName)
     );
-    toast.success("Subtópico deletado com sucesso!");
+    toast.success(`Subtópico "${subtopicName}" deletado com sucesso!`);
   };
 
   /* função para a adição de detalhes */
@@ -281,32 +312,54 @@ export function AddPlanoCurso() {
     }
   };
 
-  const [dropdownState, setDropdownState] = useState<Record<string, boolean>>(
-    {}
-  );
-  const toggleDropdown = (
+  const deleteDetail = (
     event: React.MouseEvent<HTMLButtonElement>,
-    subtopicName: string
+    subtopicName: string,
+    detail: string
   ) => {
     event.preventDefault();
 
-    setDropdownState((prevState) => ({
-      ...prevState,
-      [subtopicName]: !prevState[subtopicName],
-    }));
+    setSubtopics((prevSubtopics) =>
+      prevSubtopics.map((subtopic) =>
+        subtopic.name === subtopicName
+          ? {
+              ...subtopic,
+              details: subtopic.details.filter((d) => d !== detail),
+            }
+          : subtopic
+      )
+    );
+
+    toast.success(`Detalhe "${detail}" deletado com sucesso!`);
+  };
+
+  /* estado para armazenar o dropdown ativo */
+  const [dropdownState, setDropdownState] = useState<string | null>(null);
+
+  /* função do toggle do dropdown */
+  const toggleDropdown = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    subtopicName: string,
+    hasDetails: boolean
+  ) => {
+    event.preventDefault();
+
+    /* se não tiver detalhes, não será possível "descer" */
+    if (!hasDetails) {
+      toast.error("Este subtópico não possui detalhes.");
+      return;
+    }
+
+    /* lógica de toggle, se clicar no mesmo card, ele fecha ou abre */
+    setDropdownState((prevState) =>
+      prevState === subtopicName ? null : subtopicName
+    );
   };
 
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   /* estado para armazenar as disciplinas separadas por semestre */
   const [semesterData, setSemesterData] = useState<{
-    [key: number]: {
-      curriculum: string;
-      objective: string;
-      cargaHoraria: number | null;
-      conhecimentos: SelectOption[];
-      estrategias: SelectOption[];
-      recursos: SelectOption[];
-    }[];
+    [key: number]: DisciplineData[];
   }>({
     1: [],
     2: [],
@@ -318,9 +371,6 @@ export function AddPlanoCurso() {
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    console.log("clicouuuuuu");
-
-    /* adicionando a disciplina ao semestre selecionado */
     if (selectedSemester !== null && formValues.curriculum.trim() !== "") {
       const newDiscipline = {
         curriculum: formValues.curriculum,
@@ -329,7 +379,11 @@ export function AddPlanoCurso() {
         conhecimentos: conhecimentos,
         estrategias: estrategias,
         recursos: recursos,
+        knowledgeTableData: [...knowledgeTableData], // Include knowledge data
       };
+
+      console.log("Subtópicos:", subtopics);
+console.log("Knowledge Table Data:", knowledgeTableData);
 
       setSemesterData((prevState) => ({
         ...prevState,
@@ -339,7 +393,7 @@ export function AddPlanoCurso() {
         ],
       }));
 
-      /* resetando o formulário */
+      // Reset fields and close popup
       setFormValues({
         nameCourse: "",
         categoryCourse: "",
@@ -360,10 +414,10 @@ export function AddPlanoCurso() {
       setConhecimentos([]);
       setEstrategias([]);
       setRecursos([]);
+      setSubtopics([]);
+      setKnowledgeTableData([]);
 
-      /* fechando o popup */
       setShowPopUpGrade(false);
-
       toast.success("Disciplina adicionada com sucesso!");
     }
   };
@@ -464,29 +518,99 @@ export function AddPlanoCurso() {
                     {semesterData[semester]?.map((discipline, index) => (
                       <div key={index} className="discipline-card">
                         <h4>{discipline.curriculum}</h4>
+                        <p className="tag-cargah">
+                          Carga Horária: {discipline.cargaHoraria}
+                        </p>
                         <p>
                           <strong>Objetivo:</strong> {discipline.objective}
                         </p>
                         <p>
-                          <strong>Carga Horária:</strong>{" "}
-                          {discipline.cargaHoraria}
-                        </p>
-                        <p>
                           <strong>Conhecimentos:</strong>{" "}
                           {discipline.conhecimentos
-                            .map((c) => c.label)
+                            .map((conhecimento) => conhecimento.label)
                             .join(", ")}
                         </p>
                         <p>
                           <strong>Estratégias:</strong>{" "}
                           {discipline.estrategias
-                            .map((e) => e.label)
+                            .map((estrategia) => estrategia.label)
                             .join(", ")}
                         </p>
                         <p>
                           <strong>Recursos:</strong>{" "}
-                          {discipline.recursos.map((r) => r.label).join(", ")}
+                          {discipline.recursos
+                            .map((recurso) => recurso.label)
+                            .join(", ")}
                         </p>
+
+                        {discipline.knowledgeTableData.length > 0 && (
+                          <table className="knowledge-table-card">
+                            <thead>
+                              <tr>
+                                <th>Tópico</th>
+                                <th>Ambiente</th>
+                                <th>Subtópicos e Detalhes</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {discipline.knowledgeTableData.map(
+                                (knowledge, knowledgeIndex) => (
+                                  <tr key={knowledgeIndex}>
+                                    <td>{knowledge.topic}</td>
+                                    <td>{knowledge.ambiente}</td>
+                                    <td>
+                                      <ul>
+                                        {knowledge.subtopics.map(
+                                          (subtopic, subtopicIndex) => (
+                                            <li key={subtopicIndex}>
+                                              {subtopic.name}
+                                              {dropdownState ===
+                                                subtopic.name && (
+                                                <ul>
+                                                  {subtopic.details.map(
+                                                    (detail, detailIndex) => (
+                                                      <li key={detailIndex}>
+                                                        {detail}
+                                                      </li>
+                                                    )
+                                                  )}
+                                                </ul>
+                                              )}
+                                              <button className="drop-detail"
+                                                onClick={(event) =>
+                                                  toggleDropdown(
+                                                    event,
+                                                    subtopic.name,
+                                                    subtopic.details.length > 0
+                                                  )
+                                                }
+                                              >
+                                                {dropdownState === subtopic.name
+                                                  ? <ChevronDown />
+                                                  : <ChevronUp />}
+                                              </button>
+                                            </li>
+                                          )
+                                        )}
+                                      </ul>
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        )}
+
+                        <div className="card-action-btns">
+                          <div className="editar-btn">
+                            <button>Editar</button>
+                          </div>
+                          <div className="deletar-btn">
+                            <button>
+                              <Trash /> Deletar
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -629,28 +753,56 @@ export function AddPlanoCurso() {
                   </div>
                   <div className="details-list">
                     {subtopics.map((subtopic) => (
-                      <div key={subtopic.name} className="details-card">
+                      <div
+                        key={subtopic.name}
+                        className={`details-card ${
+                          dropdownState === subtopic.name ? "active" : ""
+                        }`}
+                      >
                         <div className="drop-header">
                           <h4>{subtopic.name}</h4>
                           <button
                             className="drop-btn"
                             onClick={(event) =>
-                              toggleDropdown(event, subtopic.name)
+                              toggleDropdown(
+                                event,
+                                subtopic.name,
+                                subtopic.details.length > 0
+                              )
                             }
-                          ><ChevronDown /></button>
+                          >
+                            <ChevronDown />
+                          </button>
                         </div>
-                        {dropdownState[subtopic.name] && (
-                          <ul>
-                            {subtopic.details.map((detail, index) => (
-                              <li key={index}>
-                                {detail}{" "}
-                                <button>
-                                  <X />
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
+                        {/* só renderizar se o dropdown estiver ativo */}
+                        {dropdownState === subtopic.name && (
+                          <div className="details-cards">
+                            <ul className="details-list">
+                              {subtopic.details.map((detail, index) => (
+                                <li key={index}>
+                                  {detail}{" "}
+                                  <button
+                                    className="delete-btn-detail"
+                                    onClick={(event) =>
+                                      deleteDetail(event, subtopic.name, detail)
+                                    }
+                                  >
+                                    <X />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         )}
+
+                        <button
+                          className="delete-subtbtn"
+                          onClick={() => deleteSubtopic(subtopic.name)}
+                        >
+                          {" "}
+                          <Trash />
+                          Deletar subtópico
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -677,32 +829,50 @@ export function AddPlanoCurso() {
                       <tr>
                         <th>Tópico</th>
                         <th>Ambiente</th>
-                        <th>Subtópicos</th>
-                        <th>Detalhes</th>
+                        <th>Subtópicos e Detalhes</th>
                         <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {knowledgeTableData.map((knowledge, index) => (
-                        <tr key={index}>
+                      {knowledgeTableData.map((knowledge, knowledgeIndex) => (
+                        <tr key={knowledgeIndex}>
+                          {/* exibindo nome do tópico */}
                           <td>{knowledge.topic}</td>
                           <td>{knowledge.ambiente}</td>
                           <td>
                             <ul>
-                              {knowledge.subtopics.map((subtopic, i) => (
-                                <li key={i}>
-                                  {subtopic.name}
-                                  <ul>
-                                    {subtopic.details.map((detail, j) => (
-                                      <li key={j}>{detail}</li>
-                                    ))}
-                                  </ul>
-                                </li>
-                              ))}
+                              {knowledge.subtopics.map(
+                                (subtopic, subtopicIndex) => (
+                                  <li
+                                    key={subtopicIndex}
+                                    className="subtopic-item"
+                                  >
+                                    {subtopic.name}
+                                    <ul>
+                                      {subtopic.details.map(
+                                        (detail, detailIndex) => (
+                                          <li
+                                            key={detailIndex}
+                                            className="detail-item"
+                                          >
+                                            {detail}
+                                          </li>
+                                        )
+                                      )}
+                                    </ul>
+                                  </li>
+                                )
+                              )}
                             </ul>
                           </td>
                           <td>
-                            <button>Deletar</button>
+                            <button
+                              onClick={(event) =>
+                                deleteKnowledge(event, knowledgeIndex)
+                              }
+                            >
+                              Deletar
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -716,6 +886,13 @@ export function AddPlanoCurso() {
                 </div>
               </PopUp>
             )}
+          </div>
+          <div className="tasks-btns">
+            <button className="save-course">
+              <Check />
+              Salvar Alterações
+            </button>
+            <button className="cancel-course">Cancelar</button>
           </div>
         </form>
       </div>

@@ -13,7 +13,7 @@
   color: #074973;
 }
 
-.intro h2 {
+.intro h2, .grade-curricular h2  {
   font-weight: 500;
   font-size: 1.7vw;
 }
@@ -67,8 +67,8 @@
 .Fieldset.filled .label-course,
 .input-course:focus+.label-course,
 .input-course:not(:placeholder-shown)+.label-course,
-.Fieldset select:focus + .label-course,
-.Fieldset select:not(:empty) + .label-course {
+.Fieldset select:focus+.label-course,
+.Fieldset select:not(:empty)+.label-course {
   transform: translateY(-1.5vw);
   font-size: 1vw;
   opacity: 1;
@@ -106,8 +106,6 @@
 
 .grade-curricular h2 {
   text-align: center;
-  font-weight: 650;
-  font-size: 1.7vw;
   margin-top: 1.5vw;
 }
 
@@ -152,7 +150,53 @@
   color: #fff;
 }
 
-.input-row{
+.discipline-cards {
+  width: 100%;
+  display: flex;
+  gap: 3vw;
+}
+
+.discipline-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 3vh 2vw;
+  border: solid 1.5px #000;
+  border-radius: 0.5vw;
+  max-width: 45%;
+  gap: 0.6vw;
+}
+
+.discipline-card h4{
+  font-size: 1.4vw;
+}
+
+.discipline-card p{
+  font-size: .9vw;
+}
+
+.tag-cargah{
+  background-color: #075a7b;
+  color: #FFF;
+  font-size: .8vw !important; 
+  width: 35%;
+  text-align: center;
+  padding: .3vw;
+  border-radius: .5vw;
+  font-size: .9vw;
+}
+
+.knowledge-table-card th, .knowledge-table-card td{
+  font-size: .9vw;
+  border: none;
+  border-bottom: solid 0.15vw rgba(0, 0, 0, 0.2);
+  vertical-align: top;
+  padding: 1.2vw 0.8vw;
+  background: #fff;
+  text-align: center;
+}
+
+.input-row {
   display: flex;
   justify-content: space-between;
 }
@@ -187,23 +231,23 @@
   border-radius: .3vw;
 }
 
-.section-title{
+.section-title {
   font-weight: 500 !important;
   text-align: center;
 }
 
-.pop-title{
+.pop-title {
   display: flex;
   flex-direction: column;
   gap: 1vw;
   margin-bottom: 1vw;
 }
 
-.pop-title h2{
+.pop-title h2 {
   font-size: 2vw;
 }
 
-.pop-title h3{
+.pop-title h3 {
   font-size: 1.2vw;
   text-align: center;
 
@@ -239,20 +283,20 @@
   transition: 0.35s ease-in-out;
 }
 
-.subtopic-tags{
+.subtopic-tags {
   display: flex;
   gap: 2vw;
   align-items: center;
   justify-content: center;
 }
 
-.subtopic-tag{
+.subtopic-tag {
   display: flex;
   gap: .5vw;
   align-items: center;
 }
 
-.subtopic-tag button{
+.subtopic-tag button {
   background: transparent;
   color: #07678d;
   border: none;
@@ -262,7 +306,7 @@
   height: 1.5vw;
 }
 
-.multiselects{
+.multiselects {
   display: flex;
   flex-direction: column;
   gap: 1.6vw;
@@ -281,9 +325,8 @@
   justify-content: center;
 }
 
-.drop-btn{
+.drop-btn {
   background: #074973;
-
 }
 
 .detail {
@@ -294,11 +337,14 @@
   gap: 3vw;
 }
 
-.detail .input-detail, .select-det, .select-course, #select-field{
+.detail .input-detail,
+.select-det,
+.select-course,
+#select-field {
   width: 100%;
 }
 
-.add-detail{
+.add-detail {
   padding: .8vw 3.5vw;
   border: none;
   border-radius: .3vw;
@@ -306,33 +352,64 @@
   color: #fff;
 }
 
-.details-list{
-  display: flex;
-  gap: 3vw;
-}
-
-.details-card{
-  border: .2vw solid #07678d;
-  border-radius: .3vw;
-  padding: .7vw 1.5vw;
-}
-
-.details-card li{
+.details-list {
   display: flex;
   flex-direction: row;
-  gap: .7vw;
-  align-items: center;
+  gap: 2vw;
+  white-space: nowrap;
 }
 
-.drop-header{
+.details-card {
+  min-width: 15vw;
+  min-height: 7vw;
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow: hidden;
+  padding: 1.3vw;
+  border-radius: .3vw;
+  border: .2vw solid #07678d;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  gap: 1vw;
+}
+
+.details-card.active {
+  height: auto;
   gap: .7vw;
 }
 
-.drop-header button{
-  width: 1vw;
-  height: 1vw;
+.details-card li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1vw;
+  align-items: center;
+  width: 100%;
+}
+
+.delete-btn-detail:hover {
+  color: #07678d;
+  cursor: pointer;
+}
+
+.drop-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.drop-header h4 {
+  font-size: 1.3vw;
+}
+
+.details-list li {
+  font-size: 1.1vw;
+}
+
+.drop-btn,
+.delete-btn-detail {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -340,17 +417,121 @@
   border: none;
 }
 
-.knowledge-table{
-  width: 100%;
-}
-
-.knowledge-table th{
-  font-size: 1vw;
-  font-weight: 500;
-}
-
-.knowledge-table th, .knowledge-table td{
+.drop-btn {
+  width: 1.8vw;
+  height: 1.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
   border: none;
-  border-bottom: solid .15vw rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
+.details-card.active .drop-btn {
+  transform: rotate(180deg);
+}
+
+.delete-btn-detail {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+
+.delete-subtbtn {
+  background: none;
+  border: none;
+  font-size: 1vw;
+  display: flex;
+  align-items: center;
+  gap: .5vw;
+}
+
+.delete-subtbtn svg {
+  width: 1vw;
+  height: 1vw;
+}
+
+.delete-subtbtn:hover,
+.delete-subtbtn svg:hover {
+  color: #e43c3c;
+  transition: .2s ease-in-out;
+}
+
+.knowledge-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.knowledge-table th {
+  font-size: 1.1vw;
+  font-weight: 450;
+  text-align: center;
+  padding: 0.5vw 0.8vw;
+}
+
+.knowledge-table th,
+.knowledge-table td {
+  border: none;
+  border-bottom: solid 0.15vw rgba(0, 0, 0, 0.2);
+  vertical-align: top;
+  padding: 1.2vw 0.8vw;
+  background: #fff;
+}
+
+.subtopic-item {
+  margin-bottom: 0.5vw;
+}
+
+.detail-item {
+  margin-left: 2vw;
+  list-style-type: disc;
+}
+
+.knowledge-table td {
+  font-size: 1vw;
+}
+
+.knowledge-table ul {
+  padding-left: 1vw;
+  margin: 0;
+}
+
+.knowledge-table button {
+  font-size: 0.9vw;
+  color: #fff;
+  background-color: #ff4d4d;
+  border: none;
+  padding: 0.5vw 1vw;
+  border-radius: 0.3vw;
+  cursor: pointer;
+}
+
+.knowledge-table button:hover {
+  background-color: #e43c3c;
+}
+
+.tasks-btns{
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+}
+
+.tasks-btns .save-course, .tasks-btns .cancel-course{
+  background: #07678d;
+  padding: 0.8vw 7vw;
+  border: none;
+  border-radius: 0.5vh;
+  color: #fff;
+  font-size: 1.2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+}
+
+.tasks-btns .save-course:hover, .tasks-btns .cancel-course:hover{
+  background: #fff;
+  border: #07678d solid 2px;
+  color: #07678d;
+  transition: ease-in-out .3s;
+}
