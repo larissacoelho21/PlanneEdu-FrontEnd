@@ -36,7 +36,7 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <Routes>
         {/* Login */}
-        <Route path="/" element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/redefinicaosenha" element={<PasswordReset />}></Route>
         <Route path="/verificacaoemail" element={<VerificationEmail />}></Route>
         {/* Professor */}
@@ -61,7 +61,7 @@ const Router: React.FC = () => {
         <Route path="/profileopp" element={<ProfileOpp />} />
         <Route path="/addclass" element={<AddClass/>} />
         {/* Lading Page */}
-        <Route path="/landingpage" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
 
       </Routes>
     </BrowserRouter>

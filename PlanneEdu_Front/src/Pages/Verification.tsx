@@ -72,7 +72,7 @@ export function VerificationEmail() {
       .then((data) => {
         console.log("sucesso", data);
         toast.success("Nova senha criado com sucesso!");
-        navigate("/");
+        navigate("/login");
       })
       .catch((error) => {
         toast.error(`Erro ao redefinir a senha: ${error.message}`); //alert

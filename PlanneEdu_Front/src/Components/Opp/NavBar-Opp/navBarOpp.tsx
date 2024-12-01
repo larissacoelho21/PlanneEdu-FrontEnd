@@ -146,7 +146,7 @@ export function NavBarOpp() {
     localStorage.clear(); //para limpar tudo
 
     // Redireciona o usuário para a página de login
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -324,7 +324,7 @@ export function NavBarOpp() {
                             text={"Visualizar Perfil"}
                           />
                           <DropdownProfile
-                            to="/"
+                            to="/login"
                             icon={<LogOut size={20} />}
                             text={"Sair"}
                             onClick={logout} // Chama a função de logout ao clicar
