@@ -1,1 +1,0 @@
-export const BaseUrl =  "https://planneedu-back.onrender.com";

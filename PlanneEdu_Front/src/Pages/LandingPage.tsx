@@ -4,7 +4,7 @@ import { ChartNoAxesColumnIncreasing } from 'lucide-react';
 import { Zap } from 'lucide-react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import giovanna from "../assets/giovanna.svg";
+import giovanna from "../../src/assets/giovanna.svg";
 import gabriel from "../assets/gabriel.svg";
 import larissa from "../assets/larissa.svg";
 import lara from "../assets/lara.svg";
@@ -30,6 +30,7 @@ export function LandingPage() {
     const NextArrow = (props) => {
         const { onClick } = props;
         return (
+
             <div className="seta-direita" onClick={onClick} style={{ cursor: "pointer" }}>
                 <ArrowRight style={{ marginTop: '1vw', marginLeft: '1vw' }} />
             </div>
@@ -68,28 +69,33 @@ export function LandingPage() {
                         <div className="bolinha-branca2"></div>
                     </div>
                     <h1><span className="conheca">Conheça e entenda</span> nosso projeto!</h1>
-                    <p>O sistema que vaio para te ajudar.</p>
+                    <p>O sistema que veio para te ajudar.</p>
                 </div>
 
-                <div className="descricao-landingPage">
-                    <p>O PlanneEdu é um software que simplifica
-                        a criação de planos de ensino, permitindo
-                        a definição de objetivos, carga horária e
-                        estratégias, além de acompanhar situações
-                        de aprendizagem. Ele oferece uma visão
-                        completa das unidades curriculares, facilitando
-                        o trabalho de docentes e gestores.</p>
+                <div className="descricao-div">
+                    <div className="descricao-landingPage">
+                        <p>O PlanneEdu é um software que simplifica
+                            a criação de planos de ensino, permitindo
+                            a definição de objetivos, carga horária e
+                            estratégias, além de acompanhar situações
+                            de aprendizagem. Ele oferece uma visão
+                            completa das unidades curriculares, facilitando
+                            o trabalho de docentes e gestores.</p>
+                    </div>
+
+                    <div className="descricao-landingPage2">
+                        <p>Destinado a docentes e OPPs do SENAI, o
+                            PlanneEdu prioriza padronização e
+                            acessibilidade, com uma interface intuitiva
+                            e segura. O sistema gera relatórios em PDF,
+                            permite personalização de temas e melhora
+                            a gestão acadêmica, contribuindo para a
+                            qualidade do ensino e o sucesso dos alunos.</p>
+                    </div>
+
                 </div>
 
-                <div className="descricao-landingPage2">
-                    <p>Destinado a docentes e OPPs do SENAI, o
-                        PlanneEdu prioriza padronização e
-                        acessibilidade, com uma interface intuitiva
-                        e segura. O sistema gera relatórios em PDF,
-                        permite personalização de temas e melhora
-                        a gestão acadêmica, contribuindo para a
-                        qualidade do ensino e o sucesso dos alunos.</p>
-                </div>
+
             </div>
 
             <div className="third-section">
@@ -186,7 +192,7 @@ export function LandingPage() {
                             <img src={gustavo} alt="" />
                             <div className="descricao-pessoa">
                                 <h1>Gustavo Paixão</h1>
-                                <p>Líder de Banco de Dados e
+                                <p>Administrador de Banco de Dados e
                                     Desenvolvedor Front-End</p>
                             </div>
                         </div>
@@ -194,7 +200,7 @@ export function LandingPage() {
                             <img src={duda} alt="" />
                             <div className="descricao-pessoa">
                                 <h1>Maria Eduarda</h1>
-                                <p>Líder de Banco de Dados e
+                                <p>Administradora de Banco de Dados e
                                     Documentadora</p>
                             </div>
                         </div>

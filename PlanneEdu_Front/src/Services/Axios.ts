@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
@@ -169,6 +170,35 @@ export const postEmail = async (
   }
 };
 
+export const verificacao = async (
+  email: string,
+  code: string,
+  password: string,
+  confirmPassword: string
+): Promise<void> => {
+  const navigate = useNavigate(); // Use o hook do React Router
+
+  try {
+    const response = await axios.post(`${BaseUrl}/auth/reset_password`, {
+      email,
+      code,
+      password,
+      confirmPassword,
+    });
+
+    // Sucesso na redefinição de senha
+    toast.success("Nova senha criada com sucesso!");
+    navigate("/login");
+  } catch (error: any) {
+    // Erro durante a solicitação
+    const errorMessage =
+      error.response?.data?.error || "Erro desconhecido ao redefinir a senha";
+    toast.error(`Erro ao redefinir a senha: ${errorMessage}`);
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
 /* ======================= Docente ============================= */
 
 /* Requisição do perfil do usuário */
@@ -207,7 +237,7 @@ export const updatePassword = async (
     }
     const response = await axios.put(
       `${BaseUrl}/update_password`,
-      { currentPassword, passwordassword, confirmPassword},
+      { currentPassword, password, confirmPassword},
       {
         headers: {
           Authorization: `Bearer ${token}`, // Incluindo o token no cabeçalho

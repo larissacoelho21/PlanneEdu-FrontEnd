@@ -7,8 +7,8 @@ import Logo from "../assets/logo.svg";
 import "../Css/Verification.css";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { BaseUrl } from "../Config/config";
 import { toast } from "sonner";
+import { verificacao } from "../Services/Axios";
 
 export function VerificationEmail() {
   /* Funçao para aparecer a senha */
@@ -18,20 +18,14 @@ export function VerificationEmail() {
   const handlePassword = () => setisShow(!isShow);
   const handlePassword2 = () => setisShow2(!isShow2);
 
-  const navigate = useNavigate();
-
-  //TODO : passar para o axios
-
-  /* Função Back-End */
-
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  // Estado para armazenar o e-mail recuperado
   const [email, setEmail] = useState("");
 
-  /* useEffect(() => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const storedEmail = localStorage.getItem("emailValue");
     if (storedEmail) {
       setEmail(storedEmail);
@@ -39,46 +33,20 @@ export function VerificationEmail() {
       toast.error(
         "Erro: e-mail não encontrado. Por favor, recomece o processo."
       );
-      navigate("/redefinicaoemail"); // Redireciona para o início caso o e-mail não seja encontrado
+      navigate("/redefinicaoemail");
     }
-  }, [navigate]); */
+  }, [navigate]);
 
-
-  const Verification = (event: React.FormEvent) => {
+  const backVerfication = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    fetch(`${BaseUrl}/auth/reset_password`, {
-      //conectando com o computador que está rodando o back-end
-      method: "POST", //method post de envio
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        //transformando os valores de nif e senha em string
-        email: email, // Certifique-se de passar o e-mail do usuário
-        code: code,
-        password: password,
-        confirmPassword: confirmPassword,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.error || "Erro");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("sucesso", data);
-        toast.success("Nova senha criado com sucesso!");
-        navigate("/login");
-      })
-      .catch((error) => {
-        toast.error(`Erro ao redefinir a senha: ${error.message}`); //alert
-        console.error(error.message);
-      });
-  };
+    try {
+      await verificacao(email, code, password, confirmPassword);
+    } catch (error) {
+      // Você pode lidar com algo extra aqui, mas não é necessário
+      console.error(error);
+    }
+  }
 
   return (
     <section className="VerificationEmail">
@@ -86,7 +54,7 @@ export function VerificationEmail() {
         <BackgroundPassword /> {/* Componente fundo */}
       </div>
 
-      <form onSubmit={Verification}>
+      <form onSubmit={backVerfication}>
         {/* Mesmo nome de divs da pag "PasswordReset" já que possue a mesma configuração */}
         <div className="reset-info">
           <div className="title-text">
