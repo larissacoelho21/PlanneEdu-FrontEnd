@@ -5,6 +5,7 @@
     --blue-one: #074973;
     --blue-two: #07678d;
     --black: #000;
+    --gray-two: #074a7325;
 }
 
 .landing-page {
@@ -18,7 +19,7 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 100vh;
+    height: 150vh;
 }
 
 .bemVindo img {
@@ -28,15 +29,15 @@
 }
 
 .bemVindo h2 {
-    margin-top: 5vw;
+    margin-top: 15vw;
     margin-left: 5vw;
-    font-size: 2vw;
+    font-size: 2.2vw;
     font-weight: 600;
 }
 
 .bemVindo h1 {
     margin-left: 5vw;
-    font-size: 3vw;
+    font-size: 3.5vw;
     color: var(--blue-one);
 }
 
@@ -77,23 +78,435 @@
 .second-section {
     background-color: var(--white-two);
     width: 100%;
-    height: auto;   
+    height: auto;
+    display: flex;
+    margin-bottom: 8vw;
 }
 
-.second-section h1 {
-    margin-top: 15vw;
-    font-size: 2vw;
+.conheca-projeto h1 {
+    font-size: 2.5vw;
     margin-left: 5vw;
-    width: 25vw;
+    width: 30vw;
 }
 
 .conheca {
     color: #074973;
 }
 
-.second-section p {
+.conheca-projeto p {
     font-size: 1vw;
     margin-left: 5vw;
     width: 25vw;
     color: var(--blue-two);
+}
+
+.tag-apresentacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-two);
+    margin-left: 5vw;
+    padding: 0.58125vw 1.5625vw;
+    border-radius: 0.5vw;
+    max-width: 12vw;
+    margin-top: 10vw;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    margin-bottom: 0.5vw;
+}
+
+.tag-apresentacao p {
+    font-size: 1vw;
+    font-weight: 600;
+    color: var(--white-one);
+    margin-left: 0;
+    /* Remova margens extras no texto */
+}
+
+.bolinha-branca {
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: var(--white-one);
+    border-radius: 0.5vw;
+    flex-shrink: 0;
+    /* Impede que as bolinhas "encolham" */
+    margin-left: 0.5vw;
+}
+
+.bolinha-branca2 {
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: var(--white-one);
+    border-radius: 0.5vw;
+    flex-shrink: 0;
+    /* Impede que as bolinhas "encolham" */
+}
+
+.bolinha-branca:first-child {
+    margin-right: 1vw;
+    /* Reduza o espaço entre a bolinha e o texto */
+}
+
+.descricao-landingPage,
+.descricao-landingPage2 p {
+    margin-top: 12vw;
+    font-size: 1.2vw;
+    width: 27vw;
+}
+
+.descricao-landingPage2 p {
+    margin-left: 5vw;
+}
+
+.third-section {
+    background-color: var(--gray-two);
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tag-objetivo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-two);
+    margin-right: 77vw;
+    padding: 0.58125vw 1.5625vw;
+    border-radius: 0.5vw;
+    width: 12vw;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    margin-bottom: 0.5vw;
+    margin-top: 5vw;
+}
+
+.tag-objetivo p {
+    font-size: 1vw;
+    font-weight: 600;
+    color: var(--white-one);
+    margin-left: 0;
+    /* Remova margens extras no texto */
+    transform: translateX(-0.5vw);
+}
+
+.bolinha-objetivo {
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: var(--white-one);
+    border-radius: 0.5vw;
+    flex-shrink: 0;
+    /* Impede que as bolinhas "encolham" */
+    transform: translateX(-1vw);
+}
+
+.bolinha-objetivo2 {
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: var(--white-one);
+    border-radius: 0.5vw;
+    flex-shrink: 0;
+    /* Impede que as bolinhas "encolham" */
+    transform: translateX(1vw);
+}
+
+.bolinha-objetivo:first-child {
+    margin-right: 1vw;
+    /* Reduza o espaço entre a bolinha e o texto */
+}
+
+.objetivo h1 {
+    font-size: 2.5vw;
+    color: var(--blue-one);
+    text-align: center;
+}
+
+.objetivos-cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 7vw;
+    margin-top: 3vw;
+}
+
+.objetivos-card1 {
+    width: 25vw;
+    height: 23vw;
+    background-color: var(--white-one);
+    margin-bottom: 5vw;
+    border-radius: 0.5vw;
+}
+
+.objetivos-card1 h1 {
+    font-size: 2vw;
+    text-align: center;
+}
+
+.objetivos-card1 p {
+    font-size: 1vw;
+    text-align: center;
+    width: 20vw;
+    margin-left: 2.5vw;
+    margin-top: 1vw;
+}
+
+#grafico,
+#zap,
+#gear {
+    margin-top: 3vw;
+    margin-left: 10vw;
+    color: var(--blue-one);
+}
+
+.fourth-section {
+    width: 100%;
+    height: auto;
+}
+
+.tag-equipe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-two);
+    margin-left: 5vw;
+    padding: 0.58125vw 1.5625vw;
+    border-radius: 0.5vw;
+    width: 12vw;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    margin-bottom: 0.5vw;
+    margin-top: 10vw;
+}
+
+.tag-equipe p {
+    font-size: 1vw;
+    font-weight: 600;
+    color: var(--white-one);
+    margin-left: 0;
+    /* Remova margens extras no texto */
+    transform: translateX(-0.5vw);
+}
+
+.fourth-section h1 {
+    margin-left: 5vw;
+    font-size: 2vw;
+    color: var(--blue-one);
+    width: 35vw;
+    margin-top: 1.5vw;
+}
+
+.slick-slider {
+    overflow: hidden;
+    /* Impede que o conteúdo vaze */
+}
+
+.card-equipe1 {
+    display: flex !important;
+    margin: 1rem;
+    margin-left: 5vw;
+    margin-top: 5vw;
+    position: relative;
+}
+
+.card-equipe1 img {
+    width: 17vw;
+}
+
+.descricao-pessoa {
+    transform: translateX(-3.5vw);
+}
+
+.descricao-pessoa h1 {
+    color: var(--blue-one);
+    margin-top: 8vw;
+    font-size: 2vw;
+}
+
+.descricao-pessoa p {
+    font-size: 1.5vw;
+    margin-left: 5vw;
+    width: 30vw;
+}
+
+.seta-esquerda {
+    position: absolute;
+    top: 10vw;
+    background-color: var(--blue-two);
+    width: 4vw;
+    height: 4vw;
+    margin-left: 5vw;
+    border-radius: 10vw;
+    color: var(--white-one);
+    z-index: 10;
+    /* Garante que a seta ficará sobre outros elementos */
+    margin-top: 5vw;
+    cursor: pointer;
+}
+
+.seta-direita {
+    position: absolute;
+    top: 15vw;
+    left: 90vw;
+    background-color: var(--blue-two);
+    width: 4vw;
+    height: 4vw;
+    border-radius: 10vw;
+    color: var(--white-one);
+    z-index: 10;
+    /* Garante que a seta ficará sobre outros elementos */
+    cursor: pointer;
+}
+
+
+.fifth-section {
+    width: 100%;
+    height: auto;
+}
+
+.fifth-section h1 {
+    text-align: center;
+    margin-top: 5vw;
+    font-size: 2vw;
+    color: var(--blue-one);
+    position: relative;
+}
+
+.sobre-sistema {
+    display: flex;
+}
+
+.linha-sobre {
+    width: 0.2vw;
+    height: 54vw;
+    background-color: var(--blue-one);
+    margin: auto;
+    margin-top: 8vw;
+    margin-bottom: 3vw;
+}
+
+.bolinha-sobre {
+    width: 2vw;
+    height: 2vw;
+    background-color: transparent;
+    position: absolute;
+    right: 48.5vw;
+    transform: translateY(-1vw);
+    border-radius: 10vw;
+    box-shadow: 0 0 0 0.1vw var(--blue-two);
+}
+
+.bolinha-dentro {
+    width: 1.3vw;
+    height: 1.3vw;
+    background-color: var(--blue-one);
+    border-radius: 10vw;
+    margin-top: 0.3vw;
+    margin-left: 0.35vw;
+}
+
+#bolinha-sobre2 {
+    transform: translateY(17vw);
+}
+
+#bolinha-sobre3 {
+    transform: translateY(40vw);
+}
+
+.organize, .crie {
+    width: 49vw;
+}
+
+.organize {
+    margin-top: 30vw;
+}
+
+.organize h4 {
+    font-size: 1.2vw;
+    color: var(--blue-one);
+}
+
+.organize p {
+    font-size: 1vw;
+    margin-right: auto;
+}
+
+.organize h4, p {
+    width: 40vw;
+    margin-left: 6vw;
+}
+
+.crie {
+    margin-top: 12vw;
+}
+
+
+.crie h4 {
+    font-size: 1.2vw;
+    color: var(--blue-one);
+}
+
+.crie p {
+    font-size: 1vw;
+    margin-right: auto;
+}
+
+.crie h4, p {
+    width: 40vw;
+    margin-left: 5vw;
+}
+
+.acesso {
+    margin-top: 33vw;
+}
+
+.sixth {
+    width: 100%;
+    height: auto;
+    margin-top: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    align-items: center; /* Centraliza o texto verticalmente */
+}
+
+.sixth h1{
+    font-size: 1.5vw;
+   text-align: center;
+   width: 50vw;
+    font-weight: 400;
+    margin-bottom: 1vw;
+}
+
+.azul {
+    color: var(--blue-one);
+}
+
+.buttons-login button {
+    width: 20vw;
+    height: 11vh;
+    background-color: var(--blue-two);
+    border: none;
+    color: var(--white);
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+    transition: 0.3s ease;
+    margin-top: 2vw;
+    font-weight: 300;
+    margin-bottom: 3vw;
+}
+
+.buttons-login button:hover,
+.buttons-login button:focus {
+    background-color: transparent;
+    border: solid 2px #07678d;
+    color: var(--blue-two);
+}
+
+.buttons-login button:active {
+    background-color: transparent;
+    border: solid 2px #07678d;
+    color: var(--blue-two);
+}
+
+.sixth img {
+    width: 12vw;
 }
