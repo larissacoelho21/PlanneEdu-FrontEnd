@@ -78,6 +78,18 @@ function InputField({
     if (onChange) {
       onChange(event);
     }
+    if (type === "number" && onChange) {
+      const numericValue = inputValue !== "" ? parseFloat(inputValue) : NaN;
+
+      if (
+        !isNaN(numericValue) &&
+        (maxValue === undefined || numericValue <= maxValue)
+      ) {
+        onChange(event);
+      }
+    } else if (onChange) {
+      onChange(event);
+    }
   };
 
   return (
@@ -105,9 +117,17 @@ function InputField({
         <input
           id={id}
           name={name}
-          type={type}
+          type={type === "number" ? "text" : type}
+          inputMode={type === "number" ? "numeric" : undefined}
+          pattern={type === "number" ? "[0-9]*" : undefined}
           value={value ?? ""}
           onChange={handleInputChange}
+          onInput={(e) => {
+            if (type === "number") {
+              const target = e.target as HTMLInputElement;
+              target.value = target.value.replace(/[^0-9]/g, "");
+            }
+          }}
           onWheel={onWheel}
           autoComplete="off"
           className="input-course"
@@ -120,12 +140,13 @@ function InputField({
 export function AddPlanoCurso() {
   /* ======== construção das funcionalidades ======== */
 
-  /* tipificação */
+  /* tipificação para os subtópicos */
   type SubtopicData = {
     name: string;
     details: string[];
   };
 
+  /* tipificação para os conhecimentos */
   type KnowledgeData = {
     topic: string;
     subtopics: SubtopicData[];
@@ -133,6 +154,7 @@ export function AddPlanoCurso() {
     ambiente: string;
   };
 
+  /* tipificação para as disciplinas */
   type DisciplineData = {
     curriculum: string;
     objective: string;
@@ -144,9 +166,11 @@ export function AddPlanoCurso() {
   };
 
   /* declaração de estados */
+  /* estado para controle de exibição do popup */
   const [showPopUpGrade, setShowPopUpGrade] = useState(false);
   const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
 
+  /* tipificação dos valores do formulário */
   type FormValues = {
     nameCourse: string;
     categoryCourse: string;
@@ -192,9 +216,6 @@ export function AddPlanoCurso() {
   const [estrategias, setEstrategias] = useState<SelectOption[]>([]);
   const [recursos, setRecursos] = useState<SelectOption[]>([]);
 
-  /* inicializando o estado `selectedOptions` como um array vazio */
-  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]);
-
   /* função para atualizar estados de forma dinâmica */
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -211,23 +232,24 @@ export function AddPlanoCurso() {
     event.preventDefault();
 
     if (
-      formValues.topicCourse &&
-      formValues.ambienteCourse &&
+      popupFormValues.topicCourse &&
+      popupFormValues.ambienteCourse &&
       subtopics.length > 0
     ) {
       const newData: KnowledgeData = {
-        topic: formValues.topicCourse,
+        topic: popupFormValues.topicCourse,
         subtopics: subtopics.map((subtopic) => ({
           name: subtopic.name,
-          details: subtopic.details, // Aqui, subtopic.details deve ser um array de detalhes
+          details: subtopic.details,
         })),
-        detail: formValues.detailCourse,
-        ambiente: formValues.ambienteCourse,
+        detail: popupFormValues.detailCourse,
+        ambiente: popupFormValues.ambienteCourse,
       };
 
       setKnowledgeTableData((prevData) => [...prevData, newData]);
 
-      setFormValues((prev) => ({
+      /* resetando os dados */
+      setPopupFormValues((prev) => ({
         ...prev,
         topicCourse: "",
         subtopicCourse: "",
@@ -235,6 +257,7 @@ export function AddPlanoCurso() {
         detailAssigned: "",
         ambienteCourse: "",
       }));
+      setSubtopics([]);
 
       toast.success("Conhecimento adicionado com sucesso!");
     } else {
@@ -258,13 +281,13 @@ export function AddPlanoCurso() {
   const addSubtopic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (formValues.subtopicCourse.trim()) {
+    if (popupFormValues.subtopicCourse.trim()) {
       const newSubtopic: SubtopicData = {
-        name: formValues.subtopicCourse,
+        name: popupFormValues.subtopicCourse,
         details: [],
       };
       setSubtopics((prevSubtopics) => [...prevSubtopics, newSubtopic]);
-      setFormValues((prev) => ({
+      setPopupFormValues((prev) => ({
         ...prev,
         subtopicCourse: "",
       }));
@@ -272,7 +295,7 @@ export function AddPlanoCurso() {
     }
   };
 
-  /* função para deletar os subtópicos já adicionados */
+  /* função para deletar os subtópicos já adicionados, baseados em seu nome */
   const deleteSubtopic = (subtopicName: string) => {
     setSubtopics((prevSubtopics) =>
       prevSubtopics.filter((subtopic) => subtopic.name !== subtopicName)
@@ -284,21 +307,21 @@ export function AddPlanoCurso() {
   const addDetail = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (formValues.detailCourse.trim() && formValues.detailAssigned) {
+    if (popupFormValues.detailCourse.trim() && popupFormValues.detailAssigned) {
       /* atualizando os subtópicos com os novos detalhes */
       setSubtopics((prevSubtopics) =>
         prevSubtopics.map((subtopic) =>
-          subtopic.name === formValues.detailAssigned
+          subtopic.name === popupFormValues.detailAssigned
             ? {
                 ...subtopic,
-                details: [...subtopic.details, formValues.detailCourse],
+                details: [...subtopic.details, popupFormValues.detailCourse],
               }
             : subtopic
         )
       );
 
       /* resentando os campos de entrada */
-      setFormValues((prev) => ({
+      setPopupFormValues((prev) => ({
         ...prev,
         detailCourse: "",
         detailAssigned: "",
@@ -312,6 +335,7 @@ export function AddPlanoCurso() {
     }
   };
 
+  /* função para deletar detalhes */
   const deleteDetail = (
     event: React.MouseEvent<HTMLButtonElement>,
     subtopicName: string,
@@ -356,6 +380,23 @@ export function AddPlanoCurso() {
     );
   };
 
+  /* estado para armazenar o dropdown ativo */
+  const [dropdownStateDiscipline, setDropdownStateDiscipline] = useState<
+    number | null
+  >(null);
+
+  /* função de dropdown, alterna a exibição */
+  const toggleDisciplineDropdown = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+
+    setDropdownStateDiscipline((prevState) =>
+      prevState === index ? null : index
+    );
+  };
+
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   /* estado para armazenar as disciplinas separadas por semestre */
   const [semesterData, setSemesterData] = useState<{
@@ -367,43 +408,146 @@ export function AddPlanoCurso() {
     4: [],
   });
 
-  /* ao clicar no botão "Salvar informações" do popup, função para salvar a disciplina */
+  /* armazena os valores do formulário do popup */
+  const [popupFormValues, setPopupFormValues] = useState<FormValues>({
+    nameCourse: "",
+    categoryCourse: "",
+    objectiveCourse: "",
+    skillsCourse: "",
+    cargaHoraria: null,
+    quantSemestres: null,
+    curriculum: "",
+    objectiveCurriculum: "",
+    cargaHCurriculum: null,
+    topicCourse: "",
+    subtopicCourse: "",
+    detailCourse: "",
+    detailAssigned: "",
+    ambienteCourse: "",
+    selectedOptDetail: "",
+  });
+
+  /* manipula a mudança de valores no popup */
+  const handlePopupInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = event.target;
+    setPopupFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: type === "number" && !isNaN(+value) ? +value : value,
+    }));
+  };
+
+  /* função para resetar dados */
+  const resetPopupStates = () => {
+    setPopupFormValues({
+      nameCourse: "",
+      categoryCourse: "",
+      objectiveCourse: "",
+      skillsCourse: "",
+      cargaHoraria: null,
+      quantSemestres: null,
+      curriculum: "",
+      objectiveCurriculum: "",
+      cargaHCurriculum: null,
+      topicCourse: "",
+      subtopicCourse: "",
+      detailCourse: "",
+      detailAssigned: "",
+      ambienteCourse: "",
+      selectedOptDetail: "",
+    });
+    setConhecimentos([]);
+    setEstrategias([]);
+    setRecursos([]);
+    setKnowledgeTableData([]);
+    setEditingDiscipline(null);
+  };
+
+  /* função para salvar disciplina, editada ou não */
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (selectedSemester !== null && formValues.curriculum.trim() !== "") {
+    if (selectedSemester !== null && popupFormValues.curriculum.trim() !== "") {
       const newDiscipline = {
-        curriculum: formValues.curriculum,
-        objective: formValues.objectiveCurriculum,
-        cargaHoraria: formValues.cargaHCurriculum,
+        curriculum: popupFormValues.curriculum,
+        objective: popupFormValues.objectiveCurriculum,
+        cargaHoraria: popupFormValues.cargaHCurriculum,
         conhecimentos: conhecimentos,
         estrategias: estrategias,
         recursos: recursos,
-        knowledgeTableData: [...knowledgeTableData], // Include knowledge data
+        knowledgeTableData: [...knowledgeTableData],
       };
 
-      console.log("Subtópicos:", subtopics);
-console.log("Knowledge Table Data:", knowledgeTableData);
+      setSemesterData((prevState) => {
+        if (editingDiscipline) {
+          /* atualizando disciplina existente */
+          const { semester, index } = editingDiscipline;
+          const updatedSemesterData = [...prevState[semester]];
+          updatedSemesterData[index] = newDiscipline;
 
-      setSemesterData((prevState) => ({
-        ...prevState,
-        [selectedSemester]: [
-          ...(prevState[selectedSemester] || []),
-          newDiscipline,
-        ],
-      }));
+          toast.success(
+            `Disciplina "${newDiscipline.curriculum}" atualizada com sucesso!`
+          );
 
-      // Reset fields and close popup
-      setFormValues({
+          return {
+            ...prevState,
+            [semester]: updatedSemesterData,
+          };
+        } else {
+          toast.success(
+            `Disciplina "${newDiscipline.curriculum}" adicionada com sucesso!`
+          );
+          return {
+            ...prevState,
+            [selectedSemester]: [
+              ...(prevState[selectedSemester] || []),
+              newDiscipline,
+            ],
+          };
+        }
+      });
+
+      /* resetando os dados */
+      resetPopupStates();
+      setShowPopUpGrade(false);
+    } else {
+      toast.error(
+        "Preencha todos os campos para criar uma disciplina. Tente novamente!"
+      );
+    }
+  };
+
+  /* estado para identificar a disciplina em edição */
+  const [editingDiscipline, setEditingDiscipline] = useState<{
+    semester: number;
+    index: number;
+    discipline: DisciplineData;
+  } | null>(null);
+
+  /* inicia o processo de edição de disciplinas */
+  const startEditDiscipline = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    semester: number,
+    index: number
+  ) => {
+    event.preventDefault();
+
+    const discipline = semesterData[semester]?.[index];
+
+    if (discipline) {
+      setEditingDiscipline({ semester, index, discipline });
+
+      setPopupFormValues({
         nameCourse: "",
         categoryCourse: "",
         objectiveCourse: "",
         skillsCourse: "",
-        cargaHoraria: null,
+        cargaHoraria: discipline.cargaHoraria,
         quantSemestres: null,
-        curriculum: "",
-        objectiveCurriculum: "",
-        cargaHCurriculum: null,
+        curriculum: discipline.curriculum,
+        objectiveCurriculum: discipline.objective,
+        cargaHCurriculum: discipline.cargaHoraria,
         topicCourse: "",
         subtopicCourse: "",
         detailCourse: "",
@@ -411,15 +555,67 @@ console.log("Knowledge Table Data:", knowledgeTableData);
         ambienteCourse: "",
         selectedOptDetail: "",
       });
-      setConhecimentos([]);
-      setEstrategias([]);
-      setRecursos([]);
-      setSubtopics([]);
-      setKnowledgeTableData([]);
 
-      setShowPopUpGrade(false);
-      toast.success("Disciplina adicionada com sucesso!");
+      setConhecimentos(discipline.conhecimentos);
+      setEstrategias(discipline.estrategias);
+      setRecursos(discipline.recursos);
+      setKnowledgeTableData(discipline.knowledgeTableData);
+
+      setShowPopUpGrade(true);
+    } else {
+      console.error(
+        `Disciplina não encontrada para o semestre ${semester} e índice ${index}`
+      );
     }
+  };
+
+  /* função de remoção de disciplina */
+  const deleteDiscipline = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    semester: number,
+    index: number
+  ) => {
+    event.preventDefault();
+
+    setSemesterData((prevState) => ({
+      ...prevState,
+      [semester]: prevState[semester].filter((_, i) => i !== index),
+    }));
+
+    /* resetando os dados */
+    setFormValues({
+      nameCourse: "",
+      categoryCourse: "",
+      objectiveCourse: "",
+      skillsCourse: "",
+      cargaHoraria: null,
+      quantSemestres: null,
+      curriculum: "",
+      objectiveCurriculum: "",
+      cargaHCurriculum: null,
+      topicCourse: "",
+      subtopicCourse: "",
+      detailCourse: "",
+      detailAssigned: "",
+      ambienteCourse: "",
+      selectedOptDetail: "",
+    });
+
+    setConhecimentos([]);
+    setEstrategias([]);
+    setRecursos([]);
+    setSubtopics([]);
+    setKnowledgeTableData([]);
+
+    toast.success("Disciplina deletada com sucesso!");
+  };
+
+  /* função para o botão de cancelar, limpa os dados e para de exibir o popup */
+  const closePopUp = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    togglePopUpGrade();
+    resetPopupStates();
   };
 
   return (
@@ -507,6 +703,7 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                     <button
                       onClick={(event) => {
                         setSelectedSemester(semester);
+                        resetPopupStates();
                         togglePopUpGrade();
                         event.preventDefault();
                       }}
@@ -517,99 +714,114 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                   <div className="discipline-cards">
                     {semesterData[semester]?.map((discipline, index) => (
                       <div key={index} className="discipline-card">
-                        <h4>{discipline.curriculum}</h4>
-                        <p className="tag-cargah">
-                          Carga Horária: {discipline.cargaHoraria}
-                        </p>
-                        <p>
-                          <strong>Objetivo:</strong> {discipline.objective}
-                        </p>
-                        <p>
-                          <strong>Conhecimentos:</strong>{" "}
-                          {discipline.conhecimentos
-                            .map((conhecimento) => conhecimento.label)
-                            .join(", ")}
-                        </p>
-                        <p>
-                          <strong>Estratégias:</strong>{" "}
-                          {discipline.estrategias
-                            .map((estrategia) => estrategia.label)
-                            .join(", ")}
-                        </p>
-                        <p>
-                          <strong>Recursos:</strong>{" "}
-                          {discipline.recursos
-                            .map((recurso) => recurso.label)
-                            .join(", ")}
-                        </p>
-
-                        {discipline.knowledgeTableData.length > 0 && (
-                          <table className="knowledge-table-card">
-                            <thead>
-                              <tr>
-                                <th>Tópico</th>
-                                <th>Ambiente</th>
-                                <th>Subtópicos e Detalhes</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {discipline.knowledgeTableData.map(
-                                (knowledge, knowledgeIndex) => (
-                                  <tr key={knowledgeIndex}>
-                                    <td>{knowledge.topic}</td>
-                                    <td>{knowledge.ambiente}</td>
-                                    <td>
-                                      <ul>
-                                        {knowledge.subtopics.map(
-                                          (subtopic, subtopicIndex) => (
-                                            <li key={subtopicIndex}>
-                                              {subtopic.name}
-                                              {dropdownState ===
-                                                subtopic.name && (
-                                                <ul>
-                                                  {subtopic.details.map(
-                                                    (detail, detailIndex) => (
-                                                      <li key={detailIndex}>
-                                                        {detail}
-                                                      </li>
-                                                    )
-                                                  )}
-                                                </ul>
-                                              )}
-                                              <button className="drop-detail"
-                                                onClick={(event) =>
-                                                  toggleDropdown(
-                                                    event,
-                                                    subtopic.name,
-                                                    subtopic.details.length > 0
-                                                  )
-                                                }
-                                              >
-                                                {dropdownState === subtopic.name
-                                                  ? <ChevronDown />
-                                                  : <ChevronUp />}
-                                              </button>
-                                            </li>
-                                          )
-                                        )}
-                                      </ul>
-                                    </td>
-                                  </tr>
-                                )
+                        {/* Informações básicas */}
+                        <div className="card-header">
+                          <div className="card-intro">
+                            <h4>{discipline.curriculum}</h4>
+                            <button
+                              onClick={(event) =>
+                                toggleDisciplineDropdown(event, index)
+                              }
+                              className="dropdown-toggle-btn"
+                            >
+                              {dropdownStateDiscipline === index ? (
+                                <ChevronUp />
+                              ) : (
+                                <ChevronDown />
                               )}
-                            </tbody>
-                          </table>
-                        )}
-
-                        <div className="card-action-btns">
-                          <div className="editar-btn">
-                            <button>Editar</button>
-                          </div>
-                          <div className="deletar-btn">
-                            <button>
-                              <Trash /> Deletar
                             </button>
                           </div>
+                          <p className="tag-cargah">
+                            Carga Horária: {discipline.cargaHoraria}
+                          </p>
+                          <p>
+                            <strong>Objetivo:</strong> {discipline.objective}
+                          </p>
+                        </div>
+
+                        {/* detalhes expandíveis no dropdown */}
+                        {dropdownStateDiscipline === index && (
+                          <div className="card-details">
+                            <p>
+                              <strong>Conhecimentos:</strong>{" "}
+                              {discipline.conhecimentos
+                                .map((conhecimento) => conhecimento.label)
+                                .join(", ")}
+                            </p>
+                            <p>
+                              <strong>Estratégias:</strong>{" "}
+                              {discipline.estrategias
+                                .map((estrategia) => estrategia.label)
+                                .join(", ")}
+                            </p>
+                            <p>
+                              <strong>Recursos:</strong>{" "}
+                              {discipline.recursos
+                                .map((recurso) => recurso.label)
+                                .join(", ")}
+                            </p>
+
+                            {/* tabela de conhecimentos */}
+                            {discipline.knowledgeTableData.length > 0 && (
+                              <table className="knowledge-table-card">
+                                <thead>
+                                  <tr>
+                                    <th>Tópico</th>
+                                    <th>Ambiente</th>
+                                    <th>Subtópicos e Detalhes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {discipline.knowledgeTableData.map(
+                                    (knowledge, knowledgeIndex) => (
+                                      <tr key={knowledgeIndex}>
+                                        <td>{knowledge.topic}</td>
+                                        <td>{knowledge.ambiente}</td>
+                                        <td>
+                                          <ul>
+                                            {knowledge.subtopics.map(
+                                              (subtopic, subtopicIndex) => (
+                                                <li key={subtopicIndex}>
+                                                  {subtopic.name}
+                                                  <ul>
+                                                    {subtopic.details.map(
+                                                      (detail, detailIndex) => (
+                                                        <li key={detailIndex}>
+                                                          {detail}
+                                                        </li>
+                                                      )
+                                                    )}
+                                                  </ul>
+                                                </li>
+                                              )
+                                            )}
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                    )
+                                  )}
+                                </tbody>
+                              </table>
+                            )}
+                          </div>
+                        )}
+
+                        {/* botões de ação */}
+                        <div className="card-action-btns">
+                          <button
+                            onClick={(event) =>
+                              startEditDiscipline(event, semester, index)
+                            }
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={(event) =>
+                              deleteDiscipline(event, semester, index)
+                            }
+                          >
+                            Deletar
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -618,6 +830,7 @@ console.log("Knowledge Table Data:", knowledgeTableData);
               ))}
             </div>
 
+            {/* popup referente a criação de disciplinas */}
             {showPopUpGrade && (
               <PopUp onClose={() => setShowPopUpGrade(false)}>
                 <div className="pop-title">
@@ -634,8 +847,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       name="curriculum"
                       label="Unidade Curricular"
                       type="text"
-                      value={formValues.curriculum}
-                      onChange={handleInputChange}
+                      value={popupFormValues.curriculum}
+                      onChange={handlePopupInputChange}
                     />
                   </div>
                   <div className="input-fieldd">
@@ -644,8 +857,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       label="Objetivo"
                       name="objectiveCurriculum"
                       type="text"
-                      value={formValues.objectiveCurriculum}
-                      onChange={handleInputChange}
+                      value={popupFormValues.objectiveCurriculum}
+                      onChange={handlePopupInputChange}
                     />
                   </div>
                   <div className="input-fieldd">
@@ -653,9 +866,9 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       id="carga-h"
                       name="cargaHCurriculum"
                       label="Carga Horária"
-                      type="number | null"
-                      value={formValues.cargaHCurriculum}
-                      onChange={handleInputChange}
+                      type="number"
+                      value={popupFormValues.cargaHCurriculum}
+                      onChange={handlePopupInputChange}
                     />
                   </div>
                   <h3 className="section-title">
@@ -700,8 +913,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       name="topicCourse"
                       label="Tópico"
                       type="text"
-                      value={formValues.topicCourse}
-                      onChange={handleInputChange}
+                      value={popupFormValues.topicCourse}
+                      onChange={handlePopupInputChange}
                     />
                   </div>
                   <div className="subtopic">
@@ -711,8 +924,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                         name="subtopicCourse"
                         label="Subtópico"
                         type="text"
-                        value={formValues.subtopicCourse}
-                        onChange={handleInputChange}
+                        value={popupFormValues.subtopicCourse}
+                        onChange={handlePopupInputChange}
                       />
                       <button className="add-subbtn" onClick={addSubtopic}>
                         <Plus />
@@ -727,8 +940,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                         name="detailCourse"
                         label="Detalhe"
                         type="text"
-                        value={formValues.detailCourse}
-                        onChange={handleInputChange}
+                        value={popupFormValues.detailCourse}
+                        onChange={handlePopupInputChange}
                       />
                     </div>
                     <div className="select-course">
@@ -742,8 +955,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                             value: subtopic.name,
                             label: subtopic.name,
                           }))}
-                          value={formValues.detailAssigned}
-                          onChange={handleInputChange}
+                          value={popupFormValues.detailAssigned}
+                          onChange={handlePopupInputChange}
                         />
                       </div>
                     </div>
@@ -751,6 +964,7 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       Adicionar detalhes
                     </button>
                   </div>
+                  {/* lista de cards referente aos subtópicos e detalhes */}
                   <div className="details-list">
                     {subtopics.map((subtopic) => (
                       <div
@@ -813,8 +1027,8 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                       name="ambienteCourse"
                       label="Ambiente Pedagógico"
                       type="text"
-                      value={formValues.ambienteCourse}
-                      onChange={handleInputChange}
+                      value={popupFormValues.ambienteCourse}
+                      onChange={handlePopupInputChange}
                     />
                   </div>
                   <div className="conhecimento-btn">
@@ -880,8 +1094,12 @@ console.log("Knowledge Table Data:", knowledgeTableData);
                   </table>
 
                   <div className="actions-btns">
-                    <button onClick={saveDiscipline}>Salvar informações</button>
-                    <button>Cancelar</button>
+                    <button onClick={saveDiscipline}>
+                      {editingDiscipline
+                        ? "Salvar Alterações"
+                        : "Salvar Informações"}
+                    </button>
+                    <button onClick={closePopUp}>Cancelar</button>
                   </div>
                 </div>
               </PopUp>

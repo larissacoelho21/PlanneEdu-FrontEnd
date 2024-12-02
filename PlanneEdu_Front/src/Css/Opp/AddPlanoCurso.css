@@ -130,9 +130,9 @@
   width: 4vw;
   height: 4vw;
   background: transparent;
-  border: 2px solid #07678d;
+  border: 2px solid #075a7b;
   border-radius: .4vw;
-  color: #07678d;
+  color: #075a7b;
   transition: ease-in-out .3s;
 }
 
@@ -144,27 +144,52 @@
 .add-btn button:hover {
   width: 4vw;
   height: 4vw;
-  background: #07678d;
-  border: 2px solid #07678d;
+  background: #075a7b;
+  border: 2px solid #075a7b;
   border-radius: .4vw;
   color: #fff;
 }
 
-.discipline-cards {
-  width: 100%;
-  display: flex;
-  gap: 3vw;
+.discipline-cards, .details-list{
+  display: flex;             
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: flex-start; 
 }
 
-.discipline-card {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 3vh 2vw;
-  border: solid 1.5px #000;
-  border-radius: 0.5vw;
-  max-width: 45%;
-  gap: 0.6vw;
+.discipline-card,
+.details-card {
+  display: flex;  
+  flex-direction: column;   
+  width: calc(50% - 1vw);
+  min-width: 200px;
+  padding: 1vw;
+  border: 1px solid #000;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;  
+  gap: 1vw; 
+}
+
+.discipline-card .dropdown-content,
+.details-card .dropdown-content {
+  max-height: 0;
+  overflow: hidden; 
+  transition: max-height 0.3s ease;
+}
+
+.discipline-card.active .dropdown-content,
+.details-card.active .dropdown-content {
+  max-height: 500px; 
+}
+
+.drop-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem;
 }
 
 .discipline-card h4{
@@ -172,17 +197,33 @@
 }
 
 .discipline-card p{
-  font-size: .9vw;
+  font-size: 1vw;
+}
+
+.card-header{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.card-intro{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-intro button{
+  background: none;
+  border: none;
 }
 
 .tag-cargah{
   background-color: #075a7b;
   color: #FFF;
   font-size: .8vw !important; 
-  width: 35%;
+  width: 30%;
   text-align: center;
-  padding: .3vw;
-  border-radius: .5vw;
+  padding: .2vw .3vw;
+  border-radius: .3vw;
   font-size: .9vw;
 }
 
@@ -194,6 +235,30 @@
   padding: 1.2vw 0.8vw;
   background: #fff;
   text-align: center;
+}
+
+.card-action-btns{
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-action-btns button{
+  padding: .5rem 2rem;
+  background: #075a7b;
+  color: #fff;
+  border: transparent solid 2px;
+  border-radius: .3vw;
+  transition: ease-in-out .3s;
+}
+
+.card-action-btns button:hover{
+  padding: .5rem 2rem;
+  background: #fff;
+  color: #075a7b;
+  border: #075a7b solid 2px;
+  border-radius: .3vw;
 }
 
 .input-row {
@@ -209,11 +274,11 @@
 }
 
 .actions-btns button {
-  background: #07678d;
+  background: #075a7b;
   color: #fff;
   font-size: 1vw;
   padding: 1vw 4vw;
-  border: 3px solid #07678d;
+  border: 3px solid #075a7b;
   border-radius: .3vw;
   transition: ease-in-out .2s;
   display: flex;
@@ -224,10 +289,10 @@
 
 .actions-btns button:hover {
   background: #fff;
-  color: #07678d;
+  color: #075a7b;
   font-size: 1vw;
   padding: 1vw 4vw;
-  border: 3px solid #07678d;
+  border: 3px solid #075a7b;
   border-radius: .3vw;
 }
 
@@ -270,15 +335,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #07678d;
+  color: #075a7b;
   border-radius: .3vw;
-  border: 2px solid #07678d;
+  border: 2px solid #075a7b;
   margin-bottom: 1vw;
 }
 
 .subtopic .add-subbtn:hover {
-  background: #07678d;
-  border: 2px solid #07678d;
+  background: #075a7b;
+  border: 2px solid #075a7b;
   color: #fff;
   transition: 0.35s ease-in-out;
 }
@@ -298,7 +363,7 @@
 
 .subtopic-tag button {
   background: transparent;
-  color: #07678d;
+  color: #075a7b;
   border: none;
   display: flex;
   align-items: center;
@@ -313,7 +378,7 @@
 }
 
 .conhecimento-btn button {
-  background: #07678d;
+  background: #075a7b;
   padding: .8vw 2vw;
   color: #fff;
   border: none;
@@ -348,36 +413,8 @@
   padding: .8vw 3.5vw;
   border: none;
   border-radius: .3vw;
-  background: #07678d;
+  background: #075a7b;
   color: #fff;
-}
-
-.details-list {
-  display: flex;
-  flex-direction: row;
-  gap: 2vw;
-  white-space: nowrap;
-}
-
-.details-card {
-  min-width: 15vw;
-  min-height: 7vw;
-  flex-shrink: 0;
-  flex-grow: 0;
-  overflow: hidden;
-  padding: 1.3vw;
-  border-radius: .3vw;
-  border: .2vw solid #07678d;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1vw;
-}
-
-.details-card.active {
-  height: auto;
-  gap: .7vw;
 }
 
 .details-card li {
@@ -390,7 +427,7 @@
 }
 
 .delete-btn-detail:hover {
-  color: #07678d;
+  color: #075a7b;
   cursor: pointer;
 }
 
@@ -517,9 +554,9 @@
 }
 
 .tasks-btns .save-course, .tasks-btns .cancel-course{
-  background: #07678d;
+  background: #075a7b;
   padding: 0.8vw 7vw;
-  border: none;
+  border: transparent solid 2px;
   border-radius: 0.5vh;
   color: #fff;
   font-size: 1.2vw;
@@ -531,7 +568,7 @@
 
 .tasks-btns .save-course:hover, .tasks-btns .cancel-course:hover{
   background: #fff;
-  border: #07678d solid 2px;
-  color: #07678d;
+  border: #075a7b solid 2px;
+  color: #075a7b;
   transition: ease-in-out .3s;
 }

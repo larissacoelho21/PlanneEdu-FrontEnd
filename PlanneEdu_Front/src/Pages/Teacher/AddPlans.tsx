@@ -3,7 +3,7 @@ import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
 import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
-import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
 import DatePicker from "react-multi-date-picker";
@@ -699,8 +699,6 @@ export function AddPlans() {
 
           {showPopUpStrategy && (
             <PopUp
-              title="Criar estratégia"
-              subtitle="Descreva suas estratégias para a criação e desenvolvimento das situações de aprendizagem e o planejamento das intervenções mediadoras"
               onClose={closePopup}
             >
               <div className="pop-body">
@@ -912,8 +910,6 @@ export function AddPlans() {
           {showPopUpPlan && (
             <PopUp
               onClose={closePopup}
-              title="Planejamento de aulas"
-              subtitle="Descreva o conteúdo das aulas e selecione os conhecimentos, recursos e estratégias a serem desenvolvidas."
             >
               <div className="pop-body">
                 <div className="datess">
@@ -978,8 +974,6 @@ export function AddPlans() {
           {showPopUpClasses && (
             <PopUp
               onClose={closePopup}
-              title="Editar"
-              subtitle="Edite as informações referente ao planejamento de aula"
             >
               <div className="pop-body">
                 <div className="datess">
