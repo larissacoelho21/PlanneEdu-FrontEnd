@@ -67,9 +67,14 @@ body {
 }
 
 .forms p {
-  opacity: 60%;
+  margin-top: 0;
   margin-bottom: 5%;
+  margin-left: 0;
+  margin-right: 0;
+  opacity: 60%;
+  text-align: left;
 }
+
 
 .inputs {
   display: flex;
@@ -77,7 +82,6 @@ body {
 }
 
 .input {
-  width: 36.5vw;
   height: 4vw;
   padding: 2vw;
   margin-bottom: 3%;
@@ -121,7 +125,7 @@ select:focus {
 
 .password a {
   font-size: 1vw;
-  margin-left: 19.2vw;
+  margin-left: 28vw;
   color: var(--blue-one);
   text-decoration: none;
 }

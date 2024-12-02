@@ -24,7 +24,7 @@
 .title-verification p {
   opacity: 60%;
   margin-bottom: 3%;
-  font-size: 1.3vw;
+  font-size: 1.1vw;
   max-width: 50vw;
 }
 
@@ -65,7 +65,7 @@ select:focus,
 }
 
 .confirm {
-  margin: 3% 0 3% 0;
+  margin: 3% 12% 3% 0;
   text-align: center;
   color: var(--black-two);
 }
