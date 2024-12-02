@@ -15,7 +15,7 @@ export function PlanoCursoOpp() {
         />
       </div>
 
-      <div className="buttons-class">
+      <div className="buttons-class" id="buttons-class">
         <a href="/addplancurso"><button>+ Criar um novo plano de curso</button></a>
       </div>
 

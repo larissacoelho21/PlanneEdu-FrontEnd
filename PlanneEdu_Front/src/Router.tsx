@@ -11,7 +11,7 @@ import { PlanEnsino } from "./Pages/Teacher/PlanEnsino";
 import { ViewActivity } from "./Pages/Teacher/ViewActivity";
 import { AddActivity } from "./Pages/Teacher/AddActivity";
 import { PlanEnsinoEspc } from "./Pages/Teacher/PlanEnsinoEspc";
-import { ProfileTeacher } from "./Pages/Teacher/Profile";
+import { ProfileTeacher } from "./Pages/Teacher/ProfileTeacher";
 import { AddPlans } from "./Pages/Teacher/AddPlans";
 
 /* Opp */
@@ -24,8 +24,11 @@ import { AddPlanoCurso } from "./Pages/Opp/AddPlanoCursoOpp";
 import { AddUser } from "./Pages/Opp/AddUser";
 import { PlanCourse } from "./Pages/Teacher/PlanCourse";
 import { ManageTeachers } from "./Pages/Opp/ManageTeachers";
-import { LandingPage } from "./Pages/LandingPage";
 import { AddClass } from "./Pages/Opp/AddClass";
+import { ProfileOpp } from "./Pages/Opp/ProfileOpp";
+
+/* Landing Page */
+import { LandingPage } from "./Pages/LandingPage";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -33,7 +36,7 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <Routes>
         {/* Login */}
-        <Route path="/" element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/redefinicaosenha" element={<PasswordReset />}></Route>
         <Route path="/verificacaoemail" element={<VerificationEmail />}></Route>
         {/* Professor */}
@@ -43,7 +46,7 @@ const Router: React.FC = () => {
         <Route path="/plansensino" element={<PlanEnsino />}></Route>
         <Route path="/visualizaratvd" element={<ViewActivity />}></Route>
         <Route path="/plansensinoespc" element={<PlanEnsinoEspc />} />
-        <Route path="/profile" element={<ProfileTeacher />} />
+        <Route path="/profileteacher" element={<ProfileTeacher />} />
         <Route path="/addplans" element={<AddPlans />} />
         <Route path="/planscourse" element={<PlanCourse/>}/>
         {/* Opp */}
@@ -54,10 +57,12 @@ const Router: React.FC = () => {
         <Route path="/addcurso" element={<AddCourse />} />
         <Route path="/addplancurso" element={<AddPlanoCurso />} />
         <Route path="/addUser" element={<AddUser />} />
-        <Route path="/managetechers" element={<ManageTeachers />} />
-        <Route path="/landingpage" element={<LandingPage />} />
-        {/* Lading Page */}
+        <Route path="/manageteachers" element={<ManageTeachers />} />
+        <Route path="/profileopp" element={<ProfileOpp />} />
         <Route path="/addclass" element={<AddClass/>} />
+        {/* Lading Page */}
+        <Route path="/" element={<LandingPage />} />
+
       </Routes>
     </BrowserRouter>
   );

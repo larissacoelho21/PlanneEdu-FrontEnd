@@ -1,10 +1,23 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .title-verification {
+  text-align: center;
   margin-top: 5%;
 }
 
 .title-verification h2 {
   font-weight: 800;
-  color: #074973;
+  color: var(--blue-one);
   font-size: 2.6vw;
 }
 
@@ -21,12 +34,12 @@
 }
 
 .verification {
-  background-color: rgba(217, 217, 217, 0%);
+  background-color: var(--white-two);
   padding: 1vw;
   width: 18vw;
   height: 5vw;
-  border: rgb(7, 73, 115) solid 2px;
-  border-radius: 0.5vw;
+  border: var(--blue-one) solid 2px;
+  border-radius: .5vw;
   font-size: 3.2vw;
   font-weight: bold;
   letter-spacing: 0.8vw;
@@ -38,7 +51,6 @@
   letter-spacing: none;
 }
 
-/* Retirando as setas que aparecem com o type=number do input */
 .verification::-webkit-inner-spin-button,
 .verification::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -48,52 +60,56 @@
 .input-verification:focus,
 select:focus,
 .verification:focus {
-  border: rgb(38, 133, 195) solid 2px;
+  border: var(--blue-three) solid 2px;
   outline: none;
 }
 
 .confirm {
   margin: 3% 0 3% 0;
   text-align: center;
+  color: var(--black-two);
 }
 
-.confirmEmail {
-  opacity: 50%;
+.confirm-email {
   font-size: 1vw;
 }
 
 .link-return {
-  color: black;
+  color: var(--black-two);
   text-decoration: none;
-  opacity: 80%;
   font-size: 1vw;
+  transition: .3s ease;
 }
 
 .link-return:hover {
-  color: rgba(7, 73, 115, 100%);
+  color: var(--blue-three);
 }
 
 .button-verification button {
-  background-color: #074973;
+  background-color: var(--blue-two);
   border: none;
   margin-top: 1.5vw;
   border-radius: 0.5vw;
-  font-size: 1.3vw;
+  font-size: 1.1vw;
   font-weight: 300;
   width: 20vw;
   height: 3.5vw;
   font-family: "Poppins", system-ui;
-  color: #f2f2f2;
+  color: var(--white-two);
+  transition: .3s ease;
 }
 
 .button-verification button:hover {
-  background-color: #07678d;
+  background-color: transparent;
+  color: var(--blue-two);
+  border: solid var(--blue-two);
+
 }
 
-.inputReset {
+.label-reset {
   display: flex;
   justify-content: space-between;
-  border: rgba(1, 18, 38, 50%) solid 1.3px;
+  border: var(--black-two) solid 1.3px;
   padding: 1.2vw 2vw;
   border-radius: 0.5vw;
   width: 36vw;
@@ -101,18 +117,18 @@ select:focus,
   cursor: pointer;
 }
 
-.inputReset input {
+.label-reset input {
   background-color: transparent;
   outline: none;
   border: 0;
 }
 
-.inputReset button {
+.label-reset button {
   background-color: transparent;
   border: 0;
   outline: 0;
   cursor: pointer;
-  color: #000;
+  color: var(--black);
   opacity: 50%;
 }
 
@@ -143,7 +159,7 @@ select:focus,
     margin-left: 10%;
   }
 
-  .inputVali {
+  .label-vali {
     display: flex;
     justify-content: space-between;
     border: rgb(255, 255, 255) solid 0.3vw;
@@ -172,7 +188,7 @@ select:focus,
     font-size: 3.5vw;
   }
 
-  .inputVali input {
+  .label-vali input {
     background-color: transparent;
     outline: none;
     border: 0;
@@ -189,17 +205,17 @@ select:focus,
     font-size: 3vw;
   }
 
-  .inputVali button {
+  .label-vali button {
     color: white;
   }
 
-  .inputVali input {
+  .label-vali input {
     background-color: transparent;
     outline: none;
     border: 0;
   }
 
-  .inputVali button {
+  .label-vali button {
     background-color: transparent;
     border: 0;
     outline: 0;

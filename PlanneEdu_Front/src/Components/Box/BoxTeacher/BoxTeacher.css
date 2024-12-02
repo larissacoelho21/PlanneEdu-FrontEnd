@@ -1,0 +1,72 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box-teacher,
+.box-plans {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--white);
+  max-width: 100%;
+  width: 42vw;
+  border-radius: 0.5vw;
+  padding: 2.4vw;
+  gap: 1vw;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  color: var(--black);
+  border: 2px solid transparent;
+  transition: 0.35s ease-out;
+}
+
+.box-teacher:hover,
+.box-plans:hover {
+  border: 2px solid var(--blue-one);
+}
+
+.box-teacher h1,
+.box-plans h1 {
+  font-size: 1.4vw;
+}
+
+.date-badge {
+  font-size: 1vw;
+  background-color: var(--blue-one);
+  width: 15vw;
+  padding: 0.5vw;
+  color: var(--white-one);
+  font-weight: normal;
+  text-align: center;
+  border-radius: 0.5vw;
+}
+
+.infos-class {
+  display: flex;
+  gap: 5vw;
+}
+
+.semester-teacher,
+.student,
+.teacher-plan,
+.shift-class {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.semester-teacher h1,
+.student h1,
+.teacher-plan h1,
+.shift-class h1 {
+  font-size: 1.3vw;
+  font-weight: normal;
+}

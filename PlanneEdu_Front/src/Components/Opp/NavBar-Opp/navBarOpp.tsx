@@ -146,7 +146,7 @@ export function NavBarOpp() {
     localStorage.clear(); //para limpar tudo
 
     // Redireciona o usuário para a página de login
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -258,7 +258,7 @@ export function NavBarOpp() {
                   className={({ isActive }) =>
                     isActive ? "navbarLink active last" : "navbarLink"
                   }
-                  to="/addUser"
+                  to="/manageteachers"
                 >
                   <p>Gerenciar docentes</p>
                 </NavLink>
@@ -319,12 +319,12 @@ export function NavBarOpp() {
                           }`}
                         >
                           <DropdownProfile
-                            to="#"
+                            to="/profileopp"
                             icon={<UserPen size={20} />}
                             text={"Visualizar Perfil"}
                           />
                           <DropdownProfile
-                            to="/"
+                            to="/login"
                             icon={<LogOut size={20} />}
                             text={"Sair"}
                             onClick={logout} // Chama a função de logout ao clicar

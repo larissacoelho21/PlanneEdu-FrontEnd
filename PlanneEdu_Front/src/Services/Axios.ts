@@ -1,23 +1,115 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
+/* ======================= Toast de carregamento  ============================= */
+export const axiosWithToast = async <T>(
+  config: AxiosRequestConfig,
+  loadingMessage = "Carregando...",
+  successMessage?: string,
+  timeoutMessage = "O tempo de espera excedeu! Tente novamente.",
+  timeout = 10000
+): Promise<T> => {
+  let timeoutReached = false;
 
+  // Exibe o toast de carregamento
+  const toastId = toast.loading(loadingMessage, { duration: timeout });
+
+  // Promise de timeout que dispara caso a requisição demore muito
+  const timeoutPromise = new Promise<null>((_, reject) => {
+    setTimeout(() => {
+      timeoutReached = true;
+      toast.error(timeoutMessage); // Exibe mensagem de erro caso o timeout aconteça
+      reject(new Error("Timeout reached"));
+    }, timeout);
+  });
+
+  try {
+    // Faz a requisição com timeout usando Promise.race
+    const response = await Promise.race([axios(config), timeoutPromise]);
+
+    if (!timeoutReached) {
+      toast.success(successMessage || "Requisição realizada com sucesso!"); // Mensagem de sucesso
+    }
+
+    // Aqui, vamos acessar a propriedade "data" da resposta e retorná-la
+    return (response as any).data; // Retorna os dados da requisição
+  } catch (error) {
+    if (!timeoutReached) {
+      toast.error("Erro na requisição."); // Exibe erro genérico
+    }
+    throw error; // Propaga o erro
+  } finally {
+    toast.dismiss(toastId); // Sempre limpa o toast de carregamento quando a operação termina
+  }
+};
+
+/* ======================= Verificação  ============================= */
 /* Login principal */
-export const login = async (nif: string, password: string) => {
+export const login = async (
+  nif: string,
+  password: string,
+  setIsLoading: (loading: boolean) => void,
+  navigate: (path: string) => void,
+  toastId: any
+) => {
+  setIsLoading(true);
+
+  const timeout = 10000; // Tempo máximo para a requisição em milissegundos (5 segundos)
+  let timeoutReached = false;
+
+  const timeoutToastId = setTimeout(() => {
+    timeoutReached = true;
+    toast.dismiss(toastId); // Remove o toast de carregamento
+    toast.warning("O tempo de espera excedeu! Tente novamente.");
+    setIsLoading(false); // Finaliza o estado de carregamento
+  }, timeout);
+
   try {
     const response = await axios.post(`${BaseUrl}/auth/login`, {
       nif: nif,
       password: password,
     });
 
+    clearTimeout(timeoutToastId);
+
+    if (!timeoutReached) {
+      const { data } = response;
+
+      toast.dismiss(toastId);
+
+      // Armazenar informações no localStorage
+      localStorage.setItem("userName", data.user.nome);
+      localStorage.setItem("Authorization", data.token);
+
+      // Verificar se é usuário padrão
+      if (data.user.defaultUser) {
+        navigate("/profile");
+        toast.info("Por favor, atualize suas informações.");
+      }
+      // Verificar nível de acesso
+      else if (data.user.nivelAcesso === "opp") {
+        navigate("/homeopp");
+        toast.success("Bem-vindo, OPP!");
+      } else if (data.user.nivelAcesso === "docente") {
+        navigate("/homeprofessor");
+        toast.success("Bem-vindo, Docente!");
+      } else {
+        toast.error("Nível de acesso desconhecido.");
+      }
+    }
+
+    setIsLoading(false);
     return response.data; // Retorna os dados da resposta se tudo ocorrer bem
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "valores não encontrados");
-    }
-    throw new Error("Erro ao tentar realizar login");
+    clearTimeout(timeoutToastId);
+    const errorMessage =
+      error.response?.data?.error || "NIF ou senha incorretos, tente novamente";
+    toast.dismiss(toastId);
+    toast.error(errorMessage);
+
+    setIsLoading(false);
   }
 };
 
@@ -30,29 +122,32 @@ export const postEmail = async (
 ) => {
   setIsLoading(true);
 
-  const promise = () => new Promise((resolve) => setTimeout(() => resolve, 1000));
+  const promise = () =>
+    new Promise((resolve) => setTimeout(() => resolve, 1000));
 
-  const timeout = 5000; // Tempo máximo para a requisição em milissegundos (5 segundos)
+  const timeout = 10000; // Tempo máximo para a requisição em milissegundos (5 segundos)
   let timeoutReached = false;
 
   // Definindo o tempo de expiração para o toast
   const timeoutToastId = setTimeout(() => {
     timeoutReached = true;
     toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.warning('O tempo de espera excedeu! Tente novamente.');
+    toast.warning("O tempo de espera excedeu! Tente novamente.");
     setIsLoading(false); // Finaliza o estado de carregamento
   }, timeout);
 
   // Função para lidar com o sucesso da requisição
   const handleSuccess = (response: any) => {
     clearTimeout(timeoutToastId);
-    console.log('E-mail enviado:', response.data);
-    localStorage.setItem('emailValue', emailValue); // Armazena o e-mail no localStorage
+    console.log("E-mail enviado:", response.data);
+    localStorage.setItem("emailValue", emailValue); // Armazena o e-mail no localStorage
 
     toast.dismiss(toastId);
-    toast.success('E-mail enviado com sucesso! Verifique sua caixa de entrada.');
+    toast.success(
+      "E-mail enviado com sucesso! Verifique sua caixa de entrada."
+    );
     setIsLoading(false); // Finaliza o estado de carregamento
-    navigate('/verificacaoemail');
+    navigate("/verificacaoemail");
   };
 
   // Função para lidar com o erro da requisição
@@ -60,35 +155,19 @@ export const postEmail = async (
     clearTimeout(timeoutToastId);
     setIsLoading(false);
     toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.error('Não foi possível enviar o e-mail, tente novamente'); // Exibe a mensagem de erro
-    console.error('Erro ao enviar e-mail: ', error);
+    toast.error("Não foi possível enviar o e-mail, tente novamente"); // Exibe a mensagem de erro
+    console.error("Erro ao enviar e-mail: ", error);
   };
 
   try {
     const response = await axios.post(`${BaseUrl}/auth/forgot_password`, {
       email: emailValue,
     });
-    /* 
-        console.log("E-mail enviado:", response.data);
-        localStorage.setItem("emailValue", emailValue); // Armazena o e-mail no localStorage
-    
-        toast.dismiss(toastId);
-        toast.success(
-          "E-mail enviado com sucesso! Verifique sua caixa de entrada."
-        );
-        setIsLoading(false); // Finaliza o estado de carregamento
-        navigate("/verificacaoemail"); // Navega para a próxima página */
     !timeoutReached && handleSuccess(response);
   } catch (error: any) {
-    /* setIsLoading(false); // Finaliza o estado de carregamento em caso de erro
-    toast.dismiss(toastId); // Remove o toast de carregamento
-    toast.error("Não foi possível enviar o e-mail, tente novamente"); // Exibe a mensagem de erro
-    console.error("Erro ao enviar e-mail: ", error); */
     !timeoutReached && handleError(error);
   }
 };
-
-
 
 /* ======================= Docente ============================= */
 
@@ -96,69 +175,89 @@ export const postEmail = async (
 export const profile = async () => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
     const response = await axios.get(`${BaseUrl}/my_user`, {
       headers: {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
       },
     });
 
-    return response.data;
+    return response.data; // Retorna os dados da API
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "Valores não encontrados");
-    }
-    throw new Error("Erro ao encontrar seus dados");
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 };
 
 /* function post - atualizando senha */
 export const updatePassword = async (
   currentPassword: string,
-  newPassword: string
+  password: string,
+  confirmPassword: string,
 ) => {
   try {
     const token = localStorage.getItem("authToken"); // Supondo que o token esteja no localStorage
+    if (!token) {
+      throw new Error(
+        "Token de autenticação não encontrado. Por favor, faça login novamente."
+      );
+    }
     const response = await axios.put(
-      `${BaseUrl}/update`,
-      { currentPassword, newPassword },
+      `${BaseUrl}/update_password`,
+      { currentPassword, passwordassword, confirmPassword},
       {
         headers: {
           Authorization: `Bearer ${token}`, // Incluindo o token no cabeçalho
         },
       }
     );
+    console.log("Resposta da API:", response);
 
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "valores não encontrados");
+      throw new Error(
+        error.response.data.error || "Erro ao tentar atualizar a senha"
+      );
     }
     throw new Error("Erro ao tentar cadastrar senha");
   }
 };
 
-
 /* ======================= Opp ============================= */
 
-
 /* Função adicionando usuário */
-export const RegisterUser = async (
-  userData: {
-    name: string;
-    sobrenome: string;
-    area: string;
-    nif: string;
-    password: string;
-    nivelAcesso: string;
-    email: string;
-    telefone: string;
-  }
-) => { 
+export const RegisterUser = async (userData: {
+  nome: string;
+  sobrenome: string;
+  area: string;
+  nif: string;
+  password: string;
+  nivelAcesso: string;
+  email: string;
+  telefone: string;
+}) => {
   // Recuperando o token do localStorage
   const token = localStorage.getItem("Authorization");
+  if (!token) {
+    toast.error("Usuário não autenticado. Faça login novamente.");
+    throw new Error("Token de autenticação ausente.");
+  }
   try {
     // Faz a chamada para o back-end
-    const response = await axios.post(
+    const response = await axiosWithToast(
+      {
+        method: "POST",
+        url: `${BaseUrl}/register`,
+        data: userData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      } /* ,
       `${BaseUrl}/register`,
       userData,
       {
@@ -166,18 +265,85 @@ export const RegisterUser = async (
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      }, */,
+      "Cadastrando usuário...",
+      "Novo usuário criado com sucesso!"
     );
-    // Sucesso: Exibe o toast e retorna a resposta
-    toast.success("Novo usuário criado com sucesso!");
-    return response.data;
+     console.log("Resposta da API:", response);
+     // Sucesso: Exibe o toast e retorna a resposta
+    return response;
   } catch (error: any) {
     // Erro: Exibe o toast e lança o erro para ser tratado
     if (error.response && error.response.data) {
-      throw new Error(error.response.data.error || "Não foi possível cadastrar o usuário");
+      throw new Error(
+        error.response.data.error || "Não foi possível cadastrar o usuário"
+      );
     } else {
       toast.error("Erro desconhecido na conexão com o servidor");
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
+  }
+};
+
+export const allUsers = async (accessLevel: string) => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/get_users/${accessLevel}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    return response.data.users; // Retorna os dados da API
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
+  }
+};
+
+export const deleteUser = async (id: string): Promise<void> => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.delete(`${BaseUrl}/delete_user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    console.log(response.data.msg);
+  } catch (error: any) {
+    console.error(
+      "Erro ao deletar usuário: ",
+      error.response?.data?.error || error.message
+    );
+    throw new Error(
+      error.response?.data?.error || "Erro ao deletar o usuário."
+    );
+  }
+};
+
+export const profileOpp = async() => {
+  try{
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/my_user`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    return response.data; // Retorna os dados da API
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 }

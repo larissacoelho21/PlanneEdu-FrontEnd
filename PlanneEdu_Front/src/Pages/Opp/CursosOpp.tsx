@@ -27,7 +27,7 @@ export function CursosOpp() {
         subtitleText="Veja os cursos disponíveis"
       />
 
-      <div className="buttons-class">
+      <div className="buttons-class" id="buttons-class">
         <a href="/addcurso">
           <button>+ Adicionar um novo curso</button>
         </a>

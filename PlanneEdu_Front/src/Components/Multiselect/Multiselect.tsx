@@ -94,7 +94,8 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
       <span className={styles.value}>
         {value.map((v, index) => (
           <button
-            key={`${v.value}-${index}`} // Adiciona índice para unicidade
+          /* adiciona índice para unidade */
+            key={`${v.value}-${index}`} 
             onClick={(e) => {
               e.stopPropagation();
               selectOption(v);
@@ -115,7 +116,8 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
         {options.map((option, index) => (
           <li
-            key={`${option.value}-${index}`} // Ajuda a garantir unicidade
+          /* garante que é único */
+            key={`${option.value}-${index}`} 
             onClick={(e) => {
               e.stopPropagation();
               selectOption(option);

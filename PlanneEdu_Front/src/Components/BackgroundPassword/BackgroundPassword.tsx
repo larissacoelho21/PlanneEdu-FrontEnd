@@ -19,7 +19,7 @@ export function BackgroundPassword() {
         </div>
 
         <div className="return">
-          <Link to="/">
+          <Link to="">
             <img className="returnPage" src={Return} alt="Voltar" onClick={handleArrowBack}
           style={{ cursor: "pointer" }} />
           </Link>

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
 import "../../Css/Teacher/Home.css"
-import { Clock3, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
+import { CardTeacher } from "../../Components/Box/BoxTeacher/BoxTeacher";
 
 export function Home() {
   const [userName, setUserName] = useState<string | null>("");
@@ -24,75 +24,27 @@ export function Home() {
         subtitleText="Visualize suas turmas ativas"
       />
       
-      <div className="cardsTeacher">
+      <div className="cards-teacher">
         <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
-          {" "}
-          {/* Evita sublinhado no texto */}
-          <div className="box-teacher">
-            <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-            <div className="dateBadge">
-              <span>23/02/2023 — 18/12/2024</span>
-            </div>
-            <div className="infos-class">
-              <div className="semesterTeacher">
-                <Clock3 size={18} />
-                <h1>4 semestres</h1>
-              </div>
-              <div className="student">
-                <Users size={18} />
-                <h1>35 alunos</h1>
-              </div>
-            </div>
-          </div>
+          <CardTeacher
+            course="Desenvolvimento de sistemas"
+            classCard="SESI"
+            yearClass="2023"
+            dateI="23/02/2023"
+            dateT="18/12/2024"
+            semester={4}
+            students="35"
+          />
         </Link>
-        <div className="box-teacher">
-          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="dateBadge">
-            <span>23/02/2023 — 18/12/2024</span>
-          </div>
-          <div className="infos-class">
-            <div className="semesterTeacher">
-              <Clock3 size={18} />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="student">
-              <Users size={18} />
-              <h1>35 alunos</h1>
-            </div>
-          </div>
-        </div>
-        <div className="box-teacher">
-          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="dateBadge">
-            <span>23/02/2023 — 18/12/2024</span>
-          </div>
-          <div className="infos-class">
-            <div className="semesterTeacher">
-              <Clock3 size={18} />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="student">
-              <Users size={18} />
-              <h1>35 alunos</h1>
-            </div>
-          </div>
-        </div>
-        <div className="box-teacher">
-          <h1>Desenvolvimento de sistemas | SESI 2023</h1>
-          <div className="dateBadge">
-            <span>23/02/2023 — 18/12/2024</span>
-          </div>
-          <div className="infos-class">
-            <div className="semesterTeacher">
-              <Clock3 size={18} />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="student">
-              <Users size={18} />
-              <h1>35 alunos</h1>
-            </div>
-          </div>
-        </div>
+        <CardTeacher
+          course="Desenvolvimento de sistemas"
+          classCard="Noite"
+          yearClass="2023"
+          dateI="30/02/2023"
+          dateT="17/12/2024"
+          semester={4}
+          students="10"
+        />
       </div>
     </section>
   );

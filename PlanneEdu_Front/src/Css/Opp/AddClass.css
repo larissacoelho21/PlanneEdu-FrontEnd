@@ -53,8 +53,13 @@
 }
 
 .title-add-student h1,
-.title-add-class h1 {
+.title-add-class h1,
+.title-timetable h1 {
   font-weight: 400;
+}
+
+.title-timetable h1{
+  font-size: 1.4rem;
 }
 
 .add-student {
@@ -64,12 +69,12 @@
   margin-top: 3%;
 }
 
-.add-student h1{
+.add-student h1 {
   font-size: 1.1vw;
   color: rgba(0, 0, 0, 0.3);
 }
 
-.add-student button{
+.add-student button {
   margin-top: 1%;
   width: 2.5rem;
   height: 2.5rem;
@@ -77,11 +82,11 @@
   background-color: transparent;
   border: 2.2px solid var(--blue-two);
   color: var(--blue-two);
-  border-radius: .5vw;
+  border-radius: 0.5vw;
 }
 
 /* PopUp add estudante */
-.overlay-add-student{
+.overlay-add-student {
   position: fixed;
   top: 0;
   left: 0;
@@ -103,24 +108,103 @@
   align-items: center;
   border-radius: 0.5vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--blue-one);
 }
 
-.popup-add-student input{
+.popup-add-student input {
   width: 29vw;
 }
 
-.texts-student h1{
+.popup-add-student input,
+.popup-add-student label {
+  cursor: pointer;
+}
+
+.texts-student h1,
+.texts-add-teacher h1 {
   color: var(--blue-one);
   margin-bottom: 8%;
 }
 
-.button-add-student button{
-  width: 15vw;
-  height: 3vw;
-  background-color: var(--blue-two);
-  color: var(--white-one);
+.button-student {
+  display: flex;
+  justify-content: space-between;
+}
+
+.registrationStudent table {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.buttons-action {
+  display: flex;
+}
+
+.buttons-action button {
+  border: transparent;
+  background-color: transparent;
+}
+
+/* tabela de matérias e professores */
+.table-add-teacher{
+  width: 100%;
+}
+
+.table-add-teacher th{
+  font-size: 1.2vw;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.table-add-teacher th,
+.table-add-teacher td{
   border: none;
-  border-radius: 0.5vw;
+  text-align: center;
+}
+
+.table-add-teacher td{
+  background-color: var(--white);
+  border-bottom: 0.15vw rgba(0, 0, 0, 0.2) solid;
+}
+
+.table-add-teacher th:nth-child(1),
+.table-add-teacher td:nth-child(1) {
+  width: 40%;
+  text-align: left;
+}
+
+.table-add-teacher th:nth-child(2),
+.table-add-teacher td:nth-child(2) {
+  text-align: center;
+  padding-left: 5%;
+}
+
+.table-add-teacher th:nth-child(3),
+.table-add-teacher td:nth-child(3) {
+  text-align: center;
+  padding-left: 10%;
+}
+
+.select-teacher select{
+  display: flex;
+  border: none;
+  width: 100%;
   cursor: pointer;
-  transition: 0.3s ease;
+}
+
+.select-teacher label{
+  display: flex;
+  align-items: self-start;
+  text-align: left;
+}
+
+.select-teacher select{
+  border-bottom: var(--gray-two) solid 2px;
+  font-size: 1rem;
+}
+
+.select-teacher option{
+  cursor: pointer;
+}
+
+.button-confirm{
+  margin-top: 10%;
 }

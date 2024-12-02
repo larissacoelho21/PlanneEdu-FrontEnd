@@ -39,6 +39,10 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
+  #buttons-class {
+    display: none !important;
+  }
+  
   .introTurma h1 {
     font-size: 4.5vw;
   }

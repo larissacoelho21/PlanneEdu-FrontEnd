@@ -52,8 +52,18 @@
   cursor: pointer;
 }
 
-.Fieldset.filled .label-add-user,
+/* .Fieldset.filled .label-add-user,
 .input-add-user:focus+.label-add-user {
+  transform: translateY(-1.5vw);
+  font-size: 1vw;
+  opacity: 1;
+}
+ */
+.Fieldset.filled .label-add-user,
+.input-add-user:focus+.label-add-user,
+.input-add-user:not(:placeholder-shown)+.label-add-user,
+.Fieldset select:focus + .label-add-user,
+.Fieldset select:not(:empty) + .label-add-user {
   transform: translateY(-1.5vw);
   font-size: 1vw;
   opacity: 1;
@@ -62,11 +72,12 @@
 
 .label-add-user {
   position: absolute;
-  font-size: 1.2vw;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.4);
-  text-align: right;
+  top: 0.8rem;
+  left: 0.2rem;
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+  pointer-events: none;
 }
 
 .input-add-user {
@@ -78,6 +89,7 @@
   border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
   margin-top: 0.5vw;
   margin-bottom: 1vw;
+  padding: .5vw 0;
 }
 
 .input-add-user:focus {
@@ -100,9 +112,15 @@
   width: 30%;
 }
 
-
 .title-adduser {
   font-size: 1.7vw;
   text-align: center;
   margin: 2vw 0;
+}
+
+.save:hover{
+  background: transparent;
+  border: #07678d solid 2px;
+  color: #07678d;
+  transition: ease-in-out .5s;
 }

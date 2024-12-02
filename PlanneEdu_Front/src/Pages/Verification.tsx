@@ -43,6 +43,7 @@ export function VerificationEmail() {
     }
   }, [navigate]); */
 
+
   const Verification = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -71,7 +72,7 @@ export function VerificationEmail() {
       .then((data) => {
         console.log("sucesso", data);
         toast.success("Nova senha criado com sucesso!");
-        navigate("/");
+        navigate("/login");
       })
       .catch((error) => {
         toast.error(`Erro ao redefinir a senha: ${error.message}`); //alert
@@ -87,7 +88,7 @@ export function VerificationEmail() {
 
       <form onSubmit={Verification}>
         {/* Mesmo nome de divs da pag "PasswordReset" já que possue a mesma configuração */}
-        <div className="Reset-Info">
+        <div className="reset-info">
           <div className="title-text">
             <div className="title-verification">
               <h2>Verificação de E-mail</h2>
@@ -111,7 +112,7 @@ export function VerificationEmail() {
             </div>
 
             <div className="confirm">
-              <p className="confirmEmail">
+              <p className="confirm-email">
                 Não recebeu o Email?
                 <span>
                   <Link className="link-return" to="/redefinicaosenha">
@@ -123,7 +124,7 @@ export function VerificationEmail() {
             </div>
 
             <div className="input-reset">
-              <label className="inputReset">
+              <label className="label-reset">
                 <input
                   className="input-password"
                   type={isShow ? "text" : "password"}
@@ -140,7 +141,7 @@ export function VerificationEmail() {
                   {!isShow && <EyeOff size={18} />}
                 </button>
               </label>
-              <label className="inputReset">
+              <label className="label-reset">
                 <input //TODO: Adicionar max de caracteres
                   className="input-password"
                   type={isShow2 ? "text" : "password"}
@@ -185,7 +186,7 @@ export function VerificationEmail() {
           </div>
 
           <div className="input-vali">
-            <label className="inputVali">
+            <label className="label-vali">
               <input
                 className="input-password1"
                 type={isShow ? "text" : "password"}
@@ -199,7 +200,7 @@ export function VerificationEmail() {
                 {!isShow && <EyeOff size={22} color="white" />}
               </button>
             </label>
-            <label className="inputVali">
+            <label className="label-vali">
               <input
                 className="input-password1"
                 type={isShow ? "text" : "password"}

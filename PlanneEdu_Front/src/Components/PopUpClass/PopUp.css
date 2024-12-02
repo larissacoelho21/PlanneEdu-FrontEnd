@@ -5,6 +5,10 @@
   --black: #000;
 }
 
+body{
+  background-color: red;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -31,7 +35,6 @@
 .popup-content {
   width: 100%;
   height: 7vw;
-  background-color: #084973;
   padding: 1vw;
   color: #ffffff;
   background-color: var(--blue-one);
@@ -52,29 +55,18 @@
   gap: 2vw;
 }
 
-.button-close button {
+.close-popup button {
   cursor: pointer;
-  background-color: transparent;
-  border: solid 0.1171875vw #07678d;
+  border: 2px solid var(--blue-two);
   padding: 0.5vw 3vw;
   color: var(--blue-two);
   border-radius: 0.5vw;
   margin-bottom: 5%;
   transition: 0.3s ease;
-}
+  margin: 20% 0 20% 0;
+} 
 
-.button-close button:hover {
-  background-color: #07678d;
-  color: #ffffff;
-}
-
-.button-close button:active {
-  translate: 0 0.5vw;
-  background-color: #07678d;
-  color: #ffffff;
-}
-
-.button-close button:hover {
+.close-popup button:hover {
   background-color: var(--blue-two);
   color: var(--white);
 }

@@ -79,9 +79,10 @@ input[type="date"]:focus {
 }
 
 .buttons-add {
+  width: 100%;
   display: flex;
-  gap: 3.6vw;
-  margin-bottom: 3%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .buttons-add button {
@@ -178,25 +179,7 @@ input[type="date"]:focus {
 .buttons-save-atvd {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.buttons-save-atvd button {
-  font-size: 1.3vw;
-  width: 30vw;
-  height: 4vw;
-  background-color: var(--blue-two);
-  border: none;
-  border-radius: 0.5vw;
-  color: var(--white-one);
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.buttons-save-atvd button:hover {
-  background-color: var(--white-one);
-  color: var(--blue-two);
-  border: solid var(--blue-two);
+  justify-content: center;
 }
 
 .buttons-popup-challenge button:hover {
@@ -207,7 +190,7 @@ input[type="date"]:focus {
 
 /* PopUp */
 .popup-challenge {
-  max: 35rem;
+  max-width: 35rem;
   padding: 3vw 3vw;
   background-color: #f2f2f2;
   display: flex;
@@ -325,4 +308,29 @@ input[type="date"]:focus {
   background-color: var(--white-one);
   border: var(--blue-two) solid 2px;
   color: var(--blue-two);
+}
+
+.select-matter-activity{
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.select-matter-activity select{
+  width: 100%;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  cursor: pointer;
+  border-bottom: 2px solid var(--gray-one);
+  background-color: transparent;
+}
+
+.select-matter-activity label{
+  display: flex;
+  align-items: start;
+  text-align: left;
 }

@@ -25,42 +25,17 @@ export function Login() {
 
   const handlePassword = () => setIsShow(!isShow);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false); // Estado para loading
   const navigate = useNavigate();
 
   // Função para lidar com o envio do formulário
   const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault(); // Evita o reload da página
+    event.preventDefault();
 
-    try {
-      // Chama a função de login do axios
-      const data = await login(nifValue, passwordValue);
-      /* const userId = data.userId; */
-      // Armazenar o nome do usuário no localStorage
-/*       localStorage.setItem("userId", userId);
- */      localStorage.setItem("userName", data.user.nome);
-      localStorage.setItem("Authorization", data.token);
-      console.log(localStorage);
-      if (data.user.defaultUser === true) {
-        //identifcando se o usuário é padrão
-        navigate("/profile"); // Redireciona para a página de perfil
-        toast.info("Por favor, atualize suas informações.");
-      }
-      // 2. Verificar o nível de acesso
-      else if (data.user.nivelAcesso === "opp") {
-        navigate("/homeopp"); // Redireciona para a página do OPP
-        toast.success("Bem-vindo, OPP!");
-      } else if (data.user.nivelAcesso === "docente") {
-        navigate("/homeprofessor"); // Redireciona para a página do professor
-        toast.success("Bem-vindo, Docente!");
-      } else {
-        // Caso a role não seja reconhecida
-        toast.error("Nível de acesso desconhecido."); //alert
-      }
-    } catch (error: any) {
-      toast.error(error.message || "NIF ou senha incorretos, tente novamente");
-      console.error("Erro ao carregar dados dos usuários: ", error);
-    }
+    const toastId = toast.loading("Carregando..."); // Toast de carregamento
+    login(nifValue, passwordValue, setIsLoading, navigate, toastId);
   };
+  
   return (
     <section className="login">
       {/* Background - forma + ilustração */}

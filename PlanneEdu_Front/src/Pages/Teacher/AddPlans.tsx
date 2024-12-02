@@ -2,14 +2,7 @@
 import "../../Css/Teacher/AddPlans.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { PopUp } from "../../Components/PopUp/PopUp-v2";
-import {
-  CodeXml,
-  GraduationCap,
-  BookMarked,
-  Plus,
-  Check,
-  X,
-} from "lucide-react";
+import { CodeXml, GraduationCap, BookMarked, Plus, Check } from "lucide-react";
 import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { toast } from "sonner";
@@ -18,6 +11,7 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
+import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -72,24 +66,28 @@ function InputField({
     /* limita o comprimento do valor de entrada */
     if (maxLength && inputValue.length > maxLength) {
       /* corta o excedente */
-      inputValue = inputValue.slice(0, maxLength); 
+      inputValue = inputValue.slice(0, maxLength);
     }
 
     /* converte para número se o tipo do input for "number" */
     if (type === "number") {
-      let numericValue = inputValue !== "" ? parseFloat(inputValue) : ""; // Conversão para número
+      let numericValue = inputValue !== "" ? parseFloat(inputValue) : "";
 
       /* verifica o valor máximo permitido */
-      if (maxValue !== undefined && typeof numericValue === "number" && numericValue > maxValue) {
+      if (
+        maxValue !== undefined &&
+        typeof numericValue === "number" &&
+        numericValue > maxValue
+      ) {
         numericValue = maxValue;
       }
-      
+
       setLocalValue(numericValue);
     } else {
       setLocalValue(inputValue);
     }
 
-    // Propaga o valor atualizado para o pai, se `onChange` estiver definido
+    /* propaga o valor atualizado para o pai, se `onChange` estiver definido */
     if (onChange) {
       event.target.value = inputValue;
       onChange(event);
@@ -169,9 +167,9 @@ export function AddPlans() {
   const [valueRecursosStra, setValueRecursosStra] = useState<SelectOption[]>(
     []
   );
-  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<SelectOption[]>(
-    []
-  );
+  const [valueCapTecnicasStra, setValueCapTecnicasStra] = useState<
+    SelectOption[]
+  >([]);
   const [valueCapSocioStra, setValueCapSocioStra] = useState<SelectOption[]>(
     []
   );
@@ -567,24 +565,26 @@ export function AddPlans() {
           <p>Desenvolvimento de Sistemas</p>
         </div>
 
-        <div className="Info">
-          <div className="Teacher">
+        <div className="infos-teacher">
+          <div className="semester-teacher">
             <GraduationCap strokeWidth={1.5} />
             <p>Arthur Rosa</p>
           </div>
-          <div className="Class">
+          <div className="students">
             <BookMarked strokeWidth={1.5} />
             <p>Manhã 2023</p>
           </div>
         </div>
       </div>
+
+      <SelectMandatory
+        label="Selecione a matéria referente a esse plano de ensino"
+        obs="uma matéria"
+      />
+
       <form className="form">
         <div className="input-field">
           <InputField label="Curso" type="text" id="course" />
-        </div>
-
-        <div className="input-field">
-          <InputField label="Unidade Curricular" type="text" id="uc" />
         </div>
 
         <div className="input-field">

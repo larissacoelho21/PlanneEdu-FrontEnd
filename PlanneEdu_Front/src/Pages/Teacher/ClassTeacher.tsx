@@ -1,15 +1,16 @@
 import "../../Css/Teacher/ClassTeacher.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
-import { Clock3, Users } from "lucide-react";
 import { Popup } from "../../Components/PopUpClass/PopUp";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 
 export function ClassTeacher() {
-  const [showPopUp1, setShowPopUp1] = useState(false);
-  const [showPopUp2, setShowPopUp2] = useState(false);
+  const [showPopUpPlane, setShowPopUpPlane] = useState(false);
+  const [showPopUpSA, setShowPopUpSA] = useState(false);
 
-  const togglePopUp1 = () => setShowPopUp1(!showPopUp1);
-  const togglePopUp2 = () => setShowPopUp2(!showPopUp2);
+  const togglePopUpPlanne = () => setShowPopUpPlane(!showPopUpPlane);
+  const togglePopUpSA = () => setShowPopUpSA(!showPopUpSA);
 
   return (
     <section className="class-teacher">
@@ -17,58 +18,51 @@ export function ClassTeacher() {
         <SubNavbar />
       </div>
 
-      <div className="box-info-class">
-        <h1>Desenvolvimento de Sistemas | SESI 2023</h1>
-        <div className="date-badge">
-          <span>23/02/2023 — 18/12/2024</span>
-        </div>
-        <div className="infos-teacher">
-          <div className="semester-teacher">
-            <Clock3 size={18} />
-            <h1>4 semestres</h1>
-          </div>
-          <div className="students">
-            <Users size={18} />
-            <h1>35 alunos</h1>
-          </div>
-        </div>
-      </div>
+      <InfoClass
+        course="Desenvolvimento de sistemas"
+        classCard="SESI"
+        yearClass="2023"
+        dateI="23/02/2023"
+        dateT="18/12/2024"
+        semester={4}
+        students="35"
+      />
 
-      <div className="selecioneClass">
+      <div className="selecione-class">
         <p>Selecione o que deseja visualizar:</p>
       </div>
 
       <div className="buttons-class">
-        <button onClick={togglePopUp1}>Plano de Ensino</button>
-        <button id="buttonSA" onClick={togglePopUp2}>Situação de Aprendizagem</button>
-        <button id="buttonSA1" onClick={togglePopUp2}>S.A</button>
+        <LargeButton text="Plano de Ensino" onClick={togglePopUpPlanne} />
+        <LargeButton text="Situação de Aprendizagem" onClick={togglePopUpSA} />
+        <button id="buttonSA1" onClick={togglePopUpSA}>
+          S.A
+        </button>
       </div>
 
-      {/* Popup para Plano de Ensino */}
-      {showPopUp1 && (
+      {showPopUpPlane && (
         <Popup
           title="Plano de Ensino"
           viewLink="/plansensino"
           viewText="Visualizar planos"
           addLink="/addplans"
           addText="Adicionar plano"
-          onClose={togglePopUp1}
+          onClose={togglePopUpPlanne}
         />
       )}
 
-      {/* Popup para Situação de Aprendizagem */}
-      {showPopUp2 && (
+      {showPopUpSA && (
         <Popup
           title="Situação de Aprendizagem"
           viewLink="/visualizaratvd"
           viewText="Visualizar atividades"
           addLink="/addatividade"
           addText="Adicionar atividade"
-          onClose={togglePopUp2}
+          onClose={togglePopUpSA}
         />
       )}
 
-      <div className="registrationTable">
+      <div className="registration-table">
         <table className="table">
           <thead>
             <tr className="title-info">

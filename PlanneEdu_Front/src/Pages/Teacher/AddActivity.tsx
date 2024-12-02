@@ -12,6 +12,9 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
+import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
+import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 
 interface InputFieldProps {
   id: string;
@@ -34,7 +37,7 @@ function InputField({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event); // Para encaminhar a mudança do valor
+    if (onChange) onChange(event);
   };
 
   return (
@@ -162,7 +165,7 @@ export function AddActivity() {
 
 useEffect(() => {
   if (editCardC !== null) {
-      setShowPopUpChallenge(true);  // Abre o pop-up apenas após `editCardC` ser configurado
+      setShowPopUpChallenge(true);  
   }
 }, [editCardC]);
 
@@ -302,27 +305,21 @@ useEffect(() => {
     <section className="add-activity">
       <div className="start-add">
         <SubNavbar />
-        <div className="box-info-class">
-          <h1>Desenvolvimento de Sistemas | SESI 2023</h1>
-          <div className="date-badge">
-            <span>23/02/2023 — 18/12/2024</span>
-          </div>
-          <div className="infos-teacher">
-            <div className="semester-teacher">
-              <Clock3 size={18} />
-              <h1>4 semestres</h1>
-            </div>
-            <div className="students">
-              <Users size={18} />
-              <h1>35 alunos</h1>
-            </div>
-          </div>
-          <div className="discipline">
-            <h1>Disciplina:</h1>
-            <h2>Desenvolvimento mobile</h2>
-          </div>
-        </div>
+        <InfoClass
+          course="Desenvolvimento de Sistemas"
+          classCard="SESI"
+          yearClass="2023"
+          dateI="23/02/2023"
+          dateT="18/12/2024"
+          semester={4}
+          students="35"
+        />
       </div>
+
+      <SelectMandatory
+        label="Selecione a matéria referente a essa situação de aprendizagem"
+        obs="uma matéria"
+      />
 
       <form>
         <div className="form-addactivity">
@@ -358,6 +355,7 @@ useEffect(() => {
             <div className="buttons-add">
               <button
                 value="situacao problema"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -369,6 +367,7 @@ useEffect(() => {
               </button>
               <button
                 value="estudos de caso"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -380,6 +379,7 @@ useEffect(() => {
               </button>
               <button
                 value="projeto"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "projeto" })
                 } */
@@ -388,6 +388,7 @@ useEffect(() => {
               </button>
               <button
                 value="projeto integrador"
+                onClick={(e) => e.preventDefault()}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -399,13 +400,13 @@ useEffect(() => {
               </button>
               <button
                 value="pesquisa"
+                onClick={(e) => e.preventDefault()}
                 /*  onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "pesquisa" })
                 } */
               >
                 Pesquisa
               </button>
-              <button>Mostrar todos</button>
             </div>
           </div>
 
@@ -436,11 +437,10 @@ useEffect(() => {
 
           <div className="contextualization">
             <InputField
-              id="contextualization"
-              label="Contextualização"
+              id="contextualizacao"
+              label="Contextualição"
               type="text"
-              /* value={formData.contextualizacao}
-              onChange={handleChange} */
+              
             />
           </div>
 
@@ -500,10 +500,9 @@ useEffect(() => {
           </div>
 
           <div className="buttons-save-atvd">
-            <button type="submit">Salvar Alterações</button>
-            <button type="button" onClick={() => navigate("/voltar")}>
-              Voltar
-            </button>
+           <LargeButton
+            text="Salvar informações"
+           />
           </div>
         </div>
       </form>

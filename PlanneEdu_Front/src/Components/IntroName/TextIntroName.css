@@ -24,3 +24,17 @@
   border-radius: 5px;
   background-image: linear-gradient(to right, #084973, #2685bf);
 }
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .introTextStandard h1 {
+    font-size: 1.4rem;
+    color: var(--blue-one);
+  }
+  .introTextStandard h2 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 1%;
+  }
+}

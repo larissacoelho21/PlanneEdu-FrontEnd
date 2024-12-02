@@ -1,0 +1,50 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box-info-class {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  margin: 5% auto;
+  padding: 2vw;
+  background-color: var(--white);
+  width: 90%;
+  border-radius: 0.5vw;
+  box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.box-info-class > h1 {
+  font-size: 1.85vw;
+}
+
+.infos-teacher {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+  margin-top: 1vw;
+}
+
+.semester-teacher,
+.students {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.semester-teacher h1,
+.students h1 {
+  font-size: 1.2vw;
+  font-weight: normal;
+}
