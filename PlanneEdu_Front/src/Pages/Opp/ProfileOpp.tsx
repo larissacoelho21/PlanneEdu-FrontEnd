@@ -1,8 +1,8 @@
 /* Images */
 import { KeyRound, Mail, Phone } from "lucide-react";
 import Background from "../../assets/backgroundProfile.svg";
-import User from "../../../public/user-profile.svg";
-import ProfileForma from "../../../public/profile-forma.svg";
+/* import User from "../../../public/user-profile.svg";
+ */import ProfileForma from "../../../public/profile-forma.svg";
 
 import "../../Css/Teacher/Profile.css";
 
