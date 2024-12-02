@@ -231,7 +231,7 @@ export function AddUser() {
               <InputField
                 id="select-field"
                 name="detailAssigned"
-                label="Atribuído a:"
+                label="Nível de acesso:"
                 type="select"
                 options={nivelAcessoOptions}
                 value={nivelAcesso}

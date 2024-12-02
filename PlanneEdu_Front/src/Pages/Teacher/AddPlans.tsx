@@ -11,7 +11,7 @@ import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
-import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
+import { ButtonAdd } from "../../Components/Buttons/More/More";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -577,10 +577,17 @@ export function AddPlans() {
         </div>
       </div>
 
-      <SelectMandatory
-        label="Selecione a matéria referente a esse plano de ensino"
-        obs="uma matéria"
-      />
+      <div className="select-planne-course">
+        <label htmlFor="" className="label-select">
+          Selecione uma matéria
+        </label>
+        <select name="" id="">
+          <option value=""></option>
+        </select>
+        <h2>
+          * Obs: Para continuar você deve selecionar uma matéria
+        </h2>
+      </div>
 
       <form className="form">
         <div className="input-field">
@@ -687,15 +694,12 @@ export function AddPlans() {
           </div>
 
           <label>Estratégias</label>
-          <button
-            className="add-card"
+          <ButtonAdd
             onClick={(event) => {
               togglePopUpStrategy();
               event.preventDefault();
             }}
-          >
-            <Plus width={40} height={40} strokeWidth={1.5} />
-          </button>
+          />
 
           {showPopUpStrategy && (
             <PopUp
@@ -855,15 +859,12 @@ export function AddPlans() {
         <div className="planneraulas">
           <h3 className="title-section">Planejamento de aulas</h3>
           <label>Datas e conhecimentos abordados</label>
-          <button
-            className="add-card"
+          <ButtonAdd
             onClick={(event) => {
               togglePopUpPlan();
               event.preventDefault();
             }}
-          >
-            <Plus width={40} height={40} strokeWidth={1.5} />
-          </button>
+          />
 
           {plans.map((plan, index) => (
             <div className="card-info">

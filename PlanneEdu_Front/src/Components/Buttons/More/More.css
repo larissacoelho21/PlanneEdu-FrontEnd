@@ -1,0 +1,17 @@
+.button-more-add button {
+  width: 3vw;
+  height: 3vw;
+  cursor: pointer;
+  border: solid 2px var(--blue-two);
+  border-radius: 0.5vw;
+  background-color: transparent;
+  font-size: 1.3vw;
+  color: var(--blue-two);
+  transition: 0.3s ease;
+}
+
+.button-more-add button:hover,
+.button-more-add button:focus {
+  background-color: var(--blue-two);
+  color: var(--white-one);
+}
