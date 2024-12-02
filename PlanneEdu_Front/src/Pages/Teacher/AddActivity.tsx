@@ -1,10 +1,7 @@
- import { Clock3, Users } from "lucide-react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import React, { useEffect, useState } from "react";
 import "../../Css/Teacher/AddActivity.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { BaseUrl } from "../../Config/config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -13,49 +10,11 @@ import {
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { LargeButton } from "../../Components/LargeButton/LargeButton";
-import { SelectMandatory } from "../../Components/Inputs/Mandatory/Select";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
-
-interface InputFieldProps {
-  id: string;
-  label: string;
-  type?: string;
-  value?: string;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-}
-
-function InputField({
-  id,
-  label,
-  type = "text",
-  value,
-  onChange,
-}: InputFieldProps) {
-  const [isFilled, setIsFilled] = useState(!!value);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event);
-  };
-
-  return (
-    <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
-      <label className="label-add" htmlFor={id}>
-        {label}
-      </label>
-      <input
-        className="input-add"
-        id={id}
-        type={type}
-        value={value}
-        onChange={handleInputChange}
-        autoComplete="off"
-      />
-    </fieldset>
-  );
-}
+import { InputField } from "../../Components/Inputs/Mandatory/Field/InputField";
+import { ButtonAdd } from "../../Components/Buttons/More/More";
+import { SmallButton } from "../../Components/SmallButton/SmallButton";
+import ReactInputMask from "react-input-mask";
 
 /*  ce conexão com  Back-End */ /* 
 interface Desafio {
@@ -87,11 +46,31 @@ interface Desafio {
 export function AddActivity() {
   // multiselect
   const options: SelectOption[] = [
-    { label: "First", value: 1 },
-    { label: "Second", value: 2 },
-    { label: "Third", value: 3 },
-    { label: "Fourth", value: 4 },
-    { label: "Fifth", value: 5 },
+    {
+      label:
+        "1. Identificar as características de programação backend em ambiente web",
+      value: 1,
+    },
+    {
+      label:
+        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      value: 2,
+    },
+    {
+      label:
+        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      value: 3,
+    },
+    {
+      label:
+        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      value: 4,
+    },
+    {
+      label:
+        "1.1 Preparar ambiente necessário ao desenvolvimento back-end para plataforma web",
+      value: 5,
+    },
   ];
 
   const [challenges, setChallenges] = useState<Challenge[]>([]);
@@ -124,10 +103,11 @@ export function AddActivity() {
     }
 
     const newChallenge = {
-      descricao,
-      capsTecBasP: valueCapTecPop.map((capTec) => capTec.value),
+      descricao: descricao,
+      capsTecBasP: valueCapTecPop.map((capTecBas) => capTecBas.value),
       capsSocP: valueCapSocPop.map((capSoc) => capSoc.value),
     };
+
     setChallenges([...challenges, newChallenge]);
 
     setDescricao("");
@@ -138,8 +118,6 @@ export function AddActivity() {
 
     togglePopUpChallenge();
   };
-
-
 
   // /multiselect
 
@@ -152,23 +130,22 @@ export function AddActivity() {
     setEditCardC(index);
     setDescricao(cardToEdit.descricao);
     setValueCapTecPop(
-        cardToEdit.capsTecBasP
-            .map((value) => options.find((option) => option.value === value))
-            .filter((option): option is SelectOption => option !== undefined)
+      cardToEdit.capsTecBasP
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option !== undefined)
     );
     setValueCapSocPop(
-        cardToEdit.capsSocP
-            .map((value) => options.find((option) => option.value === value))
-            .filter((option): option is SelectOption => option !== undefined)
+      cardToEdit.capsSocP
+        .map((value) => options.find((option) => option.value === value))
+        .filter((option): option is SelectOption => option !== undefined)
     );
-};
+  };
 
-useEffect(() => {
-  if (editCardC !== null) {
-      setShowPopUpChallenge(true);  
-  }
-}, [editCardC]);
-
+  useEffect(() => {
+    if (editCardC !== null) {
+      setShowPopUpChallenge(true);
+    }
+  }, [editCardC]);
 
   const editChallenge = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -226,80 +203,55 @@ useEffect(() => {
   const togglePopUpChallenge = () => {
     setShowPopUpChallenge(!showPopUpChallenge);
     if (showPopUpChallenge) {
-        setDescricao("");
-        setValueCapTecPop([]);
-        setValueCapSocPop([]);
-        setEditCardC(null);
+      setDescricao("");
+      setValueCapTecPop([]);
+      setValueCapSocPop([]);
+      setEditCardC(null);
     }
-};
+  };
 
-  //lairssa
+  // função back
+  const [selectedSubject, setSelectedSubject] = useState<string>("");
+  const [proposedDate, setProposedDate] = useState<string>("");
+  const [deliveryDate, setDeliveryDate] = useState<string>("");
+  const [capTecBas, setCapTecBas] = useState<string>(""); //nao sabia como colocar, coloquei só pra testa
+  const [capSocE, setCapSocE] = useState<string>(""); //nao sabia como colocar, coloquei só pra testa
+  const [contextualization, setContextualization] = useState("");
+  const [results, setResults] = useState("");
 
-  /* Conectando com o Back */
-  /*  const [formData, setFormData] = useState<SA>({
-    dataProposta: "",
-    dataEntrega: "",
-    estrategiaApre: "situacao problema",
-    capacidadesBT: [],
-    capaSocio: [],
-    contextualizacao: "",
-    desafios: [], // Lista de desafios
-    resultados: "",
-    user: "",
-    materia: "",
-  }); */
+  //input de data
 
-  /* const handleAct = (event: React.FormEvent) => {
-    event.preventDefault(); */ // Evita o reload da página
+  const convertToISO = (dateString: string) => {
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
 
-  /* fetch(`${BaseUrl}/sa/create`, { */
-  //conectando com o computador que está rodando o back-end
-  /* method: "POST", */ //method post de envio
-  /*  headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((err) => {
-            throw new Error(err.error || "Erro ao cadastrar SA");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("sucesso", data); */
-  // Após o cadastro bem-sucedido, redireciona e notifica o usuário
-  /*  toast.success("Atividade cadastrada com sucesso!");
-        navigate("/visualizaratvd"); */ // Exemplo de redirecionamento após sucesso
-  /* })
-      .catch((error) => {
-        toast.error("Erro ao cadastrar Atividade, tente novamente.");
-        console.error("Erro ao cadastrar SA: ", error);
-      });
-  }; */
+  const validateDates = (startISO: string, endISO: string) => {
+    const start = new Date(startISO);
+    const end = new Date(endISO);
 
-  // Função para lidar com mudanças nos inputs
-  /* const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  }; */
+    if (end < start) {
+      toast.error(
+        "A data de entrega não pode ser menor que a data proposta! Tente novamente com uma data válida."
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
 
-  // Função para adicionar um novo desafio
-  /*  const adicionarDesafio = () => {
-    setFormData({
-      ...formData,
-      desafios: [
-        ...formData.desafios,
-        { descricao: "", capacidadesBT: [], capaSocio: [] },
-      ],
-    });
-  }; */
+  /* converte para o formato ISO */
+  const startDateISO = convertToISO(proposedDate);
+  const endDateISO = convertToISO(deliveryDate);
 
-  // / larissa
+  if (!startDateISO || !endDateISO) {
+    toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+    return;
+  }
+
+  if (!validateDates(startDateISO, endDateISO)) {
+    return;
+  }
 
   return (
     <section className="add-activity">
@@ -316,10 +268,20 @@ useEffect(() => {
         />
       </div>
 
-      <SelectMandatory
-        label="Selecione a matéria referente a essa situação de aprendizagem"
-        obs="uma matéria"
-      />
+      <div className="select-planne-course">
+        <label htmlFor="" className="label-select">
+          Selecione uma matéria
+        </label>
+        <select
+          id="subject"
+          value={selectedSubject}
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          className="input-all"
+        >
+          <option value=""></option>
+        </select>
+        <h2>* Obs: Para continuar você deve selecionar uma matéria</h2>
+      </div>
 
       <form>
         <div className="form-addactivity">
@@ -328,22 +290,26 @@ useEffect(() => {
               <label htmlFor="" className="label-date">
                 Data Proposta
               </label>
-              <input
-                type="date"
-                name="dataProposta"
-                /*  value={formData.dataProposta}
-                onChange={handleChange} */
+              <ReactInputMask
+                className="input-all"
+                type="text"
+                mask="99/99/9999"
+                value={proposedDate}
+                onChange={(e) => setProposedDate(e.target.value)}
+                disabled={!selectedSubject}
               />
             </div>
             <div className="delivery-date">
               <label htmlFor="" className="label-date">
                 Data de Entrega
               </label>
-              <input
-                type="date"
-                name="dataEntrega"
-                /* value={formData.dataEntrega}
-                onChange={handleChange} */
+              <ReactInputMask
+                className="input-all"
+                type="text"
+                mask="99/99/9999"
+                value={deliveryDate}
+                onChange={(e) => setDeliveryDate(e.target.value)}
+                disabled={!selectedSubject}
               />
             </div>
           </div>
@@ -420,7 +386,7 @@ useEffect(() => {
                 value={valueCapTecB}
                 onChange={setValueCapTecB}
                 multiple
-              />  
+              />
             </div>
             <div className="capsocio">
               <label className="label-capsocio">
@@ -435,38 +401,49 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="contextualization">
-            <InputField
-              id="contextualizacao"
-              label="Contextualição"
-              type="text"
-              
-            />
-          </div>
+          <InputField
+            id="contextualization"
+            label="Contextualização"
+            type="textarea"
+            value={contextualization}
+            onChange={(e) => setContextualization(e.target.value)}
+          />
 
           <div className="challenge">
             <div className="tittle-challenge">
               <h1>Desafios</h1>
             </div>
-            <div className="button-add-challenge">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  togglePopUpChallenge();
-                }}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </div>
+            <ButtonAdd
+              onClick={(e) => {
+                e.preventDefault();
+                togglePopUpChallenge();
+              }}
+            />
           </div>
 
           {challenges.map((challenge, index) => (
             <div key={index} className="challenge-card">
               <div className="items-card-challenge">
                 <h3>Desafio {index + 1}</h3>
-                <p>Descrição: {challenge.descricao}</p>
-                <p>Técnicas: {challenge.capsTecBasP.join(", ")}</p>
-                <p>Socioemocionais: {challenge.capsSocP.join(", ")}</p>
+                <p><span style={{fontWeight: "700"}}>Descrição:</span> {challenge.descricao}</p>
+                <p>
+                <span style={{fontWeight: "700"}}>Técnicas:</span>{" "}
+                  {challenge.capsTecBasP
+                    .map(
+                      (value) =>
+                        options.find((option) => option.value === value)?.label
+                    )
+                    .join(", ")}
+                </p>
+                <p>
+                <span style={{fontWeight: "700"}}>Socioemocionais:</span>{" "}
+                  {challenge.capsSocP
+                    .map(
+                      (value) =>
+                        options.find((option) => option.value === value)?.label
+                    )
+                    .join(", ")}
+                </p>
               </div>
               <div className="buttons-card-challenge">
                 <button
@@ -492,17 +469,15 @@ useEffect(() => {
           <div className="results-add">
             <InputField
               id="contextualization"
-              label="Resultados Esperados"
-              type="text"
-              /* value={formData.resultados}
-              onChange={handleChange} */
+              label="Contextualização"
+              type="textarea"
+              value={results}
+              onChange={(e) => setResults(e.target.value)}
             />
           </div>
 
           <div className="buttons-save-atvd">
-           <LargeButton
-            text="Salvar informações"
-           />
+            <LargeButton text="Salvar informações" />
           </div>
         </div>
       </form>
@@ -523,10 +498,10 @@ useEffect(() => {
               <div className="forms-add-challenge">
                 <div className="description" style={{ cursor: "pointer" }}>
                   <InputField
-                    id="description"
+                    id="contextualization"
                     label="Descrição"
-                    type="text"
-                    value={descricao}
+                    type="textarea"
+                    value={contextualization}
                     onChange={(e) => setDescricao(e.target.value)}
                   />
                 </div>
@@ -554,16 +529,15 @@ useEffect(() => {
                 </div>
 
                 <div className="buttons-popup-challenge">
-                  <button
+                  <SmallButton
                     onClick={(event) =>
                       editCardC === null
                         ? createChallenge(event)
                         : editChallenge(event)
                     }
-                  >
-                    {editCardC === null ? "Salvar" : "Salvar Edição"}
-                  </button>
-                  <button onClick={togglePopUpChallenge}>Cancelar</button>
+                    text={editCardC === null ? "Salvar" : "Salvar Edição"}
+                  />
+                  <SmallButton onClick={togglePopUpChallenge} text="Cancelar" />
                 </div>
               </div>
             </div>
