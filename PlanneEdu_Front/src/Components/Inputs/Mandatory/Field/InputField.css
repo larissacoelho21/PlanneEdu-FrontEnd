@@ -1,0 +1,45 @@
+.label-all {
+  position: absolute;
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: right;
+  transition: all 0.2s ease;
+}
+
+.input-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2vw;
+  border: none;
+  background-color: transparent;
+  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
+}
+
+.Fieldset {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 1.5vw 0;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.Fieldset.filled .label-all,
+.input-all:focus + .label-all {
+  transform: translateY(-1.5vw);
+  font-size: 1vw;
+  opacity: 1;
+}
+
+.input-all:focus {
+  outline: none;
+  box-shadow: none;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: rgba(0, 0, 0, 0.2) solid 2px;
+}
