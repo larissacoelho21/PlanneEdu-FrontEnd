@@ -222,7 +222,7 @@ export const profile = async () => {
   }
 };
 
-/* function post - atualizando senha */
+/* function post - atualizando senha */ //TODO: Arrumar 
 export const updatePassword = async (
   currentPassword: string,
   password: string,
@@ -315,26 +315,32 @@ export const RegisterUser = async (userData: {
   }
 };
 
-export const allUsers = async (accessLevel: string) => {
+// TODO: Arrumar 
+/* Função aparecendo todos usuarios cadastrados */
+export const allUsers = async () => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
 
-    const response = await axios.get(`${BaseUrl}/get_users/${accessLevel}`, {
+    const response = await axios.get(`${BaseUrl}/get_all_users`, {
       headers: {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
       },
     });
 
+    console.log("Usuários carregados:", response);
     return response.data.users; // Retorna os dados da API
   } catch (error: any) {
     const errorMessage =
-      error.response?.data?.error || "Erro ao encontrar seus dados";
+      error.response?.data?.error || "Erro ao buscar os usuários";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
+/* Função deletando usuários */
 export const deleteUser = async (id: string): Promise<void> => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -359,6 +365,7 @@ export const deleteUser = async (id: string): Promise<void> => {
   }
 };
 
+/* Função perfil opp */
 export const profileOpp = async() => {
   try{
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -377,3 +384,25 @@ export const profileOpp = async() => {
       error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 }
+
+/* Função adicionando Plano de Curso */
+
+export const backPLanCourse =async (teachingPlan: any) => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+    const response = await axios.post(`${BaseUrl}/my_user`, teachingPlan, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error("Erro ao enviar os dados:", error.response || error.message);
+    throw new Error(
+      error.response?.data?.message || "Erro ao enviar os dados do plano de ensino."
+    );
+  }
+};

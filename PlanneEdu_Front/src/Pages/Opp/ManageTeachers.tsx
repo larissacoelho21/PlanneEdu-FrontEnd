@@ -22,28 +22,18 @@ interface ProfileData {
 }
 
 export function ManageTeachers() {
-  /* const [isExpanded, setIsExpanded] = useState(false); */
   const [users, setUsers] = useState<ProfileData[]>([]);
-/*   const [isExpandedCard, setIsExpandedCard] = useState<number | null>(null);
- */  const [expandedCard, setExpandedCard] = useState<number | null>(null); // Controla qual card está expandido
+  const [expandedCard, setExpandedCard] = useState<number | null>(null); // Controla qual card está expandido
 
   const toggleCard = (index: number) => {
     setExpandedCard((prevIndex) => (prevIndex === index ? null : index));
   };
-  /* const toggleExpand = () => {
-    setIsExpanded((prev) => !prev);
-  }; */
-
-  //criando card para cada usuário
-  /*  const toggleExpandCard = (index: number) => {
-     setIsExpandedCard((prevIndex) => (prevIndex === index ? null : index)); // Expande ou colapsa o card
-   }; */
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await allUsers("docente");
-        setUsers(response); // Acessando o campo `user` diretamente
+        const response = await allUsers();
+        setUsers(response || [] );
       } catch (error: any) {
         throw new Error(error.message || "Não foi possível encontrar os usuários");
       }
@@ -56,7 +46,7 @@ export function ManageTeachers() {
     //TODO: arrumar toast
     const toastId = toast(
       <div>
-        <p>Tem certeza que deseja excluir este usuário?</p>
+        <p style={{ textAlign: "start", marginLeft: "-1px"}}>Tem certeza que deseja excluir este usuário?</p>
         <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
           <button
             onClick={() => {
@@ -64,10 +54,10 @@ export function ManageTeachers() {
               toast.dismiss(toastId); // Fecha o toast
             }}
             style={{
-              background: "red",
+              background: "#e43c3c",
               color: "white",
-              padding: "5px 10px",
-              borderRadius: "5px",
+              padding: "0.5vw 1vw",
+              borderRadius: "0.5vw",
               border: "none",
               cursor: "pointer",
             }}
@@ -79,8 +69,8 @@ export function ManageTeachers() {
             style={{
               background: "gray",
               color: "white",
-              padding: "5px 10px",
-              borderRadius: "5px",
+              padding: "0.5vw 1vw",
+              borderRadius: "0.5vw",
               border: "none",
               cursor: "pointer",
             }}
@@ -101,29 +91,27 @@ export function ManageTeachers() {
       } catch (error: any) {
         toast.error("Erro ao deletar o usuário: " + error.message); // Exibe mensagem de erro
       }
-
-
     };
   }
 
 
-    return (
-      <section className="homeTeacher">
-        <NavBarOpp />
-        <div className="title-plancourseopp">
-          <IntroText
-            titleText="Gerencie os docentes"
-            subtitleText="Visualize suas principais informações"
-          />
-        </div>
+  return (
+    <section className="homeTeacher">
+      <NavBarOpp />
+      <div className="title-plancourseopp">
+        <IntroText
+          titleText="Gerencie os usuários"
+          subtitleText="Visualize suas principais informações"
+        />
+      </div>
 
-        <div className="buttons-class">
-          <a href="/addUser"><button>+ Adicionar um novo docente</button></a>
-        </div>
-        <FilterCategory />
+      <div className="buttons-class">
+        <a href="/addUser"><button>+ Adicionar um novo usuário</button></a>
+      </div>
+      <FilterCategory />
 
-        <div className="teacher-cards">
-          {users.map((user, index) => (
+      <div className="teacher-cards">
+          {users.map ((user, index) => (
             <div key={index} className="teacher-card">
               <div className="teacher-card2">
                 <h1>{user.nome} {user.sobrenome}</h1>
@@ -193,9 +181,9 @@ export function ManageTeachers() {
               )}
             </div>
           ))}
-        </div>
+      </div>
 
-        {/* <div className="teacher-card">
+      {/* <div className="teacher-card">
         <div className="teacher-card2">
           <h1>Arthur Rosa</h1>
           <div className="lock">
@@ -256,6 +244,6 @@ export function ManageTeachers() {
 
       </div> */}
 
-      </section>
-    );
-  }
+    </section>
+  );
+}
