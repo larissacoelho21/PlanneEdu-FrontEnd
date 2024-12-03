@@ -18,11 +18,13 @@ export function Home() {
   return (
     <section className="homeTeacher">
       <NavBarProfessor />
+      <div className="texts-intro">
       <TextsIntroName
         userName={userName || "Usuário"}
         titleText="Seja bem vindo"
         subtitleText="Visualize suas turmas ativas"
       />
+      </div>
       
       <div className="cards-teacher">
         <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>

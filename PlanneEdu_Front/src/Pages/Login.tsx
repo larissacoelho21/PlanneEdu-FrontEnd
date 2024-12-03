@@ -4,7 +4,7 @@ import BackgroundLogin from "../assets/reca.png";
 import Computer from "../assets/computer.svg";
 import Logo from "../assets/logo.svg";
 import Forma from "../assets/forma-azul.svg";
-import LogoWhite from "../assets/logoWhite.svg";
+import LogoWhite from "../assets/logoWhite.png";
 
 import "../Css/Login.css";
 import { Eye, EyeOff } from "lucide-react";

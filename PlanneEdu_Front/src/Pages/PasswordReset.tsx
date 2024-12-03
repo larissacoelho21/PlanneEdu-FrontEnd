@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BackgroundPassword } from "../Components/BackgroundPassword/BackgroundPassword";
 import FormaBottom from "../assets/forma_certa.svg";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logoRestaured.png"
 
 import "../Css/PasswordReset.css";
 import { useNavigate } from "react-router-dom";
@@ -69,11 +69,12 @@ export function PasswordReset() {
         </div>
 
         <div className="info-login-mobile">
-          <h1>Verificação de e-mail</h1>
+          <h1>Redefinição de senha
+          </h1>
 
           <p>
-            Enviamos um código de verificação para o seu e-mail. Por favor,
-            insira o código abaixo para confirmar sua identidade.
+          Informe seu e-mail abaixo, e enviaremos as instruções
+          necessárias para que você possa redefinir sua senha.
           </p>
         </div>
 

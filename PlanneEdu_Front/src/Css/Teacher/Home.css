@@ -35,6 +35,11 @@ body {
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
+
+  .texts-intro{
+    margin-top: 10%;
+  }
+
   .cards-teacher {
     display: flex;
     justify-content: center;
