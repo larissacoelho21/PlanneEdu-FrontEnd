@@ -196,7 +196,7 @@ select:focus {
   }
 
   #forma {
-    width: 99vw;
+    width: 102vw;
   }
 
   .login-logo {
@@ -204,8 +204,8 @@ select:focus {
   }
 
   .login-logo > img {
-    width: 8vw;
-    margin-left: 85vw;
+    width: 16vw;
+    margin-left: 80vw;
     margin-top: 8vw;
   }
 
@@ -225,12 +225,18 @@ select:focus {
 
   .login-info p {
     font-size: 4vw;
+    width: 100%;
+    margin: 0;
   }
 
   .bottom {
     position: absolute;
     margin-top: 100vw;
-    margin-left: 8.5vw;
+    margin-left: 11%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .input-login {
@@ -260,7 +266,7 @@ select:focus {
   .inputLogin input {
     background-color: transparent;
     outline: none;
-    border: 0;
+    border: none !important;
     font-size: 3.5vw;
     margin-left: 1.7vw;
     color: var(--black);
@@ -275,16 +281,24 @@ select:focus {
     opacity: 50%;
   }
 
-  label .input-password::placeholder {
+  label .input-password::placeholder,
+  .input-login::placeholder {
     color: var(--black);
     opacity: 50%;
     font-size: 3.5vw;
   }
 
+  .input-login:focus,
+  .inputLogin input:focus {
+    border: var(--black-two) solid 0.2vw; 
+    outline: none;
+    background-color: var(--white-two);
+  }
+
   .password a {
     text-decoration: none;
     font-size: 3vw;
-    margin-left: 30vw;
+    margin-left: 27vw;
     color: var(--blue-one);
   }
 

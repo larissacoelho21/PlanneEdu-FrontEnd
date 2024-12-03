@@ -46,7 +46,7 @@ export function VerificationEmail() {
       // Você pode lidar com algo extra aqui, mas não é necessário
       console.error(error);
     }
-  }
+  };
 
   return (
     <section className="VerificationEmail">
@@ -143,9 +143,10 @@ export function VerificationEmail() {
         </div>
 
         <div className="info-login-mobile">
-          <h1>Criar nova senha</h1>
+          <h1>Verificação de E-mail</h1>
 
-          <p>Sua nova senha deve ser diferente da sua senha anterior.</p>
+          <p>Enviamos um código de verificação para o seu e-mail. Por favor,
+          insira o código abaixo para confirmar sua identidade.</p>
         </div>
 
         <div className="top">
@@ -154,6 +155,30 @@ export function VerificationEmail() {
           </div>
 
           <div className="input-vali">
+          <div className="input-verification">
+              {" "}
+              {/* Input para a verificação do código */}
+              {/* verificação de quantidade de caracteres */}
+              <input //TODO: Adicionar max de caracteres
+                type="number"
+                className="verification-mobile"
+                value={code}
+                onChange={(event) => setCode(event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="confirm-mobile">
+              <p className="confirm-email-mobile">
+                Não recebeu o Email?
+                <span>
+                  <Link className="link-return-mobile" to="/redefinicaosenha">
+                    {" "}
+                    Reenviar Código
+                  </Link>
+                </span>
+              </p>
+            </div>
             <label className="label-vali">
               <input
                 className="input-password1"

@@ -13,12 +13,14 @@
 .title-verification {
   text-align: center;
   margin-top: 5%;
+  margin-right: 10%;
 }
 
 .title-verification h2 {
   font-weight: 800;
   color: var(--blue-one);
   font-size: 2.6vw;
+  margin-left: 10%;
 }
 
 .title-verification p {
@@ -155,7 +157,7 @@ select:focus,
     flex-direction: column;
     gap: 2vw;
     position: absolute;
-    margin-top: 50vw;
+    margin-top: 45vw;
     margin-left: 10%;
   }
 
@@ -183,8 +185,8 @@ select:focus,
   }
 
   label .input-password1::placeholder {
-    color: rgb(255, 255, 255); /* Define a cor preta para o placeholder */
-    opacity: 100%; /* Garante que o placeholder fique totalmente opaco */
+    color: rgb(255, 255, 255); 
+    opacity: 100%; 
     font-size: 3.5vw;
   }
 
@@ -230,6 +232,46 @@ select:focus,
     margin-left: 35%;
   }
 
+  .info-login-mobile{
+    margin-bottom: -15%;
+  }
+
+  .verification-mobile{
+    background-color: transparent;
+    width: 40vw;
+    height: 15vw;
+    padding-left: 3.6vw;
+    color: var(--white-one);
+    border: var(--white-one) solid 2px;
+    border-radius: 2vw;
+    font-size: 3.2vw;
+    font-weight: bold;
+    letter-spacing: 0.8vw;
+    font-family: "Poppins", system-ui;
+  }
+
+  .confirm-mobile{
+    margin-bottom: 8%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .confirm-email-mobile{
+    font-size: 3vw;
+    width: 60vw;
+    color: var(--white-one);
+    margin-top: 2%;
+  }
+
+  .link-return-mobile{
+    text-decoration: none;
+    color: var(--blue-three);
+  }
+
+  .input-verification input{
+    font-size: 8vw;;
+  } 
+
   .button-verification button {
     background-color: white;
     border: none;
@@ -240,7 +282,7 @@ select:focus,
     height: 10vw;
     font-family: "Poppins", system-ui;
     color: #074973;
-    margin-top: 10vw;
+    margin-top: 35vw;
   }
 
   .button-verification button:hover {

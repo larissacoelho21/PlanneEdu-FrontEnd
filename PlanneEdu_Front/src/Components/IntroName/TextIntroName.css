@@ -35,6 +35,15 @@
   .introTextStandard h2 {
     font-size: 1rem;
     font-weight: normal;
-    margin-bottom: 1%;
+    margin-bottom: 4%;
   }
+
+  .introTextStandard hr {
+  display: block;
+  width: 40vw;
+  height: 3px;
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #084973, #2685bf);
+}
 }
