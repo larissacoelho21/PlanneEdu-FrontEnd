@@ -254,7 +254,7 @@ export function LandingPage() {
                     e dedicação de todos foram essenciais para alcançar
                     esse resultado incrível.</h1>
                 <div className="buttons-login">
-                    <a href="/addUser"><button>Ir para o login</button></a>
+                    <a href="/login"><button>Ir para o login</button></a>
                 </div>
                 <img src={landingLogo} alt="" />
             </div>

@@ -131,6 +131,7 @@ function InputField({
           onWheel={onWheel}
           autoComplete="off"
           className="input-course"
+          required
         />
       )}
     </fieldset>
@@ -159,16 +160,11 @@ export function AddPlanoCurso() {
     curriculum: string;
     objective: string;
     cargaHoraria: number | null;
-    conhecimentos: SelectOption[];
+    conhecimentos: SelectOption[]; //SelectedOption[]
     estrategias: SelectOption[];
     recursos: SelectOption[];
     knowledgeTableData: KnowledgeData[];
   };
-
-  /* declaração de estados */
-  /* estado para controle de exibição do popup */
-  const [showPopUpGrade, setShowPopUpGrade] = useState(false);
-  const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
 
   /* tipificação dos valores do formulário */
   type FormValues = {
@@ -188,6 +184,14 @@ export function AddPlanoCurso() {
     ambienteCourse: string;
     selectedOptDetail: string;
   };
+
+
+  /* declaração de estados */
+  /* estado para controle de exibição do popup */
+  const [showPopUpGrade, setShowPopUpGrade] = useState(false);
+  const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
+
+
 
   /* estado único para diferentes dados */
   const [formValues, setFormValues] = useState<FormValues>({
@@ -313,9 +317,9 @@ export function AddPlanoCurso() {
         prevSubtopics.map((subtopic) =>
           subtopic.name === popupFormValues.detailAssigned
             ? {
-                ...subtopic,
-                details: [...subtopic.details, popupFormValues.detailCourse],
-              }
+              ...subtopic,
+              details: [...subtopic.details, popupFormValues.detailCourse],
+            }
             : subtopic
         )
       );
@@ -347,9 +351,9 @@ export function AddPlanoCurso() {
       prevSubtopics.map((subtopic) =>
         subtopic.name === subtopicName
           ? {
-              ...subtopic,
-              details: subtopic.details.filter((d) => d !== detail),
-            }
+            ...subtopic,
+            details: subtopic.details.filter((d) => d !== detail),
+          }
           : subtopic
       )
     );
@@ -618,6 +622,49 @@ export function AddPlanoCurso() {
     resetPopupStates();
   };
 
+
+
+  /* Função de envio de dados ao back-end */
+  const BackPlanCourse = async () => {
+    // Estrutura de dados final a ser enviada
+    const dataToSend = {
+      materias: Object.values(semesterData).flat().map((discipline) => ({
+        nome: discipline.curriculum,
+        cargaHoraria: discipline.cargaHoraria,
+        objetivo: discipline.objective,
+        capaBasicaOuTecnica: "Básica", // Ajuste conforme necessário
+        capaSocioemocional: "Colaboração", // Ajuste conforme necessário
+        conhecimento: discipline.conhecimentos.map((c) => c.value), // Supondo que SelectOption contém { value, label }
+        ambiente: discipline.knowledgeTableData.map((k) => k.ambiente).join(", "),
+        semCorrespondente: [1, 2], // Ajuste conforme necessário
+      })),
+      nome: formValues.nameCourse,
+      categoria: formValues.categoryCourse,
+      objetivo: formValues.objectiveCourse,
+      requisitosAcesso: "Ensino Fundamental completo", // Ajuste conforme necessário
+      competenciasProfissionais: formValues.skillsCourse.split(","), // Exemplo de separação por vírgulas
+      cargaHoraria: formValues.cargaHoraria,
+      qtdSemestre: formValues.quantSemestres,
+      tempoCurso: "2 anos", // Ajuste conforme necessário
+      semestre: Object.entries(semesterData).map(([key, disciplines]) => ({
+        numero: Number(key),
+        unidadeCurricular: disciplines.map((d) => ({
+          nome: d.curriculum,
+          cargaHoraria: d.cargaHoraria,
+        })),
+      })),
+    };
+
+    try {
+      const response = await BackPlanCourse();
+      toast.success("Plano de curso enviado com sucesso!");
+      console.log("Resposta da API:", response);// Para validação de retorno
+    } catch (error) {
+      toast.error("Erro ao enviar o plano de ensino. Tente novamente!");
+      console.error(error);
+    }
+  };
+
   return (
     <section className="AddPlanCourses">
       <SubNavbar />
@@ -877,13 +924,21 @@ export function AddPlanoCurso() {
 
                   <div className="multiselects">
                     <div className="multi-conhe">
-                      <label>Conhecimentos</label>
-                      <Multiselect
+                      {/* <InputField
+                        label="Conhecimentos"
+                        name="conhecimentos"
+                        type="text"
+                        id="conhc"
+                        value={conhecimentos}
+                        onChange={handleInputChange}
+                      /> */}
+                      {/* <label>Conhecimentos</label> */}
+                      {/* <Multiselect
                         options={options}
                         value={conhecimentos}
                         onChange={setConhecimentos}
                         multiple
-                      />
+                      /> */}
                     </div>
 
                     <div className="multi-estra">
@@ -969,9 +1024,8 @@ export function AddPlanoCurso() {
                     {subtopics.map((subtopic) => (
                       <div
                         key={subtopic.name}
-                        className={`details-card ${
-                          dropdownState === subtopic.name ? "active" : ""
-                        }`}
+                        className={`details-card ${dropdownState === subtopic.name ? "active" : ""
+                          }`}
                       >
                         <div className="drop-header">
                           <h4>{subtopic.name}</h4>
@@ -1106,7 +1160,7 @@ export function AddPlanoCurso() {
             )}
           </div>
           <div className="tasks-btns">
-            <button className="save-course">
+            <button className="save-course" onClick={BackPlanCourse}>
               <Check />
               Salvar Alterações
             </button>
