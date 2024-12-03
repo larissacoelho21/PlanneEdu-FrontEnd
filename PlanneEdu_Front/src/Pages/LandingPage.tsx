@@ -1,5 +1,7 @@
 import "../Css/LandingPage.css";
 import landingLogo from '../assets/logo.svg';
+import C from '../assets/Cfooter.svg';
+import landingLogoFooter from '../assets/logoWhite.png';
 import { ChartNoAxesColumnIncreasing } from 'lucide-react';
 import { Zap } from 'lucide-react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +14,7 @@ import sarah from "../assets/sarah.svg";
 import gustavo from "../assets/gustavo.svg";
 import duda from "../assets/duda.svg";
 import kethelyn from "../assets/kethelyn.svg";
+import Qr from "../assets/qr.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -22,7 +25,7 @@ export function LandingPage() {
         const { onClick } = props;
         return (
             <div className="seta-esquerda" onClick={onClick} style={{ cursor: "pointer" }}>
-                <ArrowLeft style={{ marginTop: '1vw', marginLeft: '1vw' }} />
+                <ArrowLeft style={{ marginTop: '1vw', marginLeft: '1vw', width: '2vw' }} />
             </div>
         );
     };
@@ -32,7 +35,7 @@ export function LandingPage() {
         return (
 
             <div className="seta-direita" onClick={onClick} style={{ cursor: "pointer" }}>
-                <ArrowRight style={{ marginTop: '1vw', marginLeft: '1vw' }} />
+                <ArrowRight style={{ marginTop: '1vw', marginLeft: '1vw', width: '2vw' }} />
             </div>
         );
     };
@@ -257,6 +260,65 @@ export function LandingPage() {
                     <a href="/addUser"><button>Ir para o login</button></a>
                 </div>
                 <img src={landingLogo} alt="" />
+            </div>
+
+            <div className="footer-landingPage">
+                <div className="footer-logo">
+                    <img src={landingLogoFooter} alt="" />
+                    <h1>PlanneEdu</h1>
+                </div>
+
+                <div className="linha-footer"></div>
+
+                <div className="creditos">
+
+                    <h2>Trabalho desenvolvido por :</h2>
+
+                    <div className="integrantes">
+
+                        <div className="group-integrantes">
+                            <p>Giovanna Sousa</p>
+                            <p>Gabriel Paixão</p>
+                            <p>LarissaRodrigues</p>
+                            <p>Sarah Cruz</p>
+                        </div>
+
+                        <div className="group-integrantes">
+                            <p>Lara Zanelato</p>
+                            <p>Gustavo Paixão</p>
+                            <p>Maria Eduarda</p>
+                            <p>Kethelyn Caitano</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="question-page">
+
+                    <div className="encontrou-problema">
+                        <h3>Encontrou algum problema?</h3>
+                        <p>planneedumaster@gmail.com</p>
+
+                        <h4 id="espacamento-question">Conheça nosso projeto!</h4>
+                        <p>Login</p>
+                    </div>
+
+                </div>
+
+                <div className="qr">
+
+                    <div className="encontrou-problema">
+                        <h3>Quer ver nosso trabalho de <br /> uma forma mais técnica?</h3>
+
+                        <img src={Qr} alt="" />
+
+                        <h4 id="info-qr">Acesse nosso <br /> repositório no GitHub!</h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <div className="direitos-footer">
+                <img src={C} alt="" /><p>Todos os direitos reservados por PlanneEdu</p>
             </div>
         </section>
     )
