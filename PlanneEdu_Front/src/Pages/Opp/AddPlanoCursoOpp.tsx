@@ -140,6 +140,7 @@ function InputField({
 
 export function AddPlanoCurso() {
   /* ======== construção das funcionalidades ======== */
+  type SelectOption = { label: string; value: number | string };
 
   /* tipificação para os subtópicos */
   type SubtopicData = {
@@ -216,9 +217,25 @@ export function AddPlanoCurso() {
   const [knowledgeTableData, setKnowledgeTableData] = useState<KnowledgeData[]>(
     []
   );
-  const [conhecimentos, setConhecimentos] = useState<SelectOption[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]);
+  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  const [semesterData, setSemesterData] = useState<{
+    [key: number]: {
+      curriculum: string;
+      objective: string;
+      cargaHoraria: number | null;
+      conhecimentos: SelectOption[];
+      estrategias: SelectOption[];
+      recursos: SelectOption[];
+    }[];
+  }>({ 1: [], 2: [], 3: [], 4: [] });
+
+ /*  const [conhecimentos, setConhecimentos] = useState<SelectOption[]>([]);
   const [estrategias, setEstrategias] = useState<SelectOption[]>([]);
   const [recursos, setRecursos] = useState<SelectOption[]>([]);
+
+  /* inicializando o estado `selectedOptions` como um array vazio 
+  const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([]); */
 
   /* função para atualizar estados de forma dinâmica */
   const handleInputChange = (
@@ -299,13 +316,13 @@ export function AddPlanoCurso() {
     }
   };
 
-  /* função para deletar os subtópicos já adicionados, baseados em seu nome */
-  const deleteSubtopic = (subtopicName: string) => {
+  /* função para deletar os subtópicos já adicionados */
+  /* const deleteSubtopic = (subtopicName: string) => {
     setSubtopics((prevSubtopics) =>
       prevSubtopics.filter((subtopic) => subtopic.name !== subtopicName)
     );
-    toast.success(`Subtópico "${subtopicName}" deletado com sucesso!`);
-  };
+    toast.success("Subtópico deletado com sucesso!");
+  }; */
 
   /* função para a adição de detalhes */
   const addDetail = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -401,8 +418,8 @@ export function AddPlanoCurso() {
     );
   };
 
-  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
-  /* estado para armazenar as disciplinas separadas por semestre */
+   /* const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  // estado para armazenar as disciplinas separadas por semestre 
   const [semesterData, setSemesterData] = useState<{
     [key: number]: DisciplineData[];
   }>({
@@ -410,7 +427,7 @@ export function AddPlanoCurso() {
     2: [],
     3: [],
     4: [],
-  });
+  });  */
 
   /* armazena os valores do formulário do popup */
   const [popupFormValues, setPopupFormValues] = useState<FormValues>({
@@ -474,84 +491,33 @@ export function AddPlanoCurso() {
 
     if (selectedSemester !== null && popupFormValues.curriculum.trim() !== "") {
       const newDiscipline = {
-        curriculum: popupFormValues.curriculum,
-        objective: popupFormValues.objectiveCurriculum,
-        cargaHoraria: popupFormValues.cargaHCurriculum,
+        curriculum: formValues.curriculum,
+        objective: formValues.objectiveCurriculum,
+        cargaHoraria: formValues.cargaHCurriculum,
         conhecimentos: conhecimentos,
         estrategias: estrategias,
         recursos: recursos,
-        knowledgeTableData: [...knowledgeTableData],
       };
 
-      setSemesterData((prevState) => {
-        if (editingDiscipline) {
-          /* atualizando disciplina existente */
-          const { semester, index } = editingDiscipline;
-          const updatedSemesterData = [...prevState[semester]];
-          updatedSemesterData[index] = newDiscipline;
+      setSemesterData((prevState) => ({
+        ...prevState,
+        [selectedSemester]: [
+          ...(prevState[selectedSemester] || []),
+          newDiscipline,
+        ],
+      }));
 
-          toast.success(
-            `Disciplina "${newDiscipline.curriculum}" atualizada com sucesso!`
-          );
-
-          return {
-            ...prevState,
-            [semester]: updatedSemesterData,
-          };
-        } else {
-          toast.success(
-            `Disciplina "${newDiscipline.curriculum}" adicionada com sucesso!`
-          );
-          return {
-            ...prevState,
-            [selectedSemester]: [
-              ...(prevState[selectedSemester] || []),
-              newDiscipline,
-            ],
-          };
-        }
-      });
-
-      /* resetando os dados */
-      resetPopupStates();
-      setShowPopUpGrade(false);
-    } else {
-      toast.error(
-        "Preencha todos os campos para criar uma disciplina. Tente novamente!"
-      );
-    }
-  };
-
-  /* estado para identificar a disciplina em edição */
-  const [editingDiscipline, setEditingDiscipline] = useState<{
-    semester: number;
-    index: number;
-    discipline: DisciplineData;
-  } | null>(null);
-
-  /* inicia o processo de edição de disciplinas */
-  const startEditDiscipline = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    semester: number,
-    index: number
-  ) => {
-    event.preventDefault();
-
-    const discipline = semesterData[semester]?.[index];
-
-    if (discipline) {
-      setEditingDiscipline({ semester, index, discipline });
-
-      setPopupFormValues({
+      /* resetando o formulário */
+      setFormValues({
         nameCourse: "",
         categoryCourse: "",
         objectiveCourse: "",
         skillsCourse: "",
-        cargaHoraria: discipline.cargaHoraria,
+        cargaHoraria: null,
         quantSemestres: null,
-        curriculum: discipline.curriculum,
-        objectiveCurriculum: discipline.objective,
-        cargaHCurriculum: discipline.cargaHoraria,
+        curriculum: "",
+        objectiveCurriculum: "",
+        cargaHCurriculum: null,
         topicCourse: "",
         subtopicCourse: "",
         detailCourse: "",
@@ -559,109 +525,14 @@ export function AddPlanoCurso() {
         ambienteCourse: "",
         selectedOptDetail: "",
       });
+      setConhecimentos([]);
+      setEstrategias([]);
+      setRecursos([]);
 
-      setConhecimentos(discipline.conhecimentos);
-      setEstrategias(discipline.estrategias);
-      setRecursos(discipline.recursos);
-      setKnowledgeTableData(discipline.knowledgeTableData);
+      /* fechando o popup */
+      setShowPopUpGrade(false);
 
-      setShowPopUpGrade(true);
-    } else {
-      console.error(
-        `Disciplina não encontrada para o semestre ${semester} e índice ${index}`
-      );
-    }
-  };
-
-  /* função de remoção de disciplina */
-  const deleteDiscipline = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    semester: number,
-    index: number
-  ) => {
-    event.preventDefault();
-
-    setSemesterData((prevState) => ({
-      ...prevState,
-      [semester]: prevState[semester].filter((_, i) => i !== index),
-    }));
-
-    /* resetando os dados */
-    setFormValues({
-      nameCourse: "",
-      categoryCourse: "",
-      objectiveCourse: "",
-      skillsCourse: "",
-      cargaHoraria: null,
-      quantSemestres: null,
-      curriculum: "",
-      objectiveCurriculum: "",
-      cargaHCurriculum: null,
-      topicCourse: "",
-      subtopicCourse: "",
-      detailCourse: "",
-      detailAssigned: "",
-      ambienteCourse: "",
-      selectedOptDetail: "",
-    });
-
-    setConhecimentos([]);
-    setEstrategias([]);
-    setRecursos([]);
-    setSubtopics([]);
-    setKnowledgeTableData([]);
-
-    toast.success("Disciplina deletada com sucesso!");
-  };
-
-  /* função para o botão de cancelar, limpa os dados e para de exibir o popup */
-  const closePopUp = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    togglePopUpGrade();
-    resetPopupStates();
-  };
-
-
-
-  /* Função de envio de dados ao back-end */
-  const BackPlanCourse = async () => {
-    // Estrutura de dados final a ser enviada
-    const dataToSend = {
-      materias: Object.values(semesterData).flat().map((discipline) => ({
-        nome: discipline.curriculum,
-        cargaHoraria: discipline.cargaHoraria,
-        objetivo: discipline.objective,
-        capaBasicaOuTecnica: "Básica", // Ajuste conforme necessário
-        capaSocioemocional: "Colaboração", // Ajuste conforme necessário
-        conhecimento: discipline.conhecimentos.map((c) => c.value), // Supondo que SelectOption contém { value, label }
-        ambiente: discipline.knowledgeTableData.map((k) => k.ambiente).join(", "),
-        semCorrespondente: [1, 2], // Ajuste conforme necessário
-      })),
-      nome: formValues.nameCourse,
-      categoria: formValues.categoryCourse,
-      objetivo: formValues.objectiveCourse,
-      requisitosAcesso: "Ensino Fundamental completo", // Ajuste conforme necessário
-      competenciasProfissionais: formValues.skillsCourse.split(","), // Exemplo de separação por vírgulas
-      cargaHoraria: formValues.cargaHoraria,
-      qtdSemestre: formValues.quantSemestres,
-      tempoCurso: "2 anos", // Ajuste conforme necessário
-      semestre: Object.entries(semesterData).map(([key, disciplines]) => ({
-        numero: Number(key),
-        unidadeCurricular: disciplines.map((d) => ({
-          nome: d.curriculum,
-          cargaHoraria: d.cargaHoraria,
-        })),
-      })),
-    };
-
-    try {
-      const response = await BackPlanCourse();
-      toast.success("Plano de curso enviado com sucesso!");
-      console.log("Resposta da API:", response);// Para validação de retorno
-    } catch (error) {
-      toast.error("Erro ao enviar o plano de ensino. Tente novamente!");
-      console.error(error);
+      toast.success("Disciplina adicionada com sucesso!");
     }
   };
 
