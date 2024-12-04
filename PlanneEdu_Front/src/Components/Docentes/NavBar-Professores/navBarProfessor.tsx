@@ -358,7 +358,7 @@ export function NavBarProfessor() {
                           <a href="#">Administração</a>
                         </li>
                         <li>
-                          <a href="#">Desenvolvimento de Sistemas</a>
+                          <a href="/plansensinoespc">Desenvolvimento de Sistemas</a>
                         </li>
                         <li>
                           <a href="#">Eletromecânica</a>
@@ -367,7 +367,7 @@ export function NavBarProfessor() {
                           <a href="#">Logística</a>
                         </li>
                         <li>
-                          <a href="#">Geral</a>
+                          <a href="/plansensino">Geral</a>
                         </li>
                       </ul>
                     )}
@@ -375,7 +375,7 @@ export function NavBarProfessor() {
                   <li>
                     <NavLink /* identificando se o caminho da página selecionada corresponde */
                       className="dropdownMobile"
-                      to="#"
+                      to="/planscourse"
                     >
                       <p>Plano de curso</p>
                     </NavLink>
@@ -394,10 +394,10 @@ export function NavBarProfessor() {
                     {ProfileDropdownOpen && (
                       <ul className="dropdownProfileMob">
                         <li>
-                          <a href="#">Visualizar perfil</a>
+                          <a href="/profileteacher">Visualizar perfil</a>
                         </li>
                         <li>
-                          <a href="#">Sair</a>
+                          <a href="/login">Sair</a>
                         </li>
                       </ul>
                     )}
@@ -405,6 +405,7 @@ export function NavBarProfessor() {
                 </ul>
               </div>
             </div>
+            
           </div>
         </div>
       </nav>

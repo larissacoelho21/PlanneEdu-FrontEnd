@@ -217,14 +217,15 @@ body {
   }
 
   .date-badge {
-    font-size: 3.5vw;
+    font-size: 3vw;
     background-color: var(--blue-one);
-    width: 50vw;
+    width: 45vw;
     padding: 1vw;
     color: var(--white);
     font-weight: normal;
     text-align: center;
     border-radius: 1vw;
+    margin-top: 1vw;
   }
 
   .box-info-class {
@@ -316,11 +317,13 @@ body {
   }
 
   .buttons-filter-mobile {
+    width: 90vw;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     gap: 6vw;
     margin-bottom: 3%;
+    margin-right: 4vw;
   }
   
   .buttons-filter-mobile button {
@@ -332,13 +335,9 @@ body {
     color: #07678d;
     cursor: pointer;
     transition: 0.3s;
-  }
-
-  .buttons-filter-mobile button {
     width: 33vw;
-    margin-top: 1vw;
-    margin-left: 5vw;
-    margin-right: 5vw;
+    margin-top: 2vw;
+    margin-left: 2vw;
   }
 
   .buttons-filter-mobile button:active,
