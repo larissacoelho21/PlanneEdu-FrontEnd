@@ -30,6 +30,7 @@ export function Home() {
         <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
           <CardTeacher
             course="Desenvolvimento de sistemas"
+            detail="|"
             classCard="SESI"
             yearClass="2023"
             dateI="23/02/2023"

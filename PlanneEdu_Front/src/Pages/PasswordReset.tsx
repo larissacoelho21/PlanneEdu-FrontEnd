@@ -31,7 +31,7 @@ export function PasswordReset() {
         {" "}
         {/* Div maior - não possue css */}
         <div className="title-text">
-          <div className="title">
+          <div className="title-password-reset">
             {" "}
             {/* Títulos */}
             <h2>Redefinição de senha</h2>
@@ -69,9 +69,7 @@ export function PasswordReset() {
         </div>
 
         <div className="info-login-mobile">
-          <h1>Redefinição de senha
-          </h1>
-
+          <h1>Redefinição de senha</h1>
           <p>
           Informe seu e-mail abaixo, e enviaremos as instruções
           necessárias para que você possa redefinir sua senha.

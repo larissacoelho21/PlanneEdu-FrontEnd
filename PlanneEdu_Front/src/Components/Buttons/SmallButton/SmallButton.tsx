@@ -1,5 +1,5 @@
 import React from "react";
-import "../SmallButton/SmallButton.css";
+import "./SmallButton.css";
 
 interface SmallButtonProps {
   text: string;

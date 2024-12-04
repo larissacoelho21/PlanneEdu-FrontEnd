@@ -2,7 +2,7 @@ import "../../Css/Teacher/ClassTeacher.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
 import { Popup } from "../../Components/PopUpClass/PopUp";
-import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 
 export function ClassTeacher() {

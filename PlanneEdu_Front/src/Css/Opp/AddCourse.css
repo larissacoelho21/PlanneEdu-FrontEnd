@@ -1,11 +1,15 @@
 /* ===== Variáveis de Cor ===== */
 :root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
   --blue-one: #074973;
   --blue-two: #07678d;
   --blue-three: #00a3ff;
-  --gray-one: #bbbb;
-  --gray-two: #848484bb;
-  --white: #ffff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== Seleção de Cursos ===== */
@@ -15,7 +19,7 @@
   justify-content: center;
   align-items: center;
   width: 80vw;
-  margin: 0 auto;
+  
 }
 
 /* ===== Formulário de Adição de Curso ===== */
@@ -47,6 +51,7 @@
   border: none;
   border-bottom: 0.15vw solid rgba(0, 0, 0, 0.2) !important;
   width: 80vw;
+  margin-top: 3%;
 }
 
 /* ===== Títulos e Horas das Matérias ===== */
@@ -98,9 +103,8 @@
 .semester-grid h2 {
   text-align: start;
   font-size: 1.2vw;
-  color: var(--gray-two);
+  color: var(--black-two);
 }
-
 
 /* ===== PopUp Delete ===== */
 .message-delete-course {
@@ -121,6 +125,16 @@
 .message-delete-course h1 {
   color: var(--blue-one);
   font-size: 2.5vw;
+}
+
+.label-add-course{
+  align-self: flex-start;
+  position: absolute;
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: right;
+  transition: all 0.2s ease;
 }
 
 .message-delete-course h2 {

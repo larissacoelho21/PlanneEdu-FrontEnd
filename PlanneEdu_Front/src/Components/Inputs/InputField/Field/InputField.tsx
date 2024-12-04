@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Field/InputField.css"
+import "./InputField.css"
 
 interface InputFieldProps {
   id: string;

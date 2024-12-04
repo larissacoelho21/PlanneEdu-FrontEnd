@@ -2,18 +2,18 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import React, { useEffect, useState } from "react";
 import "../../Css/Teacher/AddActivity.css";
 
-import { BaseUrl } from "../../Config/config";
+/* import { BaseUrl } from "../../Config/config"; */
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
   Multiselect,
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
-import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
-import { InputField } from "../../Components/Inputs/Mandatory/Field/InputField";
+import { InputField } from "../../Components/Inputs/InputField/Field/InputField";
 import { ButtonAdd } from "../../Components/Buttons/More/More";
-import { SmallButton } from "../../Components/SmallButton/SmallButton";
+import { SmallButton } from "../../Components/Buttons/SmallButton/SmallButton";
 import ReactInputMask from "react-input-mask";
 
 /*  ce conexão com  Back-End */ /* 
@@ -253,6 +253,18 @@ export function AddActivity() {
     return;
   }
 
+  // validação para selecionar matéria
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if(!selectedSubject) {
+      toast.error("Selecione uma matéria para continuar!");
+      return;
+    }
+
+    toast.success("Situação de aprendizagem criada com sucesso!")
+  }
+
   return (
     <section className="add-activity">
       <div className="start-add">
@@ -283,7 +295,7 @@ export function AddActivity() {
         <h2>* Obs: Para continuar você deve selecionar uma matéria</h2>
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-addactivity">
           <div className="dates-add">
             <div className="proposed-date">
@@ -298,7 +310,7 @@ export function AddActivity() {
                 onChange={(e) => setProposedDate(e.target.value)}
                 disabled={!selectedSubject}
               />
-            </div>
+              </div>
             <div className="delivery-date">
               <label htmlFor="" className="label-date">
                 Data de Entrega
