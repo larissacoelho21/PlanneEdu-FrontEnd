@@ -17,7 +17,7 @@ export function TurmaOpp() {
       </div>
 
       <div className="buttons-class" id="buttons-class">
-        <a href="/addcurso">
+        <a href="/addclass">
           <button>+ Adicionar uma nova turma</button>
         </a>
       </div>
