@@ -59,9 +59,10 @@ interface ProfileData {
 }
 
 export function ProfileTeacher() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [password, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(true);
 
   const [user, setUser] = useState<ProfileData | null>(null);
 
@@ -83,8 +84,8 @@ export function ProfileTeacher() {
   //Função para atualizar senha
   const handlePassword = async () => {
     try {
-      await updatePassword(currentPassword, password, confirmPassword);
-      toast.success("Senha cadastrada com sucesso");
+      await updatePassword(password, newPassword, confirmPassword);
+      setIsDialogOpen(false);
     } catch (error: any) {
       toast.error(
         error.message ||
@@ -95,6 +96,7 @@ export function ProfileTeacher() {
   };
 
   return (
+    /* ================ Desktop ======================= */
     <section className="profileTeacher">
       <NavBarProfessor />
 
@@ -161,7 +163,7 @@ export function ProfileTeacher() {
           </div>
         </div>
       </div>
-
+          {/* Dialog password */}
       <div className="buttonsProfile" id="buttonsProfile">
         <Dialog.Root>
           <Dialog.Trigger asChild>
@@ -187,7 +189,8 @@ export function ProfileTeacher() {
                 Trocar senha
               </Dialog.Title>
 
-              <form
+              {isDialogOpen && (
+                <form
                 onSubmit={async (e) => {
                   e.preventDefault(); // Evita o reload da página
                   await handlePassword(); // Chama sua lógica de atualizar a senha
@@ -198,14 +201,14 @@ export function ProfileTeacher() {
                     id="currentPassword"
                     label="Senha atual"
                     type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <InputField
                     id="newPassword"
                     label="Nova senha"
                     type="password"
-                    value={password}
+                    value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                   <InputField
@@ -228,6 +231,7 @@ export function ProfileTeacher() {
                   </button>
                 </div>
               </form>
+              )}
               <Dialog.Close asChild>
                 <div aria-label="Close">
                   <Cross2Icon className="IconButton" />
@@ -237,6 +241,8 @@ export function ProfileTeacher() {
           </Dialog.Portal>
         </Dialog.Root>
       </div>
+
+      {/* =========== Mobile ============== */}
 
       <div className="Mobile">
         {user && (
@@ -335,14 +341,14 @@ export function ProfileTeacher() {
                     id="currentPassword"
                     label="Senha atual"
                     type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <InputField
                     id="newPassword"
                     label="Nova senha"
                     type="password"
-                    value={password}
+                    value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                   <InputField
