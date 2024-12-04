@@ -2,6 +2,7 @@
   --blue1: #074973;
   --speed: 500ms;
 }
+
 .navbar-container {
   display: none;
 }
@@ -337,6 +338,8 @@ link:active {
     box-shadow: none;
     height: 10vw;
     display: flex;
+    position: relative;
+    z-index: 3;
     align-items: center;
   }
 
