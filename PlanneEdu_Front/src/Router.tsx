@@ -63,8 +63,9 @@ const Router: React.FC = () => {
         <Route path="/addclass" element={<AddClass/>} />
         {/* Lading Page */}
         <Route path="/" element={<LandingPage />} />
-        {/* Página de erro */}
-        <Route path="/errorPage" element={<ErrorPage />} />
+        
+        {/* Rota coringa para as páginas não encontradas (página de erro) */}
+        <Route path="*" element={<ErrorPage />} />
 
       </Routes>
     </BrowserRouter>
