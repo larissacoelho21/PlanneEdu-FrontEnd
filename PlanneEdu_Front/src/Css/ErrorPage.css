@@ -1,0 +1,76 @@
+:root {
+    --white-one: #ffffff;
+    --white-two: #f2f2f2;
+    --gray-one: #bcbbbb;
+    --blue-one: #074973;
+    --blue-two: #07678d;
+    --black: #000;
+    --gray-two: #074a7325;
+}
+
+.error-pag {
+    width: 100%;
+    height: auto;
+}
+
+.erro {
+    background-image: url('../assets/erro-img.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 60vw;
+}
+
+.erro img {
+    width: 8vw;
+    margin-top: 2vw;
+    margin-left: 3vw;
+}
+
+.descricao-erro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.descricao-erro h1 {
+    text-align: center;
+    font-size: 6vw;
+    font-family: "Poppins", system-ui;
+}
+
+.descricao-erro p {
+    text-align: center;
+    font-size: 1.5vw;
+    font-weight: bold;
+    width: 33vw;
+}
+
+.buttons-error button {
+    width: 20vw;
+    height: 5.5vw;
+    background-color: var(--white-two);
+    border: 0.15vw solid var(--black);
+    color: var(--black);
+    border-radius: 0.2vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+    transition: 0.3s ease;
+    margin-left: 1vw;
+    margin-top: 2vw;
+    font-weight: 300;
+}
+
+.buttons-error button:hover,
+.buttons-error button:focus {
+    background-color: var(--black);
+    border: solid 0.2vw var(--white-two);
+    color: var(--white-two);
+}
+
+.buttons-error button:active {
+    background-color: transparent;
+    border: solid 0.2vw var(--white-two);
+    color: var(--white-two);
+}
