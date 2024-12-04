@@ -318,6 +318,7 @@ export function ProfileTeacher() {
         )}
       </div>
 
+<<<<<<< HEAD
       {/* <div className="buttonsProfile">
         <Dialog.Root>
           <Dialog.Trigger asChild>
@@ -393,6 +394,9 @@ export function ProfileTeacher() {
           </Dialog.Portal>
         </Dialog.Root>
       </div> */}
+=======
+
+>>>>>>> b77c9033a857991059467c792e8758fea2362188
     </section>
   );
 }

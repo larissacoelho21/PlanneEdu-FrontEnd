@@ -321,6 +321,7 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     link.href = URL.createObjectURL(response.data);
     link.download = filename;
     link.click();  
+
     
     console.log("Download realizado com sucesso!");
   } catch (error: any) {
