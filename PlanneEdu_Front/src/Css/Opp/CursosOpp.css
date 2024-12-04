@@ -1,35 +1,33 @@
 .cards-cursosopp {
+  display: flex;
+  flex-direction: column;
+  gap: 5vw;
   width: 80%;
   margin: 0 auto;
-  margin-bottom: 5vw;
+}
+
+.card-course {
+  background-color: var(--white-one);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5vw;
+  transition: 0.3s ease;
+  border: solid 2px transparent;
+  cursor: pointer;
 }
 
-.Class-curso {
-  display: flex;
-  align-items: center;
-  margin: 0.5vw 0;
-  gap: 1vw;
-  margin-right: 1vw;
+.card-course:hover {
+  border: 2px solid var(--blue-one);
 }
 
-.Class-curso p {
-  font-weight: 400;
-  font-size: 1.3vw;
-}
-
-.semester-curso {
+.number-semesters,
+.assigned-classes {
   display: flex;
   align-items: center;
   gap: 0.5vw;
-  margin-right: 2vw;
 }
 
-.semester-curso img {
-  width: 1.6vw;
-}
-
-.semester-curso h1 {
+.number-semesters h1,
+.assigned-classes h1 {
   font-size: 1.3vw;
   font-weight: normal;
   margin: 0.6vw;
@@ -46,13 +44,14 @@
   border-radius: 0.5vw;
 }
 
-.Data-curso {
+.data-curso {
   display: flex;
   flex-direction: column;
   gap: 1vw;
+  padding: 2rem;
 }
 
-.Data-curso > p {
+.data-curso > p {
   font-style: italic;
   font-size: 1vw;
   font-weight: 400;
@@ -61,28 +60,48 @@
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-  .buttons-class {
-    display: none;
+
+  .card-course{
+    margin-top: 10%;
   }
 
-  .Subject {
-    padding-top: 1vw;
-    font-size: 4vw;
+  .title-cursos-opp{
+    margin-top: 3vw;
   }
 
-  .semester-curso h1,
-  .Class-curso p {
-    font-size: 2vw;
+  .subject {
+    font-size: 3.7vw;
   }
 
-  .technology-curso {
-    font-size: 1.8vw;
-    width: 40vw;
+  .info {
+    display: flex;
+    flex-direction: column;
   }
 
-  .Data-curso > p {
-    font-size: 1.5vw;
+  .number-semesters,
+  .assigned-classes {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
   }
 
-  
+  .number-semesters h1,
+  .assigned-classes h1 {
+    font-size: 3.2vw;
+    font-weight: normal;
+  }
+
+  .assigned-classes{
+    margin-bottom: 5%;
+  }
+
+  .clock-semester,
+  .bookmarked {
+    width: 3.7vw;
+  }
+
+  .technology-curso{
+    font-size: 2.8vw;
+    width: 35vw;
+  }
 }
