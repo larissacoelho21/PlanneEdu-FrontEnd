@@ -51,6 +51,11 @@
 
 .dowload-pdf span {
   font-style: italic;
+  cursor: pointer;
+}
+
+.dowload-pdf span:hover {
+  color: #07678d;
 }
 
 /* --------------------Versão Mobile-------------------- */
@@ -114,5 +119,7 @@
   .dowload-pdf span {
     font-style: italic;
     font-size: 4vw;
+    cursor: pointer;
   }
+
 }

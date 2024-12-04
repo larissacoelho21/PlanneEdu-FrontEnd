@@ -11,7 +11,10 @@
 }
 
 .title-verification {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  align-items: center;
   margin-top: 5%;
   margin-right: 10%;
 }
@@ -20,14 +23,13 @@
   font-weight: 800;
   color: var(--blue-one);
   font-size: 2.6vw;
-  margin-left: 10%;
 }
 
 .title-verification p {
   opacity: 60%;
   margin-bottom: 3%;
   font-size: 1.1vw;
-  max-width: 50vw;
+  width: 40vw;
 }
 
 .input-verification {
@@ -67,7 +69,8 @@ select:focus,
 }
 
 .confirm {
-  margin: 3% 12% 3% 0;
+  display: flex;
+  margin: 3% 0 3% 0;
   text-align: center;
   color: var(--black-two);
 }
@@ -142,7 +145,7 @@ select:focus,
 
 @media only screen and (max-width: 800px) {
   .verification-img {
-    margin-top: -1vw;
+    margin-top: 10vw;
     position: absolute;
   }
 
@@ -157,7 +160,7 @@ select:focus,
     flex-direction: column;
     gap: 2vw;
     position: absolute;
-    margin-top: 45vw;
+    margin-top: 55%;
     margin-left: 10%;
   }
 
@@ -282,7 +285,7 @@ select:focus,
     height: 10vw;
     font-family: "Poppins", system-ui;
     color: #074973;
-    margin-top: 35vw;
+    margin-top: 50vw;
   }
 
   .button-verification button:hover {

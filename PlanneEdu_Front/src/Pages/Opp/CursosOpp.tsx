@@ -4,9 +4,10 @@ import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/CursosOpp.css";
 import { BookMarked, Clock3 } from "lucide-react";
 import { ChevronRight } from "lucide-react";
+import { ButtonAdd } from "../../Components/Buttons/More/More";
+import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function CursosOpp() {
-
   const [userName, setUserName] = useState<string | null>("");
 
   useEffect(() => {
@@ -20,41 +21,52 @@ export function CursosOpp() {
   return (
     <section className="homeTeacher">
       <NavBarOpp />
-
-      <TextsIntroName
-        userName={userName || "Usuário"}
-        titleText="Olá"
-        subtitleText="Veja os cursos disponíveis"
-      />
-
-      <div className="buttons-class" id="buttons-class">
-        <a href="/addcurso">
-          <button>+ Adicionar um novo curso</button>
-        </a>
+      <div className="title-cursos-opp" style={{ margin: "0 0 -3% 0" }}>
+        <TextsIntroName
+          userName={userName || "Usuário"}
+          titleText="Olá"
+          subtitleText="Veja os cursos disponíveis"
+        />
       </div>
 
+      <ButtonToAdd path="/addcourse" text="+ Adicionar um novo curso" />
+
       <div className="cards-cursosopp">
-        <div className="Card">
-          <div className="Data-curso">
-            <h3 className="Subject">Desenvolvimento de Sistemas</h3>
-            <div className="Info">
-              <div className="semester-curso">
-                <Clock3 size={18} />
+        <div className="card-course">
+          <div className="data-curso">
+            <h3 className="subject">Desenvolvimento de Sistemas</h3>
+            <div className="info">
+              <div className="number-semesters">
+                <Clock3 size={18} className="clock-semester"/>
                 <h1>4 semestres</h1>
               </div>
-              <div className="Class-curso">
-                <BookMarked size={21} color="black" strokeWidth={1.5} />
-                <p>5 turmas atribuídas </p>
+              <div className="assigned-classes">
+                <BookMarked size={21} color="black" strokeWidth={1.5} className="bookmarked" />
+                <h1>5 turmas atribuídas </h1>
               </div>
             </div>
             <div className="technology-curso">
               <span>Tecnologia da Informação - T.I</span>
             </div>
-
-            <p>Visualizar mais informações sobre o curso</p>
           </div>
-          <div className="Arrow">
-            <ChevronRight size={50} color="black" strokeWidth={1} />
+        </div>
+
+        <div className="card-course">
+          <div className="data-curso">
+            <h3 className="subject">Desenvolvimento de Sistemas</h3>
+            <div className="info">
+              <div className="number-semesters">
+                <Clock3 size={18} className="clock-semester"/>
+                <h1>4 semestres</h1>
+              </div>
+              <div className="assigned-classes">
+                <BookMarked size={21} color="black" strokeWidth={1.5} className="bookmarked"/>
+                <h1>5 turmas atribuídas </h1>
+              </div>
+            </div>
+            <div className="technology-curso">
+              <span>Tecnologia da Informação - T.I</span>
+            </div>
           </div>
         </div>
       </div>

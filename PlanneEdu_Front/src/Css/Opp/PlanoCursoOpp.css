@@ -28,4 +28,32 @@
     font-size: 3vw;
     width: 23vw;
 }
+
+.introTextStandard h1 {
+  font-size: 4.4vw;
+  color: var(--blue-one);
+}
+
+.introTextStandard h2 {
+  font-size: 3vw;
+  font-weight: normal;
+  margin-bottom: 4%;
+}
+
+.Class-curso p {
+  margin-left: 2vw;
+}
+
+.semester-curso h1 {
+  margin-left: 2vw;
+  width: 40vw;
+}
+
+.chapeu {
+  transform: translateX(-0.5vw);
+}
+
+.Arrow {
+  display: none;
+}
 }

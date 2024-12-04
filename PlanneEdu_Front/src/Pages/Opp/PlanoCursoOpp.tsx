@@ -25,7 +25,7 @@ export function PlanoCursoOpp() {
             <h3 className="Subject">Desenvolvimento de Sistemas</h3>
             <div className="Info">
               <div className="semester-curso">
-                <GraduationCap size={22} />
+                <GraduationCap className="chapeu" size={22} />
                 <h1>4 professores atribuídos</h1>
               </div>
               <div className="Class-curso">

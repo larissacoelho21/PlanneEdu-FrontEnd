@@ -2,7 +2,7 @@ import "../../Css/Teacher/ClassTeacher.css";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { useState } from "react";
 import { Popup } from "../../Components/PopUpClass/PopUp";
-import { LargeButton } from "../../Components/LargeButton/LargeButton";
+import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 
 export function ClassTeacher() {
@@ -33,8 +33,16 @@ export function ClassTeacher() {
       </div>
 
       <div className="buttons-class">
-        <LargeButton text="Plano de Ensino" onClick={togglePopUpPlanne} />
-        <LargeButton text="Situação de Aprendizagem" onClick={togglePopUpSA} />
+        <LargeButton
+          text="Plano de Ensino"
+          onClick={togglePopUpPlanne}
+          className="large-button-text1"
+        />
+        <LargeButton
+          text="Situação de Aprendizagem"
+          onClick={togglePopUpSA}
+          className="large-button-text"
+        />
         <button id="buttonSA1" onClick={togglePopUpSA}>
           S.A
         </button>

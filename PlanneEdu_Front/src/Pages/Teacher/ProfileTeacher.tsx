@@ -23,11 +23,18 @@ interface InputFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputField({ id, label, type = "text", value }: InputFieldProps) {
+function InputField({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+}: InputFieldProps) {
   const [isFilled, setIsFilled] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
+    onChange(event);
   };
 
   return (
@@ -39,6 +46,7 @@ function InputField({ id, label, type = "text", value }: InputFieldProps) {
         className="Input"
         id={id}
         type={type}
+        value={value}
         onChange={handleInputChange}
       />
     </fieldset>
@@ -62,7 +70,8 @@ export function ProfileTeacher() {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [user, setUser] = useState<ProfileData | null>(null);
 
@@ -84,13 +93,17 @@ export function ProfileTeacher() {
   //Função para atualizar senha
   const handlePassword = async () => {
     try {
+      console.log("Dados enviados ao servidor:", {
+        password,
+        newPassword,
+        confirmPassword,
+      });
       await updatePassword(password, newPassword, confirmPassword);
+      setPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
       setIsDialogOpen(false);
     } catch (error: any) {
-      toast.error(
-        error.message ||
-        "Não foi possível cadastrar a nova senha, tente novamente"
-      );
       console.error("Erro ao cadastrar senha: ", error);
     }
   };
@@ -163,9 +176,9 @@ export function ProfileTeacher() {
           </div>
         </div>
       </div>
-          {/* Dialog password */}
+      {/* Dialog password */}
       <div className="buttonsProfile" id="buttonsProfile">
-        <Dialog.Root>
+        <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <Dialog.Trigger asChild>
             <div className="password-button">
               <button>Trocar de senha</button>
@@ -189,8 +202,7 @@ export function ProfileTeacher() {
                 Trocar senha
               </Dialog.Title>
 
-              {isDialogOpen && (
-                <form
+              <form
                 onSubmit={async (e) => {
                   e.preventDefault(); // Evita o reload da página
                   await handlePassword(); // Chama sua lógica de atualizar a senha
@@ -231,7 +243,7 @@ export function ProfileTeacher() {
                   </button>
                 </div>
               </form>
-              )}
+
               <Dialog.Close asChild>
                 <div aria-label="Close">
                   <Cross2Icon className="IconButton" />
@@ -249,7 +261,9 @@ export function ProfileTeacher() {
           <div className="content-profile">
             <div className="nameProfile">
               <img src={Graduacion} alt="" />
-              <p>{user.nome} {user.sobrenome} </p>
+              <p>
+                {user.nome} {user.sobrenome}{" "}
+              </p>
             </div>
 
             <div className="infoProfile">
@@ -297,7 +311,6 @@ export function ProfileTeacher() {
                       <p>Nenhuma turma atribuída.</p>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
@@ -305,7 +318,8 @@ export function ProfileTeacher() {
         )}
       </div>
 
-      <div className="buttonsProfile">
+<<<<<<< HEAD
+      {/* <div className="buttonsProfile">
         <Dialog.Root>
           <Dialog.Trigger asChild>
             <div className="password-button">
@@ -379,9 +393,10 @@ export function ProfileTeacher() {
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
+      </div> */}
+=======
 
-      </div>
-
+>>>>>>> b77c9033a857991059467c792e8758fea2362188
     </section>
   );
 }

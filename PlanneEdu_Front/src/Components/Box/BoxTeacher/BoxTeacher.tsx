@@ -2,8 +2,11 @@ import { Clock3, Users } from "lucide-react";
 import "../BoxTeacher/BoxTeacher.css";
 
 interface CardTeacherProps {
-  course: string;
+  course?: string;
   classCard: string;
+  detail?: string;
+  textI?: string;
+  textT?: string;
   dateI: string;
   dateT: string;
   semester: number;
@@ -14,6 +17,9 @@ interface CardTeacherProps {
 export function CardTeacher({
   course,
   classCard,
+  detail,
+  textI,
+  textT,
   dateI,
   dateT,
   semester,
@@ -23,11 +29,11 @@ export function CardTeacher({
   return (
     <div className="box-teacher">
       <h1>
-        {course} | {classCard} {yearClass}
+        {course} {detail} {classCard} {yearClass}
       </h1>
       <div className="date-badge">
         <span>
-          {dateI} — {dateT}
+          {textI} {dateI} {detail} {textT} {dateT}
         </span>
       </div>
       <div className="infos-class">

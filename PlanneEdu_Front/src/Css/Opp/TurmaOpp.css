@@ -1,8 +1,61 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .cards-turmaopp {
-  width: 80%;
-  margin: 0 auto;
-  margin-bottom: 2vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 2rem; 
+  width: 90%;
+  margin: 0 auto; 
+}
+
+.card-class {
+  background-color: var(--white-one);
+  padding: 1.5rem;
+  border-radius: 0.5vw;
+  border: solid 2px transparent;
+  width: 100%; 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  transition: .3s ease;
+}
+
+.card-class:hover{
+  border: 2px solid var(--blue-one);
+}
+
+.info{
+  display: flex;
+  gap: 2vw;
+}
+
+.semester-course{
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.semester-course h1{
+  
+  font-size: 1.3vw;
+  font-weight: normal;
+}
+
+.card-class h3 {
+  font-size: 1.4rem;
 }
 
 .highlight {
@@ -13,19 +66,20 @@
 
 .open-class {
   width: 80%;
-  margin: 0 auto;
+  margin-left: 5%;
   margin-bottom: 1vw;
 }
 
 .open-class p {
   font-size: 1.5vw;
+  margin-top: 5%;
 }
 
 .technology-turma {
   font-size: 1vw;
   background-color: #074973;
-  width: 23vw;
-  padding: 0.5vw;
+  width: fit-content;
+  padding: .9vw 1vw;
   color: #ffff;
   font-weight: normal;
   text-align: center;
@@ -35,6 +89,8 @@
 .classOpp {
   margin-bottom: 5vw;
 }
+
+
 
 /* --------------------Versão Mobile-------------------- */
 

@@ -142,7 +142,7 @@ export function VerificationEmail() {
           <img src={Logo} alt="" />
         </div>
 
-        <div className="info-login-mobile">
+        <div className="info-login-mobile" style={{marginTop: "1%"}}>
           <h1>Verificação de E-mail</h1>
 
           <p>Enviamos um código de verificação para o seu e-mail. Por favor,
@@ -196,15 +196,15 @@ export function VerificationEmail() {
             <label className="label-vali">
               <input
                 className="input-password1"
-                type={isShow ? "text" : "password"}
+                type={isShow2 ? "text" : "password"}
                 placeholder="Confirme sua senha"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 required
               />
-              <button onClick={handlePassword} type="button">
-                {isShow && <Eye size={22} color="white" />}
-                {!isShow && <EyeOff size={22} color="white" />}
+              <button onClick={handlePassword2} type="button">
+                {isShow2 && <Eye size={22} color="white" />}
+                {!isShow2 && <EyeOff size={22} color="white" />}
               </button>
             </label>
           </div>

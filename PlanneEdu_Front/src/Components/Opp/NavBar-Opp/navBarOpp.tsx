@@ -367,8 +367,7 @@ export function NavBarOpp() {
                       onClick={toggleDropdwonMobile}
                     >
                       <p>
-                        Planos de ensinos{" "}
-                        <ChevronDown className="icon-dropdownMobile" />{" "}
+                        Turmas <ChevronDown className="icon-dropdownMobile" />{" "}
                       </p>
                     </div>
 
@@ -387,7 +386,7 @@ export function NavBarOpp() {
                           <a href="#">Logística</a>
                         </li>
                         <li>
-                          <a href="#">Geral</a>
+                          <a href="/turmaopp">Geral</a>
                         </li>
                       </ul>
                     )}
@@ -395,9 +394,25 @@ export function NavBarOpp() {
                   <li>
                     <NavLink /* identificando se o caminho da página selecionada corresponde */
                       className="dropdownMobile"
-                      to="#"
+                      to="/cursosopp"
                     >
-                      <p>Plano de curso</p>
+                      <p>Cursos</p>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="/planocursoopp"
+                    >
+                      <p>Planos de curso</p>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="/manageteachers"
+                    >
+                      <p>Gerenciar usuários</p>
                     </NavLink>
                   </li>
 
@@ -414,10 +429,10 @@ export function NavBarOpp() {
                     {ProfileDropdownOpen && (
                       <ul className="dropdownProfileMob">
                         <li>
-                          <a href="#">Visualizar perfil</a>
+                          <a href="/profileopp">Visualizar perfil</a>
                         </li>
                         <li>
-                          <a href="#">Sair</a>
+                          <a href="/login">Sair</a>
                         </li>
                       </ul>
                     )}
@@ -425,6 +440,7 @@ export function NavBarOpp() {
                 </ul>
               </div>
             </div>
+
           </div>
         </div>
       </nav>

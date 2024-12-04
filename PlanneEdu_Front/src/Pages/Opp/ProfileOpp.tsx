@@ -1,8 +1,8 @@
 /* Images */
 import { KeyRound, Mail, Phone } from "lucide-react";
 import Background from "../../assets/backgroundProfile.svg";
- import User from "../../assets/user-profile.svg";
- import ProfileForma from "../../assets/profile-forma.svg";
+import User from "../../assets/user-profile.svg";
+import ProfileForma from "../../assets/profile-forma.svg";
 
 import "../../Css/Teacher/Profile.css";
 
@@ -24,11 +24,12 @@ interface InputFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputField({ id, label, type = "text", value }: InputFieldProps) {
+function InputField({ id, label, type = "text", value, onChange }: InputFieldProps) {
   const [isFilled, setIsFilled] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFilled(event.target.value !== "");
+    onChange(event);
   };
 
   return (
@@ -40,6 +41,7 @@ function InputField({ id, label, type = "text", value }: InputFieldProps) {
         className="Input"
         id={id}
         type={type}
+        value={value}
         onChange={handleInputChange}
       />
     </fieldset>
@@ -58,9 +60,11 @@ interface ProfileData {
 }
 
 export function ProfileOpp() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [password, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [user, setUser] = useState<ProfileData | null>(null);
 
@@ -82,18 +86,23 @@ export function ProfileOpp() {
   //Função para atualizar senha
   const handlePassword = async () => {
     try {
-      await updatePassword(currentPassword, password, confirmPassword);
-      toast.success("Senha cadastrada com sucesso");
+      console.log("Dados enviados ao servidor:", {
+        password,
+        newPassword,
+        confirmPassword,
+      });
+      await updatePassword(password, newPassword, confirmPassword);
+      setPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setIsDialogOpen(false);
     } catch (error: any) {
-      toast.error(
-        error.message ||
-          "Não foi possível cadastrar a nova senha, tente novamente"
-      );
       console.error("Erro ao cadastrar senha: ", error);
     }
   };
 
   return (
+    /* ================ Desktop ======================= */
     <section className="profileOpp">
       <NavBarOpp />
 
@@ -138,9 +147,9 @@ export function ProfileOpp() {
           </div>
         </div>
       </div>
-
+      {/* Dialog password */}
       <div className="buttonsProfile" id="buttonsProfile">
-        <Dialog.Root>
+        <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <Dialog.Trigger asChild>
             <div className="password-button">
               <button>Trocar de senha</button>
@@ -175,14 +184,14 @@ export function ProfileOpp() {
                     id="currentPassword"
                     label="Senha atual"
                     type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <InputField
                     id="newPassword"
                     label="Nova senha"
                     type="password"
-                    value={password}
+                    value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                   <InputField
@@ -215,36 +224,45 @@ export function ProfileOpp() {
         </Dialog.Root>
       </div>
 
-      <div className="nameProfile">
-        <img src={User} alt="" />
-        <p>Marina Fonseca Neves</p>
+      {/* =========== Mobile ============== */}
+      <div className="Mobile">
+        {user && (
+          <div className="content-profile">
+            <div className="nameProfile">
+              <img src={User} alt="" />
+              <p>{user.nome} {user.sobrenome}</p>
+            </div>
+
+            <div className="infoProfile">
+              <div className="infoProfile-img">
+                <img src={ProfileForma} alt="" />
+              </div>
+              <div className="infosProfile">
+                <div className="nif">
+                  <KeyRound className="nifIcon" />
+                  <p className="textProfile">{user.nif}</p>
+                </div>
+                <div className="contatoProfile">
+                  <h1>Informações de contato:</h1>
+
+                  <div className="emailPersonal">
+                    <Mail className="mailIcon" />
+                    <p className="textProfile">{user.email}</p>
+                  </div>
+
+                  <div className="phone">
+                    <Phone className="phoneIcon" />
+                    <p className="textProfile">{user.telefone}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="infoProfile">
-        <div className="infoProfile-img">
-          <img src={ProfileForma} alt="" />
-        </div>
-
-        <div className="infosProfile">
-          <div className="nif">
-            <KeyRound className="nifIcon" />
-            <p className="textProfile">15639479</p>
-          </div>
-
-          <div className="contatoProfile">
-            <h1>Informações de contato:</h1>
-
-            <div className="emailPersonal">
-              <Mail className="mailIcon" />
-              <p className="textProfile">mar.fonsves@gmail.com</p>
-            </div>
-
-            <div className="phone">
-              <Phone className="phoneIcon" />
-              <p className="textProfile">(11) 9785-5975</p>
-            </div>
-
-            <div className="buttonsProfile">
+<<<<<<< HEAD
+      {/* <div className="buttonsProfile">
               <Dialog.Root>
                 <Dialog.Trigger asChild>
                   <div className="password-button">
@@ -318,11 +336,38 @@ export function ProfileOpp() {
                   </Dialog.Content>
                 </Dialog.Portal>
               </Dialog.Root>
-
             </div>
+          </div> */}
+=======
+      <div className="infoProfile">
+        <div className="infoProfile-img">
+          <img src={ProfileForma} alt="" />
+        </div>
+
+        <div className="infosProfile">
+          <div className="nif">
+            <KeyRound className="nifIcon" />
+            <p className="textProfile">15639479</p>
+          </div>
+
+          <div className="contatoProfile">
+            <h1>Informações de contato:</h1>
+
+            <div className="emailPersonal">
+              <Mail className="mailIcon" />
+              <p className="textProfile">mar.fonsves@gmail.com</p>
+            </div>
+
+            <div className="phone">
+              <Phone className="phoneIcon" />
+              <p className="textProfile">(11) 9785-5975</p>
+            </div>
+
+            
           </div>
         </div>
       </div>
+>>>>>>> b77c9033a857991059467c792e8758fea2362188
     </section>
   );
 }

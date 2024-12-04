@@ -7,8 +7,8 @@ import { toast } from "sonner";
 import { IntroForms } from "../../Components/IntroForms/IntroForms";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddClass.css";
-import { LargeButton } from "../../Components/LargeButton/LargeButton";
-import { SmallButton } from "../../Components/SmallButton/SmallButton";
+import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
+import { SmallButton } from "../../Components/Buttons/SmallButton/SmallButton";
 
 // Componente de Input
 interface InputFieldProps {

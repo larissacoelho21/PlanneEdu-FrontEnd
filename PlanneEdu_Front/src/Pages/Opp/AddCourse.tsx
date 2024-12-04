@@ -36,44 +36,44 @@ export function AddCourse() {
       <form action="">
         <div className="form-addcourse">
           <div className="select-add-course" id="objective-select">
-            <label htmlFor="" className="label-select">
+            <label htmlFor="" className="label-add-course">
               Objetivo do Curso
             </label>
             <input type="text" disabled />
           </div>
           <div className="select-add-course" id="requirement-select">
-            <label htmlFor="" className="label-select">
+            <label htmlFor="" className="label-add-course">
               Requisito de Acesso
             </label>
             <input type="text" disabled />
           </div>
           <div className="select-add-course" id="category-select">
-            <label htmlFor="" className="label-select">
+            <label htmlFor="" className="label-add-course">
               Categoria
             </label>
             <input type="text" disabled />
           </div>
           <div className="select-add-course" id="competence-select">
-            <label htmlFor="" className="label-select">
+            <label htmlFor="" className="label-add-course">
               Competências Profissionais
             </label>
             <input type="text" disabled />
           </div>
           <div className="select-numbers">
             <div className="select-add-course" id="workload-select">
-              <label htmlFor="" className="label-select">
+              <label htmlFor="" className="label-add-course">
                 Carga Horária
               </label>
               <input type="text" disabled />
             </div>
             <div className="select-add-course" id="semesters-select">
-              <label htmlFor="" className="label-select">
+              <label htmlFor="" className="label-add-course">
                 Quantidade de Semestres
               </label>
               <input type="text" disabled />
             </div>
             <div className="select-add-course" id="assigned-select">
-              <label htmlFor="" className="label-select">
+              <label htmlFor="" className="label-add-course">
                 Turmas Atribuídas
               </label>
               <input type="text" disabled />
@@ -95,20 +95,20 @@ export function AddCourse() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Fundamentos de Programação Orientada a Objeto</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Sistemas Operacionais</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Hardware e Redes</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Linguagem de Marcação</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -125,16 +125,16 @@ export function AddCourse() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Fundamentos de Programação Orientada a Objeto</td>
-                          <td>100</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Programação Web Front-End</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Programação Web Back-End</td>
-                          <td>125</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -151,20 +151,20 @@ export function AddCourse() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Banco de Dados</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Programação Web Back-End</td>
-                          <td>50</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Interface para Dispositivos Móveis</td>
-                          <td>75</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Programação para Dispositivos Móveis</td>
-                          <td>100</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -181,16 +181,16 @@ export function AddCourse() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Requisitos e Modelagem de Software</td>
-                          <td>45</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Testes de Software</td>
-                          <td>30</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
-                          <td>Projetos</td>
-                          <td>225</td>
+                          <td></td>
+                          <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -227,7 +227,7 @@ export function AddCourse() {
             </h3>
 
             <div className="button-view-class">
-              <Link to="/cursosopp">
+              <Link to="/turmaopp">
                 Ver minhas turmas
               </Link>
             </div>
