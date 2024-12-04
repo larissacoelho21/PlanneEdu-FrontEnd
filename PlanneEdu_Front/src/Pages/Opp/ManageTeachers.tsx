@@ -33,7 +33,7 @@ export function ManageTeachers() {
     const getUsers = async () => {
       try {
         const response = await allUsers();
-        setUsers(response || [] );
+        setUsers(response || []);
       } catch (error: any) {
         throw new Error(error.message || "Não foi possível encontrar os usuários");
       }
@@ -46,7 +46,7 @@ export function ManageTeachers() {
     //TODO: arrumar toast
     const toastId = toast(
       <div>
-        <p style={{ textAlign: "start", marginLeft: "-1px"}}>Tem certeza que deseja excluir este usuário?</p>
+        <p style={{ textAlign: "start", marginLeft: "-1px" }}>Tem certeza que deseja excluir este usuário?</p>
         <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
           <button
             onClick={() => {
@@ -111,29 +111,30 @@ export function ManageTeachers() {
       <FilterCategory />
 
       <div className="teacher-cards">
-          {users.map ((user, index) => (
-            <div key={index} className="teacher-card">
-              <div className="teacher-card2">
-                <h1>{user.nome} {user.sobrenome}</h1>
-                <div className="lock">
-                  <Lock size={19} strokeWidth={1.5} /> <p>NIF: {user.nif}</p>
-                  <div className="chevron-container"
-                    onClick={() => toggleCard(index)} style={{ cursor: "pointer" }}>
-                    {expandedCard === index ? (
-                      <ChevronUp size={40} color="black" strokeWidth={1} />
-                    ) : (
-                      <ChevronDown size={40} color="black" strokeWidth={1} />
-                    )}
+        {users.map((user, index) => (
+          <div key={index} className={`teacher-card ${expandedCard === index ? "expanded" : ""}`}>
+            <div className="teacher-card2">
+              <h1>{user.nome} {user.sobrenome}</h1>
+              <div className="lock">
+                <Lock size={19} strokeWidth={1.5} /> <p>NIF: {user.nif}</p>
+                <div className="chevron-container"
+                  onClick={() => toggleCard(index)} style={{ cursor: "pointer" }}>
+                  {expandedCard === index ? (
+                    <ChevronUp size={40} color="black" strokeWidth={1} />
+                  ) : (
+                    <ChevronDown size={40} color="black" strokeWidth={1} />
+                  )}
 
-                  </div>
-                </div>
-                <div className="teacher-development">
-                  <span>{user.cursosAtribuidos?.join(', ') || "Sem cursos atribuídos"}</span>
                 </div>
               </div>
+              <div className="teacher-development">
+                <span>{user.cursosAtribuidos?.join(', ') || "Sem cursos atribuídos"}</span>
+              </div>
+            </div>
 
-              {/* //TODO: refazer css dessa segunda parte */}
-              {expandedCard === index && (
+            {/* //TODO: refazer css dessa segunda parte */}
+            {expandedCard === index && (
+              <div className="info-docentes">
                 <div  /* className={`additional-info ${isExpanded ? "expanded" : "collapsed"}`} */>
                   <h2>Turmas Atribuídas</h2>
                   <ul className="a">
@@ -171,16 +172,15 @@ export function ManageTeachers() {
 
                   <div className="button-manage">
                     <button onClick={() => handleDeleteUser(user._id)}>
-                      <span className="changeColor">
-                        <Trash size={25} color="black" strokeWidth={1.5} />
-                      </span>
-                      <span className="delete-manage">Excluir docente</span>
+                      
+                        <Trash className="icon-btn-delete" size={20} color="white" strokeWidth={1.5} /> Excluir docente
                     </button>
                   </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* <div className="teacher-card">

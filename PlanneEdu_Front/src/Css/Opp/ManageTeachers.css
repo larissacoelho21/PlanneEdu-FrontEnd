@@ -8,16 +8,20 @@
 
 .teacher-card {
     width: 40vw;
-    height: auto; /* Permitir que a altura se ajuste dinamicamente */
+    height: auto;
+    /* Permitir que a altura se ajuste dinamicamente */
     background-color: var(--white-one);
     display: flex;
-    flex-direction: column; /* Permitir que os itens fiquem organizados verticalmente */
+    flex-direction: column;
+    /* Permitir que os itens fiquem organizados verticalmente */
     border-radius: 0.5vw;
     box-shadow: 0 0.5vw 0.625vw rgba(0, 0, 0, 0.1);
     margin-bottom: 3vw;
     margin-left: 5vw;
-    overflow: hidden; /* Evitar "vazamento" de conteúdo antes da expansão */
-    transition: height 0.3s ease; /* Adiciona uma animação suave para a altura */
+    overflow: hidden;
+    /* Evitar "vazamento" de conteúdo antes da expansão */
+    transition: height 0.3s ease;
+    /* Adiciona uma animação suave para a altura */
 }
 
 .teacher-card2 {
@@ -35,9 +39,11 @@
 
 .lock {
     display: flex;
-    align-items: center; /* Alinha verticalmente os itens no centro */
+    align-items: center;
+    /* Alinha verticalmente os itens no centro */
     margin-left: 3vw;
-    position: relative; /* Necessário para alinhar a seta */
+    position: relative;
+    /* Necessário para alinhar a seta */
 }
 
 .lock p {
@@ -63,7 +69,7 @@
     right: 3vw;
     top: 50%;
     transform: translateY(-50%);
-    cursor: pointer; 
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,21 +81,29 @@
 }
 
 .additional-info {
-    overflow: hidden; /* Oculta conteúdo excedente */
-    max-height: 0; /* Estado recolhido */
-    opacity: 0; /* Transparente no estado recolhido */
-    transition: max-height 0.5s ease, opacity 0.5s ease; /* Suavidade na transição */
-  }
-  
-  .additional-info.expanded {
-    max-height: 500px; /* Altura suficiente para expandir o conteúdo */
-    opacity: 1; /* Totalmente visível */
-  }
-  
-  .additional-info.collapsed {
-    max-height: 0; /* Recolhido */
-    opacity: 0; /* Transparente */
-  }
+    overflow: hidden;
+    /* Oculta conteúdo excedente */
+    max-height: 0;
+    /* Estado recolhido */
+    opacity: 0;
+    /* Transparente no estado recolhido */
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    /* Suavidade na transição */
+}
+
+.additional-info.expanded {
+    max-height: 500px;
+    /* Altura suficiente para expandir o conteúdo */
+    opacity: 1;
+    /* Totalmente visível */
+}
+
+.additional-info.collapsed {
+    max-height: 0;
+    /* Recolhido */
+    opacity: 0;
+    /* Transparente */
+}
 
 .additional-info h2 {
     font-size: 1.5vw;
@@ -97,17 +111,18 @@
 }
 
 .additional-info ul {
-    list-style-type: disc; 
-    padding-left: 1.2vw; 
+    list-style-type: disc;
+    padding-left: 1.2vw;
     margin: 1vw 0;
 }
 
 .additional-info li {
-    font-size: 1.2vw; 
-    line-height: 1.6; 
+    font-size: 1.2vw;
+    line-height: 1.6;
 }
 
-.email-manage, .phone-manage {
+.email-manage,
+.phone-manage {
     display: flex;
     gap: 0.5vw;
 }
@@ -121,10 +136,14 @@
     margin-bottom: 2vw;
 }
 
-.button-manage button{
+.button-manage button {
     display: flex;
     background-color: transparent;
-    border: none;
+    border: 0.15vw solid #FF0000;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    background-color: #FF0000;
+    color: white;
     margin-left: 22vw;
     font-size: 1.1vw;
     margin-bottom: 2vw;
@@ -132,14 +151,72 @@
     transition: 0.3s ease;
 }
 
-.button-manage button:hover{
+.button-manage button:hover {
+    background-color: white;
+    border: 0.15vw solid #FF0000;
+}
+
+.button-manage button:hover .icon-btn-delete {
     color: #FF0000;
+    stroke: #FF0000;
 }
 
 .delete-manage {
     margin-top: 0.2vw;
+    font-size: 1vw;
+    color: var(--white-one);
 }
 
+.button-manage button:hover{
+    color: #FF0000;
+}
 
+.changeColor {
+    transform: translateX(0.5vw);
+}
 
+.info-docentes {
+    margin-left: 3vw;
+}
 
+.info-docentes h2 {
+    font-size: 1.5vw;
+    margin-top: 1.5vw;
+    font-weight: 600;
+}
+
+.info-docentes li {
+    margin-top: 0.5vw;
+}
+
+.a {
+    list-style-type: disc;
+    padding-left: 1.5vw;
+}
+
+.a li {
+    margin-bottom: 0.6vw;
+    /* Espaçamento entre os itens da lista */
+}
+
+.teacher-cards {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que os cards "quebrem" para a próxima linha */
+    gap: 3vw;
+    /* Espaçamento entre os cards */
+    justify-content: flex-start;
+    /* Alinha os cards à esquerda */
+}
+
+.teacher-card {
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+    max-height: 15vw;
+    /* Altura padrão do card */
+}
+
+.teacher-card.expanded {
+    max-height: 50vw;
+    /* Altura expandida */
+}
