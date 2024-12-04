@@ -163,6 +163,7 @@ export const postEmail = async (
   try {
     const response = await axios.post(`${BaseUrl}/auth/forgot_password`, {
       email: emailValue,
+      withCredentials: true,
     });
     !timeoutReached && handleSuccess(response);
   } catch (error: any) {
@@ -188,6 +189,7 @@ export const verificacao = async (
 
     // Sucesso na redefinição de senha
     toast.success("Nova senha criada com sucesso!");
+    console.log(response);
     navigate("/login");
   } catch (error: any) {
     // Erro durante a solicitação
@@ -222,11 +224,12 @@ export const profile = async () => {
   }
 };
 
-/* function post - atualizando senha */ //TODO: Arrumar 
+/* function post - atualizando senha */
+//TODO: Arrumar
 export const updatePassword = async (
   password: string, //senha atual
   newPassword: string,
-  confirmPassword: string,
+  confirmPassword: string
 ) => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -243,7 +246,6 @@ export const updatePassword = async (
         },
       }
     );
-    console.log("Resposta da API:", response);
 
     toast.success("Senha cadastrada com sucesso");
 
@@ -251,9 +253,81 @@ export const updatePassword = async (
   } catch (error: any) {
     const errorMessage =
       error.response?.data?.error || "Não foi possível atualizar senha";
+    toast.dismiss();
     toast.error(errorMessage);
     console.error("Erro ao cadastrar senha: ", error);
+    throw error;
+  }
+};
+
+/* Função aparecendo plano de curso */
+export const allPlanCourse = async () => {
+  const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+  try {
+    const response = await axios.get(`${BaseUrl}/coursePlan/get_all`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    const planosCurso = response.data.planosCurso.map((curso: any) => ({
+      _id: curso._id,
+      nome: curso.nome,
+      qtdSemestre: curso.qtdSemestre,
+      categoria: curso.categoria,
+    }));
+
+    console.log("Planos de cursos encontrados:", planosCurso);
+    return planosCurso;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao buscar planos de curso";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
+/* Função fazer o download do pdf - plano e curso */
+export const downloadPdf_PlanCourse = async (id: string) => {
+  const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+
+  try {
+    const response = await axios.get(
+      `${BaseUrl}/coursePlan/download_pdf/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+        responseType: "blob", // Indica que o retorno será um arquivo binário
+      }
+    );
     
+/* 
+    const fileUrl = response.data.url;
+    console.log(fileUrl)
+    window.open(fileUrl, '_blank'); */
+
+    const contentDisposition = response.headers["content-disposition"];
+    const filename = contentDisposition
+      ? contentDisposition.split("filename=")[1].replace(/"/g, "")
+      : "default.pdf";
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(response.data);
+    link.download = filename;
+    link.click();  
+    
+    console.log("Download realizado com sucesso!");
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao realizar download do PDF";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -382,10 +456,9 @@ export const profileOpp = async () => {
     const errorMessage =
       error.response?.data?.error || "Erro ao encontrar seus dados";
   }
-}
+};
 
 /* Função adicionando Plano de Curso */
-
 export const backPLanCourse = async (teachingPlan: any) => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -401,7 +474,8 @@ export const backPLanCourse = async (teachingPlan: any) => {
   } catch (error: any) {
     console.error("Erro ao enviar os dados:", error.response || error.message);
     throw new Error(
-      error.response?.data?.message || "Erro ao enviar os dados do plano de ensino."
+      error.response?.data?.message ||
+        "Erro ao enviar os dados do plano de ensino."
     );
   }
 };
