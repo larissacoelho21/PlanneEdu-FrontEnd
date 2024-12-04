@@ -1,3 +1,7 @@
+#buttonsProfile {
+  display: none;
+}
+
 .introProfile {
   display: flex;
   justify-content: center;

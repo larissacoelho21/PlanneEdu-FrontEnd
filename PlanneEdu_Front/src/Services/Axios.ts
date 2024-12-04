@@ -224,20 +224,19 @@ export const profile = async () => {
 
 /* function post - atualizando senha */ //TODO: Arrumar 
 export const updatePassword = async (
-  currentPassword: string,
-  password: string,
+  password: string, //senha atual
+  newPassword: string,
   confirmPassword: string,
 ) => {
   try {
-    const token = localStorage.getItem("authToken"); // Supondo que o token esteja no localStorage
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
-      throw new Error(
-        "Token de autenticação não encontrado. Por favor, faça login novamente."
-      );
+      throw new Error("Token não encontrado. Faça login novamente.");
     }
+
     const response = await axios.put(
       `${BaseUrl}/update_password`,
-      { currentPassword, password, confirmPassword},
+      { password, newPassword, confirmPassword },
       {
         headers: {
           Authorization: `Bearer ${token}`, // Incluindo o token no cabeçalho
@@ -246,14 +245,15 @@ export const updatePassword = async (
     );
     console.log("Resposta da API:", response);
 
+    toast.success("Senha cadastrada com sucesso");
+
     return response.data;
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      throw new Error(
-        error.response.data.error || "Erro ao tentar atualizar a senha"
-      );
-    }
-    throw new Error("Erro ao tentar cadastrar senha");
+    const errorMessage =
+      error.response?.data?.error || "Não foi possível atualizar senha";
+    toast.error(errorMessage);
+    console.error("Erro ao cadastrar senha: ", error);
+    
   }
 };
 
@@ -299,8 +299,8 @@ export const RegisterUser = async (userData: {
       "Cadastrando usuário...",
       "Novo usuário criado com sucesso!"
     );
-     console.log("Resposta da API:", response);
-     // Sucesso: Exibe o toast e retorna a resposta
+    console.log("Resposta da API:", response);
+    // Sucesso: Exibe o toast e retorna a resposta
     return response;
   } catch (error: any) {
     // Erro: Exibe o toast e lança o erro para ser tratado
@@ -315,7 +315,6 @@ export const RegisterUser = async (userData: {
   }
 };
 
-// TODO: Arrumar 
 /* Função aparecendo todos usuarios cadastrados */
 export const allUsers = async () => {
   try {
@@ -366,8 +365,8 @@ export const deleteUser = async (id: string): Promise<void> => {
 };
 
 /* Função perfil opp */
-export const profileOpp = async() => {
-  try{
+export const profileOpp = async () => {
+  try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
       throw new Error("Token não encontrado. Faça login novamente.");
@@ -387,7 +386,7 @@ export const profileOpp = async() => {
 
 /* Função adicionando Plano de Curso */
 
-export const backPLanCourse =async (teachingPlan: any) => {
+export const backPLanCourse = async (teachingPlan: any) => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {

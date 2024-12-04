@@ -50,6 +50,12 @@ export function LandingPage() {
         nextArrow: <NextArrow />,
     };
 
+    //função de scroll botao 
+    const scrollToSection = () => {
+        const section = document.getElementById("sobre-nos"); // Pegando a seção pelo ID
+        section?.scrollIntoView({ behavior: "smooth" }); // Rolagem suave até a seção
+    };
+
     return (
         <section className="landing-page">
             <div className="first-section">
@@ -59,13 +65,13 @@ export function LandingPage() {
                     <h1>PlanneEdu.</h1>
                     <p>Seu aliado na construção de estratégias de ensino inovadoras!</p>
                     <div className="buttons-conheca">
-                        <a href="/addUser"><button>Conheça nosso projeto</button></a>
+                        <a href="#!" onClick={scrollToSection}><button>Conheça nosso projeto</button></a>
                     </div>
                 </div>
             </div>
 
             <div className="second-section">
-                <div className="conheca-projeto">
+                <div className="conheca-projeto" id="sobre-nos">
                     <div className="tag-apresentacao">
                         <div className="bolinha-branca"></div>
                         <p>sobre nós</p>
@@ -253,7 +259,7 @@ export function LandingPage() {
 
             <div className="sixth">
                 <h1>Nossa equipe está extremamente grata por concluir este
-                    trabalho com <span className="azul">excelência</span>e em perfeita <span className="azul">harmonia</span>. A colaboração
+                    trabalho com <span className="azul">excelência</span> e em perfeita <span className="azul">harmonia</span>. A colaboração
                     e dedicação de todos foram essenciais para alcançar
                     esse resultado incrível.</h1>
                 <div className="buttons-login">
@@ -279,7 +285,7 @@ export function LandingPage() {
                         <div className="group-integrantes">
                             <p>Giovanna Sousa</p>
                             <p>Gabriel Paixão</p>
-                            <p>LarissaRodrigues</p>
+                            <p>Larissa Rodrigues</p>
                             <p>Sarah Cruz</p>
                         </div>
 
@@ -299,7 +305,7 @@ export function LandingPage() {
                         <p>planneedumaster@gmail.com</p>
 
                         <h4 id="espacamento-question">Conheça nosso projeto!</h4>
-                        <p>Login</p>
+                        <a href="/login" style={{ cursor: "pointer" }}><p>Login</p></a>
                     </div>
 
                 </div>
