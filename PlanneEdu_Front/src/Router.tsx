@@ -29,6 +29,7 @@ import { ProfileOpp } from "./Pages/Opp/ProfileOpp";
 
 /* Landing Page */
 import { LandingPage } from "./Pages/LandingPage";
+import { ErrorPage } from "./Pages/ErrorPage";
 
 //criando rotas e caminhos
 const Router: React.FC = () => {
@@ -62,6 +63,8 @@ const Router: React.FC = () => {
         <Route path="/addclass" element={<AddClass/>} />
         {/* Lading Page */}
         <Route path="/" element={<LandingPage />} />
+        {/* Página de erro */}
+        <Route path="/errorPage" element={<ErrorPage />} />
 
       </Routes>
     </BrowserRouter>
