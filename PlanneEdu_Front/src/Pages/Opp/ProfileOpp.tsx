@@ -261,7 +261,6 @@ export function ProfileOpp() {
         )}
       </div>
 
-<<<<<<< HEAD
       {/* <div className="buttonsProfile">
               <Dialog.Root>
                 <Dialog.Trigger asChild>
@@ -338,36 +337,6 @@ export function ProfileOpp() {
               </Dialog.Root>
             </div>
           </div> */}
-=======
-      <div className="infoProfile">
-        <div className="infoProfile-img">
-          <img src={ProfileForma} alt="" />
-        </div>
-
-        <div className="infosProfile">
-          <div className="nif">
-            <KeyRound className="nifIcon" />
-            <p className="textProfile">15639479</p>
-          </div>
-
-          <div className="contatoProfile">
-            <h1>Informações de contato:</h1>
-
-            <div className="emailPersonal">
-              <Mail className="mailIcon" />
-              <p className="textProfile">mar.fonsves@gmail.com</p>
-            </div>
-
-            <div className="phone">
-              <Phone className="phoneIcon" />
-              <p className="textProfile">(11) 9785-5975</p>
-            </div>
-
-            
-          </div>
-        </div>
-      </div>
->>>>>>> b77c9033a857991059467c792e8758fea2362188
     </section>
   );
 }

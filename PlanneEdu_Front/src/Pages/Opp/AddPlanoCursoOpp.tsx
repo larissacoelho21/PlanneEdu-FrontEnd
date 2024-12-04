@@ -6,7 +6,7 @@ import { PopUp } from "../../Components/PopUp/PopUp-v2";
 import { toast } from "sonner";
 import { Check, ChevronDown, ChevronUp, Plus, Trash } from "lucide-react";
 import { backPlanCourse } from "../../Services/Axios";
-import { InputField } from "../../Components/Inputs/Mandatory/Field/InputField";
+import { InputField } from "../../Components/Inputs/InputField/Field/InputField";
 
 export function AddPlanoCurso() {
   /* ======== construção das funcionalidades ======== */
