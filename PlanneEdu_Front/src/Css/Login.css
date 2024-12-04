@@ -88,6 +88,7 @@ body {
   background-color: var(--white-two);
   border: 1px solid var(--black-two);
   border-radius: 0.5vw;
+  z-index: 2;
 }
 
 .input::placeholder {
@@ -100,6 +101,7 @@ body {
   padding: 1.2vw 2vw;
   border: 1px solid var(--black-two);
   border-radius: 0.5vw;
+  z-index: 2;
 }
 
 .inputPassword input {
@@ -152,6 +154,8 @@ select:focus {
   color: var(--white-two);
   cursor: pointer;
   transition: 0.3s ease;
+  position: absolute;
+  z-index: 2;
 }
 
 .button-login button:hover {
@@ -314,6 +318,7 @@ select:focus {
     font-family: "Poppins", system-ui;
     color: var(--white-two);
     cursor: pointer;
+    position: relative;
   }
 
   .button-login {
