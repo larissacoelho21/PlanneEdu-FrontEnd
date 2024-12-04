@@ -24,3 +24,27 @@
   color: var(--blue-two);
   border: solid var(--blue-two);
 }
+
+
+/* --------------------Versão Mobile-------------------- */
+
+@media only screen and (max-width: 800px) {
+  .button-large button{
+    font-size: 3.5vw;
+  }
+
+  .button-large button {
+    background-color: var(--blue-two);
+    width: 35.5vw;
+    height: 10vw;
+    color: var(--white-one);
+    border: transparent 2px solid;
+    border-radius: 2vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease;
+  }
+}
+
