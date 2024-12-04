@@ -243,21 +243,21 @@
   justify-content: center;
   align-items: center;
 }
-
+/* TODO: terminar de estilização dos botões */
 .card-action-btns button{
-  padding: .5rem 2rem;
-  background: #075a7b;
-  color: #fff;
-  border: transparent solid 2px;
-  border-radius: .3vw;
-  transition: ease-in-out .3s;
+  display: flex;
+  background: #FF0000;
+  border: #FF0000 solid 2px solid 2px;
+  font-size: 1.1vw;
+  margin-bottom: 2vw;
+  gap: 1vw;
+  transition: 0.3s ease;
 }
 
 .card-action-btns button:hover{
-  padding: .5rem 2rem;
-  background: #fff;
-  color: #075a7b;
-  border: #075a7b solid 2px;
+  background: #FF0000;
+  color: #FF0000;
+  border: #FF0000 solid 2px;
   border-radius: .3vw;
 }
 
@@ -472,79 +472,6 @@
 .delete-btn-detail {
   width: 1.5vw;
   height: 1.5vw;
-}
-
-.delete-subtbtn {
-  background: none;
-  border: none;
-  font-size: 1vw;
-  display: flex;
-  align-items: center;
-  gap: .5vw;
-}
-
-.delete-subtbtn svg {
-  width: 1vw;
-  height: 1vw;
-}
-
-.delete-subtbtn:hover,
-.delete-subtbtn svg:hover {
-  color: #e43c3c;
-  transition: .2s ease-in-out;
-}
-
-.knowledge-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.knowledge-table th {
-  font-size: 1.1vw;
-  font-weight: 450;
-  text-align: center;
-  padding: 0.5vw 0.8vw;
-}
-
-.knowledge-table th,
-.knowledge-table td {
-  border: none;
-  border-bottom: solid 0.15vw rgba(0, 0, 0, 0.2);
-  vertical-align: top;
-  padding: 1.2vw 0.8vw;
-  background: #fff;
-}
-
-.subtopic-item {
-  margin-bottom: 0.5vw;
-}
-
-.detail-item {
-  margin-left: 2vw;
-  list-style-type: disc;
-}
-
-.knowledge-table td {
-  font-size: 1vw;
-}
-
-.knowledge-table ul {
-  padding-left: 1vw;
-  margin: 0;
-}
-
-.knowledge-table button {
-  font-size: 0.9vw;
-  color: #fff;
-  background-color: #ff4d4d;
-  border: none;
-  padding: 0.5vw 1vw;
-  border-radius: 0.3vw;
-  cursor: pointer;
-}
-
-.knowledge-table button:hover {
-  background-color: #e43c3c;
 }
 
 .tasks-btns{

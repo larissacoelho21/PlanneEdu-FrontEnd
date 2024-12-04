@@ -460,7 +460,7 @@ export const profileOpp = async () => {
 };
 
 /* Função adicionando Plano de Curso */
-export const backPLanCourse = async (teachingPlan: any) => {
+export const backPlanCourse = async (teachingPlan: any) => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
