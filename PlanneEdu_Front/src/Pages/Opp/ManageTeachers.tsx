@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Mail, Phone, Trash, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { allUsers, deleteUser } from "../../Services/Axios";
 import { toast } from "sonner";
+import { width } from "@fortawesome/free-brands-svg-icons/fa42Group";
 
 
 interface ProfileData {
@@ -114,21 +115,21 @@ export function ManageTeachers() {
         {users.map((user, index) => (
           <div key={index} className={`teacher-card ${expandedCard === index ? "expanded" : ""}`}>
             <div className="teacher-card2">
-              <h1>{user.nome} {user.sobrenome}</h1>
+              <h1 style={{ fontSize: '2vw' }}>{user.nome} {user.sobrenome}</h1>
               <div className="lock">
-                <Lock size={19} strokeWidth={1.5} /> <p>NIF: {user.nif}</p>
+                <Lock className="lock-icon" size={19} strokeWidth={1.5} /> <p>NIF: {user.nif}</p>
                 <div className="chevron-container"
                   onClick={() => toggleCard(index)} style={{ cursor: "pointer" }}>
                   {expandedCard === index ? (
-                    <ChevronUp size={40} color="black" strokeWidth={1} />
+                    <ChevronUp className="seta-baixo" size={40} color="black" strokeWidth={1} />
                   ) : (
-                    <ChevronDown size={40} color="black" strokeWidth={1} />
+                    <ChevronDown className="seta-cima" size={40} color="black" strokeWidth={1} />
                   )}
 
                 </div>
               </div>
               <div className="teacher-development">
-                <span>{user.cursosAtribuidos?.join(', ') || "Sem cursos atribuídos"}</span>
+                <span className="cursos-atribuidos">{user.cursosAtribuidos?.join(', ') || "Sem cursos atribuídos"}</span>
               </div>
             </div>
 
@@ -162,11 +163,11 @@ export function ManageTeachers() {
 
                   <h2>Informações de contato</h2>
                   <div className="email-manage">
-                    <Mail size={18} color="black" strokeWidth={1} />
+                    <Mail className="email-btn" size={18} color="black" strokeWidth={1} />
                     <p>{user.email}</p>
                   </div>
                   <div className="phone-manage">
-                    <Phone size={18} color="black" strokeWidth={1} />
+                    <Phone className="phone-btn" size={18} color="black" strokeWidth={1} />
                     <p>{user.telefone}</p>
                   </div>
 

@@ -125,6 +125,7 @@
 .phone-manage {
     display: flex;
     gap: 0.5vw;
+    font-size: 1.25vw;
 }
 
 .email-manage {
@@ -161,6 +162,11 @@
     stroke: #FF0000;
 }
 
+.icon-btn-delete {
+    width: 1.6vw;
+    height: 1.6vw;
+}
+
 .delete-manage {
     margin-top: 0.2vw;
     font-size: 1vw;
@@ -189,6 +195,16 @@
     margin-top: 0.5vw;
 }
 
+.lock-icon {
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.seta-baixo, .seta-cima {
+    width: 3.3vw;
+    height: 3.3vw;
+}
+
 .a {
     list-style-type: disc;
     padding-left: 1.5vw;
@@ -196,17 +212,20 @@
 
 .a li {
     margin-bottom: 0.6vw;
-    /* Espaçamento entre os itens da lista */
+    font-size: 1.25vw;
+}
+
+.email-btn, .phone-btn{
+    width: 1.5vw;
+    height: 1.5vw;
+    margin-top: 0.1vw;
 }
 
 .teacher-cards {
     display: flex;
     flex-wrap: wrap;
-    /* Permite que os cards "quebrem" para a próxima linha */
     gap: 3vw;
-    /* Espaçamento entre os cards */
     justify-content: flex-start;
-    /* Alinha os cards à esquerda */
 }
 
 .teacher-card {
@@ -219,4 +238,83 @@
 .teacher-card.expanded {
     max-height: 50vw;
     /* Altura expandida */
+}
+
+@media only screen and (max-width: 800px) {
+    .teacher-cards {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 4vw;
+    }
+
+    .teacher-card {
+        width: 80vw;
+    }
+
+    .teacher-card.expanded {
+        max-height: 80vw;
+        /* Altura expandida */
+    }   
+
+    .teacher-card2 h1 {
+        font-size: 3.5vw;
+    }
+
+    .lock-icon {
+        width: 3vw;
+        height: 3vw;
+    }
+
+    .lock p {
+        font-size: 3vw;
+    }
+
+    .teacher-development {
+        width: 30vw;
+        height: 3.5vw;
+        transform: translateY(-0.5vw);
+    }
+
+    .cursos-atribuidos {
+        font-size: 1.5vw;
+        margin-top: 1vw;
+    }
+
+    .info-docentes h2 {
+        font-size: 3vw;
+    }
+
+    .a {
+        list-style-type: disc;
+        padding-left: 3vw;
+    }
+    
+    .a li {
+        margin-bottom: 0.6vw;
+        font-size: 2.5vw;
+    }
+
+    .email-btn, .phone-btn {
+        width: 3vw;
+        height: 3vw;
+        margin-top: 0.1vw;
+    }
+
+    .email-manage, .phone-manage p {
+        font-size: 2.5vw;
+    }
+
+    .button-manage button {
+       display: none;
+    }
+    .buttons-class button {
+        display: none;
+    }
+
+    .seta-baixo, .seta-cima {
+        width: 6.3vw;
+        height: 6.3vw;
+    }
 }
