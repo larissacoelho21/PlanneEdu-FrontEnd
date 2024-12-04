@@ -238,7 +238,7 @@ export function NavBarOpp() {
                       text={"Administração"}
                     />
                     <DropdownItem
-                      to="# "
+                      to="/turmaopp "
                       icon={<GalleryVerticalEnd size={20} />}
                       text={"Geral"}
                     />
@@ -260,7 +260,7 @@ export function NavBarOpp() {
                   }
                   to="/manageteachers"
                 >
-                  <p>Gerenciar docentes</p>
+                  <p>Gerenciar usuários</p>
                 </NavLink>
               </ul>
             </div>
