@@ -86,7 +86,7 @@ export const login = async (
 
       // Verificar se é usuário padrão
       if (data.user.defaultUser) {
-        navigate("/profile");
+        navigate("/profileopp");
         toast.info("Por favor, atualize suas informações.");
       }
       // Verificar nível de acesso

@@ -56,15 +56,66 @@ function InputField({
 /* Conexão Back-End */
 
 /* Definindo propriedades para chamar da api */
-interface ProfileData {
+/* interface ProfileData {
   nome: string;
+  sobrenome: string;
+  email: string;
+  telefone: string;
+  nif: string;
+  turmasAtribuidas: {
+    _id: string;
+    nome: string;
+  }[];
+  cursosAtribuidos: {
+    _id: string;
+    planoCurso: {
+      _id: string;
+      nome: string;
+    };
+  }[];
+   nome: string;
   sobrenome: string;
   nif: string;
   telefone: string;
   email: string;
-  turmasAtribuidas: string[];
-  cursosAtribuidos: string[];
+  cursosAtribuidos: Curso[]; // Array de objetos do tipo Curso
+  turmasAtribuidas: Turma[];  
 }
+
+interface Curso {
+  _id: string;
+  nome: string;
+}
+
+interface Turma {
+  _id: string;
+  nome: string;
+} */
+
+interface Turma {
+  _id: string;
+  nome: string;
+}
+
+interface Curso {
+  _id: string;
+  planoCurso: {
+    _id: string;
+    nome: string;
+  };
+}
+
+interface ProfileData {
+  _id: string;
+  nome: string;
+  sobrenome: string;
+  email: string;
+  nif: string;
+  telefone: string;
+  turmasAtribuidas: Turma[];
+  cursosAtribuidos: Curso[];
+}
+
 
 export function ProfileTeacher() {
   const [password, setPassword] = useState("");
@@ -73,14 +124,15 @@ export function ProfileTeacher() {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const [user, setUser] = useState<ProfileData | null>(null);
-
+  const [user, setUser] = useState<ProfileData | null>(null); 
+ 
   useEffect(() => {
     const getUserProfile = async () => {
       try {
         const response = await profile();
-        setUser(response.user); // Acessando o campo `user` diretamente
+        setUser(response.user); // Atualiza o estado do usuário
         console.log("Perfil do Usuário:", response.user);
+        console.log("Resposta da API:", response);
       } catch (error: any) {
         console.error("Erro ao carregar o perfil:", error.message);
         toast.error(error.message || "Não foi possível encontrar seus dados");
@@ -108,6 +160,8 @@ export function ProfileTeacher() {
     }
   };
 
+  console.log("Cursos atribuídos:", user?.cursosAtribuidos);
+  console.log("Turmas atribuídas:", user?.turmasAtribuidas);
   return (
     /* ================ Desktop ======================= */
     <section className="profileTeacher">
@@ -150,26 +204,41 @@ export function ProfileTeacher() {
                   <p className="textProfile">{user.telefone}</p>
                 </div>
 
+                {/* //TODO: Arrumar  */}
                 <div className="courses-profile">
                   <h3>Cursos atribuídos</h3>
-                  {user?.cursosAtribuidos?.length ? (
+                  {/* {user?.cursosAtribuidos && user.cursosAtribuidos.length > 0 ? (
+                    user.cursosAtribuidos.map((curso) => (
+                      <p key={curso._id}>{curso.planoCurso?.nome || "Sem nome"}</p>
+                    ))
+                  ) : (
+                    <p>Nenhum curso atribuído.</p>
+                  )} */}
+                  {/* {user?.cursosAtribuidos?.length ? (
                     user.cursosAtribuidos.map((curso, index) => (
                       <p key={index}>{curso}</p>
                     ))
                   ) : (
                     <p>Nenhum curso atribuído.</p>
-                  )}
+                  )} */}
                 </div>
 
                 <div className="classes-profile">
                   <h3>Turmas atribuídas</h3>
-                  {user?.turmasAtribuidas?.length ? (
+                  {user?.turmasAtribuidas && user.turmasAtribuidas.length > 0 ? (
+                    user.turmasAtribuidas.map((turma) => (
+                      <p key={turma._id}>{turma.nome}</p>
+                    ))
+                  ) : (
+                    <p>Nenhuma turma atribuída.</p>
+                  )}
+                  {/*  {user?.turmasAtribuidas?.length ? (
                     user.turmasAtribuidas.map((turma, index) => (
                       <p key={index}>{turma}</p>
                     ))
                   ) : (
                     <p>Nenhuma turma atribuída.</p>
-                  )}
+                  )} */}
                 </div>
               </div>
             )}
@@ -292,24 +361,24 @@ export function ProfileTeacher() {
 
                   <div className="courses-profile">
                     <h3>Cursos atribuídos:</h3>
-                    {user?.cursosAtribuidos?.length ? (
+                    {/* {user?.cursosAtribuidos?.length ? (
                       user.cursosAtribuidos.map((curso, index) => (
                         <p key={index}>{curso}</p>
                       ))
                     ) : (
                       <p>Nenhum curso atribuído.</p>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="classes-profile">
                     <h3>Turmas atribuídas:</h3>
-                    {user?.turmasAtribuidas?.length ? (
+                    {/*  {user?.turmasAtribuidas?.length ? (
                       user.turmasAtribuidas.map((turma, index) => (
                         <p key={index}>{turma}</p>
                       ))
                     ) : (
                       <p>Nenhuma turma atribuída.</p>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
