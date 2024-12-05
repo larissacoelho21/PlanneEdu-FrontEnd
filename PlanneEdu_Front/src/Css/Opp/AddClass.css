@@ -26,24 +26,25 @@
   flex-direction: column;
 }
 
+.label-add-class{
+  position: absolute;
+  font-size: 1.2vw;
+  font-weight: 600;
+  text-align: right;
+}
+
 .select-addclass select {
-  border-bottom: solid 2px var(--gray-one);
-  border-top: transparent;
-  border-left: transparent;
-  border-right: transparent;
+  border: none;
+  background-color: transparent;
+  border-bottom: var(--black-two) solid 2px; 
+  font-size: 1.2vw;
+  outline: none;
+  color: var(--black-two) !important;
+  padding: 0.5vw 0; 
+  transition: border-color 0.2s ease;
+  opacity: 60%;
 }
 
-.input-addclass {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-addclass input {
-  border-bottom: solid 2px var(--gray-one);
-  border-top: transparent;
-  border-left: transparent;
-  border-right: transparent;
-}
 
 .list-students {
   display: flex;
@@ -83,6 +84,10 @@
   border: 2.2px solid var(--blue-two);
   color: var(--blue-two);
   border-radius: 0.5vw;
+}
+
+.add-student button:disabled{
+  cursor: not-allowed;
 }
 
 /* PopUp add estudante */

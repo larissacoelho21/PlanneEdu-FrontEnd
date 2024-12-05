@@ -21,65 +21,49 @@ export function PlanEnsinoEspc() {
         subtitleText="De Desenvolvimento de Sistemas"
       />
 
-      <div className="Add-Plano" style={{marginTop: "5%"}}>
-        <button>
-          <i>
-            <Plus size={32} color="white" strokeWidth={1.5} />
-          </i>{" "}
-          Adicionar plano de ensino
-        </button>
-      </div>
-
-      <div className="Planos">
+      <div className="title-plans-available">
         <h2>Planos de ensino disponíveis</h2>
-        <div className="Cards">
-          <div className="Card">
-            <div className="Data">
-              <h3 className="Subject">Programação WEB Front-End</h3>
-              <div className="tag-course">
-                <CodeXml size={20} color="white" />
+        </div>
+        <div className="cards-plans-teaching">
+          <div className="card-plan">
+            <div className="infos-card">
+              <h3 className="subject">Programação WEB Front-End</h3>
+              <div className="course-tag">
                 <p>Desenvolvimento de Sistemas</p>
               </div>
-              <div className="Info">
-                <div className="Teacher">
+              <div className="info-class">
+                <div className="teacher">
                   <GraduationCap size={25} color="black" strokeWidth={2} />
                   <p>Arthur Rosa</p>
                 </div>
-                <div className="Class">
+                <div className="class">
                   <BookMarked size={21} color="black" strokeWidth={2} />
                   <p>Manhã 2023</p>
                 </div>
               </div>
             </div>
-            <div className="Arrow">
-              <ChevronRight size={50} color="black" strokeWidth={1} />
-            </div>
           </div>
 
-          <div className="Card">
-            <div className="Data">
-              <h3 className="Subject">Interfaces para dispositivos móveis</h3>
-              <div className="tag-course">
-                <CodeXml size={20} color="white" />
+          <div className="card-plan">
+            <div className="infos-card">
+              <h3 className="subject">Interfaces para dispositivos móveis</h3>
+              <div className="course-tag">
                 <p>Desenvolvimento de Sistemas</p>
               </div>
-              <div className="Info">
-                <div className="Teacher">
+              <div className="info-class">
+                <div className="teacher">
                   <GraduationCap size={25} color="black" strokeWidth={2} />
                   <p>José Roberto</p>
                 </div>
-                <div className="Class">
+                <div className="class">
                   <BookMarked size={21} color="black" strokeWidth={2} />
                   <p>Noite 2023</p>
                 </div>
               </div>
             </div>
-            <div className="Arrow">
-              <ChevronRight size={50} color="black" strokeWidth={1} />
-            </div>
           </div>
         </div>
-      </div>
+      
     </main>
   );
 }

@@ -9,6 +9,7 @@ import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
+import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function PlanEnsino() {
   return (

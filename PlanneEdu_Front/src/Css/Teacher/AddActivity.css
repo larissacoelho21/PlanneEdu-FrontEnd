@@ -7,7 +7,8 @@
   --blue-three: #00a3ff;
   --black: #000;
   --black-two: rgba(1, 18, 38, 50%);
-  
+  --red-delete: #FF0000;
+
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -129,9 +130,15 @@
   color: var(--white-one);
 }
 
-.buttons-add button:focus{
+.buttons-add button:focus {
   background-color: var(--blue-two);
   color: var(--white-one);
+}
+
+.buttons-add button:disabled{
+  cursor: not-allowed; 
+  background-color: transparent;
+  color: var(--blue-two);
 }
 
 .captecbasic,
@@ -163,13 +170,13 @@
 
 /* PopUp */
 .popup-challenge {
-  position: fixed; 
-  top: 50%; 
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 45%; 
+  width: 45%;
   max-height: 80vh;
-  overflow-y: auto; 
+  overflow-y: auto;
   padding: 3vw;
   background-color: #f2f2f2;
   display: flex;
@@ -178,7 +185,7 @@
   align-items: center;
   border-radius: 0.5vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .popup-content-challenge {
@@ -265,7 +272,6 @@
 
 .buttons-card-challenge button {
   padding: 0.4rem 1rem;
-  background-color: var(--blue-two);
   border: transparent solid 2px;
   color: var(--white-one);
   border-radius: 0.5vw;
@@ -273,13 +279,27 @@
   transition: 0.3s;
 }
 
-.buttons-card-challenge button:hover {
+.button-edit-challenge button {
+  background-color: var(--blue-two);
+}
+
+.button-edit-challenge button:hover {
   background-color: var(--white-one);
   border: var(--blue-two) solid 2px;
   color: var(--blue-two);
 }
 
-.select-matter-activity{
+.button-delete-challenge button{
+  background-color: var(--red-delete);
+}
+
+.button-delete-challenge button:hover{
+  background-color: var(--white-one);
+  border: solid 2px var(--red-delete);
+  color: var(--red-delete);
+}
+
+.select-matter-activity {
   display: flex;
   flex-direction: column;
   width: 90vw;

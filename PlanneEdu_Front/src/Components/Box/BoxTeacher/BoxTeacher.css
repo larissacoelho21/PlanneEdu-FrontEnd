@@ -10,6 +10,11 @@
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.cards-teacher{
+  display: flex;
+  gap: 6vw;
+}
+
 .box-teacher,
 .box-plans {
   display: flex;
@@ -49,13 +54,14 @@
   border-radius: 0.5vw;
 }
 
-.infos-class {
+.infos-box {
   display: flex;
+  align-items: center;
   gap: 5vw;
 }
 
-.semester-teacher,
-.student,
+.semester,
+.student-class,
 .teacher-plan,
 .shift-class {
   display: flex;
@@ -63,10 +69,39 @@
   gap: 0.5vw;
 }
 
-.semester-teacher h1,
-.student h1,
+.semester h1,
+.student-class h1,
 .teacher-plan h1,
 .shift-class h1 {
   font-size: 1.3vw;
   font-weight: normal;
+}
+
+
+@media only screen and (max-width: 800px){
+  .box-teacher{
+    width: 80vw;
+    display: flex;
+    gap: 4vw;
+  }
+
+  .semester{
+    display: flex;
+    gap: 1.2vw;
+  }
+
+  .semester h1{
+    font-size: 2vw;
+  }
+
+  .box-teacher h1{
+    font-size: 4vw;
+    width: 50vw;
+  }
+  
+  .student-class{
+    margin-left: -30%;
+    display: flex;
+    gap: 1.2vw;
+  }
 }

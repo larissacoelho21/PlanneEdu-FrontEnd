@@ -16,12 +16,77 @@ type SelectProps = {
   value: SelectOption[];
   onChange: (value: SelectOption[]) => void;
   options: SelectOption[];
+  disabled?: boolean;
 };
 
-export function Multiselect({ value, onChange, options }: SelectProps) {
+export function Multiselect({
+  value,
+  onChange,
+  options,
+  disabled,
+}: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // coisas para o disabled funfar
+
+  const toggleDropDown = () => {
+    if (!disabled) setIsOpen((prev) => !prev);
+  };
+
+  const handleOptionSelect = (option: SelectOption) => {
+    if (disabled) return;
+
+    if (value.some((o) => o.value === option.value)) {
+      onChange(value.filter((o) => o.value !== option.value));
+    } else {
+      onChange([...value, option]);
+    }
+  };
+
+  const isSelected = (option: SelectOption) =>
+    value.some((o) => o.value === option.value);
+
+  useEffect(() => {
+    if (isOpen) setHighlightedIndex(0);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (disabled || e.target !== containerRef.current) return;
+
+      switch (e.code) {
+        case "Space":
+        case "Enter":
+          setIsOpen((prev) => !prev);
+          if (isOpen) handleOptionSelect(options[highlightedIndex]);
+          break;
+        case "ArrowUp":
+        case "ArrowDown":
+          if (!isOpen) {
+            setIsOpen(true);
+            break;
+          }
+          const newIndex = highlightedIndex + (e.code === "ArrowDown" ? 1 : -1);
+          if (newIndex >= 0 && newIndex < options.length) {
+            setHighlightedIndex(newIndex);
+          }
+          break;
+        case "Escape":
+          setIsOpen(false);
+          break;
+        default:
+          break;
+      }
+    };
+
+    containerRef.current?.addEventListener("keydown", handler);
+
+    return () => {
+      containerRef.current?.removeEventListener("keydown", handler);
+    };
+  }, [isOpen, highlightedIndex, options, disabled]);
 
   function clearOptions() {
     onChange([]);
@@ -88,19 +153,20 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
       ref={containerRef}
       onBlur={() => setIsOpen(false)}
       onClick={() => setIsOpen((prev) => !prev)}
-      tabIndex={0}
-      className={styles.container}
+      tabIndex={disabled ? -1 : 0}
+      className={`${styles.container} ${disabled ? styles.disabled : ""}`}
     >
       <span className={styles.value}>
         {value.map((v, index) => (
           <button
-          /* adiciona índice para unidade */
-            key={`${v.value}-${index}`} 
+            /* adiciona índice para unidade */
+            key={`${v.value}-${index}`}
             onClick={(e) => {
               e.stopPropagation();
               selectOption(v);
             }}
             className={styles["option-badge"]}
+            disabled={disabled}
           >
             {v.label ? v.label : v.value}{" "}
             <span className={styles["remove-btn"]}>
@@ -113,11 +179,14 @@ export function Multiselect({ value, onChange, options }: SelectProps) {
       <div className={`${styles.caret} ${isOpen ? styles.open : ""}`}>
         <ChevronDown className="icon-down" />
       </div>
-      <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
+      <ul
+        className={`${styles.options} ${isOpen ? styles.show : ""}`}
+        style={{ pointerEvents: disabled ? "none" : "auto" }}
+      >
         {options.map((option, index) => (
           <li
-          /* garante que é único */
-            key={`${option.value}-${index}`} 
+            /* garante que é único */
+            key={`${option.value}-${index}`}
             onClick={(e) => {
               e.stopPropagation();
               selectOption(option);

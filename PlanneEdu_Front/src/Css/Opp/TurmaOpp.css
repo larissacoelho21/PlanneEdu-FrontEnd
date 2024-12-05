@@ -7,16 +7,16 @@
   --blue-three: #00a3ff;
   --black: #000;
   --black-two: rgba(1, 18, 38, 50%);
-  
+
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cards-turmaopp {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 2rem; 
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
   width: 90%;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .card-class {
@@ -24,32 +24,34 @@
   padding: 1.5rem;
   border-radius: 0.5vw;
   border: solid 2px transparent;
-  width: 100%; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-shadow: var(--box-shadow);
   height: auto;
   display: flex;
   flex-direction: column;
   gap: 1vw;
-  transition: .3s ease;
+  transition: 0.3s ease;
+  cursor: pointer;
 }
 
-.card-class:hover{
+.card-class:hover {
   border: 2px solid var(--blue-one);
 }
 
-.info{
+.info-class {
   display: flex;
   gap: 2vw;
 }
 
-.semester-course{
+.semester-course,
+.number-students {
   display: flex;
   align-items: center;
   gap: 1vw;
 }
 
-.semester-course h1{
-  
+.semester-course h1,
+.number-students h1 {
   font-size: 1.3vw;
   font-weight: normal;
 }
@@ -59,7 +61,7 @@
 }
 
 .highlight {
-  color: #000000f0;
+  color: var(--black);
   font-weight: 700;
   font-size: 1.7vw;
 }
@@ -77,9 +79,9 @@
 
 .technology-turma {
   font-size: 1vw;
-  background-color: #074973;
+  background-color: var(--blue-one);
   width: fit-content;
-  padding: .9vw 1vw;
+  padding: 0.9vw 1vw;
   color: #ffff;
   font-weight: normal;
   text-align: center;
@@ -90,40 +92,55 @@
   margin-bottom: 5vw;
 }
 
-
-
 /* --------------------Versão Mobile-------------------- */
 
 @media only screen and (max-width: 800px) {
-  #buttons-class {
-    display: none !important;
-  }
-  
-  .introTurma h1 {
-    font-size: 4.5vw;
+  .button-add-class {
+    display: none;
   }
 
-  .introTurma h2 {
+  .cards-turmaopp {
+    grid-template-columns: 1fr;
+  }
+
+  .card-class{
+    display: flex;
+    gap: 4vw;
+  }
+
+  .card-class h3{
+    font-size: 4vw;
+  }
+
+  .info-class{
+    display: flex;
+    gap: 4vw;
+  }
+
+  .semester-course,
+  .number-students{
+    display: flex;
+    align-items: center;
+  }
+
+  .semester-course h1,
+  .number-students h1 {
     font-size: 3vw;
   }
 
-  .introTurma hr {
-    margin-top: 1vw;
-    width: 25vw;
-    height: 0.5vw;
-  }
-
-  .technology-turma {
-    font-size: 1.8vw;
-    width: 40vw;
-  }
-
   .highlight {
-    font-size: 2.2vw;
+    font-size: 4vw;
+  }
+
+  .technology-turma{
+    padding: .5rem 1rem;
+    font-size: 3vw;
+    font-weight: bold;
+    border-radius: .5vw;
   }
 
   .open-class p {
-    font-size: 2.2vw;
+    font-size: 4vw;
+    margin: 15% 0 5% 0;
   }
-
 }

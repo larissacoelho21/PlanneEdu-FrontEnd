@@ -69,6 +69,10 @@
     margin-top: 3vw;
   }
 
+  .button-add-course{
+    display: none;
+  }
+
   .subject {
     font-size: 3.7vw;
   }

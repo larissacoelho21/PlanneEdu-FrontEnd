@@ -41,6 +41,7 @@ export function Home() {
         </Link>
         <CardTeacher
           course="Desenvolvimento de sistemas"
+          detail="|"
           classCard="Noite"
           yearClass="2023"
           dateI="30/02/2023"
