@@ -27,23 +27,25 @@ export function CardTeacher({
   yearClass,
 }: CardTeacherProps) {
   return (
-    <div className="box-teacher">
-      <h1>
-        {course} {detail} {classCard} {yearClass}
-      </h1>
-      <div className="date-badge">
-        <span>
-          {textI} {dateI} {detail} {textT} {dateT}
-        </span>
-      </div>
-      <div className="infos-class">
-        <div className="semester-teacher">
-          <Clock3 size={18} />
-          <h1>{semester} semestres</h1>
+    <div className="cards-teacher">
+      <div className="box-teacher">
+        <h1>
+          {course} {detail} {classCard} {yearClass}
+        </h1>
+        <div className="date-badge">
+          <span>
+            {textI} {dateI} {detail} {textT} {dateT}
+          </span>
         </div>
-        <div className="student">
-          <Users size={18} />
-          <h1>{students} alunos</h1>
+        <div className="infos-box">
+          <div className="semester">
+            <Clock3 size={18} />
+            <h1>{semester} semestres</h1>
+          </div>
+          <div className="student-class">
+            <Users size={18} />
+            <h1>{students} alunos</h1>
+          </div>
         </div>
       </div>
     </div>

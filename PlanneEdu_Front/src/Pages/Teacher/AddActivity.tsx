@@ -257,13 +257,13 @@ export function AddActivity() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(!selectedSubject) {
+    if (!selectedSubject) {
       toast.error("Selecione uma matéria para continuar!");
       return;
     }
 
-    toast.success("Situação de aprendizagem criada com sucesso!")
-  }
+    toast.success("Situação de aprendizagem criada com sucesso!");
+  };
 
   return (
     <section className="add-activity">
@@ -310,7 +310,7 @@ export function AddActivity() {
                 onChange={(e) => setProposedDate(e.target.value)}
                 disabled={!selectedSubject}
               />
-              </div>
+            </div>
             <div className="delivery-date">
               <label htmlFor="" className="label-date">
                 Data de Entrega
@@ -334,6 +334,7 @@ export function AddActivity() {
               <button
                 value="situacao problema"
                 onClick={(e) => e.preventDefault()}
+                disabled={!selectedSubject}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -346,6 +347,7 @@ export function AddActivity() {
               <button
                 value="estudos de caso"
                 onClick={(e) => e.preventDefault()}
+                disabled={!selectedSubject}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -358,6 +360,7 @@ export function AddActivity() {
               <button
                 value="projeto"
                 onClick={(e) => e.preventDefault()}
+                disabled={!selectedSubject}
                 /* onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "projeto" })
                 } */
@@ -367,6 +370,7 @@ export function AddActivity() {
               <button
                 value="projeto integrador"
                 onClick={(e) => e.preventDefault()}
+                disabled={!selectedSubject}
                 /* onClick={() =>
                   setFormData({
                     ...formData,
@@ -379,6 +383,7 @@ export function AddActivity() {
               <button
                 value="pesquisa"
                 onClick={(e) => e.preventDefault()}
+                disabled={!selectedSubject}
                 /*  onClick={() =>
                   setFormData({ ...formData, estrategiaApre: "pesquisa" })
                 } */
@@ -398,6 +403,7 @@ export function AddActivity() {
                 value={valueCapTecB}
                 onChange={setValueCapTecB}
                 multiple
+                disabled={!selectedSubject}
               />
             </div>
             <div className="capsocio">
@@ -409,6 +415,7 @@ export function AddActivity() {
                 value={valueCapSoc}
                 onChange={setValueCapSoc}
                 multiple
+                disabled={!selectedSubject}
               />
             </div>
           </div>
@@ -419,6 +426,7 @@ export function AddActivity() {
             type="textarea"
             value={contextualization}
             onChange={(e) => setContextualization(e.target.value)}
+            disabled={!selectedSubject}
           />
 
           <div className="challenge">
@@ -430,6 +438,7 @@ export function AddActivity() {
                 e.preventDefault();
                 togglePopUpChallenge();
               }}
+              disabled={!selectedSubject}
             />
           </div>
 
@@ -437,9 +446,12 @@ export function AddActivity() {
             <div key={index} className="challenge-card">
               <div className="items-card-challenge">
                 <h3>Desafio {index + 1}</h3>
-                <p><span style={{fontWeight: "700"}}>Descrição:</span> {challenge.descricao}</p>
                 <p>
-                <span style={{fontWeight: "700"}}>Técnicas:</span>{" "}
+                  <span style={{ fontWeight: "700" }}>Descrição:</span>{" "}
+                  {challenge.descricao}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "700" }}>Técnicas:</span>{" "}
                   {challenge.capsTecBasP
                     .map(
                       (value) =>
@@ -448,7 +460,7 @@ export function AddActivity() {
                     .join(", ")}
                 </p>
                 <p>
-                <span style={{fontWeight: "700"}}>Socioemocionais:</span>{" "}
+                  <span style={{ fontWeight: "700" }}>Socioemocionais:</span>{" "}
                   {challenge.capsSocP
                     .map(
                       (value) =>
@@ -458,33 +470,38 @@ export function AddActivity() {
                 </p>
               </div>
               <div className="buttons-card-challenge">
-                <button
-                  onClick={(event) => {
-                    event.preventDefault();
-                    startEditCard(index);
-                  }}
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={(event) => {
-                    event.preventDefault();
-                    deleteChallenge(challenges, setChallenges, index);
-                  }}
-                >
-                  Deletar
-                </button>
+                <div className="button-edit-challenge">
+                  <button
+                    onClick={(event) => {
+                      event.preventDefault();
+                      startEditCard(index);
+                    }}
+                  >
+                    Editar
+                  </button>
+                </div>
+                <div className="button-delete-challenge">
+                  <button
+                    onClick={(event) => {
+                      event.preventDefault();
+                      deleteChallenge(challenges, setChallenges, index);
+                    }}
+                  >
+                    Deletar
+                  </button>
+                </div>
               </div>
             </div>
           ))}
 
           <div className="results-add">
             <InputField
-              id="contextualization"
-              label="Contextualização"
+              id="results"
+              label="Resultados esperados"
               type="textarea"
               value={results}
               onChange={(e) => setResults(e.target.value)}
+              disabled={!selectedSubject}
             />
           </div>
 

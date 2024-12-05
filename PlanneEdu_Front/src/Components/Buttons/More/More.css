@@ -15,3 +15,13 @@
   background-color: var(--blue-two);
   color: var(--white-one);
 }
+
+.button-add {
+  cursor: pointer;
+}
+
+.button-more-add button:disabled {
+  cursor: not-allowed;
+  background-color: transparent; 
+  color: var(--blue-two);
+}
