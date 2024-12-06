@@ -53,6 +53,8 @@ export function HomeOpp() {
         subtitleText="Visualize os planos de ensino disponíveis"
       />
 
+      
+
       <div className="table-container">
         {tabela.map((turmaData, index) => (
           <table className="table-homeopp">

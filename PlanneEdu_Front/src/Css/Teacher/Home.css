@@ -24,8 +24,7 @@ body {
 }
 
 /* Parte dos cards */
-.cards-teacher,
-.cards-plans {
+.cards-teacher {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

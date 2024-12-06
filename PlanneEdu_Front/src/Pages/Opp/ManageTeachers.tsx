@@ -123,7 +123,6 @@ export function ManageTeachers() {
       <div className="buttons-class">
         <a href="/addUser"><button>+ Adicionar um novo usuário</button></a>
       </div>
-      <FilterCategory />
 
       <div className="teacher-cards">
         {users.map((user, index) => (

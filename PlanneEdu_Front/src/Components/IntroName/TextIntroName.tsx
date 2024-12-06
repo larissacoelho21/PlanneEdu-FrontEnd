@@ -1,4 +1,4 @@
-import "../IntroName/TextIntroName.css"
+import "./TextIntroName.css"
 
 interface TextsIntroProps {
   userName?: string;
