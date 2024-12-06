@@ -307,8 +307,8 @@ export const downloadPdf_PlanCourse = async (id: string) => {
         responseType: "blob", // Indica que o retorno será um arquivo binário
       }
     );
-    
-/* 
+
+    /* 
     const fileUrl = response.data.url;
     console.log(fileUrl)
     window.open(fileUrl, '_blank'); */
@@ -320,9 +320,8 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     const link = document.createElement("a");
     link.href = URL.createObjectURL(response.data);
     link.download = filename;
-    link.click();  
+    link.click();
 
-    
     console.log("Download realizado com sucesso!");
   } catch (error: any) {
     const errorMessage =
@@ -474,7 +473,6 @@ export const backPlanCourse = async (coursePlan: {
   }[];
   materias: {
     nome: string;
-    semCorrespondente: number[];
     cargaHoraria: number | null;
     objetivo: string;
     capaBasicaOuTecnica: string[];
@@ -491,24 +489,30 @@ export const backPlanCourse = async (coursePlan: {
     ambiente: string;
   }[];
 }) => {
+  const token = localStorage.getItem("Authorization");
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
   try {
-    const token = localStorage.getItem("Authorization");
-    if (!token) {
-      throw new Error("Token não encontrado. Faça login novamente.");
-    }
-
-    const response = await axios.post(`${BaseUrl}/coursePlan/create`, coursePlan, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+    const response = await axiosWithToast(
+      {
+        method: "POST",
+        url: `${BaseUrl}/coursePlan/create`,
+        data: coursePlan,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error("Erro ao enviar os dados:", error.response || error.message);
-    throw new Error(
-      error.response?.data?.message ||
-        "Erro ao enviar os dados do plano de curso."
+      "Cadastrando plano de curso...",
+      "Plano de curso cadastrado com sucesso!"
     );
+    return response;
+  } catch (error: any) {
+    const message =
+      error.response?.data?.error ||
+      "Erro desconhecido ao conectar com o servidor.";
+    toast.error(message);
+    throw new Error(message);
   }
 };
