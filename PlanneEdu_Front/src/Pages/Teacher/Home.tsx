@@ -70,10 +70,26 @@ export function Home() {
           userName={userName || "Usuário"}
           titleText="Seja bem vindo"
           subtitleText="Visualize suas turmas ativas"
+        />
       </div>
-      
+
       <div className="cards-teacher">
-        <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
+        {turmasAtivas.map((turma: any) => (
+          <div className="cards-teacher" key={turma._id}>  {/* Use a chave única aqui */}
+            <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
+              <CardTeacher
+                course={turma.curso}
+                detail="|"
+                classCard={turma.turma.nome}
+                dateI={turma.turma.dataInicio}
+                dateT={turma.turma.dataTermino}
+                semester={turma.semestres}
+                students={turma.qtdAlunos}
+              />
+            </Link>
+          </div>
+        ))}
+        {/*  <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
           <CardTeacher
             course="Desenvolvimento de sistemas"
             detail="|"
@@ -94,7 +110,7 @@ export function Home() {
           dateT="17/12/2024"
           semester={4}
           students="10"
-        />
+        />*/}
       </div>
 
       {/* {turmasAtivas.map((turma: any) => (
@@ -117,21 +133,7 @@ export function Home() {
         </div>
         ))} */}
 
-      {turmasAtivas.map((turma: any) => (
-        <div className="cards-teacher" key={turma._id}>  {/* Use a chave única aqui */}
-          <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
-            <CardTeacher
-              course={turma.curso}
-              detail="|"
-              classCard={turma.turma.nome} 
-              dateI={turma.turma.dataInicio}
-              dateT={turma.turma.dataTermino} 
-              semester={turma.semestres} 
-              students={turma.qtdAlunos}
-            />
-          </Link>
-        </div>
-      ))}
+
     </section>
   );
 }

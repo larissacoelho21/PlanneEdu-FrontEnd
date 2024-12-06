@@ -25,35 +25,27 @@ export function CardTeacher({
   students,
 }: CardTeacherProps) {
   return (
+    <div className="cards-teacher">
     <div className="box-teacher">
       <h1>
-        {course} {detail} {classCard}
+        {course} {detail} {classCard} 
       </h1>
       <div className="date-badge">
         <span>
           {textI} {dateI} {detail} {textT} {dateT}
         </span>
       </div>
-      <div className="infos-class">
-        <div className="semester-teacher">
+      <div className="infos-box">
+        <div className="semester">
           <Clock3 size={18} />
           <h1>{semester} semestres</h1>
-        <div className="date-badge">
-          <span>
-            {textI} {dateI} {detail} {textT} {dateT}
-          </span>
         </div>
-        <div className="infos-box">
-          <div className="semester">
-            <Clock3 size={18} />
-            <h1>{semester} semestres</h1>
-          </div>
-          <div className="student-class">
-            <Users size={18} />
-            <h1>{students} alunos</h1>
-          </div>
+        <div className="student-class">
+          <Users size={18} />
+          <h1>{students} alunos</h1>
         </div>
       </div>
     </div>
+  </div>
   );
 }
