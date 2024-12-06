@@ -70,6 +70,32 @@ const Router: React.FC = () => {
       <Route path="/redefinicaosenha" element={<PasswordReset />} />
       <Route path="/verificacaoemail" element={<VerificationEmail />} />
 
+      
+      {/* Professor */}
+      <Route path="/homeprofessor" element={<Home />} />
+      <Route path="/addatividade" element={<AddActivity />} />
+      <Route path="/turmaprofessor/:classID" element={<ClassTeacher />} />
+      <Route path="/plansensino" element={<PlanEnsino />} />
+      <Route path="/visualizaratvd" element={<ViewActivity />} />
+      <Route path="/plansensinoespc" element={<PlanEnsinoEspc />} />
+      <Route path="/profileteacher" element={<ProfileTeacher />} />
+      <Route path="/addplans" element={<AddPlans />} />
+      <Route path="/planscourse" element={<PlanCourse />} />
+      
+      {/* Opp */}
+      <Route path="/homeopp" element={<HomeOpp />} />
+      <Route path="/cursosopp" element={<CursosOpp />} />
+      <Route path="/turmaopp" element={<TurmaOpp />} />
+      <Route path="/planocursoopp" element={<PlanoCursoOpp />} />
+      <Route path="/addcurso" element={<AddCourse />} />
+      <Route path="/addplancurso" element={<AddPlanoCurso />} />
+      <Route path="/addUser" element={<AddUser />} />
+      <Route path="/manageteachers" element={<ManageTeachers />} />
+      <Route path="/profileopp" element={<ProfileOpp />} />
+      <Route path="/addclass" element={<AddClass />} />
+      
+
+
       {/* Rotas de Professor - Protegidas por PrivateRoute */}
       <Route
         path="/homeprofessor"
@@ -194,6 +220,7 @@ const Router: React.FC = () => {
       >
         <Route path="" element={<AddClass />} />
       </Route>
+
       {/* Página Inicial */}
       <Route path="/" element={<LandingPage />} />
 

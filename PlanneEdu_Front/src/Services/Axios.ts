@@ -332,9 +332,13 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     const fileUrl = response.data.url;
     console.log(fileUrl)
     window.open(fileUrl, '_blank'); */
-        const fileUrl = response.data.url;
-        console.log(fileUrl)
-        window.open(fileUrl, '_blank');
+    const fileUrl = response.data.url;
+
+    console.log(fileUrl);
+    window.open(fileUrl, "_blank");
+
+    console.log(fileUrl)
+    window.open(fileUrl, '_blank');
 
     const contentDisposition = response.headers["content-disposition"];
     const filename = contentDisposition
@@ -353,9 +357,7 @@ export const downloadPdf_PlanCourse = async (id: string) => {
   }
 };
 
-
-
-//TODO: não funciona 
+//TODO: não funciona
 /* Função home, pegando todos as turmas do professor */
 /* export const allTurmas = async () => {
   try {
@@ -386,12 +388,44 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     console.log("Turmas encontradas :", turmasData);
     return turmasData;
   } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.error || "Erro ao buscar turmas";
+    const errorMessage = error.response?.data?.error || "Erro ao buscar turmas";
     console.error(errorMessage);
     throw new Error(errorMessage);
   }
-}  */
+};
+
+// Função para aparecer as turmas do professor logado
+export const classesTeacherEsp = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // Mapeia os dados conforme o retorno do backend
+    const classesTeacher = response.data.turmasData.map((item: any) => ({
+      _id: item.turma._id || "ID não disponível",
+      nome: item.turma.nome || "Não informado", // Nome da turma
+      curso: item.curso || "Não informado", // Nome do curso
+      dataInicio: item.turma.dataInicio || "Não informado", // Data de início
+      dataTermino: item.turma.dataTermino || "Não informado", // Data de término
+      estudantes: item.turma.qtdAlunos || 0, // Quantidade de alunos
+      semestres: item.semestres || "Não informado", // Quantidade de semestres
+    }));
+
+    return classesTeacher;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao buscar turmas do professor";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
 
 /* export const getMyClasses = async () => {
   try {
@@ -415,7 +449,6 @@ export const downloadPdf_PlanCourse = async (id: string) => {
  */
 /* Função para aparecer todos os planos de ensino */
 export const allPlanEns = async () => {
-
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
@@ -443,44 +476,49 @@ export const allPlanEns = async () => {
     console.error(errorMessage);
     throw new Error(errorMessage);
   }
-
-}
+};
 
 /* Requisição de matérias */
-export const discipline = async () => {
+export const discipline = async (classId: string) => {
+  const token = localStorage.getItem("Authorization");
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+
+
   try {
-    const token = localStorage.getItem("Authorization");
-    console.log("Token encontrado:", token);
-
-    if (!token) {
-      throw new Error("Token não encontrado. Faça login novamente.");
-    }
-
+    const response = await axios.get(
+      `${BaseUrl}/class/${classId}/mine_subjects`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    
     const response = await axios.get(`${BaseUrl}/class/:classID/mine_subjects`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    console.log("Resposta da API:", response);
 
-    if (response.data && response.data.materias) {
-      const materias = response.data.materias.map((materia: any) => ({
-        _id: materia._id,
-        nome: materia.nome,
-        cargaHoraria: materia.cargaHoraria,
-      }));
+    console.log("Dados recebidos do backend para matérias:", response.data);
 
-      console.log("Matérias encontradas:", materias);
-      return materias;
-    } else {
-      throw new Error("A resposta da API não contém a propriedade 'materias'.");
-    }
+    const subjects = response.data.subjectsData.map((item: any) => ({
+      _id: item.materia._id,
+      nome: item.materia.nome,
+    }));
+
+    return subjects;
   } catch (error: any) {
-    console.error("Erro ao buscar materias:", error);
-    throw new Error(error.response?.data?.error || "Erro ao buscar materias");
+    console.error("Erro ao buscar matérias do backend:", error);
+    throw new Error(error.response?.data?.message || "Erro desconhecido.");
   }
 };
+
+
+
 
 /* ======================= Opp ============================= */
 
@@ -496,7 +534,7 @@ export const fetchHome = async (courseID: string): Promise<LinhaTabela[]> => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json", // Inclui o token no cabeçalho da requisição
       },
-    }); 
+    });
     console.log(response.data.tabela)
     return response.data.tabela; // Retorna apenas a tabela
   } catch (error: any) {
@@ -540,7 +578,7 @@ export const RegisterUser = async (userData: {
     toast.error("Erro ao cadastrar usuário. Tente novamente.");
     throw error;
   }
-  
+
   /* try {
     // Faz a chamada para o back-end
     const response = await axiosWithToast(
@@ -580,7 +618,6 @@ export const RegisterUser = async (userData: {
   } */
 };
 
-
 /* Função editar informações */
 // Editando informações do perfil do OPP
 export const updateUser = async (
@@ -591,7 +628,13 @@ export const updateUser = async (
   email: string
 ) => {
   try {
-    console.log("Enviando para o servidor:", { nome, sobrenome, nif, telefone, email });
+    console.log("Enviando para o servidor:", {
+      nome,
+      sobrenome,
+      nif,
+      telefone,
+      email,
+    });
 
     const token = localStorage.getItem("Authorization");
     if (!token) {
@@ -613,6 +656,21 @@ export const updateUser = async (
     console.error("Erro ao atualizar o perfil:", error);
     throw error;
   }
+};
+
+export const allUsersClass = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/get_all_users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {}
 };
 
 /* Função aparecendo todos usuarios cadastrados */
@@ -644,9 +702,17 @@ export const allUsers = async () => {
           : "Nenhuma turma atribuída",
       cursosAtribuidos:
         getAll.cursosAtribuidos && getAll.cursosAtribuidos.length > 0
+
+          ? getAll.cursosAtribuidos
+              .map((curso: any) => curso.planoCurso?.nome)
+              .join(", ")
+          : "Nenhum curso atribuído",
+    }));
+
           ? getAll.cursosAtribuidos.map((curso: any) => curso.planoCurso?.nome).join(", ")
           : "Nenhum curso atribuído", 
     })) */
+
 
     console.log("Usuários carregados:", response);
     return response.data.users; // Retorna os dados da API
@@ -683,7 +749,7 @@ export const allUsers = async () => {
   } 
 }; */
 
- export const deleteUser = async (id: string): Promise<void> => {
+export const deleteUser = async (id: string): Promise<void> => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
@@ -705,7 +771,7 @@ export const allUsers = async () => {
       error.response?.data?.error || "Erro ao deletar o usuário."
     );
   }
-}; 
+};
 
 /* Função perfil opp */
 export const profileOpp = async () => {
@@ -750,12 +816,11 @@ export const getAllCursos = async () => {
     console.log("cursos encontrados:", Curso);
     return Curso;
   } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.error || "Erro ao buscar cursos";
+    const errorMessage = error.response?.data?.error || "Erro ao buscar cursos";
     console.error(errorMessage);
     throw new Error(errorMessage);
   }
-}
+};
 
 /* Função adicionando Plano de Curso */
 export const backPlanCourse = async (coursePlan: {
@@ -828,7 +893,7 @@ export const course = async () => {
 
     const response = await axios.get(`${BaseUrl}/course/get_all`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -861,5 +926,41 @@ export const course = async () => {
     console.error("Erro ao buscar cursos:", error);
     throw new Error(error.response?.data?.error || "Erro ao buscar cursos");
 
+  }
+};
+
+export const allTurmasOpp = async () => {
+  const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+
+  try {
+    if (!token) {
+      throw new Error("Token não encontrado");
+    }
+
+    // Decodificar o token
+    const decodedToken: any = jwtDecode(token);
+
+    console.log("Token decodificado:", decodedToken);
+
+    // Obter o ID do usuário do token
+    const userId = decodedToken.id; // Se o ID estiver em 'id', ou altere conforme o nome correto no token
+
+    if (!userId) {
+      throw new Error("ID do usuário não encontrado no token");
+    }
+
+    // Agora você pode usar o userId (ou courseID) para fazer a requisição, se necessário
+    const response = await axios.get(`${BaseUrl}/class/get_all`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    console.log("Turmas encontradas:", response.data.turmas);
+    return response.data.turmas; // Retorna as turmas encontradas
+
+  } catch (error) {
+    console.error('Erro ao buscar turmas:', error.message);
+    throw error;
   }
 };

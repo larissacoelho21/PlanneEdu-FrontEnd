@@ -4,15 +4,15 @@
 }
 
 .nav-list {
-  margin-left: 5vw; /* Ajuste o valor para mover para a esquerda */
+  margin-left: 5vw; 
 }
 
 .navbar-nav {
-  margin-left: 5vw; /* Se precisar aplicar no nível das opções */
+  margin-left: 5vw; 
 }
 
 .navbar-nav li {
-  margin-left: 10vw; /* Ajuste o valor para espaçamento entre os itens */
+  margin-left: 10vw; 
 }
 
 

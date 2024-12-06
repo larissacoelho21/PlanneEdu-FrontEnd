@@ -36,10 +36,6 @@
   border: solid 2px var(--blue-one);
 }
 
-.box-teacher:hover {
-  border: 2px solid var(--blue-one);
-}
-
 .box-teacher h1 {
   font-size: 1.4vw;
 }

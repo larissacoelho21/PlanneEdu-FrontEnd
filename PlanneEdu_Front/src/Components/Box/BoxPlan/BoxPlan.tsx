@@ -1,6 +1,9 @@
 import { BookMarked, GraduationCap, Settings } from "lucide-react";
+
 import "../../../Css/Teacher/PlanEnsino.css"
+
 import { ReactNode } from "react";
+import "../../../Css/Teacher/PlanEnsino.css"
 
 interface CardPlanProps {
   matter: string;
@@ -17,31 +20,30 @@ export function CardPlan({
   iconTeacher,
   teacher,
   iconClass,
-shiftCourse,
+  shiftCourse,
 }: CardPlanProps) {
   return (
+    <section className="cards-plans-teaching">
+    <div className="card-plan-teaching">
+      <div className="title-card-plan">
+        <h1>{matter}</h1>
 
-    <div className="box-plans">
-      <h1>
-        {matter}
-      </h1>
-
-      <div className="tag-course">
-        <span>
-          {course}
-        </span>
-      </div>
-
-      <div className="infos-class">
-        <div className="teacher-plan">
-          {iconTeacher}
-          <h1>{teacher}</h1>
+        <div className="course-badge">
+          <span>{course}</span>
         </div>
-        <div className="shift-class">
-          {iconClass}
-          <h1>{shiftCourse}</h1>
+
+        <div className="infos-box">
+          <div className="semester">
+            {iconTeacher}
+            <h1>{teacher}</h1>
+          </div>
+          <div className="student-class">
+            {iconClass}
+            <h1>{shiftCourse}</h1>
+          </div>
         </div>
       </div>
     </div>
-  )
+    </section> 
+  );
 }

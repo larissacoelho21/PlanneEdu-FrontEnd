@@ -12,6 +12,7 @@ import {
   SelectOption,
 } from "../../Components/Multiselect/Multiselect";
 import { ButtonAdd } from "../../Components/Buttons/More/More";
+import { classesTeacherEsp, discipline } from "../../Services/Axios";
 
 /* definindo as opções que serão usadas no multiselect */
 const options: SelectOption[] = [
@@ -39,6 +40,7 @@ interface InputFieldProps {
   onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
   maxLength?: number;
   maxValue?: number;
+  disabled?: boolean;
 }
 
 /* função do componente `InputField` com as propriedades desestruturadas e valores padrão */
@@ -51,6 +53,7 @@ function InputField({
   onWheel,
   maxLength,
   maxValue,
+  disabled,
 }: InputFieldProps) {
   const [localValue, setLocalValue] = useState<string | number>(value);
   /* verificando se o campo está preenchido para aplicar estilos ou animações (booleano) */
@@ -106,12 +109,81 @@ function InputField({
         value={localValue}
         onChange={handleInputChange}
         onWheel={onWheel}
+        disabled={disabled}
       />
     </fieldset>
   );
 }
 
 export function AddPlans() {
+  const [turmas, setTurmas] = useState([]);
+  const [selectedTurma, setSelectedTurma] = useState("");
+  const [materias, setMaterias] = useState<Materia[]>([]);
+  const [selectedMateria, setSelectedMateria] = useState<string>("");
+  const [isEditable, setIsEditable] = useState(false);
+
+  // Função para buscar as turmas do professor
+  const fetchTurmas = async () => {
+    try {
+      console.log("Buscando turmas do professor...");
+      const turmasData = await classesTeacherEsp(); // Requisição para buscar turmas
+      console.log("Turmas retornadas:", turmasData); // Verifica as turmas
+      setTurmas(turmasData);
+    } catch (error) {
+      console.error("Erro ao buscar turmas:", error); // Mostra erros na requisição
+    }
+  };
+
+  // Função para buscar as matérias da turma selecionada
+  const fetchMaterias = async (turmaId: string) => {
+    try {
+      console.log(`Chamando API para buscar matérias da turma ID: ${turmaId}`);
+      const materiasData = await discipline(turmaId);
+      console.log("Resposta da API para matérias:", materiasData);
+      setMaterias(materiasData);
+    } catch (error) {
+      console.error("Erro ao buscar matérias:", error);
+    }
+  };
+  
+
+  useEffect(() => {
+    if (selectedTurma) {
+      console.log(`Buscando matérias para a turma com ID: ${selectedTurma}`);
+      fetchMaterias(selectedTurma);
+    }
+  }, [selectedTurma]);
+  
+  useEffect(() => {
+    console.log("Estado atualizado de matérias:", materias);
+  }, [materias]);
+  
+
+  console.log("Matérias disponíveis:", materias);
+
+  // Efeito para carregar as turmas ao carregar o componente
+  useEffect(() => {
+    fetchTurmas();
+  }, []);
+
+  // Atualiza as matérias quando a turma muda
+  useEffect(() => {
+    if (selectedTurma) {
+      fetchMaterias(selectedTurma);
+    }
+  }, [selectedTurma]);
+
+  // Atualiza a edição dos campos com base na matéria selecionada
+  useEffect(() => {
+    setIsEditable(!!selectedMateria); // Permite edição apenas se uma matéria estiver selecionada
+  }, [selectedMateria]);
+
+  interface Materia {
+    _id: string;
+    nome: string;
+    cargaHoraria: number; // Adicione outras propriedades conforme necessário
+  }
+
   /* ======== declaração de estados dos popups ======== */
   const [showPopUpPlan, setShowPopUpPlan] = useState(false);
   const togglePopUpPlan = () => setShowPopUpPlan(!showPopUpPlan);
@@ -553,8 +625,12 @@ export function AddPlans() {
     togglePopUpClasses();
   };
 
+  useEffect(() => {
+    console.log("Carregando turmas...");
+    fetchTurmas(); // Chama a função para carregar as turmas
+  }, []);
+
   /* ======== backend ======== */
-  
 
   /* ======== layout e estrutura da página ======== */
   return (
@@ -580,26 +656,41 @@ export function AddPlans() {
         </div>
       </div>
 
-      <div className="select-planne-course">
-        <label htmlFor="" className="label-select">
-          Selecione uma matéria
-        </label>
-        <select name="" id="">
-          <option value=""></option>
-        </select>
-        <h2>
-          * Obs: Para continuar você deve selecionar uma matéria
-        </h2>
-      </div>
+<div className="select-planne-course">
+  <label htmlFor="materia-select" className="label-select">
+    Selecione uma matéria
+  </label>
+  <select
+    id="materia-select"
+    value={selectedMateria}
+    onChange={(e) => setSelectedMateria(e.target.value)}
+    disabled={!materias.length}
+  >
+    <option value="">Selecione uma matéria</option>
+    {materias.map((materia) => (
+      <option key={materia._id} value={materia._id}>
+        {materia.nome}
+      </option>
+    ))}
+  </select>
+  {!materias.length && <p>Não há matérias disponíveis para esta turma.</p>}
+</div>
+
+
 
       <form className="form">
         <div className="input-field">
-          <InputField label="Curso" type="text" id="course" />
+          <InputField
+            label="Curso"
+            type="text"
+            id="course"
+            disabled={!isEditable}
+          />
         </div>
 
         <div className="input-field">
           <label className="label">Docente</label>
-          <select name="docent">
+          <select name="docent" disabled={!isEditable}>
             <option value="" disabled selected></option>
             <option value="Arthur">Arthur</option>
             <option value="Giovani">Giovani</option>
@@ -615,6 +706,7 @@ export function AddPlans() {
               id="carg-h"
               onWheel={(event) => event.currentTarget.blur()}
               maxLength={3}
+              disabled={!isEditable}
             />
           </div>
 
@@ -625,6 +717,7 @@ export function AddPlans() {
               id="qtd-aulas"
               onWheel={(event) => event.currentTarget.blur()}
               maxLength={3}
+              disabled={!isEditable}
             />
           </div>
 
@@ -635,6 +728,7 @@ export function AddPlans() {
               id="semestre"
               onWheel={(event) => event.currentTarget.blur()}
               maxLength={1}
+              disabled={!isEditable}
             />
           </div>
 
@@ -645,6 +739,7 @@ export function AddPlans() {
               id="ano"
               onWheel={(event) => event.currentTarget.blur()}
               maxLength={4}
+              disabled={!isEditable}
             />
           </div>
         </div>
@@ -654,6 +749,7 @@ export function AddPlans() {
             label="Descrição da Unidade de Competência"
             type="text"
             id="desc-uc"
+            disabled={!isEditable}
           />
         </div>
 
@@ -662,11 +758,17 @@ export function AddPlans() {
             label="Objetivo da Unidade Curricular"
             type="text"
             id="obj-uc"
+            disabled={!isEditable}
           />
         </div>
 
         <div className="input-field">
-          <InputField label="Turma" type="text" id="turma" />
+          <InputField
+            label="Turma"
+            type="text"
+            id="turma"
+            disabled={!isEditable}
+          />
         </div>
 
         <div className="estrategias">
@@ -683,6 +785,7 @@ export function AddPlans() {
                 value={valueCapTecnicasStra}
                 onChange={setValueCapTecnicasStra}
                 multiple
+                disabled={!isEditable}
               />
             </div>
             <div className="socioemocionais">
@@ -692,6 +795,7 @@ export function AddPlans() {
                 value={valueCapSocioStra}
                 onChange={setValueCapSocioStra}
                 multiple
+                disabled={!isEditable}
               />
             </div>
           </div>
@@ -702,12 +806,11 @@ export function AddPlans() {
               togglePopUpStrategy();
               event.preventDefault();
             }}
+            disabled={!isEditable}
           />
 
           {showPopUpStrategy && (
-            <PopUp
-              onClose={closePopup}
-            >
+            <PopUp onClose={closePopup}>
               <div className="pop-body">
                 <div className="dates-add">
                   <div className="input-field">
@@ -865,6 +968,7 @@ export function AddPlans() {
               togglePopUpPlan();
               event.preventDefault();
             }}
+            disabled={!isEditable}
           />
 
           {plans.map((plan, index) => (
@@ -912,9 +1016,7 @@ export function AddPlans() {
           ))}
 
           {showPopUpPlan && (
-            <PopUp
-              onClose={closePopup}
-            >
+            <PopUp onClose={closePopup}>
               <div className="pop-body">
                 <div className="datess">
                   <div className="data-prop">
@@ -976,9 +1078,7 @@ export function AddPlans() {
           )}
 
           {showPopUpClasses && (
-            <PopUp
-              onClose={closePopup}
-            >
+            <PopUp onClose={closePopup}>
               <div className="pop-body">
                 <div className="datess">
                   <div className="data-prop">

@@ -47,10 +47,18 @@ export function PlanoCursoOpp() {
             <div className="Data-curso">
               <h3 className="Subject">{curso.nome}</h3>
               <div className="Info">
+                
+        <div className="card-plano">
+          {planosCurso.map((curso: any) => (
+            <div className="data-curso">
+              <h3 className="subject">{curso.nome}</h3>
+              <div className="infos-course">
+
                 <div className="semester-curso">
                   <GraduationCap className="chapeu" size={22} />
                   <h1>{curso.categoria}</h1>
                 </div>
+
                 <div className="Class-curso">
                   <Clock3 size={22} />
                   <p>{curso.qtdSemestre} semestres</p>
@@ -59,6 +67,16 @@ export function PlanoCursoOpp() {
             </div>
           </div>
         ))}
+          
+                <div className="qntd-semester">
+                  <Clock3 size={18} />
+                  <h1>{curso.qtdSemestre} semestres</h1>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
