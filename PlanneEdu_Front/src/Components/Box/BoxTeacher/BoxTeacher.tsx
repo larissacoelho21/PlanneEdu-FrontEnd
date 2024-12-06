@@ -10,7 +10,7 @@ interface CardTeacherProps {
   dateI: string;
   dateT: string;
   semester: number;
-  students: string;
+  students: number;
 }
 
 export function CardTeacher({

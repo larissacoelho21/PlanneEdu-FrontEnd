@@ -1,10 +1,30 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { LinhaTabela } from "../Pages/Opp/HomeOpp";
+import { jwtDecode } from 'jwt-decode';
+
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
 
 /* ======================= Toast de carregamento  ============================= */
+
+
+export const getUserRole = (): string | null => {
+  const token = localStorage.getItem('Authorization');
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+
+  try {
+    const decodedToken: any = jwtDecode(token); // Decodifica o token
+    console.log(decodedToken); // Exibe o conteúdo do token para você verificar
+    return decodedToken.role || null; // Exemplo: retorno da role do token
+  } catch (error) {
+    throw new Error("Erro ao processar o token. Faça login novamente.");
+  }
+};
+
 export const axiosWithToast = async <T>(
   config: AxiosRequestConfig,
   loadingMessage = "Carregando...",
@@ -336,7 +356,7 @@ export const downloadPdf_PlanCourse = async (id: string) => {
 
 //TODO: não funciona 
 /* Função home, pegando todos as turmas do professor */
-export const allTurmas = async () => {
+/* export const allTurmas = async () => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     console.log("Token:", token);
@@ -370,8 +390,28 @@ export const allTurmas = async () => {
     console.error(errorMessage);
     throw new Error(errorMessage);
   }
-}
+}  */
 
+/* export const getMyClasses = async () => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    console.log("Token:", token);
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    }); // Endpoint para obter turmas e cursos
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar turmas:', error);
+    throw error;
+  }
+};
+ */
 /* Função para aparecer todos os planos de ensino */
 export const allPlanEns = async () => {
 
@@ -407,6 +447,27 @@ export const allPlanEns = async () => {
 
 /* ======================= Opp ============================= */
 
+export const fetchHome = async (courseID: string): Promise<LinhaTabela[]> => {
+
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+    const response = await axios.get<{ tabela: LinhaTabela[] }>(`${BaseUrl}/teachPlan/get_table/${courseID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json", // Inclui o token no cabeçalho da requisição
+      },
+    }); 
+    console.log(response.data.tabela)
+    return response.data.tabela; // Retorna apenas a tabela
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || "Erro ao buscar os planos.");
+  }
+
+}
+
 /* Função adicionando usuário */
 export const RegisterUser = async (userData: {
   nome: string;
@@ -425,6 +486,25 @@ export const RegisterUser = async (userData: {
     throw new Error("Token de autenticação ausente.");
   }
   try {
+    const response = await axios.post(
+      `${BaseUrl}/register`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("Resposta da API:", response);
+    return response;
+  } catch (error: any) {
+    console.error("Erro no cadastro:", error);
+    toast.error("Erro ao cadastrar usuário. Tente novamente.");
+    throw error;
+  }
+  
+  /* try {
     // Faz a chamada para o back-end
     const response = await axiosWithToast(
       {
@@ -435,7 +515,7 @@ export const RegisterUser = async (userData: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      } /* ,
+      }  ,
       `${BaseUrl}/register`,
       userData,
       {
@@ -443,7 +523,7 @@ export const RegisterUser = async (userData: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }, */,
+      }, ,
       "Cadastrando usuário...",
       "Novo usuário criado com sucesso!"
     );
@@ -460,7 +540,7 @@ export const RegisterUser = async (userData: {
       toast.error("Erro desconhecido na conexão com o servidor");
       throw new Error("Erro desconhecido na conexão com o servidor");
     }
-  }
+  } */
 };
 
 //TODO: não funciona 
@@ -478,15 +558,15 @@ export const allUsers = async () => {
       },
     });
 
-    const all_Users = response.data.users.map((getAll: any) => ({
+    /* const all_Users = response.data.users.map((getAll: any) => ({
       _id: getAll._id,
       nome: getAll.nome || "Não informado",
       sobrenome: getAll.sobrenome || "Não informado",
       nif: getAll.nif || "Não informado",
       telefone: getAll.telefone || "Não informado",
       email: getAll.email || "Não informado",
-      /*  turmasAtribuidas: getAll.turmasAtribuidas?.nome || "Não informado",
-      cursosAtribuidos: getAll.cursosAtribuidos?.nome || "Não informado", */
+      /*   turmasAtribuidas: getAll.turmasAtribuidas?.nome || "Não informado",
+      cursosAtribuidos: getAll.cursosAtribuidos?.nome || "Não informado", 
       turmasAtribuidas:
         getAll.turmasAtribuidas && getAll.turmasAtribuidas.length > 0
           ? getAll.turmasAtribuidas.map((turma: any) => turma.nome).join(", ")
@@ -494,11 +574,11 @@ export const allUsers = async () => {
       cursosAtribuidos:
         getAll.cursosAtribuidos && getAll.cursosAtribuidos.length > 0
           ? getAll.cursosAtribuidos.map((curso: any) => curso.planoCurso?.nome).join(", ")
-          : "Nenhum curso atribuído",
-    }))
+          : "Nenhum curso atribuído", 
+    })) */
 
-    console.log("Usuários carregados:", all_Users);
-    return all_Users; // Retorna os dados da API
+    console.log("Usuários carregados:", response);
+    return response.data.users; // Retorna os dados da API
   } catch (error: any) {
     const errorMessage =
       error.response?.data?.error || "Erro ao buscar os usuários";
@@ -508,7 +588,7 @@ export const allUsers = async () => {
 };
 
 /* Função deletando usuários */
-export const deleteUser = async (id: string): Promise<void> => {
+/* export const deleteUser = async (id: string): Promise<void> => {
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
     if (!token) {
@@ -520,7 +600,31 @@ export const deleteUser = async (id: string): Promise<void> => {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
       },
     });
-    console.log(response.data.msg);
+    console.log(response.data);
+  } catch (error: any) {
+    console.error(
+      "Erro ao deletar usuário: ",
+      error.response?.data?.error || error.message
+    );
+    throw new Error(
+      error.response?.data?.error || "Erro ao deletar o usuário."
+    );
+  } 
+}; */
+
+ export const deleteUser = async (id: string): Promise<void> => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.delete(`${BaseUrl}/delete_user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+    console.log(response.data); // Log para depuração, se necessário
   } catch (error: any) {
     console.error(
       "Erro ao deletar usuário: ",
@@ -530,7 +634,7 @@ export const deleteUser = async (id: string): Promise<void> => {
       error.response?.data?.error || "Erro ao deletar o usuário."
     );
   }
-};
+}; 
 
 /* Função perfil opp */
 export const profileOpp = async () => {
@@ -568,7 +672,7 @@ export const getAllCursos = async () => {
     const Curso = response.data.cursos.map((curso: any) => ({
       _id: curso._id,
       nome: curso.planoCurso?.nome,
-      categoria: curso.planoCurso?.categoria, 
+      categoria: curso.planoCurso?.categoria,
       qtdSemestre: curso.planoCurso?.qtdSemestre,
     }));
 
@@ -631,7 +735,7 @@ export const backPlanCourse = async (coursePlan: {
     console.error("Erro ao enviar os dados:", error.response || error.message);
     throw new Error(
       error.response?.data?.message ||
-        "Erro ao enviar os dados do plano de curso."
+      "Erro ao enviar os dados do plano de curso."
     );
   }
 };
