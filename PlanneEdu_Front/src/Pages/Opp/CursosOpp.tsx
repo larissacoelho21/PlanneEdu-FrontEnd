@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/CursosOpp.css";
 import { BookMarked, Clock3 } from "lucide-react";
@@ -7,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import { ButtonAdd } from "../../Components/Buttons/More/More";
 import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 import { getAllCursos } from "../../Services/Axios";
+import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
 
 export function CursosOpp() {
   const [userName, setUserName] = useState<string | null>("");

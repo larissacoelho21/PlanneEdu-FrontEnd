@@ -71,7 +71,7 @@ const Router: React.FC = () => {
       {/* Professor */}
       <Route path="/homeprofessor" element={<Home />} />
       <Route path="/addatividade" element={<AddActivity />} />
-      <Route path="/turmaprofessor" element={<ClassTeacher />} />
+      <Route path="/turmaprofessor/:classID" element={<ClassTeacher />} />
       <Route path="/plansensino" element={<PlanEnsino />} />
       <Route path="/visualizaratvd" element={<ViewActivity />} />
       <Route path="/plansensinoespc" element={<PlanEnsinoEspc />} />

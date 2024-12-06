@@ -43,10 +43,14 @@ link:active {
 }
 /* estilizando imagem logo */
 
+.nav-logo {
+  flex: 1; /* Garante que o logo ocupe espaço */
+  display: flex;
+  align-items: center;
+}
+
 .nav-logo img {
-  width: 0 auto;
-  height: 5vw;
-  margin-left: 2vw;
+  height: 5vw; /* Ajuste de tamanho */
 }
 
 /* estilizando logo do mobile  */
@@ -59,18 +63,36 @@ link:active {
 }
 
 /* estilizando lista */
+.navbarOne {
+  height: 6vw;
+  background-color: #f2f2f2;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  justify-content: space-between; /* Distribui logo, links e ícones */
+  align-items: center;
+  padding: 0 2vw;
+}
+
 .navbar-nav {
   display: flex;
-  flex-direction: row;
+  gap: 3vw; /* Espaçamento entre os links */
+  list-style: none;
   justify-content: center;
-  align-items: center;
-  gap: 2vw;
+  flex: 1; /* Define o espaço central */
 }
 
 .navbar-nav p {
   font-family: var(--font);
   color: black;
   font-size: 1.3vw;
+  cursor: pointer;
+}
+
+.navbar-link {
+  font-size: 1.3vw;
+  color: black;
+  text-decoration: none;
 }
 
 .navbar-link p:hover {
@@ -247,16 +269,23 @@ link:active {
   cursor: pointer;
 }
 
-.icon-list ul,
-.secondPart {
+.icon-list ul {
   display: flex;
+  align-items: center;
+  gap: 2vw;
 }
 
 .Icons {
   display: flex;
   align-items: center;
+  margin-left: auto;
+}
+
+.profileIcon{
+  font-size: 1.5vw;
   cursor: pointer;
 }
+
 
 /* --------------------Dropdown Perfil-------------------- */
 
