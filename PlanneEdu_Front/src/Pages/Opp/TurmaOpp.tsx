@@ -3,15 +3,76 @@ import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/TurmaOpp.css";
 import { Clock3, Users } from "lucide-react";
+import { allTurmasOpp } from "../../Services/Axios";
+import { useEffect, useState } from "react";
+
+interface Aluno {
+  nome: string;
+  sobrenome: string;
+}
+
+interface Grade {
+  materia: {
+    nome: string;
+    cargaHoraria: number;
+  };
+  professor: {
+    nome: string;
+    sobrenome: string;
+  };
+}
+
+interface Turma {
+  nome: string;
+  grade: Grade[];
+  alunos: Aluno[];
+  inicio: string;
+  termino: string;
+}
+
 
 export function TurmaOpp() {
+  const [turmas, setTurmas] = useState<Turma[]>([]); // Estado para armazenar as turmas
+
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const turmasData = await allTurmasOpp(); // Chama a função para pegar as turmas
+        setTurmas(turmasData); // Armazena as turmas no estado
+      } catch (error) {
+        console.error("Erro ao carregar turmas:", error);
+      }
+    };
+    
+    fetchTurmas(); // Chama a função de fetch ao montar o componente
+  }, []);
+
+  const renderTurmas = (): JSX.Element[] => {
+    return turmas.map((turma, index) => (
+      <div className="card-class" key={index}>
+        <h3 className="subject">{turma.nome}</h3>
+        <div className="info-class">
+          <div className="semester-course">
+            <Clock3 size={18} />
+            <h1>{turma.grade.length} semestres</h1>
+          </div>
+          <div className="number-students">
+            <Users size={18} />
+            <h1>{turma.alunos.length} alunos</h1>
+          </div>
+        </div>
+      </div>
+    ));
+  };
+  
   return (
+
     <section className="turmaOpp">
       <NavBarOpp />
       <div className="text-intro-class" style={{ margin: "6% 0 3% 0" }}>
         <IntroText
-          titleText="Gerencie suas turmas"
-          subtitleText="de Desenvolvimento de sistemas"
+          titleText="Gerencie as turmas"
+          subtitleText="Adicione e visualize as turmas disponíveis"
         />
       </div>
 
@@ -20,88 +81,8 @@ export function TurmaOpp() {
       </div>
 
       <div className="classOpp" style={{ margin: "5% 0 0 0" }}>
-        <div className="open-class">
-          <p>
-            <span className="highlight">Turmas abertas em:</span> 2023
-          </p>
-        </div>
         <div className="cards-turmaopp">
-          <div className="card-class">
-            <h3 className="subject">DS SESI 2023</h3>
-            <div className="info-class">
-              <div className="semester-course">
-                <Clock3 size={18} />
-                <h1>4 semestres</h1>
-              </div>
-              <div className="number-students">
-                <Users size={18} />
-                <h1>35 alunos</h1>
-              </div>
-            </div>
-            <div className="technology-turma">
-              <span>Início: 23/01/2023 | Término: 12/12/2024</span>
-            </div>
-          </div>
-
-          <div className="card-class">
-            <h3 className="subject">DS SESI 2023</h3>
-            <div className="info-class">
-              <div className="semester-course">
-                <Clock3 size={18} />
-                <h1>4 semestres</h1>
-              </div>
-              <div className="number-students">
-                <Users size={18} />
-                <h1>35 alunos</h1>
-              </div>
-            </div>
-            <div className="technology-turma">
-              <span>Início: 23/01/2023 | Término: 12/12/2024</span>
-            </div>
-          </div>
-
-          <div className="card-class">
-            <h3 className="subject">DS SESI 2023</h3>
-            <div className="info-class">
-              <div className="semester-course">
-                <Clock3 size={18} />
-                <h1>4 semestres</h1>
-              </div>
-              <div className="number-students">
-                <Users size={18} />
-                <h1>35 alunos</h1>
-              </div>
-            </div>
-            <div className="technology-turma">
-              <span>Início: 23/01/2023 | Término: 12/12/2024</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="classOpp">
-          <div className="open-class">
-            <p>
-              <span className="highlight">Turmas abertas em:</span> 2024
-            </p>
-          </div>
-          <div className="cards-turmaopp">
-            <div className="card-class">
-              <h3 className="subject">DS SESI 2023</h3>
-              <div className="info-class">
-                <div className="semester-course">
-                  <Clock3 size={18} />
-                  <h1>4 semestres</h1>
-                </div>
-                <div className="number-students">
-                  <Users size={18} />
-                  <h1>35 alunos</h1>
-                </div>
-              </div>
-              <div className="technology-turma">
-                <span>Início: 23/01/2023 | Término: 12/12/2024</span>
-              </div>
-            </div>
-          </div>
+        {renderTurmas()}
         </div>
       </div>
     </section>

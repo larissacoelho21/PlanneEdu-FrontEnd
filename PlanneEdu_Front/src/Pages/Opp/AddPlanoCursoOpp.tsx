@@ -207,19 +207,19 @@ export function AddPlanoCurso() {
   /* função para salvar disciplina, editada ou não */
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-  
+
     if (selectedSemester !== null && formData.materias[0]?.nome.trim() !== "") {
       const newDiscipline = { ...formData.materias[0] };
-  
+
       setSemesterData((prevState) => {
         if (editingDiscipline) {
           // Atualiza a disciplina existente
           const { semester, index } = editingDiscipline;
           const updatedSemesterData = [...prevState[semester]];
           updatedSemesterData[index] = newDiscipline;
-  
+
           toast.success(`Disciplina "${newDiscipline.nome}" atualizada com sucesso!`);
-  
+
           return {
             ...prevState,
             [semester]: updatedSemesterData,
@@ -235,7 +235,7 @@ export function AddPlanoCurso() {
           };
         }
       });
-  
+
       // Atualize o estado de formData.materias
       setFormData((prevData) => ({
         ...prevData,
@@ -244,7 +244,7 @@ export function AddPlanoCurso() {
           newDiscipline, // Adiciona a nova disciplina ao array de matérias
         ],
       }));
-  
+
       // Resetando os dados
       resetPopupStates();
       setShowPopUpGrade(false);
@@ -252,7 +252,7 @@ export function AddPlanoCurso() {
       toast.error("Preencha todos os campos para criar uma disciplina. Tente novamente!");
     }
   };
-  
+
   /* estado para armazenar o dropdown ativo */
   const [dropdownStateDiscipline, setDropdownStateDiscipline] = useState<
     number | null
@@ -355,17 +355,17 @@ export function AddPlanoCurso() {
 
     data.materias.forEach((materia, index) => {
       if (!materia.nome) console.log(`Campo nome vazio na matéria ${index}`);
-  if (!materia.semCorrespondente) console.log(`Campo semCorrespondente vazio na matéria ${index}`);
-  if (!materia.cargaHoraria) console.log(`Campo cargaHoraria vazio na matéria ${index}`);
-  if (!materia.objetivo) console.log(`Campo objetivo vazio na matéria ${index}`);
-  if (!materia.capaBasicaOuTecnica.length) console.log(`Campo capaBasicaOuTecnica vazio na matéria ${index}`);
-  if (!materia.capaSocioemocional.length) console.log(`Campo capaSocioemocional vazio na matéria ${index}`);
-  if (!materia.ambiente) console.log(`Campo ambiente vazio na matéria ${index}`);
+      if (!materia.semCorrespondente) console.log(`Campo semCorrespondente vazio na matéria ${index}`);
+      if (!materia.cargaHoraria) console.log(`Campo cargaHoraria vazio na matéria ${index}`);
+      if (!materia.objetivo) console.log(`Campo objetivo vazio na matéria ${index}`);
+      if (!materia.capaBasicaOuTecnica.length) console.log(`Campo capaBasicaOuTecnica vazio na matéria ${index}`);
+      if (!materia.capaSocioemocional.length) console.log(`Campo capaSocioemocional vazio na matéria ${index}`);
+      if (!materia.ambiente) console.log(`Campo ambiente vazio na matéria ${index}`);
 
       if (
-        !materia.nome || 
-        !materia.semCorrespondente || 
-        !materia.cargaHoraria || 
+        !materia.nome ||
+        !materia.semCorrespondente ||
+        !materia.cargaHoraria ||
         !materia.objetivo ||
         !materia.capaBasicaOuTecnica.length ||
         !materia.capaSocioemocional.length ||
@@ -421,18 +421,36 @@ export function AddPlanoCurso() {
     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   >, index: number) => {
     const { name, value } = event.target;
-  
+
     setFormData((prevData) => {
       // Faz uma cópia das matérias para evitar a mutação direta
       const updatedMaterias = [...prevData.materias];
-      
+
       // Atualiza o campo específico da matéria no índice selecionado
-      updatedMaterias[index] = {
-        ...updatedMaterias[index],
-        [name]: value,  // Atualiza o campo específico da disciplina (ex: nome, carga horária, etc.)
-      };
-  
-      // Retorna o estado atualizado com as novas matérias
+      /*       updatedMaterias[index] = {
+              ...updatedMaterias[index],
+              [name]: value,  // Atualiza o campo específico da disciplina (ex: nome, carga horária, etc.)
+            }; */
+
+
+      // Verifique se o campo é 'semCorrespondente' e processe como um array de números
+      if (name === "semCorrespondente") {
+        const semCorrespondenteArray = value
+          .split(",") // Supondo que o usuário insira números separados por vírgula
+          .map((item) => parseInt(item.trim(), 10)) // Converte para números
+          .filter((item) => !isNaN(item)); // Filtra valores não numéricos
+        updatedMaterias[index] = {
+          ...updatedMaterias[index],
+          [name]: semCorrespondenteArray,
+        };
+      } else {
+        // Para os outros campos, a lógica normal de atualização
+        updatedMaterias[index] = {
+          ...updatedMaterias[index],
+          [name]: value,
+        };
+      }
+
       return {
         ...prevData,
         materias: updatedMaterias,
@@ -508,7 +526,7 @@ export function AddPlanoCurso() {
                 type="select"
                 options={[
                   { value: "InformacaoEComunicacao", label: "Informação e Comunicação" },
-                  { value: "ControleEProcessosIndustrial", label: "Controle e Processos Industriais"},
+                  { value: "ControleEProcessosIndustrial", label: "Controle e Processos Industriais" },
                   { value: "GestaoENegocios", label: "Gestão e Negócios" },
                 ]}
                 onBackendChange={(event) => onBackendChange(event, "categoria")}
@@ -639,7 +657,45 @@ export function AddPlanoCurso() {
                             <div className="knowledge-container">
                               <strong>Conhecimentos:</strong>
                               <ul>
-                                {/* convertendo a string JSON armazenada no knowledgeInput de volta para um objeto utilizável */}
+                                {/* Convertendo a string JSON armazenada no knowledgeInput de volta para um objeto utilizável */}
+                                {discipline.conhecimento.topicos.map(
+                                  (topic: { tituloTopico: string; subTopicos: any[] }, topicIndex: number) => (
+                                    <li key={`topic-${topicIndex}`}>
+                                      <strong>
+                                        {topicIndex + 1}. {topic.tituloTopico}
+                                      </strong>
+                                      <ul>
+                                        {topic.subTopicos.map(
+                                          (subtopic: { tituloSubtopico: string; detalhes: string[] }, subIndex: number) => (
+                                            <li key={`subtopic-${subIndex}`}>
+                                              {topicIndex + 1}.{subIndex + 1}.{" "}
+                                              {subtopic.tituloSubtopico}
+                                              {subtopic.detalhes.length > 0 && (
+                                                <ul>
+                                                  {subtopic.detalhes.map((detail, detailIndex) => (
+                                                    <li key={`detail-${detailIndex}`}>
+                                                      {topicIndex + 1}.{subIndex + 1}.{detailIndex + 1}.{" "}
+                                                      {detail}
+                                                    </li>
+                                                  ))}
+                                                </ul>
+                                              )}
+                                            </li>
+                                          )
+                                        )}
+                                      </ul>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          </div>
+                        )}
+
+                        {/*  <div className="knowledge-container">
+                              <strong>Conhecimentos:</strong>
+                              <ul>
+                                {/* convertendo a string JSON armazenada no knowledgeInput de volta para um objeto utilizável }
                                 {discipline.conhecimento.topicos.map(
                                   (
                                     topic: {
@@ -689,8 +745,8 @@ export function AddPlanoCurso() {
                                 )}
                               </ul>
                             </div>
-                          </div>
-                        )}
+                          </div> */}
+
 
                         {/* botões de ação */}
                         <div className="card-action-btns">
@@ -730,101 +786,101 @@ export function AddPlanoCurso() {
                 </div>
                 {formData.materias.map((materia, index) => (
 
-                <div className="pop-body">
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`uc-${index}`}
-                      name="nome"
-                      label="Unidade Curricular"
-                      type="text"
-                      value={materia.nome || ""}
-                      onChange={(event) => onBackendChangeDiscipline(event, index)}
-                    />
-                  </div>
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`obj-${index}`}
-                      label="Objetivo"
-                      name="objetivo"
-                      type="textarea"
-                      value={materia.objetivo}
-                      onChange={(event) => onBackendChangeDiscipline(event, index)}
-                    />
-                  </div>
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`cargah-${index}`}
-                      name="cargaHoraria"
-                      label="Carga Horária"
-                      type="number"
-                      value={materia.cargaHoraria}
-                      onBackendChange={(event) =>
-                        onBackendChangeDiscipline(event, index)
-                      }
-                    />
-                  </div>
-                  <h3 className="section-title">
-                    Competências Específicas e Socioemocionais
-                  </h3>
+                  <div className="pop-body">
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`uc-${index}`}
+                        name="nome"
+                        label="Unidade Curricular"
+                        type="text"
+                        value={materia.nome || ""}
+                        onChange={(event) => onBackendChangeDiscipline(event, index)}
+                      />
+                    </div>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`obj-${index}`}
+                        label="Objetivo"
+                        name="objetivo"
+                        type="textarea"
+                        value={materia.objetivo}
+                        onChange={(event) => onBackendChangeDiscipline(event, index)}
+                      />
+                    </div>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`cargah-${index}`}
+                        name="cargaHoraria"
+                        label="Carga Horária"
+                        type="number"
+                        value={materia.cargaHoraria}
+                        onBackendChange={(event) =>
+                          onBackendChangeDiscipline(event, index)
+                        }
+                      />
+                    </div>
+                    <h3 className="section-title">
+                      Competências Específicas e Socioemocionais
+                    </h3>
 
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`capaBT-${index}`}
-                      name="capaBasicaOuTecnica"
-                      label="Capacidades Básicas ou Técnicas"
-                      type="textarea"
-                      value={String(materia.capaBasicaOuTecnica)} /* forçando o valor a ser string */
-                      onBackendChange={(event) =>
-                        onBackendChangeDiscipline(event, index)
-                      }
-                    />
-                  </div>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`capaBT-${index}`}
+                        name="capaBasicaOuTecnica"
+                        label="Capacidades Básicas ou Técnicas"
+                        type="textarea"
+                        value={String(materia.capaBasicaOuTecnica)} /* forçando o valor a ser string */
+                        onBackendChange={(event) =>
+                          onBackendChangeDiscipline(event, index)
+                        }
+                      />
+                    </div>
 
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`capaSocio-${index}`}
-                      name="capaSocioemocional"
-                      label="Capacidades Socioemocionais"
-                      type="textarea"
-                      value={String(materia.capaSocioemocional)}
-                      onBackendChange={(event) =>
-                        onBackendChangeDiscipline(event, index)
-                      }
-                    />
-                  </div>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`capaSocio-${index}`}
+                        name="capaSocioemocional"
+                        label="Capacidades Socioemocionais"
+                        type="textarea"
+                        value={String(materia.capaSocioemocional)}
+                        onBackendChange={(event) =>
+                          onBackendChangeDiscipline(event, index)
+                        }
+                      />
+                    </div>
 
-                  <h3 className="section-title">Conhecimentos</h3>
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`conhecimento-${index}`}
-                      name="conhecimento"
-                      label="Conhecimentos (cole o texto com os tópicos, subtópicos e detalhes)"
-                      type="textarea"
-                      value={String(materia.conhecimento)}
-                      onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
-                    />
-                  </div>
+                    <h3 className="section-title">Conhecimentos</h3>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`conhecimento-${index}`}
+                        name="conhecimento"
+                        label="Conhecimentos (cole o texto com os tópicos, subtópicos e detalhes)"
+                        type="textarea"
+                        value={String(materia.conhecimento)}
+                        onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
+                      />
+                    </div>
 
-                  <div className="input-fieldd">
-                    <InputField
-                      id={`amb-${index}`}
-                      name="ambiente"
-                      label="Ambiente Pedagógico"
-                      type="text"
-                      value={String(materia.ambiente)}
-                      onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
-                    />
-                  </div>
+                    <div className="input-fieldd">
+                      <InputField
+                        id={`amb-${index}`}
+                        name="ambiente"
+                        label="Ambiente Pedagógico"
+                        type="text"
+                        value={String(materia.ambiente)}
+                        onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
+                      />
+                    </div>
 
-                  <div className="actions-btns">
-                    <button onClick={saveDiscipline}>
-                      {editingDiscipline
-                        ? "Salvar Alterações"
-                        : "Salvar Informações"}
-                    </button>
-                    <button onClick={closePopUp}>Cancelar</button>
+                    <div className="actions-btns">
+                      <button onClick={saveDiscipline}>
+                        {editingDiscipline
+                          ? "Salvar Alterações"
+                          : "Salvar Informações"}
+                      </button>
+                      <button onClick={closePopUp}>Cancelar</button>
+                    </div>
                   </div>
-                </div>
                 ))}
               </PopUp>
             )}
