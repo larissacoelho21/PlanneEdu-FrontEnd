@@ -309,6 +309,9 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     );
 
     /* 
+    const fileUrl = response.data.url;
+    console.log(fileUrl)
+    window.open(fileUrl, '_blank'); */
         const fileUrl = response.data.url;
         console.log(fileUrl)
         window.open(fileUrl, '_blank'); */
@@ -321,8 +324,6 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     link.href = URL.createObjectURL(response.data);
     link.download = filename;
     link.click();
-
-
     console.log("Download realizado com sucesso!");
   } catch (error: any) {
     const errorMessage =
@@ -597,7 +598,6 @@ export const backPlanCourse = async (coursePlan: {
   }[];
   materias: {
     nome: string;
-    semCorrespondente: number[];
     cargaHoraria: number | null;
     objetivo: string;
     capaBasicaOuTecnica: string[];
@@ -614,24 +614,72 @@ export const backPlanCourse = async (coursePlan: {
     ambiente: string;
   }[];
 }) => {
+  const token = localStorage.getItem("Authorization");
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+  try {
+    const response = await axiosWithToast(
+      {
+        method: "POST",
+        url: `${BaseUrl}/coursePlan/create`,
+        data: coursePlan,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      "Cadastrando plano de curso...",
+      "Plano de curso cadastrado com sucesso!"
+    );
+    return response;
+  } catch (error: any) {
+    const message =
+      error.response?.data?.error ||
+      "Erro desconhecido ao conectar com o servidor.";
+    toast.error(message);
+    throw new Error(message);
+  }
+};
+
+/* Requisição dos cursos */
+export const course = async () => {
   try {
     const token = localStorage.getItem("Authorization");
+    console.log("Token encontrado:", token);
+
     if (!token) {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
 
-    const response = await axios.post(`${BaseUrl}/coursePlan/create`, coursePlan, {
+    const response = await axios.get(`${BaseUrl}/course/get_all`, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, 
       },
     });
-    return response.data;
+
+    console.log("Resposta da API:", response);
+
+    if (response.data && response.data.cursos) {
+      const cursos = response.data.cursos.map((curso: any) => ({
+        _id: curso._id,
+        planoCurso: {
+          _id: curso.planoCurso._id,
+          nome: curso.planoCurso.nome,
+          categoria: curso.planoCurso.categoria,
+          cargaHoraria: curso.planoCurso.cargaHoraria,
+          qtdSemestre: curso.planoCurso.qtdSemestre,
+          tempoCurso: curso.planoCurso.tempoCurso,
+        },
+      }));
+
+      console.log("Cursos encontrados:", cursos);
+      return cursos;
+    } else {
+      throw new Error("A resposta da API não contém a propriedade 'cursos'.");
+    }
   } catch (error: any) {
-    console.error("Erro ao enviar os dados:", error.response || error.message);
-    throw new Error(
-      error.response?.data?.message ||
-        "Erro ao enviar os dados do plano de curso."
-    );
+    console.error("Erro ao buscar cursos:", error);
+    throw new Error(error.response?.data?.error || "Erro ao buscar cursos");
   }
 };

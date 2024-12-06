@@ -1,4 +1,4 @@
-/* importações de bibliotecas, dependências e arquivos*/
+/* /* importações de bibliotecas, dependências e arquivos*/
 import "../../Css/Opp/AddPlanoCurso.css";
 import React, { useState } from "react";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
@@ -64,7 +64,7 @@ type planCourseData = {
 
 export function AddPlanoCurso() {
   /* ======== construção das funcionalidades ======== */
-  /* declaração de estados */
+
   /* estado para controle de exibição do popup */
   const [showPopUpGrade, setShowPopUpGrade] = useState(false);
   const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
@@ -87,7 +87,6 @@ export function AddPlanoCurso() {
     materias: [],
   });
 
-  /* inicializando o estado `selectedOptions` como um array vazio */
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   const [semesterData, setSemesterData] = useState<{
     [key: number]: DisciplineData[];
@@ -98,84 +97,7 @@ export function AddPlanoCurso() {
     4: [],
   });
 
-  /* ======== funções para inputar os conhecimentos (tópicos, subtópicos e detalhes) ======== */
-  const processKnowledgeInput = (inputText: string): conhecimentoEstrutura => {
-    /* Dividindo o texto por linhas e removendo espaços extras */
-    const lines = inputText
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
-
-    /* Objeto inicial para armazenar os tópicos */
-    const conhecimento: conhecimentoEstrutura = { topicos: [] };
-
-    /* Variáveis para controlar o tópico e subtópico atuais */
-    let currentTopic: { tituloTopico: string; subTopicos: any[] } | null = null;
-    let currentSubtopic: {
-      tituloSubtopico: string;
-      detalhes: string[];
-    } | null = null;
-
-    /* Percorrendo cada linha do texto */
-    for (const line of lines) {
-      /* Identificando tópicos */
-      if (/^\d+\.\s/.test(line)) {
-        /* Finalizando subtópico pendente */
-        if (currentSubtopic) {
-          currentTopic?.subTopicos.push(currentSubtopic);
-          currentSubtopic = null;
-        }
-        /* Finalizando tópico anterior */
-        if (currentTopic) {
-          conhecimento.topicos.push(currentTopic);
-        }
-        /* Criando novo tópico */
-        currentTopic = {
-          tituloTopico: line.replace(/^\d+\.\s*/, ""),
-          subTopicos: [],
-        };
-      } else if (/^\d+\.\d+\.\s/.test(line)) {
-        /* Identificando subtópicos */
-        /* Finalizando subtópico anterior */
-        if (currentSubtopic) {
-          currentTopic?.subTopicos.push(currentSubtopic);
-        }
-        /* Criando novo subtópico */
-        currentSubtopic = {
-          tituloSubtopico: line.replace(/^\d+\.\d+\.\s*/, ""),
-          detalhes: [],
-        };
-      } else if (/^\d+\.\d+\.\d+\.\s/.test(line)) {
-        /* Identificando detalhes */
-        /* Adicionando detalhe ao subtópico atual */
-        currentSubtopic?.detalhes.push(line.replace(/^\d+\.\d+\.\d+\.\s*/, ""));
-      }
-    }
-
-    /* Finalizando quaisquer tópicos e subtópicos pendentes */
-    if (currentSubtopic) {
-      currentTopic?.subTopicos.push(currentSubtopic);
-    }
-    if (currentTopic) {
-      conhecimento.topicos.push(currentTopic);
-    }
-
-    return conhecimento;
-  };
-
-  /* função para processar o texto inserido, transformando em uma lista */
-  const processCapacitiesToList = (inputText: string | string[]): string[] => {
-    if (Array.isArray(inputText)) {
-      return inputText;
-    }
-  
-    return inputText
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line !== "");
-  };
-  
-
+  /* ======== funções para limpar dados e fechar popup ======== */
   /* função para resetar dados */
   const resetPopupStates = () => {
     setFormData((prevData) => ({
@@ -197,45 +119,140 @@ export function AddPlanoCurso() {
     setEditingDiscipline(null);
   };
 
+  /* função para o botão de cancelar, limpa os dados e para de exibir o popup */
+  const closePopUp = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    togglePopUpGrade();
+    resetPopupStates();
+  };
+
+  /* ======== funções para inputar os conhecimentos (tópicos, subtópicos e detalhes) ======== */
+  const processKnowledgeInput = (inputText: string): conhecimentoEstrutura => {
+    /* dividindo o texto por linhas e removendo espaços extras */
+    const lines = inputText
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    /* objeto inicial para armazenar os tópicos */
+    const conhecimento: conhecimentoEstrutura = { topicos: [] };
+
+    /* variáveis para controlar o tópico e subtópico atuais */
+    let currentTopic: { tituloTopico: string; subTopicos: any[] } | null = null;
+    let currentSubtopic: {
+      tituloSubtopico: string;
+      detalhes: string[];
+    } | null = null;
+
+    /* percorrendo cada linha do texto */
+    for (const line of lines) {
+      /* identificando tópicos */
+      if (/^\d+\.\s/.test(line)) {
+        /* finalizando subtópico pendente */
+        if (currentSubtopic) {
+          currentTopic?.subTopicos.push(currentSubtopic);
+          currentSubtopic = null;
+        }
+        /* finalizando tópico anterior */
+        if (currentTopic) {
+          conhecimento.topicos.push(currentTopic);
+        }
+        /* criando novo tópico */
+        currentTopic = {
+          tituloTopico: line.replace(/^\d+\.\s*/, ""),
+          subTopicos: [],
+        };
+      } else if (/^\d+\.\d+\.\s/.test(line)) {
+        /* identificando subtópicos */
+        /* finalizando subtópico anterior */
+        if (currentSubtopic) {
+          currentTopic?.subTopicos.push(currentSubtopic);
+        }
+        /* criando novo subtópico */
+        currentSubtopic = {
+          tituloSubtopico: line.replace(/^\d+\.\d+\.\s*/, ""),
+          detalhes: [],
+        };
+      } else if (/^\d+\.\d+\.\d+\.\s/.test(line)) {
+        /* identificando detalhes */
+        /* adicionando detalhe ao subtópico atual */
+        currentSubtopic?.detalhes.push(line.replace(/^\d+\.\d+\.\d+\.\s*/, ""));
+      }
+    }
+
+    /* Finalizando quaisquer tópicos e subtópicos pendentes */
+    if (currentSubtopic) {
+      currentTopic?.subTopicos.push(currentSubtopic);
+    }
+    if (currentTopic) {
+      conhecimento.topicos.push(currentTopic);
+    }
+
+    return conhecimento;
+  };
+
+  /* função para processar o texto inserido, transformando em uma lista */
+  const processCapacitiesToList = (inputText: string | string[]): string[] => {
+    if (Array.isArray(inputText)) {
+      return inputText;
+    }
+
+    return inputText
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line !== "");
+  };
+
   /* função para salvar disciplina, editada ou não */
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
+  
     if (selectedSemester !== null && formData.materias[0]?.nome.trim() !== "") {
       const newDiscipline = { ...formData.materias[0] };
-
-      setSemesterData((prevState) => ({
-        ...prevState,
-        [selectedSemester]: [
-          ...(prevState[selectedSemester] || []),
-          newDiscipline,
-        ],
-      }));
-      
-      /* limpando os dados da matéria/disciplina depois de salvar */
+  
+      setSemesterData((prevState) => {
+        if (editingDiscipline) {
+          // Atualiza a disciplina existente
+          const { semester, index } = editingDiscipline;
+          const updatedSemesterData = [...prevState[semester]];
+          updatedSemesterData[index] = newDiscipline;
+  
+          toast.success(`Disciplina "${newDiscipline.nome}" atualizada com sucesso!`);
+  
+          return {
+            ...prevState,
+            [semester]: updatedSemesterData,
+          };
+        } else {
+          toast.success(`Disciplina "${newDiscipline.nome}" adicionada com sucesso!`);
+          return {
+            ...prevState,
+            [selectedSemester]: [
+              ...(prevState[selectedSemester] || []),
+              newDiscipline,
+            ],
+          };
+        }
+      });
+  
+      // Atualize o estado de formData.materias
       setFormData((prevData) => ({
         ...prevData,
         materias: [
-          {
-            nome: "",
-            semCorrespondente: [],
-            cargaHoraria: null,
-            objetivo: "",
-            capaBasicaOuTecnica: [],
-            capaSocioemocional: [],
-            conhecimento: { topicos: [] },
-            ambiente: "",
-          },
+          ...prevData.materias,
+          newDiscipline, // Adiciona a nova disciplina ao array de matérias
         ],
       }));
-
+  
+      // Resetando os dados
+      resetPopupStates();
       setShowPopUpGrade(false);
-      toast.success("Disciplina adicionada com sucesso!");
     } else {
-      toast.error("Preencha todos os campos do popup.");
+      toast.error("Preencha todos os campos para criar uma disciplina. Tente novamente!");
     }
   };
-
+  
   /* estado para armazenar o dropdown ativo */
   const [dropdownStateDiscipline, setDropdownStateDiscipline] = useState<
     number | null
@@ -296,20 +313,8 @@ export function AddPlanoCurso() {
     }));
 
     /* resetando os dados */
-    setFormData({
-      nome: "",
-      categoria: "",
-      objetivo: "",
-      requisitosAcesso: "",
-      competenciasProfissionais: "",
-      cargaHoraria: null,
-      qtdSemestre: null,
-      semestre: [
-        { numero: 1, unidadeCurricular: [] },
-        { numero: 2, unidadeCurricular: [] },
-        { numero: 3, unidadeCurricular: [] },
-        { numero: 4, unidadeCurricular: [] },
-      ],
+    setFormData((prevState) => ({
+      ...prevState,
       materias: [
         {
           nome: "",
@@ -324,42 +329,56 @@ export function AddPlanoCurso() {
           ambiente: "",
         },
       ],
-    });
+    }));
 
     toast.success("Disciplina deletada com sucesso!");
   };
 
-  /* função para o botão de cancelar, limpa os dados e para de exibir o popup */
-  const closePopUp = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    togglePopUpGrade();
-    resetPopupStates();
-  };
-
   /* ======== configurações e funções relacionadas com o backend ======== */
   const validateFormData = (data: planCourseData) => {
-    if (!data.nome || !data.categoria || !data.objetivo || !data.requisitosAcesso) {
+    console.log("ACIONEI VALIDAÇÃOOOOOOOO")
+
+    if (
+      !data.nome ||
+      !data.categoria ||
+      !data.objetivo ||
+      !data.requisitosAcesso ||
+      !data.cargaHoraria ||
+      !data.qtdSemestre
+    ) {
       throw new Error("Preencha todos os campos principais do plano de curso!");
     }
-  
+
     if (!data.materias || data.materias.length === 0) {
       throw new Error("Adicione pelo menos uma matéria ao plano de curso.");
     }
-  
+
     data.materias.forEach((materia, index) => {
+      if (!materia.nome) console.log(`Campo nome vazio na matéria ${index}`);
+  if (!materia.semCorrespondente) console.log(`Campo semCorrespondente vazio na matéria ${index}`);
+  if (!materia.cargaHoraria) console.log(`Campo cargaHoraria vazio na matéria ${index}`);
+  if (!materia.objetivo) console.log(`Campo objetivo vazio na matéria ${index}`);
+  if (!materia.capaBasicaOuTecnica.length) console.log(`Campo capaBasicaOuTecnica vazio na matéria ${index}`);
+  if (!materia.capaSocioemocional.length) console.log(`Campo capaSocioemocional vazio na matéria ${index}`);
+  if (!materia.ambiente) console.log(`Campo ambiente vazio na matéria ${index}`);
+
       if (
-        !materia.nome ||
-        !materia.semCorrespondente ||
-        !materia.cargaHoraria ||
+        !materia.nome || 
+        !materia.semCorrespondente || 
+        !materia.cargaHoraria || 
         !materia.objetivo ||
         !materia.capaBasicaOuTecnica.length ||
         !materia.capaSocioemocional.length ||
         !materia.ambiente
       ) {
-        throw new Error(`Os campos da matéria no índice ${index} estão incompletos.`);
+        console.log(!materia.nome, materia.semCorrespondente, materia.cargaHoraria, materia.objetivo, materia.capaBasicaOuTecnica.length, materia.capaSocioemocional.length, materia.ambiente)
+        throw new Error(
+          `Os campos da matéria no índice ${index} estão incompletos.`
+        );
       }
     });
+
+    console.log("FINAL DA VALIDATION")
   };
 
   const onBackendChange = (
@@ -369,69 +388,96 @@ export function AddPlanoCurso() {
     fieldPath: string
   ) => {
     const { value } = event.target;
-  
+
     setFormData((prevState) => {
       const keys = fieldPath.split(".");
       const updatedState = { ...prevState };
-  
+
       let current: any = updatedState;
-  
+
       keys.slice(0, -1).forEach((key) => {
         const indexMatch = key.match(/\[(\d+)\]/);
         if (indexMatch) {
           const arrayKey = key.split("[")[0];
           const index = parseInt(indexMatch[1], 10);
-  
+
           /* verificando se o array/lista existe e se o index é válido */
           if (!current[arrayKey]) current[arrayKey] = [];
           if (!current[arrayKey][index]) current[arrayKey][index] = {};
-  
+
           current = current[arrayKey][index];
         } else {
           if (!current[key]) current[key] = {};
           current = current[key];
         }
       });
-  
+
       current[keys[keys.length - 1]] = value;
       return updatedState;
     });
-  };  
+  };
+
+  const onBackendChangeDiscipline = (event: React.ChangeEvent<
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  >, index: number) => {
+    const { name, value } = event.target;
+  
+    setFormData((prevData) => {
+      // Faz uma cópia das matérias para evitar a mutação direta
+      const updatedMaterias = [...prevData.materias];
+      
+      // Atualiza o campo específico da matéria no índice selecionado
+      updatedMaterias[index] = {
+        ...updatedMaterias[index],
+        [name]: value,  // Atualiza o campo específico da disciplina (ex: nome, carga horária, etc.)
+      };
+  
+      // Retorna o estado atualizado com as novas matérias
+      return {
+        ...prevData,
+        materias: updatedMaterias,
+      };
+    });
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
+    console.log("Dados do formulário antes da validação:", formData);
+
     try {
-    /* validando formData */
-    validateFormData(formData);
+      /* validando formData */
+      validateFormData(formData);
 
-    /* processando dados */
-    const processedFormData = {
-      ...formData,
-      materias: formData.materias.map((materia) => ({
-        ...materia,
-        capaBasicaOuTecnica: processCapacitiesToList(
-          materia.capaBasicaOuTecnica.join("\n") || ""
-        ),
-        capaSocioemocional: processCapacitiesToList(
-          materia.capaSocioemocional.join("\n") || ""
-        ),
-        conhecimento: processKnowledgeInput(
-          JSON.stringify(materia.conhecimento || { topicos: [] })
-        ),
-      })),
-    };
+      console.log("depois da validação: ", formData)
 
-    console.log("Dados processados antes do envio:", processedFormData);
+      /* processando dados */
+      const processedFormData = {
+        ...formData,
+        materias: formData.materias.map((materia) => ({
+          ...materia,
+          capaBasicaOuTecnica: processCapacitiesToList(
+            materia.capaBasicaOuTecnica.join("\n") || ""
+          ),
+          capaSocioemocional: processCapacitiesToList(
+            materia.capaSocioemocional.join("\n") || ""
+          ),
+          conhecimento: processKnowledgeInput(
+            JSON.stringify(materia.conhecimento || { topicos: [] })
+          ),
+        })),
+      };
 
-    const response = await backPlanCourse(processedFormData);
-    toast.success("Plano de curso enviado com sucesso!");
-    console.log("Resposta do servidor:", response);
-  } catch (error: any) {
-    console.error("Erro ao enviar:", error.response || error.message);
-    toast.error(error.message || "Erro ao enviar o plano de curso.");
-  }
-};
+      console.log("Dados processados antes do envio:", processedFormData);
+
+      const response = await backPlanCourse(processedFormData);
+      toast.success("Plano de curso enviado com sucesso!");
+      console.log("Resposta do servidor:", response);
+    } catch (error: any) {
+      console.log("Erro ao enviar:", error.response || error.message);
+      toast.error(error.message || "Erro ao enviar o plano de curso.");
+    }
+  };
 
   return (
     <section className="AddPlanCourses">
@@ -461,8 +507,9 @@ export function AddPlanoCurso() {
                 value={formData.categoria}
                 type="select"
                 options={[
-                  { value: "Tecnologia", label: "Tecnologia" },
-                  { value: "Comunicação", label: "Comunicação" },
+                  { value: "InformacaoEComunicacao", label: "Informação e Comunicação" },
+                  { value: "ControleEProcessosIndustrial", label: "Controle e Processos Industriais"},
+                  { value: "GestaoENegocios", label: "Gestão e Negócios" },
                 ]}
                 onBackendChange={(event) => onBackendChange(event, "categoria")}
               />
@@ -493,7 +540,7 @@ export function AddPlanoCurso() {
               <InputField
                 label="Competências"
                 name="competenciasProfissionais"
-                type="text"
+                type="textarea"
                 id="compt-course"
                 value={formData.competenciasProfissionais}
                 onBackendChange={(event) =>
@@ -681,40 +728,38 @@ export function AddPlanoCurso() {
                     habilidades que deseja desenvolver ao longo do curso.
                   </h3>
                 </div>
+                {formData.materias.map((materia, index) => (
+
                 <div className="pop-body">
                   <div className="input-fieldd">
                     <InputField
-                      id="uc"
+                      id={`uc-${index}`}
                       name="nome"
                       label="Unidade Curricular"
                       type="text"
-                      value={formData.materias[0]?.nome || ""}
-                      onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].nome")
-                      }
+                      value={materia.nome || ""}
+                      onChange={(event) => onBackendChangeDiscipline(event, index)}
                     />
                   </div>
                   <div className="input-fieldd">
                     <InputField
-                      id="obj"
+                      id={`obj-${index}`}
                       label="Objetivo"
                       name="objetivo"
                       type="textarea"
-                      value={formData.materias[0]?.objetivo || ""}
-                      onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].objetivo")
-                      }
+                      value={materia.objetivo}
+                      onChange={(event) => onBackendChangeDiscipline(event, index)}
                     />
                   </div>
                   <div className="input-fieldd">
                     <InputField
-                      id="carga-h"
+                      id={`cargah-${index}`}
                       name="cargaHoraria"
                       label="Carga Horária"
                       type="number"
-                      value={formData.materias[0]?.cargaHoraria || null}
+                      value={materia.cargaHoraria}
                       onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].cargaHoraria")
+                        onBackendChangeDiscipline(event, index)
                       }
                     />
                   </div>
@@ -724,33 +769,26 @@ export function AddPlanoCurso() {
 
                   <div className="input-fieldd">
                     <InputField
-                      id="capaBasicTec"
+                      id={`capaBT-${index}`}
                       name="capaBasicaOuTecnica"
                       label="Capacidades Básicas ou Técnicas"
                       type="textarea"
-                      value={String(
-                        formData.materias[0]?.capaBasicaOuTecnica ?? ""
-                      )} /* forçando o valor a ser string */
+                      value={String(materia.capaBasicaOuTecnica)} /* forçando o valor a ser string */
                       onBackendChange={(event) =>
-                        onBackendChange(
-                          event,
-                          "materias[0].capaBasicaOuTecnica"
-                        )
+                        onBackendChangeDiscipline(event, index)
                       }
                     />
                   </div>
 
                   <div className="input-fieldd">
                     <InputField
-                      id="cappaSocio"
+                      id={`capaSocio-${index}`}
                       name="capaSocioemocional"
                       label="Capacidades Socioemocionais"
                       type="textarea"
-                      value={String(
-                        formData.materias[0]?.capaSocioemocional ?? ""
-                      )}
+                      value={String(materia.capaSocioemocional)}
                       onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].capaSocioemocional")
+                        onBackendChangeDiscipline(event, index)
                       }
                     />
                   </div>
@@ -758,29 +796,23 @@ export function AddPlanoCurso() {
                   <h3 className="section-title">Conhecimentos</h3>
                   <div className="input-fieldd">
                     <InputField
-                      id="conhecimentos"
+                      id={`conhecimento-${index}`}
                       name="conhecimento"
                       label="Conhecimentos (cole o texto com os tópicos, subtópicos e detalhes)"
                       type="textarea"
-                      value={(
-                        formData.materias[0]?.conhecimento?.topicos || []
-                      ).join(", ")}
-                      onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].conhecimento")
-                      }
+                      value={String(materia.conhecimento)}
+                      onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
                     />
                   </div>
 
                   <div className="input-fieldd">
                     <InputField
-                      id="ambiente"
+                      id={`amb-${index}`}
                       name="ambiente"
                       label="Ambiente Pedagógico"
                       type="text"
-                      value={formData.materias[0]?.ambiente || ""}
-                      onBackendChange={(event) =>
-                        onBackendChange(event, "materias[0].ambiente")
-                      }
+                      value={String(materia.ambiente)}
+                      onBackendChange={(event) => onBackendChangeDiscipline(event, index)}
                     />
                   </div>
 
@@ -793,6 +825,7 @@ export function AddPlanoCurso() {
                     <button onClick={closePopUp}>Cancelar</button>
                   </div>
                 </div>
+                ))}
               </PopUp>
             )}
           </div>
