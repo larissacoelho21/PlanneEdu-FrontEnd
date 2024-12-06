@@ -1,4 +1,7 @@
 import { BookMarked, GraduationCap, Settings } from "lucide-react";
+
+import "../../../Css/Teacher/PlanEnsino.css"
+
 import { ReactNode } from "react";
 import "../../../Css/Teacher/PlanEnsino.css"
 

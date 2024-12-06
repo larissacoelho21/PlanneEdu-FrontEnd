@@ -1,6 +1,5 @@
 import { Clock3, Pointer } from "lucide-react";
 import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/navBarProfessor";
-import { FilterCategory } from "../../Components/FilterCategory/FilterCategory";
 import "../../Css/Teacher/PlanCourse.css";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { useEffect, useState } from "react";
@@ -58,9 +57,6 @@ export function PlanCourse() {
         />
       </div>
 
-      <div className="filter-plancourse">
-        <FilterCategory />
-      </div>
       <div className="cards-planscourses">
         {planosCurso.map((curso: any) => (
           <div key={curso._id} className="box-teacher-plancourse">
