@@ -100,7 +100,7 @@
   }
   
   .student-class{
-    margin-left: -30%;
+    /* margin-left: -30%; */
     display: flex;
     gap: 1.2vw;
   }
