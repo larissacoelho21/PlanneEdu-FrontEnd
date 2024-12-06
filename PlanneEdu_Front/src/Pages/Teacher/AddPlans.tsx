@@ -675,9 +675,6 @@ export function AddPlans() {
   </select>
   {!materias.length && <p>Não há matérias disponíveis para esta turma.</p>}
 </div>
-
-
-
       <form className="form">
         <div className="input-field">
           <InputField

@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { LinhaTabela } from "../Pages/Opp/HomeOpp";
-import { jwtDecode } from 'jwt-decode';
+/* import { LinhaTabela } from "../Pages/Opp/HomeOpp";
+ */import { jwtDecode } from 'jwt-decode';
 
 
 const BaseUrl = "https://planneedu-back.onrender.com"; // Substitua com sua URL base
@@ -358,95 +358,7 @@ export const downloadPdf_PlanCourse = async (id: string) => {
 };
 
 //TODO: não funciona
-/* Função home, pegando todos as turmas do professor */
-/* export const allTurmas = async () => {
-  try {
-    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
-    console.log("Token:", token);
-    if (!token) {
-      throw new Error("Token não encontrado. Faça login novamente.");
-    }
-    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
-      },
-    });
 
-    console.log("Resposta da API:", response.data);
-
-    const turmasData = response.data.turmasData.map((turma: any) => ({
-      _id: turma.turma?._id || "Nome não disponível",
-      nome: turma.turma?.nome || "Nome não disponível",
-      turno: turma.turma?.turno || "Nome não disponível",
-      dataInicio: turma.turma?.dataInicio || "Data não disponível",
-      dataTermino: turma.turma?.dataTermino || "Data não disponível",
-      qtdAlunos: turma.turma?.qtdAlunos || "Alunos não disponível",
-      curso: turma.curso || "Curso não informado",
-      semestres: turma.semestres || "Semestre não informado",
-    }));
-
-    console.log("Turmas encontradas :", turmasData);
-    return turmasData;
-  } catch (error: any) {
-    const errorMessage = error.response?.data?.error || "Erro ao buscar turmas";
-    console.error(errorMessage);
-    throw new Error(errorMessage);
-  }
-};
-
-// Função para aparecer as turmas do professor logado
-export const classesTeacherEsp = async () => {
-  try {
-    const token = localStorage.getItem("Authorization");
-    if (!token) {
-      throw new Error("Token não encontrado. Faça login novamente.");
-    }
-
-    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    // Mapeia os dados conforme o retorno do backend
-    const classesTeacher = response.data.turmasData.map((item: any) => ({
-      _id: item.turma._id || "ID não disponível",
-      nome: item.turma.nome || "Não informado", // Nome da turma
-      curso: item.curso || "Não informado", // Nome do curso
-      dataInicio: item.turma.dataInicio || "Não informado", // Data de início
-      dataTermino: item.turma.dataTermino || "Não informado", // Data de término
-      estudantes: item.turma.qtdAlunos || 0, // Quantidade de alunos
-      semestres: item.semestres || "Não informado", // Quantidade de semestres
-    }));
-
-    return classesTeacher;
-  } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.error || "Erro ao buscar turmas do professor";
-    console.error(errorMessage);
-    throw new Error(errorMessage);
-  }
-
-/* export const getMyClasses = async () => {
-  try {
-    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
-    console.log("Token:", token);
-    if (!token) {
-      throw new Error("Token não encontrado. Faça login novamente.");
-    }
-
-    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
-      },
-    }); // Endpoint para obter turmas e cursos
-    return response.data;
-  } catch (error) {
-    console.error('Erro ao buscar turmas:', error);
-    throw error;
-  }
-};
- */
 /* Função para aparecer todos os planos de ensino */
 export const allPlanEns = async () => {
   try {
@@ -479,7 +391,7 @@ export const allPlanEns = async () => {
 };
 
 /* Requisição de matérias */
-export const discipline = async (classId: string) => {
+/* export const discipline = async (classId: string) => {
   const token = localStorage.getItem("Authorization");
   if (!token) {
     throw new Error("Token não encontrado. Faça login novamente.");
@@ -515,14 +427,12 @@ export const discipline = async (classId: string) => {
     console.error("Erro ao buscar matérias do backend:", error);
     throw new Error(error.response?.data?.message || "Erro desconhecido.");
   }
-};
-
-
+}; */
 
 
 /* ======================= Opp ============================= */
 
-export const fetchHome = async (courseID: string): Promise<LinhaTabela[]> => {
+/* export const fetchHome = async (courseID: string): Promise<LinhaTabela[]> => {
 
   try {
     const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
@@ -541,7 +451,7 @@ export const fetchHome = async (courseID: string): Promise<LinhaTabela[]> => {
     throw new Error(error.response?.data?.error || "Erro ao buscar os planos.");
   }
 
-}
+} */
 
 /* Função adicionando usuário */
 export const RegisterUser = async (userData: {

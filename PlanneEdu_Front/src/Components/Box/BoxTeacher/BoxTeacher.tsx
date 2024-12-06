@@ -12,7 +12,7 @@ interface CardTeacherProps {
 }
 
 
-const CardTeacher: React.FC<CardTeacherProps> = ({
+/* const CardTeacher: React.FC<CardTeacherProps> = ({
   course,
   detail,
   classCard,
@@ -43,8 +43,8 @@ const CardTeacher: React.FC<CardTeacherProps> = ({
     </div>
   );
 };
-
-export default CardTeacher;
+ */
+/* export default CardTeacher; */
 
 const CardTeacher: React.FC<CardTeacherProps> = ({ course, detail, classCard, dateI, dateT, semester, students }) => {
   return (
