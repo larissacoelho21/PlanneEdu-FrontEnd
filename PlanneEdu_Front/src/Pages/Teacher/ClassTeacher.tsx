@@ -1,14 +1,65 @@
-import "../../Css/Teacher/ClassTeacher.css";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
 import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
-import { useState } from "react";
-import { Popup } from "../../Components/PopUpClass/PopUp";
-import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
+import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
+import { Popup } from "../../Components/PopUpClass/PopUp";
 
 export function ClassTeacher() {
+  const { classID } = useParams();
+  console.log("Class ID recebido:", classID);
+
+  const [classData, setClassData] = useState<any>(null);
+  const [loading, setLoading] = useState(true); // Estado de carregamento
   const [showPopUpPlane, setShowPopUpPlane] = useState(false);
   const [showPopUpSA, setShowPopUpSA] = useState(false);
 
+  // Busca os dados da turma
+  useEffect(() => {
+    if (classID) {
+      const fetchClassData = async () => {
+        try {
+          const token = localStorage.getItem("Authorization");
+          if (!token) {
+            throw new Error("Token não encontrado. Faça login novamente.");
+          }
+          const response = await axios.get(
+            `https://planneedu-back.onrender.com/class/get_one/${classID}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setClassData(response.data.selectedTurma);
+        } catch (error) {
+          toast.error("Erro ao buscar dados da turma.");
+          console.error(error);
+        } finally {
+          setLoading(false); // Finaliza o estado de carregamento
+        }
+      };
+
+      fetchClassData();
+    } else {
+      console.error("classID não foi definido!");
+      setLoading(false);
+    }
+  }, [classID]);
+
+  // Lógica de carregamento
+  if (loading) {
+    return <div>Carregando...</div>; // Indicador de carregamento
+  }
+
+  // Lógica para erro ao carregar dados
+  if (!classData) {
+    return <div>Erro ao carregar os dados da turma.</div>;
+  }
+
+  // Alterna exibição de pop-ups
   const togglePopUpPlanne = () => setShowPopUpPlane(!showPopUpPlane);
   const togglePopUpSA = () => setShowPopUpSA(!showPopUpSA);
 
@@ -19,18 +70,14 @@ export function ClassTeacher() {
       </div>
 
       <InfoClass
-        course="Desenvolvimento de sistemas"
-        classCard="SESI"
-        yearClass="2023"
-        dateI="23/02/2023"
-        dateT="18/12/2024"
-        semester={4}
-        students="35"
+        course="Desenvolvimento de Sistemas"
+        classCard={classData.nome}
+        yearClass={new Date(classData.dataInicio).getFullYear().toString()}
+        dateI={new Date(classData.dataInicio).toLocaleDateString()}
+        dateT={new Date(classData.dataTermino).toLocaleDateString()}
+        semester={4} // Atualize conforme necessário
+        students={classData.alunos?.length?.toString() || "0"} // Verifique se alunos existe
       />
-
-      <div className="selecione-class">
-        <p>Selecione o que deseja visualizar:</p>
-      </div>
 
       <div className="buttons-class">
         <LargeButton
@@ -43,9 +90,6 @@ export function ClassTeacher() {
           onClick={togglePopUpSA}
           className="large-button-text"
         />
-        <button id="buttonSA1" onClick={togglePopUpSA}>
-          S.A
-        </button>
       </div>
 
       {showPopUpPlane && (
@@ -80,46 +124,13 @@ export function ClassTeacher() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td id="number">1</td>
-              <td id="name">Ana Costa Santos</td>
-              <td id="number">25780</td>
-            </tr>
-            <tr>
-              <td id="number">2</td>
-              <td id="name">Brenda Almeida da Silva</td>
-              <td id="number">25957</td>
-            </tr>
-            <tr>
-              <td id="number">3</td>
-              <td id="name">Julia Rodrigues Cunha</td>
-              <td id="number">25762</td>
-            </tr>
-            <tr>
-              <td id="number">4</td>
-              <td id="name">Kauã Castro Cavalcanti</td>
-              <td id="number">25893</td>
-            </tr>
-            <tr>
-              <td id="number">5</td>
-              <td id="name">Marisa Silva Barbosa</td>
-              <td id="number">25866</td>
-            </tr>
-            <tr>
-              <td id="number">6</td>
-              <td id="name">Martim Costa Cardoso</td>
-              <td id="number">25031</td>
-            </tr>
-            <tr>
-              <td id="number">7</td>
-              <td id="name">Tomás Carvalho Pinto</td>
-              <td id="number">25114</td>
-            </tr>
-            <tr>
-              <td id="number">8</td>
-              <td id="name">Olivía Bernardes Oliveira</td>
-              <td id="number">25490</td>
-            </tr>
+            {classData.alunos?.map((aluno: any, index: number) => (
+              <tr key={aluno._id}>
+                <td id="number">{index + 1}</td>
+                <td id="name">{`${aluno.nome} ${aluno.sobrenome}`}</td>
+                <td id="number">{aluno.matricula}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

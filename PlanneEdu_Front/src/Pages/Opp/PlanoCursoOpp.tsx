@@ -36,31 +36,29 @@ export function PlanoCursoOpp() {
       </div>
 
       <div className="buttons-class" id="buttons-class">
-        <a href="/addplancurso"><button>+ Criar um novo plano de curso</button></a>
+        <a href="/addplancurso">
+          <button>+ Criar um novo plano de curso</button>
+        </a>
       </div>
 
       <div className="cards-cursosopp">
-        <div className="Card-plano">
+        <div className="card-plano">
           {planosCurso.map((curso: any) => (
-            <div className="Data-curso">
-              <h3 className="Subject">{curso.nome}</h3>
-              <div className="Info">
+            <div className="data-curso">
+              <h3 className="subject">{curso.nome}</h3>
+              <div className="infos-course">
                 <div className="semester-curso">
                   <GraduationCap className="chapeu" size={22} />
                   <h1>{curso.categoria}</h1>
                 </div>
-                <div className="Class-curso">
+                <div className="qntd-semester">
                   <Clock3 size={18} />
-                  <p>{curso.qtdSemestre} semestres</p>
+                  <h1>{curso.qtdSemestre} semestres</h1>
                 </div>
               </div>
             </div>
           ))}
-          <div className="Arrow">
-            <ChevronRight size={50} color="black" strokeWidth={1} />
-          </div>
         </div>
-
       </div>
     </section>
   );
