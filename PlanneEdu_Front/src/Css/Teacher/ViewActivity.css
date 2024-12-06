@@ -112,7 +112,7 @@ body {
   background-color: transparent;
   border: 2px solid #07678d;
   border-radius: 0.5vw;
-  padding: 0.7vw 1.4vw;
+  padding: 0.7vw 6vw;
   font-size: 1.2vw;
   color: #07678d;
   cursor: pointer;
@@ -141,7 +141,13 @@ body {
   padding: 2vw;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   width: 44vw;
+  border: solid 2px transparent;
   cursor: pointer;
+  transition: .3s ease;
+}
+
+.activity-card:hover{
+  border: solid 2px var(--blue-one);
 }
 
 .activity-card h2 {
@@ -154,7 +160,7 @@ body {
 }
 
 .dates-card {
-  width: 20vw;
+  width: 15vw;
   background-color: #084973;
   color: #fff;
   border-radius: 0.5vw;
@@ -162,14 +168,20 @@ body {
 
 .matter-card h2{
   font-weight: 500;
+  font-size: 1.2vw;
 }
 
 .items-card-atvd {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5vw;
-  padding: 0.5vw;
+  
+}
+
+.items-card-atvd h1{
+  font-size: 1vw;
+  font-weight: normal;
+  padding: .6vw;
 }
 
 .items-card-atvd p{

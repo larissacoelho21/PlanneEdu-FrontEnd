@@ -204,6 +204,16 @@ export function NavBarOpp() {
                   <p>Cursos</p>
                 </NavLink>
 
+<<<<<<< HEAD
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "navbarLink active" : "navbarLink"
+                  }
+                  to="/turmaopp"
+                >
+                  <p>Turmas</p>
+                </NavLink>
+=======
                 <li className="nav-dropdown">
                   <div
                     className="li-inicio"
@@ -253,6 +263,7 @@ export function NavBarOpp() {
                     />
                   </div>
                 </li>
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 
                 <NavLink
                   className={({ isActive }) =>
@@ -268,6 +279,7 @@ export function NavBarOpp() {
                     isActive ? "navbarLink active last" : "navbarLink"
                   }
                   to="/manageteachers"
+                  style={{marginRight: "5vw"}}
                 >
                   <p>Gerenciar usuários</p>
                 </NavLink>
@@ -277,6 +289,8 @@ export function NavBarOpp() {
             <div className="Icons">
               <div className="icon-list">
                 <ul>
+<<<<<<< HEAD
+=======
                   <li className="notification-dropdown">
                     <div
                       className="li-bell"
@@ -305,6 +319,7 @@ export function NavBarOpp() {
                   </li>
 
                   {/* Notificação */}
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
                   <li className="profile-notification">
                     {" "}
                     {/* Perfil */}

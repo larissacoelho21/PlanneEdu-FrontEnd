@@ -25,44 +25,44 @@ export function PlanEnsinoEspc() {
         <h2>Planos de ensino disponíveis</h2>
         </div>
         <div className="cards-plans-teaching">
-          <div className="card-plan">
-            <div className="infos-card">
-              <h3 className="subject">Programação WEB Front-End</h3>
-              <div className="course-tag">
-                <p>Desenvolvimento de Sistemas</p>
-              </div>
-              <div className="info-class">
-                <div className="teacher">
-                  <GraduationCap size={25} color="black" strokeWidth={2} />
-                  <p>Arthur Rosa</p>
-                </div>
-                <div className="class">
-                  <BookMarked size={21} color="black" strokeWidth={2} />
-                  <p>Manhã 2023</p>
-                </div>
-              </div>
-            </div>
+        <div className="card-plan-teaching">
+          <div className="title-card-plan">
+            <h1>Programação WEB Front-End</h1>
           </div>
-
-          <div className="card-plan">
-            <div className="infos-card">
-              <h3 className="subject">Interfaces para dispositivos móveis</h3>
-              <div className="course-tag">
-                <p>Desenvolvimento de Sistemas</p>
-              </div>
-              <div className="info-class">
-                <div className="teacher">
-                  <GraduationCap size={25} color="black" strokeWidth={2} />
-                  <p>José Roberto</p>
-                </div>
-                <div className="class">
-                  <BookMarked size={21} color="black" strokeWidth={2} />
-                  <p>Noite 2023</p>
-                </div>
-              </div>
+          <div className="course-badge">
+            <span>Desenvolvimento de sistemas</span>
+          </div>
+          <div className="infos-box">
+            <div className="semester">
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+              <h1>Arthur Rosa</h1>
+            </div>
+            <div className="student-class">
+              <BookMarked size={18} color="black" strokeWidth={1.5} />
+              <h1>Integral 2023</h1>
             </div>
           </div>
         </div>
+
+        <div className="card-plan-teaching">
+          <div className="title-card-plan">
+            <h1>Interfaces para dispositivos móveis</h1>
+          </div>
+          <div className="course-badge">
+            <span>Desenvolvimento de sistemas</span>
+          </div>
+          <div className="infos-box">
+            <div className="semester">
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+              <h1>José Roberto</h1>
+            </div>
+            <div className="student-class">
+              <BookMarked size={18} color="black" strokeWidth={1.5} />
+              <h1>Manhã 2023</h1>
+            </div>
+          </div>
+        </div>
+      </div>
       
     </main>
   );

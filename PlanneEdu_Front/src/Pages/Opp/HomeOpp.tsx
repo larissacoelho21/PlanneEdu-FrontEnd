@@ -24,6 +24,8 @@ export function HomeOpp() {
         subtitleText="Visualize os planos de ensino disponíveis"
       />
 
+      
+
       <div className="table-container">
         <table className="table-homeopp">
           <thead>

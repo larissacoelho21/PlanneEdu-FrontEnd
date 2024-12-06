@@ -23,83 +23,77 @@
 .cards-plans-teaching {
   display: flex;
   grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
+  justify-content: center !important;
+  align-items: center;
   gap: 4vw;
 }
 
-.card-plan {
-  display: flex;
-  flex-direction: column;
+.card-plan-teaching {
   width: 40vw;
-  padding: 2rem;
   background-color: var(--white-one);
+  padding: 2vw;
   border-radius: 0.5vw;
-}
-
-.infos-card{
   display: flex;
   flex-direction: column;
   gap: 1vw;
+  border: solid 2px transparent;
+  transition: 0.3s ease;
+  cursor: pointer;
 }
 
-.infos-card h3 {
-  font-size: 1.3vw;
+.title-card-plan h1 {
+  font-size: 1.5vw;
 }
 
-.course-tag {
+.card-plan-teaching:hover {
+  border: solid 2px var(--blue-one);
+}
+
+.course-badge span{
   background-color: var(--blue-one);
-  width: 18vw;
-  text-align: center;
   color: var(--white-one);
-  padding: 0.5rem;
-  border-radius: 0.5vw;
-}
-
-.info-class {
-  display: flex;
-}
-
-.teacher, .class{
-  display: flex;
-  gap: .5vw;
+  padding: .5rem 1rem;
+  border-radius: .5vw;
 }
 
 /* -------------------- Mobile Version -------------------- */
 @media only screen and (max-width: 800px) {
-  .title-plans-available{
+  .title-plans-available {
     margin-top: 10%;
   }
 
-  .title-plans-available h2{
+  .title-plans-available h2 {
     font-size: 4vw;
   }
 
-  .cards-plans-teaching{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(1fr);
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .card-plan{
-    width: 80vw;
-    padding: 1.5rem;
-  }
-
-  .infos-card{
-    display: flex;
+  .cards-plans-teaching {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     gap: 4vw;
   }
 
-  .infos-card h3{
-    font-size: 4vw;
+  .card-plan-teaching{
+    width: 80vw;
+    display: flex;
+    gap: 3vw;
   }
 
-  .course-tag{
-    width: 50vw;
+  .title-card-plan h1{
     font-size: 3vw;
-    padding: .5rem;
+  }
+
+  .course-badge span{
+    font-size: 2.2vw;
+    padding: 1vw 5vw;
+  }
+
+  .infos-box{
+    display: flex;
+    gap: 35%;
+  }
+
+  .student-class h1{
+    font-size: 2vw;
   }
 }
