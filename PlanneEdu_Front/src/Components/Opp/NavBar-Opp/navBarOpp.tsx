@@ -203,8 +203,6 @@ export function NavBarOpp() {
                   {" "}
                   <p>Cursos</p>
                 </NavLink>
-
-<<<<<<< HEAD
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "navbarLink active" : "navbarLink"
@@ -213,57 +211,6 @@ export function NavBarOpp() {
                 >
                   <p>Turmas</p>
                 </NavLink>
-=======
-                <li className="nav-dropdown">
-                  <div
-                    className="li-inicio"
-                    onClick={() => {
-                      setOpenOne(!openOne);
-                    }}
-                  >
-                    <div className={`navbarLink ${openOne ? "selected" : ""}`}>
-                      {" "}
-                      {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                      <p>
-                        Turmas <ChevronDown />
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`dropdownMenu ${openOne ? "active" : "inactive"
-                      }`}
-                  >
-                    {" "}
-                    {/* menu */}
-                    <DropdownItem
-                      to="#"
-                      icon={<CodeXml size={20} />}
-                      text={"Desenvolvimento de sistemas"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<Settings size={20} />}
-                      text={"Eletromecânica"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<ChartLine size={20} />}
-                      text={"Logística"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<Folder size={20} />}
-                      text={"Administração"}
-                    />
-                    <DropdownItem
-                      to="/turmaopp "
-                      icon={<GalleryVerticalEnd size={20} />}
-                      text={"Geral"}
-                    />
-                  </div>
-                </li>
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 
                 <NavLink
                   className={({ isActive }) =>
@@ -289,37 +236,9 @@ export function NavBarOpp() {
             <div className="Icons">
               <div className="icon-list">
                 <ul>
-<<<<<<< HEAD
-=======
-                  <li className="notification-dropdown">
-                    <div
-                      className="li-bell"
-                      onClick={() => {
-                        setOpenTwo(!openTwo);
-                      }}
-                      ref={notRef}
-                    >
-                      <div className="link-bell">
-                        <FontAwesomeIcon icon={faBell} className="iconsBell" />
-                      </div>
-                    </div>
-
-                    <div
-                      className={`dropdown-notification ${openTwo ? "ativo" : "inactive"
-                        }`}
-                    >
-                      <DropdownNotification
-                        to="#"
-                        text={
-                          "O professor Giovani respondeu ao seu comentário."
-                        }
-                        secondtext={"Toque aqui para visualizar."}
-                      />
-                    </div>
-                  </li>
+                  
 
                   {/* Notificação */}
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
                   <li className="profile-notification">
                     {" "}
                     {/* Perfil */}
@@ -358,121 +277,9 @@ export function NavBarOpp() {
                 </ul>
               </div>
             </div>
-
-            <div className="menu-mobile">
-              {/* Ícone de hambúrguer para mobile */}
-              <NavLink
-                to={"#"}
-                className="hamburger-menu"
-                onClick={toggleMenu} // Chama a função que reseta o estado
-              >
-                <p>
-                  {MenuOpen ? (
-                    <X className="x-icon" size={35} />
-                  ) : (
-                    <Menu className="hamburguer" size={35} />
-                  )}
-                </p>
-              </NavLink>
-
-
-              <div
-                /* className="menulist" */ className={`menu ${MenuOpen ? "open" : ""
-                  }`}
-              >
-                <ul>
-                  <li>
-                    <NavLink /* identificando se o caminho da página selecionada corresponde */
-                      className="dropdownMobile"
-                      to="/homeopp"
-                    >
-                      <p>Início</p>
-                    </NavLink>
-                  </li>
-                  <li
-                    className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
-                  >
-                    <div
-                      className="dropdownMobile"
-                      onClick={toggleDropdwonMobile}
-                    >
-                      <p>
-                        Turmas <ChevronDown className="icon-dropdownMobile" />{" "}
-                      </p>
-                    </div>
-
-                    {DropdownMobileOpen && (
-                      <ul className="dropdown-Mobile">
-                        <li>
-                          <a href="#">Administração</a>
-                        </li>
-                        <li>
-                          <a href="#">Desenvolvimento de Sistemas</a>
-                        </li>
-                        <li>
-                          <a href="#">Eletromecânica</a>
-                        </li>
-                        <li>
-                          <a href="#">Logística</a>
-                        </li>
-                        <li>
-                          <a href="/turmaopp">Geral</a>
-                        </li>
-                      </ul>
-                    )}
-                  </li>
-                  <li>
-                    <NavLink /* identificando se o caminho da página selecionada corresponde */
-                      className="dropdownMobile"
-                      to="/cursosopp"
-                    >
-                      <p>Cursos</p>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink /* identificando se o caminho da página selecionada corresponde */
-                      className="dropdownMobile"
-                      to="/planocursoopp"
-                    >
-                      <p>Planos de curso</p>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink /* identificando se o caminho da página selecionada corresponde */
-                      className="dropdownMobile"
-                      to="/manageteachers"
-                    >
-                      <p>Gerenciar usuários</p>
-                    </NavLink>
-                  </li>
-
-                  <li>
-                    <div
-                      className="dropdownMobile"
-                      onClick={toggleDropdwonMobileProfile}
-                    >
-                      <p>
-                        Perfil <ChevronDown className="icon-dropdownMobile" />{" "}
-                      </p>
-                    </div>
-
-                    {ProfileDropdownOpen && (
-                      <ul className="dropdownProfileMob">
-                        <li>
-                          <a href="/profileopp">Visualizar perfil</a>
-                        </li>
-                        <li>
-                          <a href="/login">Sair</a>
-                        </li>
-                      </ul>
-                    )}
-                  </li>
-                </ul>
-              </div>
             </div>
 
           </div>
-        </div>
       </nav>
     </section>
   );

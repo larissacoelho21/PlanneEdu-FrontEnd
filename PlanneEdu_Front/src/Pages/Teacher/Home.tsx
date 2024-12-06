@@ -3,8 +3,8 @@ import { NavBarProfessor } from "../../Components/Docentes/NavBar-Professores/na
 import "../../Css/Teacher/Home.css"
 import { useEffect, useState } from "react";
 import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
-import { CardTeacher } from "../../Components/Box/BoxTeacher/BoxTeacher";
 import { toast } from "sonner";
+import CardTeacher from "../../Components/Box/BoxTeacher/BoxTeacher";
 /* import { allTurmas } from "../../Services/Axios"; */
 
 /* interface TurmaData {

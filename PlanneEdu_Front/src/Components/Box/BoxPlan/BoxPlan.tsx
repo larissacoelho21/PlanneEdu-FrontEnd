@@ -1,5 +1,5 @@
 import { BookMarked, GraduationCap, Settings } from "lucide-react";
-import "../BoxPlan/BoxPlan.css";
+import "../../../Css/Teacher/PlanEnsino.css"
 import { ReactNode } from "react";
 
 interface CardPlanProps {
