@@ -26,7 +26,7 @@ export function CardTeacher({
 }: CardTeacherProps) {
   return (
     <div className="cards-teacher">
-<<<<<<< HEAD
+
       <div className="card-box">
         <h1>
           {course} {detail} {classCard} {yearClass}
@@ -35,7 +35,7 @@ export function CardTeacher({
           <span>
             {textI} {dateI} {detail} {textT} {dateT}
           </span>
-=======
+
     <div className="box-teacher">
       <h1>
         {course} {detail} {classCard} 
@@ -49,7 +49,7 @@ export function CardTeacher({
         <div className="semester">
           <Clock3 size={18} />
           <h1>{semester} semestres</h1>
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
+
         </div>
         <div className="student-class">
           <Users size={18} />

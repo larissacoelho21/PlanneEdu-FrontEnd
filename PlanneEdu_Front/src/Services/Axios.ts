@@ -464,7 +464,7 @@ export const RegisterUser = async (userData: {
   }
 };
 
-<<<<<<< HEAD
+
 /* Função editar informações */
 // Editando informações do perfil do OPP
 export const updateUser = async (
@@ -499,10 +499,6 @@ export const updateUser = async (
   }
 };
 
-
-=======
-//TODO: não funciona 
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 /* Função aparecendo todos usuarios cadastrados */
 export const allUsers = async () => {
   try {

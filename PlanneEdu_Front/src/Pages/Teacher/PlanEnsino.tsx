@@ -8,13 +8,11 @@ import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
-<<<<<<< HEAD
-=======
+
 import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
 import { useEffect, useState } from "react";
 import { allPlanEns } from "../../Services/Axios";
 
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function PlanEnsino() {
@@ -52,7 +50,7 @@ export function PlanEnsino() {
         <h2>Planos de ensino disponíveis</h2>
       </div>
 
-<<<<<<< HEAD
+
       <div className="cards-plans-teaching">
         <div className="card-plan-teaching">
           <div className="title-card-plan">
@@ -91,7 +89,6 @@ export function PlanEnsino() {
             </div>
           </div>
         </div>
-=======
       <div className="cards-plans">
         {planoEns.map((plano) => (
           <CardPlan
@@ -118,7 +115,7 @@ export function PlanEnsino() {
           shiftCourse="Manhã"
           yearCourse="2023"
         /> */}
->>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
+
       </div>
     </main>
   );
