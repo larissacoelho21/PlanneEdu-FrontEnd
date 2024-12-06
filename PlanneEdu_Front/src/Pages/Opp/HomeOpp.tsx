@@ -3,9 +3,28 @@ import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/HomeOpp.css";
 import { Link } from "react-router-dom";
 import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
+import { fetchHome } from "../../Services/Axios";
+interface Plano {
+  planoId: string;
+  materia: string;
+}
+
+interface Professor {
+  nome: string;
+  planos: Plano[];
+}
+
+export interface LinhaTabela {
+  turma: string;
+  professores: Record<string, Professor>;
+}
+
 
 export function HomeOpp() {
   const [userName, setUserName] = useState<string | null>("");
+  const [tabela, setTabela] = useState<LinhaTabela[]>([]);
+
+  const courseID = "6752ae043224e375940edcbd6752ae043224e375940edcbd"
 
   useEffect(() => {
     // Recupera o nome do usuário do localStorage
@@ -13,8 +32,18 @@ export function HomeOpp() {
     if (storedUserName) {
       setUserName(storedUserName);
     }
+
+    fetchHomeData();
   }, []);
 
+  const fetchHomeData = async () => {
+    try {
+      const response = await fetchHome(courseID); // Passa o courseID corretamente
+      setTabela(response); // Atualiza o estado com os dados
+    } catch (error: any) {
+      console.error("Erro ao carregar tabela:", error.message);
+    }
+  };
   return (
     <section className="homeTeacher">
       <NavBarOpp />
@@ -27,6 +56,48 @@ export function HomeOpp() {
       
 
       <div className="table-container">
+        {tabela.map((turmaData, index) => (
+          <table className="table-homeopp">
+            <thead>
+              <tr>
+                <th id="title-homeopp" colSpan={4}>
+                  Desenvolvimento de sistemas
+                </th>
+              </tr>
+              <tr>
+                <th></th>
+                {tabela.length > 0 && Object.keys(tabela[0].professores).map((professorId) => (
+                  <th key={professorId} id="subtitle">
+                    {tabela[0].professores[professorId].nome}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tabela.map((linha, index) => (
+                <tr key={index}>
+                  <td className="turmas-homeopp">{linha.turma}</td>
+                  {Object.keys(linha.professores).map((professorId) => (
+                    <td key={professorId} className="td">
+                      {linha.professores[professorId].planos.map((plano, idx) => (
+                        <Link
+                          to={`/planos/${plano.planoId}`}
+                          key={idx}
+                          className="button"
+                        >
+                          {plano.materia}
+                        </Link>
+                      ))}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ))}
+      </div>
+
+      {/* <div className="table-container">
         <table className="table-homeopp">
           <thead>
             <tr>
@@ -89,7 +160,7 @@ export function HomeOpp() {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </section>
   );
 }

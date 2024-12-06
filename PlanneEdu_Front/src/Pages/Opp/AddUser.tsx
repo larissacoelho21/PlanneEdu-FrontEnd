@@ -117,15 +117,6 @@ function InputField({
             </option>
           ))}
         </select>
-      ) : mask ? (
-        <ReactInputMask
-          id={id}
-          name={name}
-          mask={mask}
-          value={localValue ?? ""}
-          onChange={handleInputChange}
-          className="input-add-user"
-        />
       ) : (
         <input
           id={id}
@@ -189,9 +180,10 @@ export function AddUser() {
   ];
 
   const areasAtuacao = [
-    { value: "infoNcomu", label: "Informação e comunicação" },
-    { value: "controNprocessos", label: "Controle e Processos Industriais" },
-    { value: "gestNnego", label: "Gestão e Negócios" },
+    { value: "INFORMAÇÃO E COMUNICAÇÃO", label: "Informação e comunicação" },
+    { value: "CONTROLE E PROCESSOS INDUSTRIAIS", label: "Controle e Processos Industriais" },
+    { value: "GESTÃO E NEGÓCIOS", label: "Gestão e Negócios" },
+    { value: "ORIENTADOR DE PRÁTICAS PROFISSIONAIS", label: "'Orientador de práticas profissionais'"}
   ];
 
   return (

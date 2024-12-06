@@ -17,8 +17,6 @@ interface ProfileData {
   nif: string;
   telefone: string;
   email: string;
-  turmasAtribuidas: [];
-  cursosAtribuidos: [];
 }
 
 /* interface Turma {
@@ -49,9 +47,7 @@ export function ManageTeachers() {
     const getUsers = async () => {
       try {
         const response = await allUsers();
-        setUsers(response.users || []);
-        /* setTurmas(response.turmasAtribuidas);
-        setCursos(response.cursosAtribuidos || []); */
+        setUsers(response || []);
 
         console.log('Resposta da API:', response);
       } catch (error: any) {
@@ -63,7 +59,6 @@ export function ManageTeachers() {
   }, []);
 
   const handleDeleteUser = async (id: string) => {
-    //TODO: arrumar toast
     const toastId = toast(
       <div>
         <p style={{ textAlign: "start", marginLeft: "-1px" }}>Tem certeza que deseja excluir este usuário?</p>
@@ -112,7 +107,7 @@ export function ManageTeachers() {
         toast.error("Erro ao deletar o usuário: " + error.message); // Exibe mensagem de erro
       }
     };
-  }
+  } 
 
 
   return (
@@ -143,7 +138,6 @@ export function ManageTeachers() {
                   ) : (
                     <ChevronDown className="seta-cima" size={40} color="black" strokeWidth={1} />
                   )}
-
                 </div>
               </div>
             </div>
@@ -151,42 +145,6 @@ export function ManageTeachers() {
             {expandedCard === index && (
               <div className="info-docentes">
                 <div  /* className={`additional-info ${isExpanded ? "expanded" : "collapsed"}`} */>
-                  <h2>Turmas Atribuídas</h2>
-                  <ul className="a">
-                    {/* {user.turmasAtribuidas && user.turmasAtribuidas.length > 0 ? (
-                      user.turmasAtribuidas.split(", ").map((turma, i) => (
-                        <li key={i}>{turma}</li>
-                      ))
-                    ) : null} */} {/* Não exibe nada se não houver turmas */}
-
-                    {/* <p>{user.turmasAtribuidas}</p> */}
-                    {/* {users.map((turma) => (
-                      <p key={turma._id}>{turma.nome}</p>
-                    ))} */}
-                    {/* {turmas.length > 0 ? (
-                        turmas.map((turma) => (
-                          <li key={turma._id}>{turma.nome}</li>
-                        ))
-                      ) : (
-                        <li>Nenhuma turma atribuída</li>
-                      )} */}
-                  </ul>
-
-                  <h2>Cursos</h2>
-                  <ul className="a">
-                    <p>{user.cursosAtribuidos}</p>
-                    {/* {cursos.map((curso) => (
-                      <p key={curso._id}>{curso.planoCurso.nome}</p>
-                    ))} */}
-                    {/* {cursos.length > 0 ? (
-                        cursos.map((curso) => (
-                          <li key={curso._id}>{curso.planoCurso.nome}</li>
-                        ))
-                      ) : (
-                        <li>Nenhuma turma atribuída</li>
-                      )} */}
-                  </ul>
-
                   <h2>Informações de contato</h2>
                   <div className="email-manage">
                     <Mail className="email-btn" size={18} color="black" strokeWidth={1} />
