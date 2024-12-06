@@ -11,24 +11,39 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import React, { useEffect, useState } from "react";
-import { profileOpp, updatePassword } from "../../Services/Axios";
+import { profileOpp, updatePassword, updateUser } from "../../Services/Axios";
 import { toast } from "sonner";
 import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 
-/* Interface para o InputField */
 interface InputFieldProps {
   id: string;
   label: string;
   type?: string;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
 }
 
-function InputField({ id, label, type = "text", value, onChange }: InputFieldProps) {
+/* Interface para o InputField */
+function InputField({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+}: InputFieldProps) {
   const [isFilled, setIsFilled] = useState(false);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFilled(event.target.value !== "");
+  useEffect(() => {
+    setIsFilled(value !== "");
+  }, [value]);
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const target = event.target;
+    setIsFilled(target.value !== "");
     onChange(event);
   };
 
@@ -57,6 +72,7 @@ interface ProfileData {
   nif: string;
   telefone: string;
   email: string;
+  nivelAcesso: string;
 }
 
 export function ProfileOpp() {
@@ -98,6 +114,44 @@ export function ProfileOpp() {
       setIsDialogOpen(false);
     } catch (error: any) {
       console.error("Erro ao cadastrar senha: ", error);
+    }
+  };
+
+  // Editar perfil opp
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
+  const [nome, setNome] = useState<string>("");
+  const [sobrenome, setSobrenome] = useState<string>("");
+  const [nif, setNif] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    if (user) {
+      setNome(user.nome);
+      setSobrenome(user.sobrenome);
+      setNif(user.nif);
+      setTelefone(user.telefone);
+      setEmail(user.email);
+    }
+  }, [user]);
+
+  const handleEditProfile = async () => {
+    try {
+      console.log("Dados enviados ao servidor:", {
+        nome,
+        sobrenome,
+        nif,
+        telefone,
+        email,
+      });
+
+      await updateUser(nome, sobrenome, nif, telefone, email);
+
+      toast.success("Perfil atualizado com sucesso!");
+      setEditProfileOpen(false);
+    } catch (error: any) {
+      console.error("Erro ao atualizar perfil:", error);
+      toast.error("Erro ao atualizar perfil.");
     }
   };
 
@@ -222,6 +276,102 @@ export function ProfileOpp() {
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
+
+        {/* Editar infos */}
+        <Dialog.Root open={editProfileOpen} onOpenChange={setEditProfileOpen}>
+          <Dialog.Trigger asChild>
+            <div className="edit-profile-button">
+              <button>Editar perfil</button>
+            </div>
+          </Dialog.Trigger>
+
+          <Dialog.Portal>
+            <Dialog.Overlay className="DialogOverlay" />
+            <Dialog.Content className="DialogContent">
+              <Dialog.Title
+                className="DialogTitle"
+                style={{
+                  display: "flex",
+                  marginTop: 10,
+                  justifyContent: "center",
+                }}
+              >
+                Editar Perfil
+              </Dialog.Title>
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await handleEditProfile();
+                }}
+              >
+                <div className="Fildset">
+                  <InputField
+                    id="editName"
+                    label="Nome"
+                    type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                  />
+
+                  <InputField
+                    id="editSurname"
+                    label="Sobrenome"
+                    type="text"
+                    value={sobrenome}
+                    onChange={(e) => setSobrenome(e.target.value)}
+                  />
+
+                  <InputField
+                    id="editNif"
+                    label="NIF"
+                    type="text"
+                    value={nif}
+                    onChange={(e) => setNif(e.target.value)}
+                  />
+
+                  <InputField
+                    id="editEmail"
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <InputField
+                    id="editPhone"
+                    label="Telefone"
+                    type="tel"
+                    value={telefone}
+                    onChange={(e) => setTelefone(e.target.value)}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: 25,
+                    justifyContent: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <button type="submit" className="Button cancel">
+                    Salvar
+                  </button>
+                  <Dialog.Close asChild>
+                    <button type="button" className="Button cancel">
+                      Cancelar
+                    </button>
+                  </Dialog.Close>
+                </div>
+              </form>
+
+              <Dialog.Close asChild>
+                <div aria-label="Close">
+                  <Cross2Icon className="IconButton" />
+                </div>
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
       </div>
 
       {/* =========== Mobile ============== */}
@@ -230,7 +380,9 @@ export function ProfileOpp() {
           <div className="content-profile">
             <div className="nameProfile">
               <img src={User} alt="" />
-              <p>{user.nome} {user.sobrenome}</p>
+              <p>
+                {user.nome} {user.sobrenome}
+              </p>
             </div>
 
             <div className="infoProfile">
