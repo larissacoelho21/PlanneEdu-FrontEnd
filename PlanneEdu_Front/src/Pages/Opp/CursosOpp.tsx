@@ -6,9 +6,11 @@ import { BookMarked, Clock3 } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { ButtonAdd } from "../../Components/Buttons/More/More";
 import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
+import { getAllCursos } from "../../Services/Axios";
 
 export function CursosOpp() {
   const [userName, setUserName] = useState<string | null>("");
+  const [cursos, setCursos] = useState<any[]>([])
 
   useEffect(() => {
     // Recupera o nome do usuário do localStorage
@@ -16,7 +18,21 @@ export function CursosOpp() {
     if (storedUserName) {
       setUserName(storedUserName);
     }
+
+    getCourse();
   }, []);
+
+  const getCourse = async () => {
+    try {
+      const response = await getAllCursos();
+      console.log("Resposta da API:", response);
+      setCursos(response);
+    } catch (error: any) {
+      throw new Error(
+        error.message || "Não foi possível encontrar os usuários"
+      );
+    }
+  }
 
   return (
     <section className="homeTeacher">
@@ -34,30 +50,24 @@ export function CursosOpp() {
 
       <div className="cards-cursosopp">
         <div className="card-course">
-          <div className="data-curso">
-            <h3 className="subject">Desenvolvimento de Sistemas</h3>
-            <div className="info">
-              <div className="number-semesters">
-                <Clock3 size={18} className="clock-semester" />
-                <h1>4 semestres</h1>
+          {cursos.map((curso: any) => (
+            <div className="data-curso">
+              <h3 className="subject">{curso.nome}</h3>
+              <div className="info">
+                <div className="number-semesters">
+                  <Clock3 size={18} className="clock-semester" />
+                  <h1>{curso.qtdSemestre} semestres</h1>
+                </div>
               </div>
-              <div className="assigned-classes">
-                <BookMarked
-                  size={21}
-                  color="black"
-                  strokeWidth={1.5}
-                  className="bookmarked"
-                />
-                <h1>5 turmas atribuídas </h1>
+              <div className="technology-curso">
+                <span>{curso.categoria}</span>
               </div>
             </div>
-            <div className="technology-curso">
-              <span>Tecnologia da Informação - T.I</span>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="card-course">
+
+        {/* <div className="card-course">
           <div className="data-curso">
             <h3 className="subject">Desenvolvimento de Sistemas</h3>
             <div className="info">
@@ -79,7 +89,7 @@ export function CursosOpp() {
               <span>Tecnologia da Informação - T.I</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

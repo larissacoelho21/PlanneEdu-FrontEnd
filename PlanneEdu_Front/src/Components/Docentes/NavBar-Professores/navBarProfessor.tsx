@@ -134,6 +134,15 @@ export function NavBarProfessor() {
     };
   }, []);
 
+  const toggleMenu = () => {
+    setMenuOpen(!MenuOpen);
+  
+    // Reseta o dropdown de Turmas ao fechar/reabrir o menu
+    if (MenuOpen) {
+      SetIsDropdownMobileOpen(false);
+    }
+  };
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -196,10 +205,9 @@ export function NavBarProfessor() {
 
                   <li>
                     <div
-                      className={`dropdown-menu ${
-                        openOne ? "active" : "inactive"
-                      }`}
-                      //TODO: Transformar textos responsivos
+                      className={`dropdown-menu ${openOne ? "active" : "inactive"
+                        }`}
+                    //TODO: Transformar textos responsivos
                     >
                       {" "}
                       {/* menu */}
@@ -262,9 +270,8 @@ export function NavBarProfessor() {
 
                     <li>
                       <div
-                        className={`dropdown-notification ${
-                          openTwo ? "ativo" : "inactive"
-                        }`}
+                        className={`dropdown-notification ${openTwo ? "ativo" : "inactive"
+                          }`}
                       >
                         <DropdownNotification
                           to="/homeopp"
@@ -294,9 +301,8 @@ export function NavBarProfessor() {
                     <ul>
                       <li>
                         <div
-                          className={`dropdown-profile ${
-                            opentThree ? "activeOne" : "inactiveOne"
-                          }`}
+                          className={`dropdown-profile ${opentThree ? "activeOne" : "inactiveOne"
+                            }`}
                         >
                           <DropdownProfile
                             to="/profileteacher"
@@ -322,23 +328,31 @@ export function NavBarProfessor() {
               <NavLink
                 to={"#"}
                 className="hamburger-menu"
-                onClick={() => setMenuOpen(!MenuOpen)}
+                onClick={toggleMenu} // Chama a função que reseta o estado
               >
                 <p>
                   {MenuOpen ? (
                     <X className="x-icon" size={35} />
                   ) : (
-                    <Menu className="hamburguer" size={35}/>
+                    <Menu className="hamburguer" size={35} />
                   )}
                 </p>
               </NavLink>
 
+
               <div
-                /* className="menulist" */ className={`menu ${
-                  MenuOpen ? "open" : ""
-                }`}
+                /* className="menulist" */ className={`menu ${MenuOpen ? "open" : ""
+                  }`}
               >
                 <ul>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="/homeprofessor"
+                    >
+                      <p>Início</p>
+                    </NavLink>
+                  </li>
                   <li
                     className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
                   >
@@ -405,7 +419,7 @@ export function NavBarProfessor() {
                 </ul>
               </div>
             </div>
-            
+
           </div>
         </div>
       </nav>

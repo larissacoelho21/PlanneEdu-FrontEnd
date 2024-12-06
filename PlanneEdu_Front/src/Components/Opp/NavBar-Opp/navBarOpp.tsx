@@ -140,6 +140,16 @@ export function NavBarOpp() {
     };
   }, []);
 
+  const toggleMenu = () => {
+  setMenuOpen(!MenuOpen);
+
+  // Reseta o dropdown de Turmas ao fechar/reabrir o menu
+  if (MenuOpen) {
+    SetIsDropdownMobileOpen(false);
+  }
+};
+
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -194,6 +204,7 @@ export function NavBarOpp() {
                   <p>Cursos</p>
                 </NavLink>
 
+<<<<<<< HEAD
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "navbarLink active" : "navbarLink"
@@ -202,6 +213,57 @@ export function NavBarOpp() {
                 >
                   <p>Turmas</p>
                 </NavLink>
+=======
+                <li className="nav-dropdown">
+                  <div
+                    className="li-inicio"
+                    onClick={() => {
+                      setOpenOne(!openOne);
+                    }}
+                  >
+                    <div className={`navbarLink ${openOne ? "selected" : ""}`}>
+                      {" "}
+                      {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
+                      <p>
+                        Turmas <ChevronDown />
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`dropdownMenu ${openOne ? "active" : "inactive"
+                      }`}
+                  >
+                    {" "}
+                    {/* menu */}
+                    <DropdownItem
+                      to="#"
+                      icon={<CodeXml size={20} />}
+                      text={"Desenvolvimento de sistemas"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<Settings size={20} />}
+                      text={"Eletromecânica"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<ChartLine size={20} />}
+                      text={"Logística"}
+                    />
+                    <DropdownItem
+                      to="#"
+                      icon={<Folder size={20} />}
+                      text={"Administração"}
+                    />
+                    <DropdownItem
+                      to="/turmaopp "
+                      icon={<GalleryVerticalEnd size={20} />}
+                      text={"Geral"}
+                    />
+                  </div>
+                </li>
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 
                 <NavLink
                   className={({ isActive }) =>
@@ -227,6 +289,37 @@ export function NavBarOpp() {
             <div className="Icons">
               <div className="icon-list">
                 <ul>
+<<<<<<< HEAD
+=======
+                  <li className="notification-dropdown">
+                    <div
+                      className="li-bell"
+                      onClick={() => {
+                        setOpenTwo(!openTwo);
+                      }}
+                      ref={notRef}
+                    >
+                      <div className="link-bell">
+                        <FontAwesomeIcon icon={faBell} className="iconsBell" />
+                      </div>
+                    </div>
+
+                    <div
+                      className={`dropdown-notification ${openTwo ? "ativo" : "inactive"
+                        }`}
+                    >
+                      <DropdownNotification
+                        to="#"
+                        text={
+                          "O professor Giovani respondeu ao seu comentário."
+                        }
+                        secondtext={"Toque aqui para visualizar."}
+                      />
+                    </div>
+                  </li>
+
+                  {/* Notificação */}
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
                   <li className="profile-notification">
                     {" "}
                     {/* Perfil */}
@@ -244,9 +337,8 @@ export function NavBarOpp() {
                     <ul>
                       <li>
                         <div
-                          className={`dropdown-profile ${
-                            opentThree ? "activeOne" : "inactiveOne"
-                          }`}
+                          className={`dropdown-profile ${opentThree ? "activeOne" : "inactiveOne"
+                            }`}
                         >
                           <DropdownProfile
                             to="/profileopp"
@@ -272,7 +364,7 @@ export function NavBarOpp() {
               <NavLink
                 to={"#"}
                 className="hamburger-menu"
-                onClick={() => setMenuOpen(!MenuOpen)}
+                onClick={toggleMenu} // Chama a função que reseta o estado
               >
                 <p>
                   {MenuOpen ? (
@@ -283,12 +375,20 @@ export function NavBarOpp() {
                 </p>
               </NavLink>
 
+
               <div
-                /* className="menulist" */ className={`menu ${
-                  MenuOpen ? "open" : ""
-                }`}
+                /* className="menulist" */ className={`menu ${MenuOpen ? "open" : ""
+                  }`}
               >
                 <ul>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="/homeopp"
+                    >
+                      <p>Início</p>
+                    </NavLink>
+                  </li>
                   <li
                     className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
                   >

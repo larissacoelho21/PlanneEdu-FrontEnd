@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pencil, UserMinus } from "lucide-react";
@@ -11,6 +11,7 @@ import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { SmallButton } from "../../Components/Buttons/SmallButton/SmallButton";
 import { InputField } from "../../Components/Inputs/InputField/Field/InputField";
 import ReactInputMask from "react-input-mask";
+import { course } from "../../Services/Axios";
 
 // Componente principal
 export function AddClass() {
@@ -138,14 +139,30 @@ export function AddClass() {
   };
 
   // função back
-  const [selectCourse, setSelectCourse] = useState<string>("");
+  const [selectCourse, setSelectCourse] = useState<any[]>([]);
+  const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   const [nameClass, setNameClass] = useState<string>("");
   const [shiftClass, setShiftClass] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [selectTeacher, setSelectTeacher] = useState<string>("");
 
-  // validação para selecionar curso
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const cursos = await course();
+        console.log("Cursos recebidos da API:", cursos);
+
+        setSelectCourse(cursos);
+      } catch (error: any) {
+        console.error("Erro ao carregar os cursos:", error.message);
+        toast.error(error.message || "Não foi possível encontrar os cursos");
+      }
+    };
+
+    getCourses();
+  }, []);
+
   const handleSubmitCourse = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -157,7 +174,6 @@ export function AddClass() {
     toast.success("Turma criada com sucesso!");
   };
 
-  // input data
   const convertToISO = (dateString: string) => {
     const [day, month, year] = dateString.split("/");
     return `${year}-${month}-${day}`;
@@ -177,7 +193,6 @@ export function AddClass() {
     }
   };
 
-  // converte para o formato ISO 
   const startDateISO = convertToISO(startDate);
   const endDateISO = convertToISO(endDate);
 
@@ -207,11 +222,16 @@ export function AddClass() {
         </label>
         <select
           id="select-course"
-          value={selectCourse}
-          onChange={(e) => setSelectCourse(e.target.value)}
+          value={selectedCourseId} 
+          onChange={(e) => setSelectedCourseId(e.target.value)}
           className="input-all"
         >
           <option value=""></option>
+          {selectCourse.map((curso) => (
+            <option key={curso._id} value={curso._id}>
+              {curso.planoCurso.nome}
+            </option>
+          ))}
         </select>
         <h2>* Obs: Para continuar você deve selecionar um curso</h2>
       </div>
@@ -227,7 +247,11 @@ export function AddClass() {
             disabled={!selectCourse}
           />
           <div className="select-addclass">
-            <label htmlFor="" className="label-add-class" style={{ color: "var(--black-two)", opacity: "90%"}}>
+            <label
+              htmlFor=""
+              className="label-add-class"
+              style={{ color: "var(--black-two)", opacity: "90%" }}
+            >
               Selecione o turno
             </label>
             <select name="" id="" disabled={!selectCourse}>

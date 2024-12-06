@@ -8,9 +8,34 @@ import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
+<<<<<<< HEAD
+=======
+import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
+import { useEffect, useState } from "react";
+import { allPlanEns } from "../../Services/Axios";
+
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
 import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function PlanEnsino() {
+  const [planoEns, setPlanosEns] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getPlanEns = async () => {
+      try {
+        const response = await allPlanEns();
+        console.log("Resposta da API:", response);
+        setPlanosEns(response);
+      } catch (error: any) {
+        throw new Error(
+          error.message || "Não foi possível encontrar os usuários"
+        );
+      }
+    };
+
+    getPlanEns();
+  }, []);
+
   return (
     <main>
       <div className="header">
@@ -27,6 +52,7 @@ export function PlanEnsino() {
         <h2>Planos de ensino disponíveis</h2>
       </div>
 
+<<<<<<< HEAD
       <div className="cards-plans-teaching">
         <div className="card-plan-teaching">
           <div className="title-card-plan">
@@ -65,6 +91,34 @@ export function PlanEnsino() {
             </div>
           </div>
         </div>
+=======
+      <div className="cards-plans">
+        {planoEns.map((plano) => (
+          <CardPlan
+            matter={plano.materia}
+            course={plano.curso}
+            iconTeacher={
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+            }
+            teacher={plano.professor}
+            iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+            shiftCourse={plano.turma}
+          />
+        ))}
+
+
+        {/* <CardPlan
+          matter="Automação Industrial"
+          course="Eletromecânica"
+          iconTeacher={
+            <GraduationCap size={23} color="black" strokeWidth={1.5} />
+          }
+          teacher="André Pereira"
+          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+          shiftCourse="Manhã"
+          yearCourse="2023"
+        /> */}
+>>>>>>> 27086b9158047eda7d29f3595bbabcf67451b100
       </div>
     </main>
   );

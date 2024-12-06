@@ -17,13 +17,28 @@ interface ProfileData {
   nif: string;
   telefone: string;
   email: string;
-  turmasAtribuidas: string[];
-  cursosAtribuidos: string[];
-  materiasAtribuidos: string[];
+  turmasAtribuidas: [];
+  cursosAtribuidos: [];
 }
+
+/* interface Turma {
+  _id: string;
+  nome: string;
+}
+
+interface Curso {
+  _id: string;
+  planoCurso: {
+    nome: string;
+  };
+} */
+
 
 export function ManageTeachers() {
   const [users, setUsers] = useState<ProfileData[]>([]);
+  /* const [turmas, setTurmas] = useState<Turma[]>([]);
+  const [cursos, setCursos] = useState<Curso[]>([]);
+ */
   const [expandedCard, setExpandedCard] = useState<number | null>(null); // Controla qual card está expandido
 
   const toggleCard = (index: number) => {
@@ -34,7 +49,11 @@ export function ManageTeachers() {
     const getUsers = async () => {
       try {
         const response = await allUsers();
-        setUsers(response || []);
+        setUsers(response.users || []);
+        /* setTurmas(response.turmasAtribuidas);
+        setCursos(response.cursosAtribuidos || []); */
+
+        console.log('Resposta da API:', response);
       } catch (error: any) {
         throw new Error(error.message || "Não foi possível encontrar os usuários");
       }
@@ -127,37 +146,45 @@ export function ManageTeachers() {
 
                 </div>
               </div>
-              <div className="teacher-development">
-                <span className="cursos-atribuidos">{user.cursosAtribuidos?.join(', ') || "Sem cursos atribuídos"}</span>
-              </div>
             </div>
 
-            {/* //TODO: refazer css dessa segunda parte */}
             {expandedCard === index && (
               <div className="info-docentes">
                 <div  /* className={`additional-info ${isExpanded ? "expanded" : "collapsed"}`} */>
                   <h2>Turmas Atribuídas</h2>
                   <ul className="a">
-                    {user?.turmasAtribuidas?.length ? (
-                      user.turmasAtribuidas.map((turma, index) => (
-                        <li key={index}>{turma}</li>
+                    {/* {user.turmasAtribuidas && user.turmasAtribuidas.length > 0 ? (
+                      user.turmasAtribuidas.split(", ").map((turma, i) => (
+                        <li key={i}>{turma}</li>
                       ))
-                    ) : (
-                      <li>Nenhuma turma atribuída</li>
-                    )}
+                    ) : null} */} {/* Não exibe nada se não houver turmas */}
 
+                    {/* <p>{user.turmasAtribuidas}</p> */}
+                    {/* {users.map((turma) => (
+                      <p key={turma._id}>{turma.nome}</p>
+                    ))} */}
+                    {/* {turmas.length > 0 ? (
+                        turmas.map((turma) => (
+                          <li key={turma._id}>{turma.nome}</li>
+                        ))
+                      ) : (
+                        <li>Nenhuma turma atribuída</li>
+                      )} */}
                   </ul>
 
-                  <h2>Matérias</h2>
+                  <h2>Cursos</h2>
                   <ul className="a">
-                    {user?.materiasAtribuidos?.length ? (
-                      user.materiasAtribuidos.map((curso, index) => (
-                        <li key={index}>{curso}</li>
-                      ))
-                    ) : (
-                      <li>Nenhuma matéria atribuída</li>
-                    )}
-
+                    <p>{user.cursosAtribuidos}</p>
+                    {/* {cursos.map((curso) => (
+                      <p key={curso._id}>{curso.planoCurso.nome}</p>
+                    ))} */}
+                    {/* {cursos.length > 0 ? (
+                        cursos.map((curso) => (
+                          <li key={curso._id}>{curso.planoCurso.nome}</li>
+                        ))
+                      ) : (
+                        <li>Nenhuma turma atribuída</li>
+                      )} */}
                   </ul>
 
                   <h2>Informações de contato</h2>
@@ -172,8 +199,7 @@ export function ManageTeachers() {
 
                   <div className="button-manage">
                     <button onClick={() => handleDeleteUser(user._id)}>
-                      
-                        <Trash className="icon-btn-delete" size={20} color="white" strokeWidth={1.5} /> Excluir docente
+                      <Trash className="icon-btn-delete" size={20} color="white" strokeWidth={1.5} /> Excluir docente
                     </button>
                   </div>
                 </div>
@@ -182,68 +208,6 @@ export function ManageTeachers() {
           </div>
         ))}
       </div>
-
-      {/* <div className="teacher-card">
-        <div className="teacher-card2">
-          <h1>Arthur Rosa</h1>
-          <div className="lock">
-            <Lock size={19} strokeWidth={1.5} /> <p>NIF: 128492220</p>
-            <div className="chevron-container" onClick={toggleExpand} style={{ cursor: "pointer" }}>
-              {isExpanded ? (
-                <ChevronUp size={40} color="black" strokeWidth={1} />
-              ) : (
-                <ChevronDown size={40} color="black" strokeWidth={1} />
-              )}
-            </div>
-          </div>
-          <div className="teacher-development">
-            <span>Desenvolvimento de sistemas</span>
-          </div>
-        </div>
-
-
-        {/* Conteúdo adicional 
-        {isExpanded && (
-          <div className={`additional-info ${isExpanded ? "expanded" : "collapsed"}`}>
-            <h2>Turmas Atribuídas</h2>
-            <ul className="a">
-              <li>DEV SESI - 2023</li>
-              <li>DEV Noite - 2023</li>
-              <li>Libbs</li>
-              <li>DS SESI - 2024</li>
-              <li>DS Noite - 2024</li>
-            </ul>
-
-            <h2>Matérias</h2>
-            <ul className="a">
-              <li>Banco de Dados</li>
-              <li>Programação Orientada a Objetos</li>
-              <li>Programação BackEnd</li>
-            </ul>
-
-            <h2>Informações de contato</h2>
-            <div className="email-manage">
-              <Mail size={18} color="black" strokeWidth={1} />
-              <p>arthur.rosa@gmail.com</p>
-            </div>
-            <div className="phone-manage">
-              <Phone size={18} color="black" strokeWidth={1} />
-              <p>11 97391-0399</p>
-            </div>
-
-            <div className="button-manage">
-              <button>
-                <span className="changeColor">
-                  <Trash size={25} color="black" strokeWidth={1.5} />
-                </span>
-                <span className="delete-manage">Excluir docente</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-      </div> */}
-
     </section>
   );
 }
