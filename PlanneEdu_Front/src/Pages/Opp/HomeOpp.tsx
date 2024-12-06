@@ -3,25 +3,79 @@ import { NavBarOpp } from "../../Components/Opp/NavBar-Opp/navBarOpp";
 import "../../Css/Opp/HomeOpp.css";
 import { Link } from "react-router-dom";
 import { TextsIntroName } from "../../Components/IntroName/TextIntroName";
-import { fetchHome } from "../../Services/Axios";
-interface Plano {
-  planoId: string;
-  materia: string;
-}
-
-interface Professor {
-  nome: string;
-  planos: Plano[];
-}
-
-export interface LinhaTabela {
-  turma: string;
-  professores: Record<string, Professor>;
-}
-
+import { allPlanEns } from "../../Services/Axios";
+import { IntroText } from "../../Components/IntroTexts/IntroText";
+import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
+import { BookMarked, GraduationCap } from "lucide-react";
 
 export function HomeOpp() {
   const [userName, setUserName] = useState<string | null>("");
+  const [planoEns, setPlanosEns] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Recupera o nome do usuário do localStorage
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+
+    getPlanEns();
+  }, []);
+  
+  const getPlanEns = async () => {
+    try {
+      const response = await allPlanEns();
+      console.log("Resposta da API:", response);
+      setPlanosEns(response);
+    } catch (error: any) {
+      console.error(
+        error.message || "Não foi possível carregar os planos de ensino."
+      );
+    }
+  };
+
+  return (
+    <main>
+      {/* Cabeçalho */}
+      <header className="header">
+        <NavBarOpp />
+      </header>
+
+      {/* Título principal */}
+      <section className="title-planensino" style={{ margin: "5% 0" }}>
+        <TextsIntroName
+          userName={userName || "Usuário"}
+          titleText="Seja bem vindo"
+          subtitleText="Visualize os planos de ensino disponíveis"
+        />
+      </section>
+
+      {/* Subtítulo */}
+      <section className="title-plans-available">
+        <h2>Planos de ensino disponíveis</h2>
+      </section>
+
+
+      {/* Planos dinâmicos */}
+      {planoEns.map((plano, index) => (
+        <CardPlan
+          key={index}
+          matter={plano.materia}
+          course={plano.curso}
+          iconTeacher={
+            <GraduationCap size={23} color="black" strokeWidth={1.5} />
+          }
+          teacher={plano.professor}
+          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+          shiftCourse={plano.turma}
+        />
+      ))}
+    </main>
+  );
+}
+
+
+  /* const [userName, setUserName] = useState<string | null>("");
   const [tabela, setTabela] = useState<LinhaTabela[]>([]);
 
   const courseID = "6752ae043224e375940edcbd6752ae043224e375940edcbd"
@@ -53,49 +107,47 @@ export function HomeOpp() {
         subtitleText="Visualize os planos de ensino disponíveis"
       />
 
-      
+
 
       <div className="table-container">
         {tabela.map((turmaData, index) => (
-          <table className="table-homeopp">
+          <table className="table-homeopp" key={index}>
             <thead>
               <tr>
-                <th id="title-homeopp" colSpan={4}>
-                  Desenvolvimento de sistemas
+                <th id="title-homeopp" colSpan={Object.keys(turmaData.professores).length + 1}>
+                  {turmaData.turma}
                 </th>
               </tr>
               <tr>
                 <th></th>
-                {tabela.length > 0 && Object.keys(tabela[0].professores).map((professorId) => (
+                {Object.keys(turmaData.professores).map((professorId) => (
                   <th key={professorId} id="subtitle">
-                    {tabela[0].professores[professorId].nome}
-                  </th>
+                    {turmaData.professores[professorId]?.nome || "Professor não encontrado"}                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {tabela.map((linha, index) => (
-                <tr key={index}>
-                  <td className="turmas-homeopp">{linha.turma}</td>
-                  {Object.keys(linha.professores).map((professorId) => (
-                    <td key={professorId} className="td">
-                      {linha.professores[professorId].planos.map((plano, idx) => (
-                        <Link
-                          to={`/planos/${plano.planoId}`}
-                          key={idx}
-                          className="button"
-                        >
-                          {plano.materia}
-                        </Link>
-                      ))}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              <tr>
+                <td className="turmas-homeopp">{turmaData.turma}</td>
+                {Object.keys(turmaData.professores).map((professorId) => (
+                  <td key={professorId} className="td">
+                    {turmaData.professores[professorId]?.planos.map((plano, idx) => (
+                      <Link
+                        to={`/planos/${plano.planoId}`}
+                        key={plano.planoId || idx}
+                        className="button"
+                      >
+                        {plano.materia}
+                      </Link>
+                    ))}
+                  </td>
+                ))}
+              </tr>
             </tbody>
           </table>
         ))}
       </div>
+
 
       {/* <div className="table-container">
         <table className="table-homeopp">
@@ -160,7 +212,6 @@ export function HomeOpp() {
             </tr>
           </tbody>
         </table>
-      </div> */}
+      </div> }
     </section>
-  );
-}
+  ); */

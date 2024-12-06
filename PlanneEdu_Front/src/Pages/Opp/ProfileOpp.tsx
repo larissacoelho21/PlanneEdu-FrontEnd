@@ -119,7 +119,7 @@ export function ProfileOpp() {
 
   // Editar perfil opp
   const [editProfileOpen, setEditProfileOpen] = useState(false);
-  const [nome, setNome] = useState<string>("");
+  const [nome, setName] = useState<string>("");
   const [sobrenome, setSobrenome] = useState<string>("");
   const [nif, setNif] = useState<string>("");
   const [telefone, setTelefone] = useState<string>("");
@@ -127,7 +127,7 @@ export function ProfileOpp() {
 
   useEffect(() => {
     if (user) {
-      setNome(user.nome);
+      setName(user.nome);
       setSobrenome(user.sobrenome);
       setNif(user.nif);
       setTelefone(user.telefone);
@@ -149,6 +149,7 @@ export function ProfileOpp() {
 
       toast.success("Perfil atualizado com sucesso!");
       setEditProfileOpen(false);
+      window.location.reload();
     } catch (error: any) {
       console.error("Erro ao atualizar perfil:", error);
       toast.error("Erro ao atualizar perfil.");
@@ -311,7 +312,7 @@ export function ProfileOpp() {
                     label="Nome"
                     type="text"
                     value={nome}
-                    onChange={(e) => setNome(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                   />
 
                   <InputField
