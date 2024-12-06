@@ -516,3 +516,45 @@ export const backPlanCourse = async (coursePlan: {
     throw new Error(message);
   }
 };
+
+/* Requisição dos cursos */
+export const course = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    console.log("Token encontrado:", token);
+
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/course/get_all`, {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    });
+
+    console.log("Resposta da API:", response);
+
+    if (response.data && response.data.cursos) {
+      const cursos = response.data.cursos.map((curso: any) => ({
+        _id: curso._id,
+        planoCurso: {
+          _id: curso.planoCurso._id,
+          nome: curso.planoCurso.nome,
+          categoria: curso.planoCurso.categoria,
+          cargaHoraria: curso.planoCurso.cargaHoraria,
+          qtdSemestre: curso.planoCurso.qtdSemestre,
+          tempoCurso: curso.planoCurso.tempoCurso,
+        },
+      }));
+
+      console.log("Cursos encontrados:", cursos);
+      return cursos;
+    } else {
+      throw new Error("A resposta da API não contém a propriedade 'cursos'.");
+    }
+  } catch (error: any) {
+    console.error("Erro ao buscar cursos:", error);
+    throw new Error(error.response?.data?.error || "Erro ao buscar cursos");
+  }
+};
