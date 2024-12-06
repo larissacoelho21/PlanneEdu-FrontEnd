@@ -583,15 +583,47 @@ export const getAllCursos = async () => {
 }
 
 /* Função adicionando Plano de Curso */
-export const backPlanCourse = async (teachingPlan: any) => {
+export const backPlanCourse = async (coursePlan: {
+  nome: string;
+  categoria: string;
+  objetivo: string;
+  requisitosAcesso: string;
+  competenciasProfissionais: string;
+  cargaHoraria: number | null;
+  qtdSemestre: number | null;
+  semestre: {
+    numero: number;
+    unidadeCurricular: string[];
+  }[];
+  materias: {
+    nome: string;
+    semCorrespondente: number[];
+    cargaHoraria: number | null;
+    objetivo: string;
+    capaBasicaOuTecnica: string[];
+    capaSocioemocional: string[];
+    conhecimento: {
+      topicos: {
+        tituloTopico: string;
+        subTopicos: {
+          tituloSubtopico: string;
+          detalhes: string[];
+        }[];
+      }[];
+    };
+    ambiente: string;
+  }[];
+}) => {
   try {
-    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    const token = localStorage.getItem("Authorization");
     if (!token) {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
-    const response = await axios.post(`${BaseUrl}/my_user`, teachingPlan, {
+
+    const response = await axios.post(`${BaseUrl}/coursePlan/create`, coursePlan, {
       headers: {
-        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     return response.data;
@@ -599,7 +631,7 @@ export const backPlanCourse = async (teachingPlan: any) => {
     console.error("Erro ao enviar os dados:", error.response || error.message);
     throw new Error(
       error.response?.data?.message ||
-      "Erro ao enviar os dados do plano de ensino."
+        "Erro ao enviar os dados do plano de curso."
     );
   }
 };

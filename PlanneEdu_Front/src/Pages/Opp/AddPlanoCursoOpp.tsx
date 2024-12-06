@@ -8,9 +8,24 @@ import { Check, ChevronDown, ChevronUp, Plus, Trash } from "lucide-react";
 import { backPlanCourse } from "../../Services/Axios";
 import { InputField } from "../../Components/Inputs/InputField/Field/InputField";
 
-export function AddPlanoCurso() {
-  /* ======== construção das funcionalidades ======== */
-  type KnowledgeStructure = {
+type conhecimentoEstrutura = {
+  topicos: {
+    tituloTopico: string;
+    subTopicos: {
+      tituloSubtopico: string;
+      detalhes: string[];
+    }[];
+  }[];
+};
+
+/* tipificação para as disciplinas */
+type DisciplineData = {
+  nome: string;
+  objetivo: string;
+  cargaHoraria: number | null;
+  capaBasicaOuTecnica: string[];
+  capaSocioemocional: string[];
+  conhecimento: {
     topicos: {
       tituloTopico: string;
       subTopicos: {
@@ -19,58 +34,57 @@ export function AddPlanoCurso() {
       }[];
     }[];
   };
+  ambiente: string;
+};
 
-  /* tipificação para as disciplinas */
-  type DisciplineData = {
-    curriculum: string;
-    objective: string;
+/* tipificação dos valores do formulário */
+type planCourseData = {
+  nome: string;
+  categoria: string;
+  objetivo: string;
+  requisitosAcesso: string;
+  competenciasProfissionais: string;
+  cargaHoraria: number | null;
+  qtdSemestre: number | null;
+  semestre: {
+    numero: number;
+    unidadeCurricular: string[];
+  }[];
+  materias: {
+    nome: string;
+    semCorrespondente: number[];
     cargaHoraria: number | null;
-    capBasTecCourse: string[];
-    capSocioCourse: string[];
-    knowledgeInput: string;
-  };
+    objetivo: string;
+    capaBasicaOuTecnica: string[];
+    capaSocioemocional: string[];
+    conhecimento: conhecimentoEstrutura;
+    ambiente: string;
+  }[];
+};
 
-  /* tipificação dos valores do formulário */
-  type FormValues = {
-    /* valores do formulário fora do popup */
-    nameCourse: string;
-    categoryCourse: string;
-    objectiveCourse: string;
-    reqAcesso: string;
-    skillsCourse: string;
-    cargaHoraria: number | null;
-    quantSemestres: number | null;
-    /* valores do formulário do popup */
-    curriculum: string;
-    objectiveCurriculum: string;
-    cargaHCurriculum: number | null;
-    capBasTecCourse: string;
-    capSocioCourse: string;
-    knowledgeInput: string;
-    ambienteCourse: string;
-  };
-
+export function AddPlanoCurso() {
+  /* ======== construção das funcionalidades ======== */
   /* declaração de estados */
   /* estado para controle de exibição do popup */
   const [showPopUpGrade, setShowPopUpGrade] = useState(false);
   const togglePopUpGrade = () => setShowPopUpGrade((prev) => !prev);
 
-  /* estado único para diferentes dados */
-  const [formValues, setFormValues] = useState<FormValues>({
-    nameCourse: "",
-    categoryCourse: "",
-    objectiveCourse: "",
-    reqAcesso: "",
-    skillsCourse: "",
+  /* estado único para diferentes dados do formulário */
+  const [formData, setFormData] = useState<planCourseData>({
+    nome: "",
+    categoria: "",
+    objetivo: "",
+    requisitosAcesso: "",
+    competenciasProfissionais: "",
     cargaHoraria: null,
-    quantSemestres: null,
-    curriculum: "",
-    objectiveCurriculum: "",
-    cargaHCurriculum: null,
-    capBasTecCourse: "",
-    capSocioCourse: "",
-    knowledgeInput: "",
-    ambienteCourse: "",
+    qtdSemestre: null,
+    semestre: [
+      { numero: 1, unidadeCurricular: [] },
+      { numero: 2, unidadeCurricular: [] },
+      { numero: 3, unidadeCurricular: [] },
+      { numero: 4, unidadeCurricular: [] },
+    ],
+    materias: [],
   });
 
   /* inicializando o estado `selectedOptions` como um array vazio */
@@ -84,137 +98,102 @@ export function AddPlanoCurso() {
     4: [],
   });
 
-  /* função para atualizar estados de forma dinâmica */
-  const handleFormInputChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value, type } = event.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: type === "number" && !isNaN(+value) ? +value : value,
-    }));
-  };
-
   /* ======== funções para inputar os conhecimentos (tópicos, subtópicos e detalhes) ======== */
-  const processKnowledgeInput = (inputText: string): KnowledgeStructure => {
-    /* dividindo texto por linhas e removendo espaços extras */
+  const processKnowledgeInput = (inputText: string): conhecimentoEstrutura => {
+    /* Dividindo o texto por linhas e removendo espaços extras */
     const lines = inputText
       .split("\n")
       .map((line) => line.trim())
       .filter(Boolean);
 
-    /* objeto inicial para armazenar os tópicos */
-    const knowledge: KnowledgeStructure = { topicos: [] };
+    /* Objeto inicial para armazenar os tópicos */
+    const conhecimento: conhecimentoEstrutura = { topicos: [] };
 
-    /* variáveis para controlar o tópico e subtópico atual */
+    /* Variáveis para controlar o tópico e subtópico atuais */
     let currentTopic: { tituloTopico: string; subTopicos: any[] } | null = null;
     let currentSubtopic: {
       tituloSubtopico: string;
       detalhes: string[];
     } | null = null;
 
-    /* percorre cada linha do texto */
+    /* Percorrendo cada linha do texto */
     for (const line of lines) {
-      /* identificando tópicos */
+      /* Identificando tópicos */
       if (/^\d+\.\s/.test(line)) {
+        /* Finalizando subtópico pendente */
         if (currentSubtopic) {
           currentTopic?.subTopicos.push(currentSubtopic);
           currentSubtopic = null;
         }
+        /* Finalizando tópico anterior */
         if (currentTopic) {
-          knowledge.topicos.push(currentTopic);
+          conhecimento.topicos.push(currentTopic);
         }
+        /* Criando novo tópico */
         currentTopic = {
-          /* removendo indice */
           tituloTopico: line.replace(/^\d+\.\s*/, ""),
           subTopicos: [],
         };
-        /* identificando subtópicos */
       } else if (/^\d+\.\d+\.\s/.test(line)) {
+        /* Identificando subtópicos */
+        /* Finalizando subtópico anterior */
         if (currentSubtopic) {
           currentTopic?.subTopicos.push(currentSubtopic);
         }
+        /* Criando novo subtópico */
         currentSubtopic = {
           tituloSubtopico: line.replace(/^\d+\.\d+\.\s*/, ""),
           detalhes: [],
         };
-        /* identificando detalhes */
       } else if (/^\d+\.\d+\.\d+\.\s/.test(line)) {
+        /* Identificando detalhes */
+        /* Adicionando detalhe ao subtópico atual */
         currentSubtopic?.detalhes.push(line.replace(/^\d+\.\d+\.\d+\.\s*/, ""));
       }
     }
 
-    /* adiciona o último subtópico e tópico ao final */
+    /* Finalizando quaisquer tópicos e subtópicos pendentes */
     if (currentSubtopic) {
       currentTopic?.subTopicos.push(currentSubtopic);
     }
     if (currentTopic) {
-      knowledge.topicos.push(currentTopic);
+      conhecimento.topicos.push(currentTopic);
     }
 
-    return knowledge;
+    return conhecimento;
   };
 
-  /* armazena os valores do formulário do popup */
-  const [popupFormValues, setPopupFormValues] = useState<FormValues>({
-    nameCourse: "",
-    categoryCourse: "",
-    objectiveCourse: "",
-    reqAcesso: "",
-    skillsCourse: "",
-    cargaHoraria: null,
-    quantSemestres: null,
-    curriculum: "",
-    objectiveCurriculum: "",
-    cargaHCurriculum: null,
-    capBasTecCourse: "",
-    capSocioCourse: "",
-    knowledgeInput: "",
-    ambienteCourse: "",
-  });
-
   /* função para processar o texto inserido, transformando em uma lista */
-  const processCapacitiesToList = (inputText: string): string[] => {
+  const processCapacitiesToList = (inputText: string | string[]): string[] => {
+    if (Array.isArray(inputText)) {
+      return inputText;
+    }
+  
     return inputText
       .split("\n")
       .map((line) => line.trim())
-      .filter((line) => line !== "")
-      .map((line) => line.replace(/^\d+\.\s*/, ""));
+      .filter((line) => line !== "");
   };
-
-  /* função que manipula a mudança de valores no formulário */
-  const handlePopupInputChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = event.target;
-    setPopupFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
+  
 
   /* função para resetar dados */
   const resetPopupStates = () => {
-    setPopupFormValues({
-      nameCourse: "",
-      categoryCourse: "",
-      objectiveCourse: "",
-      reqAcesso: "",
-      skillsCourse: "",
-      cargaHoraria: null,
-      quantSemestres: null,
-      curriculum: "",
-      objectiveCurriculum: "",
-      cargaHCurriculum: null,
-      capBasTecCourse: "",
-      capSocioCourse: "",
-      knowledgeInput: "",
-      ambienteCourse: "",
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+
+      materias: [
+        {
+          nome: "",
+          semCorrespondente: [],
+          cargaHoraria: null,
+          objetivo: "",
+          capaBasicaOuTecnica: [],
+          capaSocioemocional: [],
+          conhecimento: { topicos: [] },
+          ambiente: "",
+        },
+      ],
+    }));
     setEditingDiscipline(null);
   };
 
@@ -222,65 +201,38 @@ export function AddPlanoCurso() {
   const saveDiscipline = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (selectedSemester !== null && popupFormValues.curriculum.trim() !== "") {
-      const processedCapBasTec = processCapacitiesToList(
-        popupFormValues.capBasTecCourse
-      );
-      const processedCapSocio = processCapacitiesToList(
-        popupFormValues.capSocioCourse
-      );
-      const processedKnowledge = processKnowledgeInput(
-        popupFormValues.knowledgeInput
-      );
+    if (selectedSemester !== null && formData.materias[0]?.nome.trim() !== "") {
+      const newDiscipline = { ...formData.materias[0] };
 
-      console.log("Capacidades Básicas/Técnicas:", processedCapBasTec);
-      console.log("Capacidades Socioemocionais:", processedCapSocio);
+      setSemesterData((prevState) => ({
+        ...prevState,
+        [selectedSemester]: [
+          ...(prevState[selectedSemester] || []),
+          newDiscipline,
+        ],
+      }));
+      
+      /* limpando os dados da matéria/disciplina depois de salvar */
+      setFormData((prevData) => ({
+        ...prevData,
+        materias: [
+          {
+            nome: "",
+            semCorrespondente: [],
+            cargaHoraria: null,
+            objetivo: "",
+            capaBasicaOuTecnica: [],
+            capaSocioemocional: [],
+            conhecimento: { topicos: [] },
+            ambiente: "",
+          },
+        ],
+      }));
 
-      const newDiscipline = {
-        curriculum: popupFormValues.curriculum,
-        objective: popupFormValues.objectiveCurriculum,
-        cargaHoraria: popupFormValues.cargaHCurriculum,
-        capBasTecCourse: processedCapBasTec,
-        capSocioCourse: processedCapSocio,
-        knowledgeInput: JSON.stringify(processedKnowledge),
-      };
-
-      setSemesterData((prevState) => {
-        if (editingDiscipline) {
-          /* atualizando disciplina existente */
-          const { semester, index } = editingDiscipline;
-          const updatedSemesterData = [...prevState[semester]];
-          updatedSemesterData[index] = newDiscipline;
-
-          toast.success(
-            `Disciplina "${newDiscipline.curriculum}" atualizada com sucesso!`
-          );
-
-          return {
-            ...prevState,
-            [semester]: updatedSemesterData,
-          };
-        } else {
-          toast.success(
-            `Disciplina "${newDiscipline.curriculum}" adicionada com sucesso!`
-          );
-          return {
-            ...prevState,
-            [selectedSemester]: [
-              ...(prevState[selectedSemester] || []),
-              newDiscipline,
-            ],
-          };
-        }
-      });
-
-      /* resetando os dados */
-      resetPopupStates();
       setShowPopUpGrade(false);
+      toast.success("Disciplina adicionada com sucesso!");
     } else {
-      toast.error(
-        "Preencha todos os campos para criar uma disciplina. Tente novamente!"
-      );
+      toast.error("Preencha todos os campos do popup.");
     }
   };
 
@@ -321,28 +273,7 @@ export function AddPlanoCurso() {
     if (discipline) {
       setEditingDiscipline({ semester, index, discipline });
 
-      setPopupFormValues({
-        nameCourse: "",
-        categoryCourse: "",
-        objectiveCourse: "",
-        reqAcesso: "",
-        skillsCourse: "",
-        cargaHoraria: discipline.cargaHoraria,
-        quantSemestres: null,
-        curriculum: discipline.curriculum,
-        objectiveCurriculum: discipline.objective,
-        cargaHCurriculum: discipline.cargaHoraria,
-        /* convertendo os arrays para strings com quebra de linha */
-        capBasTecCourse: Array.isArray(discipline.capBasTecCourse)
-          ? discipline.capBasTecCourse.join("\n")
-          : "",
-        capSocioCourse: Array.isArray(discipline.capSocioCourse)
-          ? discipline.capSocioCourse.join("\n")
-          : "",
-        knowledgeInput: "",
-        ambienteCourse: "",
-      });
-
+      resetPopupStates();
       setShowPopUpGrade(true);
     } else {
       console.error(
@@ -365,21 +296,34 @@ export function AddPlanoCurso() {
     }));
 
     /* resetando os dados */
-    setFormValues({
-      nameCourse: "",
-      categoryCourse: "",
-      objectiveCourse: "",
-      reqAcesso: "",
-      skillsCourse: "",
+    setFormData({
+      nome: "",
+      categoria: "",
+      objetivo: "",
+      requisitosAcesso: "",
+      competenciasProfissionais: "",
       cargaHoraria: null,
-      quantSemestres: null,
-      curriculum: "",
-      objectiveCurriculum: "",
-      cargaHCurriculum: null,
-      capBasTecCourse: "",
-      capSocioCourse: "",
-      knowledgeInput: "",
-      ambienteCourse: "",
+      qtdSemestre: null,
+      semestre: [
+        { numero: 1, unidadeCurricular: [] },
+        { numero: 2, unidadeCurricular: [] },
+        { numero: 3, unidadeCurricular: [] },
+        { numero: 4, unidadeCurricular: [] },
+      ],
+      materias: [
+        {
+          nome: "",
+          semCorrespondente: [],
+          cargaHoraria: null,
+          objetivo: "",
+          capaBasicaOuTecnica: [],
+          capaSocioemocional: [],
+          conhecimento: {
+            topicos: [],
+          },
+          ambiente: "",
+        },
+      ],
     });
 
     toast.success("Disciplina deletada com sucesso!");
@@ -394,18 +338,100 @@ export function AddPlanoCurso() {
   };
 
   /* ======== configurações e funções relacionadas com o backend ======== */
-  const mapFormToBackend = (formData: FormValues) => {
-    return {
-      nome: formData.nameCourse,
-      categoria: formData.categoryCourse,
-      objetivo: formData.objectiveCourse,
-      requisitosAcesso: formData.reqAcesso,
-      competenciasProfissionais: formData.skillsCourse,
-      cargaHoraria: formData.cargaHoraria,
-      qtdSemestre: formData.quantSemestres,
-      tempoCurso: `${formData.quantSemestres} semestres`
-    };
+  const validateFormData = (data: planCourseData) => {
+    if (!data.nome || !data.categoria || !data.objetivo || !data.requisitosAcesso) {
+      throw new Error("Preencha todos os campos principais do plano de curso!");
+    }
+  
+    if (!data.materias || data.materias.length === 0) {
+      throw new Error("Adicione pelo menos uma matéria ao plano de curso.");
+    }
+  
+    data.materias.forEach((materia, index) => {
+      if (
+        !materia.nome ||
+        !materia.semCorrespondente ||
+        !materia.cargaHoraria ||
+        !materia.objetivo ||
+        !materia.capaBasicaOuTecnica.length ||
+        !materia.capaSocioemocional.length ||
+        !materia.ambiente
+      ) {
+        throw new Error(`Os campos da matéria no índice ${index} estão incompletos.`);
+      }
+    });
   };
+
+  const onBackendChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+    fieldPath: string
+  ) => {
+    const { value } = event.target;
+  
+    setFormData((prevState) => {
+      const keys = fieldPath.split(".");
+      const updatedState = { ...prevState };
+  
+      let current: any = updatedState;
+  
+      keys.slice(0, -1).forEach((key) => {
+        const indexMatch = key.match(/\[(\d+)\]/);
+        if (indexMatch) {
+          const arrayKey = key.split("[")[0];
+          const index = parseInt(indexMatch[1], 10);
+  
+          /* verificando se o array/lista existe e se o index é válido */
+          if (!current[arrayKey]) current[arrayKey] = [];
+          if (!current[arrayKey][index]) current[arrayKey][index] = {};
+  
+          current = current[arrayKey][index];
+        } else {
+          if (!current[key]) current[key] = {};
+          current = current[key];
+        }
+      });
+  
+      current[keys[keys.length - 1]] = value;
+      return updatedState;
+    });
+  };  
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+  
+    try {
+    /* validando formData */
+    validateFormData(formData);
+
+    /* processando dados */
+    const processedFormData = {
+      ...formData,
+      materias: formData.materias.map((materia) => ({
+        ...materia,
+        capaBasicaOuTecnica: processCapacitiesToList(
+          materia.capaBasicaOuTecnica.join("\n") || ""
+        ),
+        capaSocioemocional: processCapacitiesToList(
+          materia.capaSocioemocional.join("\n") || ""
+        ),
+        conhecimento: processKnowledgeInput(
+          JSON.stringify(materia.conhecimento || { topicos: [] })
+        ),
+      })),
+    };
+
+    console.log("Dados processados antes do envio:", processedFormData);
+
+    const response = await backPlanCourse(processedFormData);
+    toast.success("Plano de curso enviado com sucesso!");
+    console.log("Resposta do servidor:", response);
+  } catch (error: any) {
+    console.error("Erro ao enviar:", error.response || error.message);
+    toast.error(error.message || "Erro ao enviar o plano de curso.");
+  }
+};
 
   return (
     <section className="AddPlanCourses">
@@ -416,26 +442,29 @@ export function AddPlanoCurso() {
           <h2>Preencha as informações corretamente</h2>
         </div>
 
-        <form className="form-course">
+        <form onSubmit={handleSubmit} className="form-course">
           <div className="inputs-opp">
             <div className="input-fieldd">
               <InputField
                 label="Nome do Curso"
-                name="nameCourse"
+                name="nome"
                 type="text"
                 id="name-course"
-                value={formValues.nameCourse}
-                onChange={handleFormInputChange}
+                value={formData.nome}
+                onBackendChange={(event) => onBackendChange(event, "nome")}
               />
             </div>
             <div className="input-fieldd">
               <InputField
                 label="Categoria"
-                name="categoryCourse"
-                type="text"
-                id="category-course"
-                value={formValues.categoryCourse}
-                onChange={handleFormInputChange}
+                id="categoria"
+                value={formData.categoria}
+                type="select"
+                options={[
+                  { value: "Tecnologia", label: "Tecnologia" },
+                  { value: "Comunicação", label: "Comunicação" },
+                ]}
+                onBackendChange={(event) => onBackendChange(event, "categoria")}
               />
             </div>
             <div className="input-fieldd">
@@ -444,28 +473,32 @@ export function AddPlanoCurso() {
                 name="objectiveCourse"
                 type="textarea"
                 id="obj-course"
-                value={formValues.objectiveCourse}
-                onChange={handleFormInputChange}
+                value={formData.objetivo}
+                onBackendChange={(event) => onBackendChange(event, "objetivo")}
               />
             </div>
             <div className="input-fieldd">
               <InputField
                 label="Requisitos de Acesso"
-                name="reqAcesso"
+                name="requisitosAcesso"
                 type="textarea"
                 id="req-acesso"
-                value={formValues.objectiveCourse}
-                onChange={handleFormInputChange}
+                value={formData.requisitosAcesso}
+                onBackendChange={(event) =>
+                  onBackendChange(event, "requisitosAcesso")
+                }
               />
             </div>
             <div className="input-fieldd">
               <InputField
                 label="Competências"
-                name="skillsCourse"
+                name="competenciasProfissionais"
                 type="text"
                 id="compt-course"
-                value={formValues.skillsCourse}
-                onChange={handleFormInputChange}
+                value={formData.competenciasProfissionais}
+                onBackendChange={(event) =>
+                  onBackendChange(event, "competenciasProfissionais")
+                }
               />
             </div>
             <div className="input-row">
@@ -475,18 +508,22 @@ export function AddPlanoCurso() {
                   name="cargaHoraria"
                   type="number"
                   id="cargah-course"
-                  value={formValues.cargaHoraria}
-                  onChange={handleFormInputChange}
+                  value={formData.cargaHoraria}
+                  onBackendChange={(event) =>
+                    onBackendChange(event, "cargaHoraria")
+                  }
                 />
               </div>
               <div className="input-fieldd">
                 <InputField
                   label="Quantidade de semestres"
-                  name="quantSemestres"
+                  name="qtdSemestre"
                   type="number"
                   id="semestres-course"
-                  value={formValues.quantSemestres}
-                  onChange={handleFormInputChange}
+                  value={formData.qtdSemestre}
+                  onBackendChange={(event) =>
+                    onBackendChange(event, "qtdSemestre")
+                  }
                 />
               </div>
             </div>
@@ -516,7 +553,7 @@ export function AddPlanoCurso() {
                         {/* Informações básicas */}
                         <div className="card-header">
                           <div className="card-intro">
-                            <h4>{discipline.curriculum}</h4>
+                            <h4>{discipline.nome}</h4>
                             <button
                               type="button"
                               onClick={(event) =>
@@ -535,7 +572,7 @@ export function AddPlanoCurso() {
                             Carga Horária: {discipline.cargaHoraria}
                           </p>
                           <p>
-                            <strong>Objetivo:</strong> {discipline.objective}
+                            <strong>Objetivo:</strong> {discipline.objetivo}
                           </p>
                         </div>
 
@@ -544,22 +581,19 @@ export function AddPlanoCurso() {
                           <div className="card-details">
                             <p>
                               <strong>Capacidades Básicas ou Técnicas:</strong>{" "}
-                              {discipline.capBasTecCourse.join(", ")}{" "}
+                              {discipline.capaBasicaOuTecnica.join(", ")}{" "}
                             </p>
 
                             <p>
                               <strong>Capacidades Socioemocionais:</strong>
-                              {discipline.capSocioCourse.join(", ")}{" "}
+                              {discipline.capaSocioemocional.join(", ")}{" "}
                             </p>
 
                             <div className="knowledge-container">
                               <strong>Conhecimentos:</strong>
                               <ul>
                                 {/* convertendo a string JSON armazenada no knowledgeInput de volta para um objeto utilizável */}
-                                {JSON.parse(
-                                  discipline.knowledgeInput
-                                  /* percorrendo a lista de tópicos, onde cada tópico é topic e seu indice é armazenado em topicIndex*/
-                                ).topicos.map(
+                                {discipline.conhecimento.topicos.map(
                                   (
                                     topic: {
                                       tituloTopico: string;
@@ -567,13 +601,11 @@ export function AddPlanoCurso() {
                                     },
                                     topicIndex: number
                                   ) => (
-                                    /* cria um item de lista para cada tópico. cada item precisa de uma chave única para identificar elementos, para isso utilizamos topicIndex. */
                                     <li key={`topic-${topicIndex}`}>
                                       <strong>
                                         {topicIndex + 1}. {topic.tituloTopico}
                                       </strong>
                                       <ul>
-                                        {/* itera por todos os subtópicos do tópico atual */}
                                         {topic.subTopicos.map(
                                           (
                                             subtopic: {
@@ -582,24 +614,16 @@ export function AddPlanoCurso() {
                                             },
                                             subIndex: number
                                           ) => (
-                                            /* cria-se um item na lista para cada subtópico */
                                             <li key={`subtopic-${subIndex}`}>
-                                              {/* formatando o subtópico com o número do tópico + subtópico */}
                                               {topicIndex + 1}.{subIndex + 1}.{" "}
                                               {subtopic.tituloSubtopico}
-                                              {/* só renderiza a lista de detalhes, se houver algum */}
                                               {subtopic.detalhes.length > 0 && (
                                                 <ul>
-                                                  {/* percorre pelos detalhes do subtópico atual */}
                                                   {subtopic.detalhes.map(
-                                                    (
-                                                      detail: string,
-                                                      detailIndex: number
-                                                    ) => (
+                                                    (detail, detailIndex) => (
                                                       <li
                                                         key={`detail-${detailIndex}`}
                                                       >
-                                                        {/* formatando o número dos detalhes com: número do tópico + subtópico + detalhe */}
                                                         {topicIndex + 1}.
                                                         {subIndex + 1}.
                                                         {detailIndex + 1}.{" "}
@@ -661,31 +685,37 @@ export function AddPlanoCurso() {
                   <div className="input-fieldd">
                     <InputField
                       id="uc"
-                      name="curriculum"
+                      name="nome"
                       label="Unidade Curricular"
                       type="text"
-                      value={popupFormValues.curriculum}
-                      onChange={handlePopupInputChange}
+                      value={formData.materias[0]?.nome || ""}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].nome")
+                      }
                     />
                   </div>
                   <div className="input-fieldd">
                     <InputField
                       id="obj"
                       label="Objetivo"
-                      name="objectiveCurriculum"
+                      name="objetivo"
                       type="textarea"
-                      value={popupFormValues.objectiveCurriculum}
-                      onChange={handlePopupInputChange}
+                      value={formData.materias[0]?.objetivo || ""}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].objetivo")
+                      }
                     />
                   </div>
                   <div className="input-fieldd">
                     <InputField
                       id="carga-h"
-                      name="cargaHCurriculum"
+                      name="cargaHoraria"
                       label="Carga Horária"
                       type="number"
-                      value={popupFormValues.cargaHCurriculum}
-                      onChange={handlePopupInputChange}
+                      value={formData.materias[0]?.cargaHoraria || null}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].cargaHoraria")
+                      }
                     />
                   </div>
                   <h3 className="section-title">
@@ -694,35 +724,63 @@ export function AddPlanoCurso() {
 
                   <div className="input-fieldd">
                     <InputField
-                      id="topic"
-                      name="capBasTecCourse"
+                      id="capaBasicTec"
+                      name="capaBasicaOuTecnica"
                       label="Capacidades Básicas ou Técnicas"
                       type="textarea"
-                      value={popupFormValues.capBasTecCourse}
-                      onChange={handlePopupInputChange}
+                      value={String(
+                        formData.materias[0]?.capaBasicaOuTecnica ?? ""
+                      )} /* forçando o valor a ser string */
+                      onBackendChange={(event) =>
+                        onBackendChange(
+                          event,
+                          "materias[0].capaBasicaOuTecnica"
+                        )
+                      }
                     />
                   </div>
 
                   <div className="input-fieldd">
                     <InputField
-                      id="topic"
-                      name="capSocioCourse"
+                      id="cappaSocio"
+                      name="capaSocioemocional"
                       label="Capacidades Socioemocionais"
                       type="textarea"
-                      value={popupFormValues.capSocioCourse}
-                      onChange={handlePopupInputChange}
+                      value={String(
+                        formData.materias[0]?.capaSocioemocional ?? ""
+                      )}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].capaSocioemocional")
+                      }
                     />
                   </div>
 
                   <h3 className="section-title">Conhecimentos</h3>
                   <div className="input-fieldd">
                     <InputField
-                      id="knowledgeInput"
-                      name="knowledgeInput"
+                      id="conhecimentos"
+                      name="conhecimento"
                       label="Conhecimentos (cole o texto com os tópicos, subtópicos e detalhes)"
                       type="textarea"
-                      value={popupFormValues.knowledgeInput || ""}
-                      onChange={handlePopupInputChange}
+                      value={(
+                        formData.materias[0]?.conhecimento?.topicos || []
+                      ).join(", ")}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].conhecimento")
+                      }
+                    />
+                  </div>
+
+                  <div className="input-fieldd">
+                    <InputField
+                      id="ambiente"
+                      name="ambiente"
+                      label="Ambiente Pedagógico"
+                      type="text"
+                      value={formData.materias[0]?.ambiente || ""}
+                      onBackendChange={(event) =>
+                        onBackendChange(event, "materias[0].ambiente")
+                      }
                     />
                   </div>
 
@@ -739,7 +797,7 @@ export function AddPlanoCurso() {
             )}
           </div>
           <div className="tasks-btns">
-            <button className="save-course" onClick={backPlanCourse}>
+            <button className="save-course" type="submit">
               <Check />
               Salvar Alterações
             </button>

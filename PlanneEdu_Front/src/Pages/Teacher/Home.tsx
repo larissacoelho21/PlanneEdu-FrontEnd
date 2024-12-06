@@ -70,6 +70,30 @@ export function Home() {
           userName={userName || "Usuário"}
           titleText="Seja bem vindo"
           subtitleText="Visualize suas turmas ativas"
+      </div>
+      
+      <div className="cards-teacher">
+        <Link to="/turmaprofessor" style={{ textDecoration: "none" }}>
+          <CardTeacher
+            course="Desenvolvimento de sistemas"
+            detail="|"
+            classCard="SESI"
+            yearClass="2023"
+            dateI="23/02/2023"
+            dateT="18/12/2024"
+            semester={4}
+            students="35"
+          />
+        </Link>
+        <CardTeacher
+          course="Desenvolvimento de sistemas"
+          detail="|"
+          classCard="Noite"
+          yearClass="2023"
+          dateI="30/02/2023"
+          dateT="17/12/2024"
+          semester={4}
+          students="10"
         />
       </div>
 

@@ -10,6 +10,11 @@
   cursor: pointer;
 }
 
+.disabled {
+  pointer-events: none; 
+  cursor: not-allowed;
+}
+
 .value {
   /* o item vai crescer para ocupar o espaço disponível no contêiner flexível */
   flex-grow: 1;

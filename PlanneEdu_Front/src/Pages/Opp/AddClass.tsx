@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Pencil, UserMinus } from "lucide-react";
@@ -9,48 +9,8 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import "../../Css/Opp/AddClass.css";
 import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { SmallButton } from "../../Components/Buttons/SmallButton/SmallButton";
-
-// Componente de Input
-interface InputFieldProps {
-  id: string;
-  label: string;
-  type?: string;
-  value?: string;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-}
-
-function InputField({
-  id,
-  label,
-  type = "text",
-  value,
-  onChange,
-}: InputFieldProps) {
-  const [isFilled, setIsFilled] = useState(!!value);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFilled(event.target.value !== "");
-    if (onChange) onChange(event);
-  };
-
-  return (
-    <fieldset className={`Fieldset ${isFilled ? "filled" : ""}`}>
-      <label className="label-add" htmlFor={id}>
-        {label}
-      </label>
-      <input
-        className="input-add"
-        id={id}
-        type={type}
-        value={value}
-        onChange={handleInputChange}
-        autoComplete="off"
-      />
-    </fieldset>
-  );
-}
+import { InputField } from "../../Components/Inputs/InputField/Field/InputField";
+import ReactInputMask from "react-input-mask";
 
 // Componente principal
 export function AddClass() {
@@ -177,6 +137,59 @@ export function AddClass() {
     togglePopUpTeacher();
   };
 
+  // função back
+  const [selectCourse, setSelectCourse] = useState<string>("");
+  const [nameClass, setNameClass] = useState<string>("");
+  const [shiftClass, setShiftClass] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [selectTeacher, setSelectTeacher] = useState<string>("");
+
+  // validação para selecionar curso
+  const handleSubmitCourse = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!selectCourse) {
+      toast.error("Selecione um curso para continuar");
+      return;
+    }
+
+    toast.success("Turma criada com sucesso!");
+  };
+
+  // input data
+  const convertToISO = (dateString: string) => {
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
+  const validateDates = (startISO: string, endISO: string) => {
+    const start = new Date(startISO);
+    const end = new Date(endISO);
+
+    if (end < start) {
+      toast.error(
+        "A data de entrega não pode ser menor que a data proposta! Tente novamente com uma data válida."
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  // converte para o formato ISO 
+  const startDateISO = convertToISO(startDate);
+  const endDateISO = convertToISO(endDate);
+
+  if (!startDateISO || !endDateISO) {
+    toast.error("Formato de data inválido! Use o formato DD/MM/AAAA.");
+    return;
+  }
+
+  if (!validateDates(startDateISO, endDateISO)) {
+    return;
+  }
+
   return (
     <section className="add-new-class">
       <SubNavbar />
@@ -188,24 +201,36 @@ export function AddClass() {
         />
       </div>
 
-      <form action="" onSubmit={(e) => e.preventDefault()}>
+      <div className="select-planne-course">
+        <label htmlFor="" className="label-select">
+          Selecione um curso
+        </label>
+        <select
+          id="select-course"
+          value={selectCourse}
+          onChange={(e) => setSelectCourse(e.target.value)}
+          className="input-all"
+        >
+          <option value=""></option>
+        </select>
+        <h2>* Obs: Para continuar você deve selecionar um curso</h2>
+      </div>
+
+      <form action="" onSubmit={handleSubmitCourse}>
         <div className="form-addclass">
+          <InputField
+            id="nameclass"
+            label="Nome da turma"
+            type="text"
+            value={nameClass}
+            onChange={(e) => setNameClass(e.target.value)}
+            disabled={!selectCourse}
+          />
           <div className="select-addclass">
-            <label htmlFor="" className="label-select">
-              Selecione o curso
-            </label>
-            <select name="" id="">
-              <option value=""></option>
-            </select>
-          </div>
-          <div className="input-addclass">
-            <InputField id="nameclass" label="Nome da turma" type="text" />
-          </div>
-          <div className="select-addclass">
-            <label htmlFor="" className="label-select">
+            <label htmlFor="" className="label-add-class" style={{ color: "var(--black-two)", opacity: "90%"}}>
               Selecione o turno
             </label>
-            <select name="" id="">
+            <select name="" id="" disabled={!selectCourse}>
               <option value=""></option>
               <option value="">Matutino</option>
               <option value="">Vespertino</option>
@@ -218,13 +243,27 @@ export function AddClass() {
               <label htmlFor="" className="label-date">
                 Data de início
               </label>
-              <input type="date" name="dataInicio" />
+              <ReactInputMask
+                className="input-all"
+                type="text"
+                mask="99/99/9999"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                disabled={!selectCourse}
+              />
             </div>
             <div className="delivery-date">
               <label htmlFor="" className="label-date">
                 Data de término
               </label>
-              <input type="date" name="dataTermino" />
+              <ReactInputMask
+                className="input-all"
+                type="text"
+                mask="99/99/9999"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                disabled={!selectCourse}
+              />
             </div>
           </div>
 
@@ -239,6 +278,7 @@ export function AddClass() {
                   e.preventDefault();
                   togglePopUpStudent();
                 }}
+                disabled={!selectCourse}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
@@ -288,19 +328,17 @@ export function AddClass() {
 
                   <div className="button-student">
                     <SmallButton
-                      text={editStudentIndex === null
-                        ? "Adicionar"
-                        : "Salvar alterações"
+                      text={
+                        editStudentIndex === null
+                          ? "Adicionar"
+                          : "Salvar alterações"
                       }
                       onClick={(e) => {
                         e.preventDefault();
                         handleSaveStudent();
                       }}
                     />
-                    <SmallButton
-                      text="Cancelar"
-                      onClick={togglePopUpStudent}
-                    />
+                    <SmallButton text="Cancelar" onClick={togglePopUpStudent} />
                   </div>
                 </div>
               </div>
@@ -351,7 +389,10 @@ export function AddClass() {
 
             <div className="semester-grid">
               <h2 style={{ marginTop: "5%" }}>1° Semestre</h2>
-              <table className="table-add-teacher" style={{marginBottom: "5%"}}>
+              <table
+                className="table-add-teacher"
+                style={{ marginBottom: "5%" }}
+              >
                 <thead>
                   <tr>
                     <th>Matéria</th>
@@ -368,6 +409,7 @@ export function AddClass() {
                           text={subject.teacher || "Adicionar"}
                           onClick={() => togglePopUpTeacher(index)}
                           className="button-teacher"
+                          disabled={!selectCourse}
                         />
                       </td>
                       <td>{subject.workload}</td>
@@ -422,11 +464,8 @@ export function AddClass() {
           )}
 
           <div className="save-class">
-            <LargeButton
-              text="Salvar informações"
-            />
+            <LargeButton text="Salvar informações" />
           </div>
-
         </div>
       </form>
     </section>

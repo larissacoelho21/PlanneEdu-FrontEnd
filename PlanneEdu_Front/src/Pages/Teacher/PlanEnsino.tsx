@@ -12,6 +12,7 @@ import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
 import { useEffect, useState } from "react";
 import { allPlanEns } from "../../Services/Axios";
 
+import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function PlanEnsino() {
   const [planoEns, setPlanosEns] = useState<any[]>([]);

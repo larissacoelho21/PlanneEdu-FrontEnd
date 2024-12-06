@@ -140,6 +140,16 @@ export function NavBarOpp() {
     };
   }, []);
 
+  const toggleMenu = () => {
+  setMenuOpen(!MenuOpen);
+
+  // Reseta o dropdown de Turmas ao fechar/reabrir o menu
+  if (MenuOpen) {
+    SetIsDropdownMobileOpen(false);
+  }
+};
+
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -211,9 +221,8 @@ export function NavBarOpp() {
                   </div>
 
                   <div
-                    className={`dropdownMenu ${
-                      openOne ? "active" : "inactive"
-                    }`}
+                    className={`dropdownMenu ${openOne ? "active" : "inactive"
+                      }`}
                   >
                     {" "}
                     {/* menu */}
@@ -282,9 +291,8 @@ export function NavBarOpp() {
                     </div>
 
                     <div
-                      className={`dropdown-notification ${
-                        openTwo ? "ativo" : "inactive"
-                      }`}
+                      className={`dropdown-notification ${openTwo ? "ativo" : "inactive"
+                        }`}
                     >
                       <DropdownNotification
                         to="#"
@@ -314,9 +322,8 @@ export function NavBarOpp() {
                     <ul>
                       <li>
                         <div
-                          className={`dropdown-profile ${
-                            opentThree ? "activeOne" : "inactiveOne"
-                          }`}
+                          className={`dropdown-profile ${opentThree ? "activeOne" : "inactiveOne"
+                            }`}
                         >
                           <DropdownProfile
                             to="/profileopp"
@@ -342,7 +349,7 @@ export function NavBarOpp() {
               <NavLink
                 to={"#"}
                 className="hamburger-menu"
-                onClick={() => setMenuOpen(!MenuOpen)}
+                onClick={toggleMenu} // Chama a função que reseta o estado
               >
                 <p>
                   {MenuOpen ? (
@@ -353,12 +360,20 @@ export function NavBarOpp() {
                 </p>
               </NavLink>
 
+
               <div
-                /* className="menulist" */ className={`menu ${
-                  MenuOpen ? "open" : ""
-                }`}
+                /* className="menulist" */ className={`menu ${MenuOpen ? "open" : ""
+                  }`}
               >
                 <ul>
+                  <li>
+                    <NavLink /* identificando se o caminho da página selecionada corresponde */
+                      className="dropdownMobile"
+                      to="/homeopp"
+                    >
+                      <p>Início</p>
+                    </NavLink>
+                  </li>
                   <li
                     className={`dropdown ${DropdownMobileOpen ? "open" : ""}`}
                   >

@@ -44,8 +44,9 @@ export function CursosOpp() {
           subtitleText="Veja os cursos disponíveis"
         />
       </div>
-
-      <ButtonToAdd path="/addcourse" text="+ Adicionar um novo curso" />
+      <div className="button-add-course">
+        <ButtonToAdd path="/addcurso" text="+ Adicionar um novo curso" />
+      </div>
 
       <div className="cards-cursosopp">
         <div className="card-course">
@@ -71,11 +72,16 @@ export function CursosOpp() {
             <h3 className="subject">Desenvolvimento de Sistemas</h3>
             <div className="info">
               <div className="number-semesters">
-                <Clock3 size={18} className="clock-semester"/>
+                <Clock3 size={18} className="clock-semester" />
                 <h1>4 semestres</h1>
               </div>
               <div className="assigned-classes">
-                <BookMarked size={21} color="black" strokeWidth={1.5} className="bookmarked"/>
+                <BookMarked
+                  size={21}
+                  color="black"
+                  strokeWidth={1.5}
+                  className="bookmarked"
+                />
                 <h1>5 turmas atribuídas </h1>
               </div>
             </div>

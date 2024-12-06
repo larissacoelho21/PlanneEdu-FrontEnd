@@ -20,5 +20,11 @@
 .button-small button:hover{
   background-color: transparent;
   color: var(--blue-two);
-  border: solid var(--blue-two);
+  border: solid var(--blue-two) 2px;
+}
+
+.button-small button:disabled{
+  cursor: not-allowed;
+  background-color: var(--blue-two);
+  color: var(--white);
 }
