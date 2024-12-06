@@ -314,7 +314,7 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     window.open(fileUrl, '_blank'); */
         const fileUrl = response.data.url;
         console.log(fileUrl)
-        window.open(fileUrl, '_blank'); */
+        window.open(fileUrl, '_blank');
 
     const contentDisposition = response.headers["content-disposition"];
     const filename = contentDisposition
@@ -405,6 +405,42 @@ export const allPlanEns = async () => {
   }
 
 }
+
+/* Requisição de matérias */
+export const discipline = async () => {
+  try {
+    const token = localStorage.getItem("Authorization");
+    console.log("Token encontrado:", token);
+
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.get(`${BaseUrl}/class/:classID/mine_subjects`, {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    });
+
+    console.log("Resposta da API:", response);
+
+    if (response.data && response.data.materias) {
+      const materias = response.data.materias.map((materia: any) => ({
+        _id: materia._id,
+        nome: materia.nome,
+        cargaHoraria: materia.cargaHoraria,
+      }));
+
+      console.log("Matérias encontradas:", materias);
+      return materias;
+    } else {
+      throw new Error("A resposta da API não contém a propriedade 'materias'.");
+    }
+  } catch (error: any) {
+    console.error("Erro ao buscar materias:", error);
+    throw new Error(error.response?.data?.error || "Erro ao buscar materias");
+  }
+};
 
 /* ======================= Opp ============================= */
 
