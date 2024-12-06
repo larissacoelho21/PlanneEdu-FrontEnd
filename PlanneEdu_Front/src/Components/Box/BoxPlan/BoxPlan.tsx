@@ -9,7 +9,6 @@ interface CardPlanProps {
   teacher: string;
   iconClass: ReactNode;
   shiftCourse: string;
-  yearCourse: string;
 }
 
 export function CardPlan({
@@ -19,7 +18,6 @@ export function CardPlan({
   teacher,
   iconClass,
 shiftCourse,
-yearCourse
 }: CardPlanProps) {
   return (
 
@@ -41,7 +39,7 @@ yearCourse
         </div>
         <div className="shift-class">
           {iconClass}
-          <h1>{shiftCourse} {yearCourse}</h1>
+          <h1>{shiftCourse}</h1>
         </div>
       </div>
     </div>

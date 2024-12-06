@@ -210,7 +210,6 @@ export const profile = async () => {
     if (!token) {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
-
     const response = await axios.get(`${BaseUrl}/my_user`, {
       headers: {
         Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
@@ -263,6 +262,7 @@ export const updatePassword = async (
 /* Função aparecendo plano de curso */
 export const allPlanCourse = async () => {
   const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+  console.log("Token enviado:", token);
   if (!token) {
     throw new Error("Token não encontrado. Faça login novamente.");
   }
@@ -312,6 +312,9 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     const fileUrl = response.data.url;
     console.log(fileUrl)
     window.open(fileUrl, '_blank'); */
+        const fileUrl = response.data.url;
+        console.log(fileUrl)
+        window.open(fileUrl, '_blank'); */
 
     const contentDisposition = response.headers["content-disposition"];
     const filename = contentDisposition
@@ -321,7 +324,6 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     link.href = URL.createObjectURL(response.data);
     link.download = filename;
     link.click();
-
     console.log("Download realizado com sucesso!");
   } catch (error: any) {
     const errorMessage =
@@ -330,6 +332,79 @@ export const downloadPdf_PlanCourse = async (id: string) => {
     throw new Error(errorMessage);
   }
 };
+
+
+
+//TODO: não funciona 
+/* Função home, pegando todos as turmas do professor */
+export const allTurmas = async () => {
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    console.log("Token:", token);
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+    const response = await axios.get(`${BaseUrl}/class/mine_classes`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    console.log("Resposta da API:", response.data);
+
+    const turmasData = response.data.turmasData.map((turma: any) => ({
+      _id: turma.turma?._id || "Nome não disponível",
+      nome: turma.turma?.nome || "Nome não disponível",
+      turno: turma.turma?.turno || "Nome não disponível",
+      dataInicio: turma.turma?.dataInicio || "Data não disponível",
+      dataTermino: turma.turma?.dataTermino || "Data não disponível",
+      qtdAlunos: turma.turma?.qtdAlunos || "Alunos não disponível",
+      curso: turma.curso || "Curso não informado",
+      semestres: turma.semestres || "Semestre não informado",
+    }));
+
+    console.log("Turmas encontradas :", turmasData);
+    return turmasData;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao buscar turmas";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+}
+
+/* Função para aparecer todos os planos de ensino */
+export const allPlanEns = async () => {
+
+  try {
+    const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+    const response = await axios.get(`${BaseUrl}/teachPlan/get_all`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    const planosEnsin = response.data.planosEnsino.map((plano: any) => ({
+      _id: plano._id,
+      materia: plano.unidadeCurricular?.nome || "Não informado", // Nome da matéria
+      curso: plano.curso?.planoCurso?.nome || "Não informado", // Nome do curso
+      professor: plano.user?.nome || "Não informado", // Nome do professor
+      turma: plano.turma?.nome || "Não informado", // Nome da turma
+    }));
+
+    console.log("Planos de ensino encontrados:", planosEnsin);
+    return planosEnsin;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao buscar planos de ensino";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
+}
 
 /* ======================= Opp ============================= */
 
@@ -389,6 +464,7 @@ export const RegisterUser = async (userData: {
   }
 };
 
+//TODO: não funciona 
 /* Função aparecendo todos usuarios cadastrados */
 export const allUsers = async () => {
   try {
@@ -403,8 +479,27 @@ export const allUsers = async () => {
       },
     });
 
-    console.log("Usuários carregados:", response);
-    return response.data.users; // Retorna os dados da API
+    const all_Users = response.data.users.map((getAll: any) => ({
+      _id: getAll._id,
+      nome: getAll.nome || "Não informado",
+      sobrenome: getAll.sobrenome || "Não informado",
+      nif: getAll.nif || "Não informado",
+      telefone: getAll.telefone || "Não informado",
+      email: getAll.email || "Não informado",
+      /*  turmasAtribuidas: getAll.turmasAtribuidas?.nome || "Não informado",
+      cursosAtribuidos: getAll.cursosAtribuidos?.nome || "Não informado", */
+      turmasAtribuidas:
+        getAll.turmasAtribuidas && getAll.turmasAtribuidas.length > 0
+          ? getAll.turmasAtribuidas.map((turma: any) => turma.nome).join(", ")
+          : "Nenhuma turma atribuída",
+      cursosAtribuidos:
+        getAll.cursosAtribuidos && getAll.cursosAtribuidos.length > 0
+          ? getAll.cursosAtribuidos.map((curso: any) => curso.planoCurso?.nome).join(", ")
+          : "Nenhum curso atribuído",
+    }))
+
+    console.log("Usuários carregados:", all_Users);
+    return all_Users; // Retorna os dados da API
   } catch (error: any) {
     const errorMessage =
       error.response?.data?.error || "Erro ao buscar os usuários";
@@ -457,6 +552,36 @@ export const profileOpp = async () => {
       error.response?.data?.error || "Erro ao encontrar seus dados";
   }
 };
+
+export const getAllCursos = async () => {
+  const token = localStorage.getItem("Authorization"); // Obtém o token do localStorage
+  console.log("Token enviado:", token);
+  if (!token) {
+    throw new Error("Token não encontrado. Faça login novamente.");
+  }
+  try {
+    const response = await axios.get(`${BaseUrl}/course/get_all`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+      },
+    });
+
+    const Curso = response.data.cursos.map((curso: any) => ({
+      _id: curso._id,
+      nome: curso.planoCurso?.nome,
+      categoria: curso.planoCurso?.categoria, 
+      qtdSemestre: curso.planoCurso?.qtdSemestre,
+    }));
+
+    console.log("cursos encontrados:", Curso);
+    return Curso;
+  } catch (error: any) {
+    const errorMessage =
+      error.response?.data?.error || "Erro ao buscar cursos";
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+}
 
 /* Função adicionando Plano de Curso */
 export const backPlanCourse = async (coursePlan: {
