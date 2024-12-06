@@ -6,6 +6,7 @@ import { SubNavbar } from "../../Components/SubNavbar/SubNavbar";
 import { InfoClass } from "../../Components/Box/InfoClass/InfoClass";
 import { LargeButton } from "../../Components/Buttons/LargeButton/LargeButton";
 import { Popup } from "../../Components/PopUpClass/PopUp";
+import "../../Css/Teacher/ClassTeacher.css"
 
 export function ClassTeacher() {
   const { classID } = useParams();
@@ -79,7 +80,7 @@ export function ClassTeacher() {
         students={classData.alunos?.length?.toString() || "0"} // Verifique se alunos existe
       />
 
-      <div className="buttons-class">
+      <div className="buttons-class-teacher">
         <LargeButton
           text="Plano de Ensino"
           onClick={togglePopUpPlanne}
