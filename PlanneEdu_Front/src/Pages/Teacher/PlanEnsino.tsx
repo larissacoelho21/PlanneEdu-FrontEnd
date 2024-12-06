@@ -9,8 +9,29 @@ import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
 import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
+import { useEffect, useState } from "react";
+import { allPlanEns } from "../../Services/Axios";
+
 
 export function PlanEnsino() {
+  const [planoEns, setPlanosEns] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getPlanEns = async () => {
+      try {
+        const response = await allPlanEns();
+        console.log("Resposta da API:", response);
+        setPlanosEns(response);
+      } catch (error: any) {
+        throw new Error(
+          error.message || "Não foi possível encontrar os usuários"
+        );
+      }
+    };
+
+    getPlanEns();
+  }, []);
+
   return (
     <main>
       <div className="header">
@@ -28,19 +49,21 @@ export function PlanEnsino() {
       </div>
 
       <div className="cards-plans">
-        <CardPlan
-          matter="Programação e Controle de Suprimentos"
-          course="Logística"
-          iconTeacher={
-            <GraduationCap size={23} color="black" strokeWidth={1.5} />
-          }
-          teacher="Samanta Neves"
-          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
-          shiftCourse="Manhã"
-          yearCourse="2023"
-        />
+        {planoEns.map((plano) => (
+          <CardPlan
+            matter={plano.materia}
+            course={plano.curso}
+            iconTeacher={
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+            }
+            teacher={plano.professor}
+            iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
+            shiftCourse={plano.turma}
+          />
+        ))}
 
-        <CardPlan
+
+        {/* <CardPlan
           matter="Automação Industrial"
           course="Eletromecânica"
           iconTeacher={
@@ -50,7 +73,7 @@ export function PlanEnsino() {
           iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
           shiftCourse="Manhã"
           yearCourse="2023"
-        />
+        /> */}
       </div>
     </main>
   );

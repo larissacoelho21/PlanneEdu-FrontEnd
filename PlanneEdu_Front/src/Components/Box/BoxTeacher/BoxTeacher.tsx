@@ -11,7 +11,6 @@ interface CardTeacherProps {
   dateT: string;
   semester: number;
   students: string;
-  yearClass: string;
 }
 
 export function CardTeacher({
@@ -24,12 +23,11 @@ export function CardTeacher({
   dateT,
   semester,
   students,
-  yearClass,
 }: CardTeacherProps) {
   return (
     <div className="box-teacher">
       <h1>
-        {course} {detail} {classCard} {yearClass}
+        {course} {detail} {classCard}
       </h1>
       <div className="date-badge">
         <span>
