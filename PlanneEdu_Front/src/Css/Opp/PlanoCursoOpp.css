@@ -1,3 +1,33 @@
+:root {
+  --white-one: #ffffff;
+  --white-two: #f2f2f2;
+  --gray-one: #bcbbbb;
+  --blue-one: #074973;
+  --blue-two: #07678d;
+  --blue-three: #00a3ff;
+  --black: #000;
+  --black-two: rgba(1, 18, 38, 50%);
+  --red-delete: #FF0000;
+
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cards-cursosopp{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vw;
+}
+
+.Card-plano {
+  background-color: #fff;
+  border-radius: 1vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  width: 100%;
+  border-radius: 1vw;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 3vw 4vw;
+  
 .card-plano {
   border-radius: 1vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -8,6 +38,7 @@
   cursor: pointer;
   border: 2px solid transparent;
   transition: 0.35s ease-out;
+  margin-bottom: 2vw;
 }
 
 .card-plano:hover {
@@ -30,6 +61,44 @@
 .qntd-semester h1{
   font-size: 1.2vw;
   font-weight: normal;
+}
+
+.Data-curso, .Info{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.Data-curso h3{
+  font-size: 1.5vw;
+}
+
+.semester-curso{
+  display: flex;
+  gap: .7vw;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-one);
+  width: 70%;
+  padding: .4vw .6vw;
+  border-radius: 5px;
+}
+
+.semester-curso h1, .semester-curso svg{
+  font-size: 1vw;
+  color: var(--white-one);
+  font-weight: 500;
+}
+
+.Class-curso{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 1vw;
+}
+
+.Class-curso p{
+  font-size: 1.2vw;
 }
 
 /* --------------------Versão Mobile-------------------- */
