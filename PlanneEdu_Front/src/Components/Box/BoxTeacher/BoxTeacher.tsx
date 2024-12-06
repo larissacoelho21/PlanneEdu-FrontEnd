@@ -28,7 +28,7 @@ export function CardTeacher({
 }: CardTeacherProps) {
   return (
     <div className="cards-teacher">
-      <div className="box-teacher">
+      <div className="card-box">
         <h1>
           {course} {detail} {classCard} {yearClass}
         </h1>

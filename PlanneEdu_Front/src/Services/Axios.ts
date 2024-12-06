@@ -390,6 +390,41 @@ export const RegisterUser = async (userData: {
   }
 };
 
+/* Função editar informações */
+// Editando informações do perfil do OPP
+export const updateUser = async (
+  nome: string,
+  sobrenome: string,
+  nif: string,
+  telefone: string,
+  email: string
+) => {
+  try {
+    console.log("Enviando para o servidor:", { nome, sobrenome, nif, telefone, email });
+
+    const token = localStorage.getItem("Authorization");
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.put(
+      `${BaseUrl}/update`,
+      { nome, sobrenome, nif, telefone, email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error("Erro ao atualizar o perfil:", error);
+    throw error;
+  }
+};
+
+
 /* Função aparecendo todos usuarios cadastrados */
 export const allUsers = async () => {
   try {

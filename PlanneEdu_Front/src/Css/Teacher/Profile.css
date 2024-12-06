@@ -113,10 +113,11 @@
 }
 
 .change-button button,
-.password-button button {
+.password-button button,
+.edit-profile-button button {
   background-color: #074973;
   text-align: center;
-  border: none;
+  border: 2px solid transparent;
   margin-top: 2vw;
   border-radius: 0.5vw;
   font-size: 1.3vw;
@@ -127,11 +128,14 @@
   color: #f2f2f2;
   margin-bottom: 2vw;
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  transition: .3s ease;
 }
 
-.buttonsProfile button:hover {
-  background-color: #07678d;
+.buttonsProfile button:hover,
+.edit-profile-button button:hover {
+  border: 2px solid var(--blue-two);
+  background-color: transparent;
+  color: var(--blue-two);
 }
 
 /* Dialog */
@@ -170,9 +174,11 @@
 }
 
 /* botão de salvar dentro popUp */
-.Button.save {
+.Button.save,
+.Button.cancel {
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #074973;
   text-align: center;
   border: 0;

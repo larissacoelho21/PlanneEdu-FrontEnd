@@ -8,7 +8,6 @@ import { GraduationCap } from "lucide-react";
 import { BookMarked } from "lucide-react";
 import { ChartLine } from "lucide-react";
 import { IntroText } from "../../Components/IntroTexts/IntroText";
-import { CardPlan } from "../../Components/Box/BoxPlan/BoxPlan";
 import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 export function PlanEnsino() {
@@ -28,30 +27,44 @@ export function PlanEnsino() {
         <h2>Planos de ensino disponíveis</h2>
       </div>
 
-      <div className="cards-plans">
-        <CardPlan
-          matter="Programação e Controle de Suprimentos"
-          course="Logística"
-          iconTeacher={
-            <GraduationCap size={23} color="black" strokeWidth={1.5} />
-          }
-          teacher="Samanta Neves"
-          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
-          shiftCourse="Manhã"
-          yearCourse="2023"
-        />
+      <div className="cards-plans-teaching">
+        <div className="card-plan-teaching">
+          <div className="title-card-plan">
+            <h1>Programação e Controle de Suprimentos</h1>
+          </div>
+          <div className="course-badge">
+            <span>Logística</span>
+          </div>
+          <div className="infos-box">
+            <div className="semester">
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+              <h1>Samanta Neves</h1>
+            </div>
+            <div className="student-class">
+              <BookMarked size={18} color="black" strokeWidth={1.5} />
+              <h1>Manhã 2023</h1>
+            </div>
+          </div>
+        </div>
 
-        <CardPlan
-          matter="Automação Industrial"
-          course="Eletromecânica"
-          iconTeacher={
-            <GraduationCap size={23} color="black" strokeWidth={1.5} />
-          }
-          teacher="André Pereira"
-          iconClass={<BookMarked size={18} color="black" strokeWidth={1.5} />}
-          shiftCourse="Manhã"
-          yearCourse="2023"
-        />
+        <div className="card-plan-teaching">
+          <div className="title-card-plan">
+            <h1>Automação Industrial</h1>
+          </div>
+          <div className="course-badge">
+            <span>Eletromecânica</span>
+          </div>
+          <div className="infos-box">
+            <div className="semester">
+              <GraduationCap size={23} color="black" strokeWidth={1.5} />
+              <h1>André Pereira</h1>
+            </div>
+            <div className="student-class">
+              <BookMarked size={18} color="black" strokeWidth={1.5} />
+              <h1>Manhã 2023</h1>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );

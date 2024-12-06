@@ -15,8 +15,7 @@
   gap: 6vw;
 }
 
-.box-teacher,
-.box-plans {
+.card-box {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -33,13 +32,15 @@
   transition: 0.35s ease-out;
 }
 
-.box-teacher:hover,
-.box-plans:hover {
+.card-box:hover{
+  border: solid 2px var(--blue-one);
+}
+
+.box-teacher:hover {
   border: 2px solid var(--blue-one);
 }
 
-.box-teacher h1,
-.box-plans h1 {
+.box-teacher h1 {
   font-size: 1.4vw;
 }
 
@@ -79,7 +80,8 @@
 
 
 @media only screen and (max-width: 800px){
-  .box-teacher{
+  .box-teacher,
+  .box-plans {
     width: 80vw;
     display: flex;
     gap: 4vw;

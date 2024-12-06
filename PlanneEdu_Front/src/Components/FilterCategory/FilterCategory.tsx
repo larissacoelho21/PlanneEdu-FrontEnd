@@ -7,7 +7,7 @@ export function FilterCategory() {
     "Mostrar Tudo",
     "Informação e Comunicação",
     "Controle e Processos Industriais",
-    "Gestão e Negócios",
+    "Gestão e Negócios"
   ];
 
   // variável para armazenar as categorias selecionadas

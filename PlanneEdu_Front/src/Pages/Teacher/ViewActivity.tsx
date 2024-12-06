@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Clock3, Users } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { ButtonToAdd } from "../../Components/Buttons/Add/ToAdd";
 
 interface ActivityCardProps {
   name: string;
@@ -22,9 +23,9 @@ export function ActivityCard({ name, matter, dateI, dateE }: ActivityCardProps) 
       </div>
       <div className="dates-card">
         <div className="items-card-atvd">
-          <p>{dateI}</p>
+          <h1>{dateI}</h1>
           <p>-</p>
-          <p>{dateE}</p>
+          <h1>{dateE}</h1>
         </div>
       </div>
     </div>
@@ -39,7 +40,7 @@ export function ViewActivity() {
       id: 1,
       category: "Situação-Problema",
       name: "Situação Problema",
-      matter: "BackEnd",
+      matter: "FrontEnd",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -55,7 +56,7 @@ export function ViewActivity() {
       id: 3,
       category: "Projeto",
       name: "Projeto",
-      matter: "BackEnd",
+      matter: "Projetos",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -71,7 +72,7 @@ export function ViewActivity() {
       id: 5,
       category: "Pesquisa",
       name: "Pesquisa",
-      matter: "BackEnd",
+      matter: "Projetos",
       dateI: "02/08/2024",
       dateE: "08/08/2024",
     },
@@ -86,7 +87,7 @@ export function ViewActivity() {
   ];
 
   const selectedCategory = filterActivities
-    ? items.filter((item) => item.category === filterActivities)
+    ? items.filter((item) => item.matter === filterActivities)
     : items;
 
   return (
@@ -121,18 +122,12 @@ export function ViewActivity() {
               </div>
             </div>
           </div>
-          <div className="discipline">
-            <h1>Disciplina:</h1>
-            <h2>Desenvolvimento mobile</h2>
-          </div>
         </div>
 
-        <div className="button-addActivity">
-          <Link to="/addatividade">
-            <FontAwesomeIcon icon={faPlus} />
-            <h1>Adicionar nova atividade</h1>
-          </Link>
-        </div>
+        <ButtonToAdd
+          path="/addatividade"
+          text="+ Adicionar atividade"
+        />
 
         <div className="available-activities">
           <div className="activities-text">
@@ -141,25 +136,19 @@ export function ViewActivity() {
 
           <div className="filter-activities-category">
             <div className="title-filter">
-              <h1>Filtre por categoria:</h1>
+              <h1>Filtre por matéria:</h1>
             </div>
             <div
               className="buttons-filter" //TODO: Adicionar hover nos botões
             >
-              <button onClick={() => setFilterActivities("Situação-Problema")}>
-                Situação Problema
+              <button onClick={() => setFilterActivities("FrontEnd")}>
+                FrontEnd
               </button>
-              <button onClick={() => setFilterActivities("Estudo-Caso")}>
-                Estudo de Caso
+              <button onClick={() => setFilterActivities("BackEnd")}>
+                BackEnd
               </button>
-              <button onClick={() => setFilterActivities("Projeto")}>
-                Projeto
-              </button>
-              <button onClick={() => setFilterActivities("Projeto-Integrador")}>
-                Projeto Integrador
-              </button>
-              <button onClick={() => setFilterActivities("Pesquisa")}>
-                Pesquisa
+              <button onClick={() => setFilterActivities("Projetos")}>
+                Projetos
               </button>
               <button onClick={() => setFilterActivities("")}>
                 Mostrar todos

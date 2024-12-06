@@ -194,56 +194,14 @@ export function NavBarOpp() {
                   <p>Cursos</p>
                 </NavLink>
 
-                <li className="nav-dropdown">
-                  <div
-                    className="li-inicio"
-                    onClick={() => {
-                      setOpenOne(!openOne);
-                    }}
-                  >
-                    <div className={`navbarLink ${openOne ? "selected" : ""}`}>
-                      {" "}
-                      {/* Identificando quando estiver clicado (selecionado) aparecer diferente */}
-                      <p>
-                        Turmas <ChevronDown />
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`dropdownMenu ${
-                      openOne ? "active" : "inactive"
-                    }`}
-                  >
-                    {" "}
-                    {/* menu */}
-                    <DropdownItem
-                      to="#"
-                      icon={<CodeXml size={20} />}
-                      text={"Desenvolvimento de sistemas"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<Settings size={20} />}
-                      text={"Eletromecânica"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<ChartLine size={20} />}
-                      text={"Logística"}
-                    />
-                    <DropdownItem
-                      to="#"
-                      icon={<Folder size={20} />}
-                      text={"Administração"}
-                    />
-                    <DropdownItem
-                      to="/turmaopp "
-                      icon={<GalleryVerticalEnd size={20} />}
-                      text={"Geral"}
-                    />
-                  </div>
-                </li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "navbarLink active" : "navbarLink"
+                  }
+                  to="/turmaopp"
+                >
+                  <p>Turmas</p>
+                </NavLink>
 
                 <NavLink
                   className={({ isActive }) =>
@@ -259,6 +217,7 @@ export function NavBarOpp() {
                     isActive ? "navbarLink active last" : "navbarLink"
                   }
                   to="/manageteachers"
+                  style={{marginRight: "5vw"}}
                 >
                   <p>Gerenciar usuários</p>
                 </NavLink>
@@ -268,35 +227,6 @@ export function NavBarOpp() {
             <div className="Icons">
               <div className="icon-list">
                 <ul>
-                  <li className="notification-dropdown">
-                    <div
-                      className="li-bell"
-                      onClick={() => {
-                        setOpenTwo(!openTwo);
-                      }}
-                      ref={notRef}
-                    >
-                      <div className="link-bell">
-                        <FontAwesomeIcon icon={faBell} className="iconsBell" />
-                      </div>
-                    </div>
-
-                    <div
-                      className={`dropdown-notification ${
-                        openTwo ? "ativo" : "inactive"
-                      }`}
-                    >
-                      <DropdownNotification
-                        to="#"
-                        text={
-                          "O professor Giovani respondeu ao seu comentário."
-                        }
-                        secondtext={"Toque aqui para visualizar."}
-                      />
-                    </div>
-                  </li>
-
-                  {/* Notificação */}
                   <li className="profile-notification">
                     {" "}
                     {/* Perfil */}
