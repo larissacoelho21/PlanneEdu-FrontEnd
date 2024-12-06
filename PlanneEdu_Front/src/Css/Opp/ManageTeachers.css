@@ -22,6 +22,7 @@
     /* Evitar "vazamento" de conteúdo antes da expansão */
     transition: height 0.3s ease;
     /* Adiciona uma animação suave para a altura */
+    padding: 2vw 3vw;
 }
 
 .teacher-card2 {
@@ -66,9 +67,9 @@
 
 .chevron-container {
     position: absolute;
-    right: 3vw;
+    right: -1vw;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-140%);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -140,16 +141,18 @@
 .button-manage button {
     display: flex;
     background-color: transparent;
+    justify-content: center;
     border: 0.15vw solid #FF0000;
     padding: 0.5vw;
     border-radius: 0.5vw;
     background-color: #FF0000;
     color: white;
-    margin-left: 22vw;
+    margin-left: 15vw;
     font-size: 1.1vw;
     margin-bottom: 2vw;
     gap: 1vw;
     transition: 0.3s ease;
+    width: 15vw;
 }
 
 .button-manage button:hover {

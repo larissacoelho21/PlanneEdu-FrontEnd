@@ -36,12 +36,14 @@ export function PlanoCursoOpp() {
       </div>
 
       <div className="buttons-class" id="buttons-class">
-        <a href="/addplancurso"><button>+ Criar um novo plano de curso</button></a>
+        <a href="/addplancurso">
+          <button>+ Criar um novo plano de curso</button>
+        </a>
       </div>
 
       <div className="cards-cursosopp">
-        <div className="Card-plano">
-          {planosCurso.map((curso: any) => (
+        {planosCurso.map((curso: any) => (
+          <div className="Card-plano" key={curso.id}>
             <div className="Data-curso">
               <h3 className="Subject">{curso.nome}</h3>
               <div className="Info">
@@ -50,17 +52,13 @@ export function PlanoCursoOpp() {
                   <h1>{curso.categoria}</h1>
                 </div>
                 <div className="Class-curso">
-                  <Clock3 size={18} />
+                  <Clock3 size={22} />
                   <p>{curso.qtdSemestre} semestres</p>
                 </div>
               </div>
             </div>
-          ))}
-          <div className="Arrow">
-            <ChevronRight size={50} color="black" strokeWidth={1} />
           </div>
-        </div>
-
+        ))}
       </div>
     </section>
   );
